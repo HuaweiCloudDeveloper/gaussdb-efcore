@@ -1,6 +1,6 @@
-using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure.Internal;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB;
 
 public class NpgsqlDbContextOptionsExtensionsTest
 {

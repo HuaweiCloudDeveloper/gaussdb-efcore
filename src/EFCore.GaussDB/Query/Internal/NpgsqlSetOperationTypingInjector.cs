@@ -1,4 +1,4 @@
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Query.Internal;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.Internal;
 
 /// <summary>
 ///     A visitor that injects explicit typing on null projections in set operations, to ensure PostgreSQL gets the typing right.

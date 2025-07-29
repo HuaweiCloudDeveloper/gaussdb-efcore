@@ -1,6 +1,6 @@
-using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure.Internal;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Query.Internal;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.Internal;
 
 /// <summary>
 ///     The default factory for Npgsql-specific query SQL generators.

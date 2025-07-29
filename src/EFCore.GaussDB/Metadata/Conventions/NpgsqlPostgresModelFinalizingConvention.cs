@@ -1,6 +1,6 @@
-using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure.Internal;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Metadata.Conventions;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Metadata.Conventions;
 
 /// <summary>
 ///     A convention that discovers certain common PostgreSQL extensions based on store types used in the model (e.g. hstore).

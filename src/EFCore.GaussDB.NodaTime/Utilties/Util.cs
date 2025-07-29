@@ -1,4 +1,4 @@
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime.Utilties;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.NodaTime.Utilties;
 
 internal static class Util
 {

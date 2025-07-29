@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.TestUtilities;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Metadata.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.TestUtilities;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Metadata.Conventions;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Metadata.Conventions;
 
 public class NpgsqlValueGenerationStrategyConventionTest
 {

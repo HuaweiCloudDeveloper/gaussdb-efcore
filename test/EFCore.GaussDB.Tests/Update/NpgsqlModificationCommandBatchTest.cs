@@ -2,13 +2,13 @@ using Microsoft.EntityFrameworkCore.Diagnostics.Internal;
 using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using Microsoft.EntityFrameworkCore.Update.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.TestUtilities;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Update.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.TestUtilities;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Update.Internal;
 
 // ReSharper disable once CheckNamespace
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Tests.Update;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Tests.Update;
 
 public class NpgsqlModificationCommandBatchTest
 {

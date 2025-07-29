@@ -1,9 +1,9 @@
-using Npgsql.EntityFrameworkCore.PostgreSQL.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.Mapping;
-using static Npgsql.EntityFrameworkCore.PostgreSQL.Utilities.Statics;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal.Mapping;
+using static HuaweiCloud.EntityFrameworkCore.GaussDB.Utilities.Statics;
 using ExpressionExtensions = Microsoft.EntityFrameworkCore.Query.ExpressionExtensions;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Query.ExpressionTranslators.Internal;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.ExpressionTranslators.Internal;
 
 /// <summary>
 ///     Translates method and property calls on arrays/lists into their corresponding PostgreSQL operations.

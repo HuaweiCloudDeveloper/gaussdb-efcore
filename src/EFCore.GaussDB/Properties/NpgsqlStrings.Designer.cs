@@ -4,9 +4,9 @@
 
 using System.Resources;
 using Microsoft.EntityFrameworkCore.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Diagnostics.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Diagnostics.Internal;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Internal
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Internal
 {
     /// <summary>
     ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to
@@ -17,7 +17,7 @@ namespace Npgsql.EntityFrameworkCore.PostgreSQL.Internal
     public static class NpgsqlStrings
     {
         private static readonly ResourceManager _resourceManager
-            = new ResourceManager("Npgsql.EntityFrameworkCore.PostgreSQL.Properties.NpgsqlStrings", typeof(NpgsqlStrings).Assembly);
+            = new ResourceManager("HuaweiCloud.EntityFrameworkCore.GaussDB.Properties.NpgsqlStrings", typeof(NpgsqlStrings).Assembly);
 
         /// <summary>
         ///     ConfigureDataSource() cannot be used when an externally-provided NpgsqlDataSource is passed to UseNpgsql(). Either perform all data source configuration on the external NpgsqlDataSource, or pass a connection string to UseNpgsql() and specify the data source configuration there.
@@ -196,7 +196,7 @@ namespace Npgsql.EntityFrameworkCore.PostgreSQL.Internal
     }
 }
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Internal
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Internal
 {
     /// <summary>
     ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to
@@ -207,7 +207,7 @@ namespace Npgsql.EntityFrameworkCore.PostgreSQL.Internal
     public static class NpgsqlResources
     {
         private static readonly ResourceManager _resourceManager
-            = new ResourceManager("Npgsql.EntityFrameworkCore.PostgreSQL.Properties.NpgsqlStrings", typeof(NpgsqlResources).Assembly);
+            = new ResourceManager("HuaweiCloud.EntityFrameworkCore.GaussDB.Properties.NpgsqlStrings", typeof(NpgsqlResources).Assembly);
 
         /// <summary>
         ///     Enum column '{name}' cannot be scaffolded, define a CLR enum type and add the property manually.

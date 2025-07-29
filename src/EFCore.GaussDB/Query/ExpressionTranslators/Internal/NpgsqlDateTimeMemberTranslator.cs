@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.Mapping;
-using static Npgsql.EntityFrameworkCore.PostgreSQL.Utilities.Statics;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal.Mapping;
+using static HuaweiCloud.EntityFrameworkCore.GaussDB.Utilities.Statics;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Query.ExpressionTranslators.Internal;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.ExpressionTranslators.Internal;
 
 /// <summary>
 ///     Provides translation services for <see cref="DateTime" /> members.

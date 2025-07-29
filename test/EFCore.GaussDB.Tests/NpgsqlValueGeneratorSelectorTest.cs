@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.TestUtilities;
-using Npgsql.EntityFrameworkCore.PostgreSQL.ValueGeneration;
-using Npgsql.EntityFrameworkCore.PostgreSQL.ValueGeneration.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.TestUtilities;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.ValueGeneration;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.ValueGeneration.Internal;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB;
 
 public class NpgsqlValueGeneratorSelectorTest
 {

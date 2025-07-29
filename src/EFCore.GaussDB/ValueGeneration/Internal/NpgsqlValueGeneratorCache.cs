@@ -1,6 +1,6 @@
 ﻿using System.Collections.Concurrent;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.ValueGeneration.Internal;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.ValueGeneration.Internal;
 
 /// <summary>
 ///     This API supports the Entity Framework Core infrastructure and is not intended to be used

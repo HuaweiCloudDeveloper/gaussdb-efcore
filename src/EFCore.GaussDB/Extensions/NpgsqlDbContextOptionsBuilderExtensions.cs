@@ -1,6 +1,6 @@
 using System.Data.Common;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure.Internal;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.EntityFrameworkCore;

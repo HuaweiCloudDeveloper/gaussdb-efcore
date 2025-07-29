@@ -1,6 +1,6 @@
 using System.Data;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Update.Internal;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Update.Internal;
 
 /// <summary>
 ///     The Npgsql-specific implementation for <see cref="ModificationCommandBatch" />.

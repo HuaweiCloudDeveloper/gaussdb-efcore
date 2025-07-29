@@ -1,6 +1,6 @@
 ﻿using System.Data.Common;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.Mapping;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal.Mapping;
 
 /// <summary>
 ///     The base class for mapping Npgsql-specific string types. It configures parameters with the

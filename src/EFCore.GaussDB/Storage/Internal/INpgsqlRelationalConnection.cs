@@ -1,6 +1,6 @@
 ﻿using System.Data.Common;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal;
 
 /// <summary>
 ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to

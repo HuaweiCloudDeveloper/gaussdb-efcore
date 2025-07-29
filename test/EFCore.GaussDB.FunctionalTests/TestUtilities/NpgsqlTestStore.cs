@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using System.Data.Common;
 using System.Text.RegularExpressions;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure;
 
 namespace Microsoft.EntityFrameworkCore.TestUtilities;
 

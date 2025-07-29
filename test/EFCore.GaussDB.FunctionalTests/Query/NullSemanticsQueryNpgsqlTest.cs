@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.TestModels.NullSemanticsModel;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.Mapping;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal.Mapping;
 
 namespace Microsoft.EntityFrameworkCore.Query;
 

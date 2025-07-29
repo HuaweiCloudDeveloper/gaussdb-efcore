@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.TestModels.Array;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Internal;
 
 // ReSharper disable ConvertToConstant.Local
 

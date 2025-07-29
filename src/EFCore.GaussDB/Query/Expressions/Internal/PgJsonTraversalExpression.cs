@@ -1,4 +1,4 @@
-﻿namespace Npgsql.EntityFrameworkCore.PostgreSQL.Query.Expressions.Internal;
+﻿namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.Expressions.Internal;
 
 /// <summary>
 ///     Represents a PostgreSQL JSON operator traversing a JSON document with a path (i.e. x#>y or x#>>y)

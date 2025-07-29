@@ -1,6 +1,6 @@
-using Npgsql.EntityFrameworkCore.PostgreSQL.TestUtilities;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.TestUtilities;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Metadata;
 
 public class NpgsqlMetadataExtensionsTest
 {

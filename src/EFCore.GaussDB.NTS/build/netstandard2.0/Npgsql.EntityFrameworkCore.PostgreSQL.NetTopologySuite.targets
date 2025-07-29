@@ -32,8 +32,8 @@
           Outputs="$(EFCoreNpgsqlNetTopologySuiteFile)">
     <ItemGroup>
       <EFCoreNpgsqlNetTopologySuiteServices Include="Microsoft.EntityFrameworkCore.Design.DesignTimeServicesReferenceAttribute">
-        <_Parameter1>Npgsql.EntityFrameworkCore.PostgreSQL.Design.Internal.NpgsqlNetTopologySuiteDesignTimeServices, Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite</_Parameter1>
-        <_Parameter2>Npgsql.EntityFrameworkCore.PostgreSQL</_Parameter2>
+        <_Parameter1>HuaweiCloud.EntityFrameworkCore.GaussDB.Design.Internal.NpgsqlNetTopologySuiteDesignTimeServices, HuaweiCloud.EntityFrameworkCore.GaussDB.NetTopologySuite</_Parameter1>
+        <_Parameter2>HuaweiCloud.EntityFrameworkCore.GaussDB</_Parameter2>
       </EFCoreNpgsqlNetTopologySuiteServices>
     </ItemGroup>
     <WriteCodeFragment AssemblyAttributes="@(EFCoreNpgsqlNetTopologySuiteServices)"

@@ -1,15 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <AssemblyName>Npgsql.EntityFrameworkCore.PostgreSQL.FunctionalTests</AssemblyName>
+    <AssemblyName>HuaweiCloud.EntityFrameworkCore.GaussDB.FunctionalTests</AssemblyName>
     <RootNamespace>Microsoft.EntityFrameworkCore</RootNamespace>
     <PreserveCompilationContext>true</PreserveCompilationContext>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\EFCore.PG\EFCore.PG.csproj" />
-    <ProjectReference Include="..\..\src\EFCore.PG.NTS\EFCore.PG.NTS.csproj" />
-    <ProjectReference Include="..\..\src\EFCore.PG.NodaTime\EFCore.PG.NodaTime.csproj" />
+    <ProjectReference Include="..\..\src\EFCore.GaussDB\EFCore.GaussDB.csproj" />
+    <ProjectReference Include="..\..\src\EFCore.GaussDB.NTS\EFCore.GaussDB.NTS.csproj" />
+    <ProjectReference Include="..\..\src\EFCore.GaussDB.NodaTime\EFCore.GaussDB.NodaTime.csproj" />
   </ItemGroup>
 
   <ItemGroup>

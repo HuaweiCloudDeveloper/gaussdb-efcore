@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore.Migrations.Internal;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Migrations.Internal;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Migrations.Internal;
 
 // Migrator is EF-pubternal, but overriding it is the only way to force Npgsql to ReloadTypes() after executing a migration which adds
 // types to the database

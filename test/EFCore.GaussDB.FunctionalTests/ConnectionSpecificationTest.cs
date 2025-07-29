@@ -1,4 +1,4 @@
-﻿using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal;
+﻿using HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal;
 
 // ReSharper disable StringLiteralTypo
 namespace Microsoft.EntityFrameworkCore;

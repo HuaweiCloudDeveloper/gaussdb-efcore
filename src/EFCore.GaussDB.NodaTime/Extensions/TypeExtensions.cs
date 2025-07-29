@@ -1,6 +1,6 @@
 // ReSharper disable once CheckNamespace
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB;
 
 internal static class TypeExtensions
 {

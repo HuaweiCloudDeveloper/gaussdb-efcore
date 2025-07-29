@@ -1,9 +1,9 @@
-﻿using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
-using Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite.Scaffolding.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime.Scaffolding.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Scaffolding.Internal;
+﻿using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.NetTopologySuite.Scaffolding.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.NodaTime.Scaffolding.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Scaffolding.Internal;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Scaffolding;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Scaffolding;
 
 public class NpgsqlCodeGeneratorTest
 {

@@ -3,14 +3,14 @@ using System.Transactions;
 using Microsoft.EntityFrameworkCore.Diagnostics.Internal;
 using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Diagnostics.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.TestUtilities;
-using Npgsql.EntityFrameworkCore.PostgreSQL.TestUtilities.FakeProvider;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Diagnostics.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.TestUtilities;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.TestUtilities.FakeProvider;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB;
 
 #nullable enable
 

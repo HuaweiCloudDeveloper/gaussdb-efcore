@@ -1,4 +1,4 @@
-using Npgsql.EntityFrameworkCore.PostgreSQL.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Internal;
 
 namespace Microsoft.EntityFrameworkCore.Update;
 

@@ -1,14 +1,14 @@
-using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Query.ExpressionTranslators.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Query.ExpressionTranslators.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-///     Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite extension methods for <see cref="IServiceCollection" />.
+///     HuaweiCloud.EntityFrameworkCore.GaussDB.NetTopologySuite extension methods for <see cref="IServiceCollection" />.
 /// </summary>
 public static class NpgsqlNetTopologySuiteServiceCollectionExtensions
 {

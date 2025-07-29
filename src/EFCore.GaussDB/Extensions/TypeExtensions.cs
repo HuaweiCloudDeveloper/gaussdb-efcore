@@ -1,5 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.Mapping;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal.Mapping;
 
 // ReSharper disable once CheckNamespace
 namespace System.Reflection;

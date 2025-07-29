@@ -1,11 +1,11 @@
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite.Scaffolding.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.NetTopologySuite.Scaffolding.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal;
 
 // ReSharper disable once CheckNamespace
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Design.Internal;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Design.Internal;
 
 /// <summary>
 ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to

@@ -1,7 +1,7 @@
-﻿using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Scaffolding.Internal;
+﻿using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Metadata;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Metadata.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Scaffolding.Internal;
 
 namespace Microsoft.EntityFrameworkCore.Migrations;
 

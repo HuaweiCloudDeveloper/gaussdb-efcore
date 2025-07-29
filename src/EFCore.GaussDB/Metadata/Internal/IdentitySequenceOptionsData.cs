@@ -1,7 +1,7 @@
 using System.Globalization;
 using System.Text;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Metadata.Internal;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Metadata.Internal;
 
 /// <summary>
 ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to

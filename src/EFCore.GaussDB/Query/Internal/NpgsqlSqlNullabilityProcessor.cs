@@ -1,9 +1,9 @@
 using System.Runtime.CompilerServices;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Query.Expressions;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Query.Expressions.Internal;
-using static Npgsql.EntityFrameworkCore.PostgreSQL.Utilities.Statics;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Query.Expressions;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Query.Expressions.Internal;
+using static HuaweiCloud.EntityFrameworkCore.GaussDB.Utilities.Statics;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Query.Internal;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.Internal;
 
 /// <inheritdoc />
 public class NpgsqlSqlNullabilityProcessor : SqlNullabilityProcessor

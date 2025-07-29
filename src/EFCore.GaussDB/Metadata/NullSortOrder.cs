@@ -1,4 +1,4 @@
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Metadata;
 
 /// <summary>
 ///     Options for modifying sort ordering of <c>NULL</c>-values in indexes.

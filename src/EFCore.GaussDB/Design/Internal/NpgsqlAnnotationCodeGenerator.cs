@@ -1,8 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Metadata;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Metadata.Internal;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Design.Internal;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Design.Internal;
 
 /// <summary>
 ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to

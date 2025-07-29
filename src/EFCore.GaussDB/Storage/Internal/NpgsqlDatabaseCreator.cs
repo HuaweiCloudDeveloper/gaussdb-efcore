@@ -1,8 +1,8 @@
 using System.Net.Sockets;
 using System.Transactions;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Migrations.Operations;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Migrations.Operations;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal;
 
 /// <summary>
 ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to

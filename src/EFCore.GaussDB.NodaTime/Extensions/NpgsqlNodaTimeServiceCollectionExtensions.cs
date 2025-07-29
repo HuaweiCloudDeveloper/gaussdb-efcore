@@ -1,13 +1,13 @@
-using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime.Query.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.NodaTime.Query.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-///     Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime extension methods for <see cref="IServiceCollection" />.
+///     HuaweiCloud.EntityFrameworkCore.GaussDB.NodaTime extension methods for <see cref="IServiceCollection" />.
 /// </summary>
 public static class NpgsqlNodaTimeServiceCollectionExtensions
 {

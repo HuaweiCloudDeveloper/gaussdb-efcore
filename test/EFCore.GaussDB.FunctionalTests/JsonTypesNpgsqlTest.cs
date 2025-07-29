@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Numerics;
 using NetTopologySuite;
 using NetTopologySuite.Geometries;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure;
 using Xunit.Sdk;
 
 namespace Microsoft.EntityFrameworkCore;
@@ -12,7 +12,7 @@ public class JsonTypesNpgsqlTest(NonSharedFixture fixture) : JsonTypesRelational
 {
     #region Nested collections (unsupported)
 
-    // The following tests are disabled because they use nested collections, which are not supported by EFCore.PG (arrays of arrays aren't
+    // The following tests are disabled because they use nested collections, which are not supported by EFCore.GaussDB (arrays of arrays aren't
     // supported).
 
     public override Task Can_read_write_array_of_array_of_array_of_int_JSON_values()
@@ -571,7 +571,7 @@ public class JsonTypesNpgsqlTest(NonSharedFixture fixture) : JsonTypesRelational
     protected override DbContextOptionsBuilder AddOptions(DbContextOptionsBuilder builder)
     {
         // Note that the enum doesn't actually need to be created in the database, since Can_read_and_write_JSON_value doesn't access
-        // the database. We just need the mapping to be picked up by EFCore.PG from the ADO.NET layer.
+        // the database. We just need the mapping to be picked up by EFCore.GaussDB from the ADO.NET layer.
         new NpgsqlDbContextOptionsBuilder(builder)
             .MapEnum<Mood>("mapped_enum", "test")
             .UseNetTopologySuite();

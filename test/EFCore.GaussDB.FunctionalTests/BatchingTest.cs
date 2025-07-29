@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Diagnostics.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Diagnostics.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Diagnostics.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure;
 
 // ReSharper disable UnusedAutoPropertyAccessor.Local
 // ReSharper disable InconsistentNaming

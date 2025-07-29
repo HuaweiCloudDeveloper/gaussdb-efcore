@@ -1,8 +1,8 @@
 using System.Numerics;
-using static Npgsql.EntityFrameworkCore.PostgreSQL.Utilities.Statics;
+using static HuaweiCloud.EntityFrameworkCore.GaussDB.Utilities.Statics;
 using ExpressionExtensions = Microsoft.EntityFrameworkCore.Query.ExpressionExtensions;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Query.ExpressionTranslators.Internal;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.ExpressionTranslators.Internal;
 
 /// <summary>
 ///     Provides translation services for static <see cref="Math" /> methods..

@@ -1,4 +1,4 @@
-﻿namespace Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.Mapping;
+﻿namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal.Mapping;
 
 /// <summary>
 ///     Represents a so-called PostgreSQL E-string literal string, which allows C-style escape sequences.

@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Query.Expressions.Internal;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.Expressions.Internal;
 
 /// <summary>
 ///     An expression that represents a PostgreSQL-specific row value expression in a SQL tree.

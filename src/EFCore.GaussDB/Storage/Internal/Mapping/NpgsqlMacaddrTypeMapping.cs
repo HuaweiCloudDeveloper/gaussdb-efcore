@@ -1,7 +1,7 @@
 using System.Net.NetworkInformation;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.Json;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal.Json;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.Mapping;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal.Mapping;
 
 /// <summary>
 ///     The type mapping for the PostgreSQL macaddr type.

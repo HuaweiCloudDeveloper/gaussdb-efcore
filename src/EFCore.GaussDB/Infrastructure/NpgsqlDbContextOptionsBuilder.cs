@@ -1,7 +1,7 @@
 using System.Net.Security;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure.Internal;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure;
 
 /// <summary>
 ///     Allows for options specific to PostgreSQL to be configured for a <see cref="DbContext" />.

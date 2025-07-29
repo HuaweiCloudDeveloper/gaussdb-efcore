@@ -1,6 +1,6 @@
 // ReSharper disable once CheckNamespace
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure.Internal;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure.Internal;
 
 /// <summary>
 ///     Represents options for Npgsql NetTopologySuite that can only be set at the <see cref="System.IServiceProvider" /> singleton level.

@@ -1,6 +1,6 @@
-﻿using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal;
+﻿using HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB;
 
 /// <summary>
 ///     An <see cref="IExecutionStrategy" /> implementation for retrying failed executions on PostgreSQL.

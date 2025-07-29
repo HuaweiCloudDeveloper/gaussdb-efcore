@@ -1,4 +1,4 @@
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Types;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Types;
 
 public class LTreeTest
 {

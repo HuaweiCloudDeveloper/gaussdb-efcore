@@ -1,4 +1,4 @@
-﻿using Npgsql.EntityFrameworkCore.PostgreSQL.Diagnostics.Internal;
+﻿using HuaweiCloud.EntityFrameworkCore.GaussDB.Diagnostics.Internal;
 
 namespace Microsoft.EntityFrameworkCore.TestUtilities;
 

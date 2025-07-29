@@ -1,12 +1,12 @@
 using System.Globalization;
 using System.Text;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Migrations.Operations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Update.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Metadata;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Metadata.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Migrations.Operations;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Update.Internal;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Migrations;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Migrations;
 
 /// <summary>
 ///     PostgreSQL-specific implementation of <see cref="MigrationsSqlGenerator" />.

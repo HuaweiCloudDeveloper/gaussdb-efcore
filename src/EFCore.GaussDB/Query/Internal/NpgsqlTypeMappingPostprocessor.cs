@@ -1,6 +1,6 @@
-using Npgsql.EntityFrameworkCore.PostgreSQL.Query.Expressions.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Query.Expressions.Internal;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Query.Internal;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.Internal;
 
 /// <summary>
 ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to

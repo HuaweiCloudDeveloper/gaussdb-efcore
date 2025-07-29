@@ -1,10 +1,10 @@
 using System.Collections.Concurrent;
 using System.Data.Common;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Internal;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal;
 
 /// <summary>
 ///     Manages resolving and creating <see cref="NpgsqlDataSource" /> instances.

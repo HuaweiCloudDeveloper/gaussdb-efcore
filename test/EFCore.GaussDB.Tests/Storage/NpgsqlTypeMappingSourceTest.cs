@@ -1,12 +1,12 @@
 using Microsoft.EntityFrameworkCore.Storage.Json;
 using NetTopologySuite.Geometries;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.Mapping;
-using Npgsql.EntityFrameworkCore.PostgreSQL.TestUtilities;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal.Mapping;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.TestUtilities;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Storage;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Storage;
 
 public class NpgsqlTypeMappingSourceTest
 {

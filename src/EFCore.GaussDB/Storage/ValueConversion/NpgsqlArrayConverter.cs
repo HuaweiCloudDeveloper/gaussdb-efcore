@@ -1,7 +1,7 @@
 using System.Collections;
 using static System.Linq.Expressions.Expression;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Storage.ValueConversion;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.ValueConversion;
 
 /// <summary>
 ///     A value converter that can convert between array types; accepts an optional <see cref="ValueConverter" /> for the element, but can be

@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.TestUtilities;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.TestUtilities;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Metadata.Conventions;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Metadata.Conventions;
 
 public class NpgsqlPostgresModelFinalizingConventionTest
 {

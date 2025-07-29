@@ -1,4 +1,4 @@
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure;
 
 /// <summary>
 ///     A builder API designed for Npgsql when registering services.

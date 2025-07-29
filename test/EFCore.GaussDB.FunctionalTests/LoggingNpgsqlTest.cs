@@ -1,6 +1,6 @@
-using Npgsql.EntityFrameworkCore.PostgreSQL.Diagnostics.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Diagnostics.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure.Internal;
 
 namespace Microsoft.EntityFrameworkCore;
 
@@ -68,7 +68,7 @@ public class LoggingNpgsqlTest : LoggingRelationalTestBase<NpgsqlDbContextOption
         => new TestLogger<NpgsqlLoggingDefinitions>();
 
     protected override string ProviderName
-        => "Npgsql.EntityFrameworkCore.PostgreSQL";
+        => "HuaweiCloud.EntityFrameworkCore.GaussDB";
 
     protected override string ProviderVersion
         => typeof(NpgsqlOptionsExtension).Assembly

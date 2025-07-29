@@ -1,4 +1,4 @@
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Query.ExpressionTranslators.Internal;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.ExpressionTranslators.Internal;
 
 /// <summary>
 ///     Translates <see cref="T:DbFunctionsExtensions.Like" /> methods into PostgreSQL LIKE expressions.

@@ -1,4 +1,4 @@
-namespace Npgsql.EntityFrameworkCore.PostgreSQL;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB;
 
 public class NpgsqlNodaTimeApiConsistencyTest(NpgsqlNodaTimeApiConsistencyTest.NpgsqlNodaTimeApiConsistencyFixture fixture)
     : ApiConsistencyTestBase<NpgsqlNodaTimeApiConsistencyTest.NpgsqlNodaTimeApiConsistencyFixture>(fixture)

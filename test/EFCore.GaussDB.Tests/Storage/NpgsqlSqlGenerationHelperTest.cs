@@ -1,7 +1,7 @@
 ﻿using System.Text;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Storage;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Storage;
 
 public class NpgsqlSqlGenerationHelperTest
 {

@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore.TestModels.SpatialModel;
 using NetTopologySuite.Geometries;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure;
 
 namespace Microsoft.EntityFrameworkCore.Query;
 

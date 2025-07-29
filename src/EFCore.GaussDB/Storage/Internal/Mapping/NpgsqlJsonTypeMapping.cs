@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.Mapping;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal.Mapping;
 
 /// <summary>
 ///     Supports the older Npgsql-specific JSON mapping, allowing mapping json/jsonb to text, to e.g.

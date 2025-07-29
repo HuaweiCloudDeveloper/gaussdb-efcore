@@ -1,9 +1,9 @@
 // using System.Runtime.CompilerServices;
-// using Npgsql.EntityFrameworkCore.PostgreSQL.Design.Internal;
-// using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
-// using Npgsql.EntityFrameworkCore.PostgreSQL.TestUtilities;
+// using HuaweiCloud.EntityFrameworkCore.GaussDB.Design.Internal;
+// using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure;
+// using HuaweiCloud.EntityFrameworkCore.GaussDB.TestUtilities;
 //
-// namespace Npgsql.EntityFrameworkCore.PostgreSQL.Scaffolding;
+// namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Scaffolding;
 //
 // public class CompiledModelNpgsqlTest : CompiledModelRelationalTestBase
 // {
@@ -50,8 +50,8 @@
 //     protected override BuildSource AddReferences(BuildSource build, [CallerFilePath] string filePath = "")
 //     {
 //         base.AddReferences(build);
-//         build.References.Add(BuildReference.ByName("Npgsql.EntityFrameworkCore.PostgreSQL"));
-//         build.References.Add(BuildReference.ByName("Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite"));
+//         build.References.Add(BuildReference.ByName("HuaweiCloud.EntityFrameworkCore.GaussDB"));
+//         build.References.Add(BuildReference.ByName("HuaweiCloud.EntityFrameworkCore.GaussDB.NetTopologySuite"));
 //         build.References.Add(BuildReference.ByName("Npgsql"));
 //         build.References.Add(BuildReference.ByName("NetTopologySuite"));
 //         return build;

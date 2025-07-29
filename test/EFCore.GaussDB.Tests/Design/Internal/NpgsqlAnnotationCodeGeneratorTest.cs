@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage.Json;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata.Conventions;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Metadata;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Metadata.Conventions;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Metadata.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Design.Internal;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Design.Internal;
 
 public class NpgsqlAnnotationCodeGeneratorTest
 {

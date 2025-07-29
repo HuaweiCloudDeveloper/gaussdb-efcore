@@ -1,5 +1,5 @@
 using Microsoft.CodeAnalysis;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure.Internal;
 
 namespace Microsoft.EntityFrameworkCore.TestUtilities;
 

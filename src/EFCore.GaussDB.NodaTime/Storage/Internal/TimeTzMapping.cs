@@ -1,11 +1,11 @@
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore.Storage.Json;
 using NodaTime.Text;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.Mapping;
-using static Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime.Utilties.Util;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal.Mapping;
+using static HuaweiCloud.EntityFrameworkCore.GaussDB.NodaTime.Utilties.Util;
 
 // ReSharper disable once CheckNamespace
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal;
 
 /// <summary>
 ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to

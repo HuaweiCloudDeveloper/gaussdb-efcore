@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Text;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.Json;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal.Json;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.Mapping;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal.Mapping;
 
 /// <summary>
 ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to

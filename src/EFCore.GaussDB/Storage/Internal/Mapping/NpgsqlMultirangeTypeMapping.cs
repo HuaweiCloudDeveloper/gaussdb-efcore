@@ -2,7 +2,7 @@
 using System.Data.Common;
 using System.Text;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.Mapping;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal.Mapping;
 
 /// <summary>
 ///     The type mapping for PostgreSQL multirange types.

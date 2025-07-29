@@ -156,7 +156,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: EFCore.PG.CI
+          name: EFCore.GaussDB.CI
           path: nupkgs
 
       - name: Publish packages to MyGet (vnext)
@@ -188,7 +188,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: EFCore.PG.Release
+          name: EFCore.GaussDB.Release
           path: nupkgs
 
       # TODO: Create a release

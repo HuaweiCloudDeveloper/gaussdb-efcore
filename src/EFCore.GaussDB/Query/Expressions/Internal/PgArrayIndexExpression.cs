@@ -1,4 +1,4 @@
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Query.Expressions.Internal;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.Expressions.Internal;
 
 /// <summary>
 ///     An SQL expression that represents an indexing into a PostgreSQL array.

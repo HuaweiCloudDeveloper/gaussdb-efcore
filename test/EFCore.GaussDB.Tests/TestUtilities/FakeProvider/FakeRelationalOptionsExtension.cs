@@ -1,4 +1,4 @@
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.TestUtilities.FakeProvider;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.TestUtilities.FakeProvider;
 
 public class FakeRelationalOptionsExtension : RelationalOptionsExtension
 {

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <AssemblyName>Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite</AssemblyName>
-    <RootNamespace>Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite</RootNamespace>
+    <AssemblyName>HuaweiCloud.EntityFrameworkCore.GaussDB.NetTopologySuite</AssemblyName>
+    <RootNamespace>HuaweiCloud.EntityFrameworkCore.GaussDB.NetTopologySuite</RootNamespace>
 
     <Authors>Shay Rojansky</Authors>
     <Description>NetTopologySuite PostGIS spatial support plugin for GaussDB Entity Framework Core provider.</Description>
@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EFCore.PG\EFCore.PG.csproj" />
+    <ProjectReference Include="..\EFCore.GaussDB\EFCore.GaussDB.csproj" />
   </ItemGroup>
 
   <ItemGroup>

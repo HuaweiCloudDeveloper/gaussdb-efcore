@@ -1,4 +1,4 @@
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Utilities;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Utilities;
 
 internal static class Statics
 {

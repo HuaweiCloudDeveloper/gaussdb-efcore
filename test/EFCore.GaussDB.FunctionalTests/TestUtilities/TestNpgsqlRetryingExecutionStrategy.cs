@@ -1,4 +1,4 @@
-﻿using Npgsql.EntityFrameworkCore.PostgreSQL;
+﻿using HuaweiCloud.EntityFrameworkCore.GaussDB;
 
 namespace Microsoft.EntityFrameworkCore.TestUtilities;
 

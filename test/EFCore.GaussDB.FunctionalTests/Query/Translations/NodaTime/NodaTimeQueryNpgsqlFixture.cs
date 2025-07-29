@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore.TestModels.NodaTime;
 using NodaTime;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure;
 
 namespace Microsoft.EntityFrameworkCore.Query.Translations.NodaTime;
 

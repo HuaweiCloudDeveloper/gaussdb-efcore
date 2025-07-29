@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Query.Expressions.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Query.Expressions.Internal;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Query.Internal;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.Internal;
 
 /// <summary>
 ///     Locates instances of <see cref="PgUnnestExpression" /> in the tree and prunes the WITH ORDINALITY clause from them if the

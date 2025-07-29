@@ -5,9 +5,9 @@ using System.Text;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Microsoft.EntityFrameworkCore.Storage.Json;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.ValueConversion;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.ValueConversion;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.Mapping;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal.Mapping;
 
 /// <summary>
 ///     Type mapping for PostgreSQL arrays.

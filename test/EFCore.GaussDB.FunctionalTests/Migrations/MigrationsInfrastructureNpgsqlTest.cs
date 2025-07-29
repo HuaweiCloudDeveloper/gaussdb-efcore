@@ -1,5 +1,5 @@
-﻿using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal;
+﻿using HuaweiCloud.EntityFrameworkCore.GaussDB.Metadata;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal;
 
 namespace Microsoft.EntityFrameworkCore.Migrations;
 #nullable disable
@@ -11,7 +11,7 @@ public class MigrationsInfrastructureNpgsqlTest(MigrationsInfrastructureNpgsqlTe
     {
         base.Can_get_active_provider();
 
-        Assert.Equal("Npgsql.EntityFrameworkCore.PostgreSQL", ActiveProvider);
+        Assert.Equal("HuaweiCloud.EntityFrameworkCore.GaussDB", ActiveProvider);
     }
 
     // See #3407

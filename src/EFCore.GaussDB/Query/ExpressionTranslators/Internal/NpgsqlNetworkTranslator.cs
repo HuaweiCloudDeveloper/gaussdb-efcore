@@ -1,9 +1,9 @@
 using System.Net;
 using System.Net.NetworkInformation;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Query.Expressions;
-using static Npgsql.EntityFrameworkCore.PostgreSQL.Utilities.Statics;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Query.Expressions;
+using static HuaweiCloud.EntityFrameworkCore.GaussDB.Utilities.Statics;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Query.ExpressionTranslators.Internal;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.ExpressionTranslators.Internal;
 
 /// <summary>
 ///     Provides translation services for operators and functions of PostgreSQL network typess (cidr, inet, macaddr, macaddr8).

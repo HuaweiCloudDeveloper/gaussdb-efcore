@@ -1,6 +1,6 @@
-using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.ValueConversion;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.ValueConversion;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Storage;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Storage;
 
 public class NpgsqlArrayValueConverterTest
 {

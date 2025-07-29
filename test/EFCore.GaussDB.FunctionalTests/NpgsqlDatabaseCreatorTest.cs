@@ -1,5 +1,5 @@
 ﻿using System.Data;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal;
 
 // ReSharper disable HeapView.CanAvoidClosure
 // ReSharper disable MethodHasAsyncOverload

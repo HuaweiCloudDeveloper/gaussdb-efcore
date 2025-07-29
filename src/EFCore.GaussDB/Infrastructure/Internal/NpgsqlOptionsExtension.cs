@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Net.Security;
 using System.Text;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure.Internal;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure.Internal;
 
 /// <summary>
 ///     Represents options managed by the Npgsql.
@@ -536,31 +536,31 @@ public class NpgsqlOptionsExtension : RelationalOptionsExtension
         /// <inheritdoc />
         public override void PopulateDebugInfo(IDictionary<string, string> debugInfo)
         {
-            debugInfo["Npgsql.EntityFrameworkCore.PostgreSQL:" + nameof(NpgsqlDbContextOptionsBuilder.UseAdminDatabase)]
+            debugInfo["HuaweiCloud.EntityFrameworkCore.GaussDB:" + nameof(NpgsqlDbContextOptionsBuilder.UseAdminDatabase)]
                 = (Extension.AdminDatabase?.GetHashCode() ?? 0).ToString(CultureInfo.InvariantCulture);
 
-            debugInfo["Npgsql.EntityFrameworkCore.PostgreSQL:" + nameof(NpgsqlDbContextOptionsBuilder.SetPostgresVersion)]
+            debugInfo["HuaweiCloud.EntityFrameworkCore.GaussDB:" + nameof(NpgsqlDbContextOptionsBuilder.SetPostgresVersion)]
                 = Extension.PostgresVersion.GetHashCode().ToString(CultureInfo.InvariantCulture);
 
-            debugInfo["Npgsql.EntityFrameworkCore.PostgreSQL:" + nameof(NpgsqlDbContextOptionsBuilder.UseRedshift)]
+            debugInfo["HuaweiCloud.EntityFrameworkCore.GaussDB:" + nameof(NpgsqlDbContextOptionsBuilder.UseRedshift)]
                 = Extension.UseRedshift.GetHashCode().ToString(CultureInfo.InvariantCulture);
 
-            debugInfo["Npgsql.EntityFrameworkCore.PostgreSQL:" + nameof(NpgsqlDbContextOptionsBuilder.ReverseNullOrdering)]
+            debugInfo["HuaweiCloud.EntityFrameworkCore.GaussDB:" + nameof(NpgsqlDbContextOptionsBuilder.ReverseNullOrdering)]
                 = Extension.ReverseNullOrdering.GetHashCode().ToString(CultureInfo.InvariantCulture);
 
-            debugInfo["Npgsql.EntityFrameworkCore.PostgreSQL:" + nameof(NpgsqlDbContextOptionsBuilder.RemoteCertificateValidationCallback)]
+            debugInfo["HuaweiCloud.EntityFrameworkCore.GaussDB:" + nameof(NpgsqlDbContextOptionsBuilder.RemoteCertificateValidationCallback)]
                 = (Extension.RemoteCertificateValidationCallback?.GetHashCode() ?? 0).ToString(CultureInfo.InvariantCulture);
 
-            debugInfo["Npgsql.EntityFrameworkCore.PostgreSQL:" + nameof(NpgsqlDbContextOptionsBuilder.ProvideClientCertificatesCallback)]
+            debugInfo["HuaweiCloud.EntityFrameworkCore.GaussDB:" + nameof(NpgsqlDbContextOptionsBuilder.ProvideClientCertificatesCallback)]
                 = (Extension.ProvideClientCertificatesCallback?.GetHashCode() ?? 0).ToString(CultureInfo.InvariantCulture);
 
-            debugInfo["Npgsql.EntityFrameworkCore.PostgreSQL:" + nameof(NpgsqlDbContextOptionsBuilder.ProvidePasswordCallback)]
+            debugInfo["HuaweiCloud.EntityFrameworkCore.GaussDB:" + nameof(NpgsqlDbContextOptionsBuilder.ProvidePasswordCallback)]
                 = (Extension.ProvidePasswordCallback?.GetHashCode() ?? 0).ToString(CultureInfo.InvariantCulture);
 
             foreach (var enumDefinition in Extension._enumDefinitions)
             {
                 debugInfo[
-                        "Npgsql.EntityFrameworkCore.PostgreSQL:"
+                        "HuaweiCloud.EntityFrameworkCore.GaussDB:"
                         + nameof(NpgsqlDbContextOptionsBuilder.MapEnum)
                         + ":"
                         + enumDefinition.ClrType.Name]
@@ -570,7 +570,7 @@ public class NpgsqlOptionsExtension : RelationalOptionsExtension
             foreach (var rangeDefinition in Extension._userRangeDefinitions)
             {
                 debugInfo[
-                        "Npgsql.EntityFrameworkCore.PostgreSQL:"
+                        "HuaweiCloud.EntityFrameworkCore.GaussDB:"
                         + nameof(NpgsqlDbContextOptionsBuilder.MapRange)
                         + ":"
                         + rangeDefinition.SubtypeClrType.Name]

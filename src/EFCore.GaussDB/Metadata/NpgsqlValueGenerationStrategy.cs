@@ -1,4 +1,4 @@
-﻿namespace Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+﻿namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Metadata;
 
 /// <summary>
 ///     Defines strategies to use when generating values for database columns.

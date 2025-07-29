@@ -1,7 +1,7 @@
-﻿using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal;
+﻿using HuaweiCloud.EntityFrameworkCore.GaussDB.Metadata;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.ValueGeneration.Internal;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.ValueGeneration.Internal;
 
 /// <summary>
 ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to

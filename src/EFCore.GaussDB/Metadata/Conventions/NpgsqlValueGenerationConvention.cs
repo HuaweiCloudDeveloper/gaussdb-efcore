@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Metadata.Internal;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Metadata.Conventions;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Metadata.Conventions;
 
 /// <summary>
 ///     A convention that configures store value generation as <see cref="ValueGenerated.OnAdd" /> on properties that are

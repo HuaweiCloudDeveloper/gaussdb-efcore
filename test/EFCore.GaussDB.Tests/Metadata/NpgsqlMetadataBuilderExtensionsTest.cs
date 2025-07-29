@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Metadata.Internal;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Metadata;
 
 public class NpgsqlInternalMetadataBuilderExtensionsTest
 {

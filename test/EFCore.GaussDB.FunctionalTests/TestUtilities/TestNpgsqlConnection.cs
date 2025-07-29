@@ -1,6 +1,6 @@
 ﻿using System.Data;
 using System.Data.Common;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal;
 
 namespace Microsoft.EntityFrameworkCore.TestUtilities;
 

@@ -1,10 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Query.Expressions.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal;
-using static Npgsql.EntityFrameworkCore.PostgreSQL.Utilities.Statics;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Query.Expressions.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal;
+using static HuaweiCloud.EntityFrameworkCore.GaussDB.Utilities.Statics;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Query.ExpressionTranslators.Internal;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.ExpressionTranslators.Internal;
 
 /// <summary>
 ///     Translates Regex method calls into their corresponding PostgreSQL equivalent for database-side processing.

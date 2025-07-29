@@ -1,4 +1,4 @@
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.ValueGeneration;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.ValueGeneration;
 
 /// <summary>
 ///     This API supports the Entity Framework Core infrastructure and is not intended to be used

@@ -1,7 +1,7 @@
-using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure.Internal;
 
 // ReSharper disable once CheckNamespace
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Internal;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Internal;
 
 /// <inheritdoc />
 public class NpgsqlNetTopologySuiteSingletonOptions : INpgsqlNetTopologySuiteSingletonOptions

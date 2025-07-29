@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Design.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Scaffolding.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Scaffolding.Internal;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Design.Internal;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Design.Internal;
 
 /// <summary>
 ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to

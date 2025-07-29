@@ -1,4 +1,4 @@
-﻿namespace Npgsql.EntityFrameworkCore.PostgreSQL.Migrations.Operations;
+﻿namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Migrations.Operations;
 
 /// <summary>
 ///     A PostgreSQL-specific <see cref="MigrationOperation" /> to create a database.

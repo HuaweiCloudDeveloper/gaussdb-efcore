@@ -1,7 +1,7 @@
-﻿using Npgsql.EntityFrameworkCore.PostgreSQL.Query;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal;
+﻿using HuaweiCloud.EntityFrameworkCore.GaussDB.Query;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime.Query.Internal;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.NodaTime.Query.Internal;
 
 /// <summary>
 ///     Provides translation services for <see cref="NodaTime" /> members.

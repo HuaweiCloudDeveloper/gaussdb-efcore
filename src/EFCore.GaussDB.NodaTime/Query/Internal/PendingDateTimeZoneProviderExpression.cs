@@ -1,4 +1,4 @@
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime.Query.Internal;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.NodaTime.Query.Internal;
 
 internal class PendingDateTimeZoneProviderExpression : SqlExpression
 {

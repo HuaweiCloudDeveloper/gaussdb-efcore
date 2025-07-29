@@ -1,6 +1,6 @@
-using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure.Internal;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Metadata.Conventions;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Metadata.Conventions;
 
 /// <summary>
 ///     A builder for building conventions for Npgsql.

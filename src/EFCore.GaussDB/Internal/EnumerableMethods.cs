@@ -1,4 +1,4 @@
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Internal;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Internal;
 
 internal static class EnumerableMethods
 {

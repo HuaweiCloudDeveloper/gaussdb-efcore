@@ -1,6 +1,6 @@
 # Npgsql Entity Framework Core provider for PostgreSQL
 
-Npgsql.EntityFrameworkCore.PostgreSQL is the open source EF Core provider for PostgreSQL. It allows you to interact with PostgreSQL via the most widely-used .NET O/RM from Microsoft, and use familiar LINQ syntax to express queries. It's built on top of [Npgsql](https://github.com/npgsql/npgsql).
+HuaweiCloud.EntityFrameworkCore.GaussDB is the open source EF Core provider for PostgreSQL. It allows you to interact with PostgreSQL via the most widely-used .NET O/RM from Microsoft, and use familiar LINQ syntax to express queries. It's built on top of [Npgsql](https://github.com/npgsql/npgsql).
 
 The provider looks and feels just like any other Entity Framework Core provider. Here's a quick sample to get you started:
 

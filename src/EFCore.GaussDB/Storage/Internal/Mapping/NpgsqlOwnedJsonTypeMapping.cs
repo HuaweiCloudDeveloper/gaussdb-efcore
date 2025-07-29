@@ -2,7 +2,7 @@ using System.Data.Common;
 using System.Text;
 using System.Text.Json;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.Mapping;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal.Mapping;
 
 /// <summary>
 ///     Supports the standard EF JSON support, which relies on owned entity modeling.

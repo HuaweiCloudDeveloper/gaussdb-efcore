@@ -1,4 +1,4 @@
-using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure;
 
 namespace Microsoft.EntityFrameworkCore.Query;
 
@@ -14,7 +14,7 @@ public class AdHocMiscellaneousQueryNpgsqlTest(NonSharedFixture fixture) : AdHoc
         return optionsBuilder;
     }
 
-    // Unlike the other providers, EFCore.PG does actually support mapping JsonElement
+    // Unlike the other providers, EFCore.GaussDB does actually support mapping JsonElement
     public override Task Mapping_JsonElement_property_throws_a_meaningful_exception()
         => Task.CompletedTask;
 

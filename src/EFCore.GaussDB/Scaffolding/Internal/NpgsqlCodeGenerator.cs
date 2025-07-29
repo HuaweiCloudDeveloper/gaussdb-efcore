@@ -1,6 +1,6 @@
-﻿using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
+﻿using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Scaffolding.Internal;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Scaffolding.Internal;
 
 /// <summary>
 ///     The default code generator for Npgsql.

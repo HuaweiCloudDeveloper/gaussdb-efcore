@@ -1,17 +1,17 @@
-using Npgsql.EntityFrameworkCore.PostgreSQL.Diagnostics.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata.Conventions;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Migrations.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Query;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Query.ExpressionTranslators.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Query.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Update.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.ValueGeneration.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Diagnostics.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Metadata.Conventions;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Metadata.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Migrations;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Migrations.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Query;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Query.ExpressionTranslators.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Query.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Update.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.ValueGeneration.Internal;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection;

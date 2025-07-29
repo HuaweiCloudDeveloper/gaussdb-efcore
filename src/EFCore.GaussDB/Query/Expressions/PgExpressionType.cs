@@ -1,4 +1,4 @@
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Query.Expressions;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.Expressions;
 
 /// <summary>
 ///     PostgreSQL-specific expression node types.

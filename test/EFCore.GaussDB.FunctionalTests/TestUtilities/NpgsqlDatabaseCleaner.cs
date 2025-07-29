@@ -1,9 +1,9 @@
 ﻿using System.Data.Common;
 using System.Text;
 using Microsoft.EntityFrameworkCore.Diagnostics.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Diagnostics.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Scaffolding.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Diagnostics.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Scaffolding.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal;
 
 namespace Microsoft.EntityFrameworkCore.TestUtilities;
 

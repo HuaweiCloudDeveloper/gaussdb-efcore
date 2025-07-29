@@ -1,6 +1,6 @@
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Metadata;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Utilities;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Utilities;
 
 internal static class SortOrderHelper
 {

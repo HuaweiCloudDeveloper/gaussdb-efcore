@@ -1,4 +1,4 @@
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure.Internal;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure.Internal;
 
 /// <summary>
 ///     A definition for a user-defined PostgreSQL range to be mapped.

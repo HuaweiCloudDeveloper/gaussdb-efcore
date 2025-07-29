@@ -1,10 +1,10 @@
 #if DEBUG
 
 using Microsoft.EntityFrameworkCore.Storage.Json;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Internal;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Storage;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Storage;
 
 [Collection("LegacyDateTimeTest")]
 public class LegacyNpgsqlTypeMappingTest : IClassFixture<LegacyNpgsqlTypeMappingTest.LegacyNpgsqlTypeMappingFixture>

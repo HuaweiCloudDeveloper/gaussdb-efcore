@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <AssemblyName>Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime</AssemblyName>
-    <RootNamespace>Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime</RootNamespace>
+    <AssemblyName>HuaweiCloud.EntityFrameworkCore.GaussDB.NodaTime</AssemblyName>
+    <RootNamespace>HuaweiCloud.EntityFrameworkCore.GaussDB.NodaTime</RootNamespace>
 
     <Authors>Shay Rojansky</Authors>
     <Description>NodaTime support plugin for GaussDB Entity Framework Core provider.</Description>
@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EFCore.PG\EFCore.PG.csproj" />
+    <ProjectReference Include="..\EFCore.GaussDB\EFCore.GaussDB.csproj" />
   </ItemGroup>
 
   <ItemGroup>

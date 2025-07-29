@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Storage.Json;
 using NetTopologySuite.IO;
 
 // ReSharper disable once CheckNamespace
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal;
 
 /// <summary>
 ///     Reads and writes JSON using the well-known-text format for <see cref="Geometry" /> values.

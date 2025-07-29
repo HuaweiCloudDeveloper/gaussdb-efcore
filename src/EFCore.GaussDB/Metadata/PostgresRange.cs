@@ -1,6 +1,6 @@
-﻿using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata.Internal;
+﻿using HuaweiCloud.EntityFrameworkCore.GaussDB.Metadata.Internal;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Metadata;
 
 /// <summary>
 ///     Represents the metadata for a PostgreSQL range.

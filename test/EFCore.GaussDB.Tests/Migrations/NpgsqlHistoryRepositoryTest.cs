@@ -1,6 +1,6 @@
-using Npgsql.EntityFrameworkCore.PostgreSQL.TestUtilities;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.TestUtilities;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Migrations;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Migrations;
 
 public class NpgsqlHistoryRepositoryTest
 {

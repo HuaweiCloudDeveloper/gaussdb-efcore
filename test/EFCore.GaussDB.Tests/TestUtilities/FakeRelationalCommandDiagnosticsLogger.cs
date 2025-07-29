@@ -1,7 +1,7 @@
 #nullable enable
 
 using System.Data.Common;
-using Npgsql.EntityFrameworkCore.PostgreSQL.TestUtilities;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.TestUtilities;
 
 namespace Microsoft.EntityFrameworkCore.TestUtilities;
 

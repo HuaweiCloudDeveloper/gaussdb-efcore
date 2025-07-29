@@ -1,4 +1,4 @@
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Metadata;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.EntityFrameworkCore;

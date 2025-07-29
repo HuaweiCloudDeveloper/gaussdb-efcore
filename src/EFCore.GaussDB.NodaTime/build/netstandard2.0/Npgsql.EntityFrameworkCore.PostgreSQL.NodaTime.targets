@@ -32,8 +32,8 @@
           Outputs="$(EFCoreNpgsqlNodaTimeFile)">
     <ItemGroup>
       <EFCoreNpgsqlNodaTimeServices Include="Microsoft.EntityFrameworkCore.Design.DesignTimeServicesReferenceAttribute">
-        <_Parameter1>Npgsql.EntityFrameworkCore.PostgreSQL.Design.Internal.NpgsqlNodaTimeDesignTimeServices, Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime</_Parameter1>
-        <_Parameter2>Npgsql.EntityFrameworkCore.PostgreSQL</_Parameter2>
+        <_Parameter1>HuaweiCloud.EntityFrameworkCore.GaussDB.Design.Internal.NpgsqlNodaTimeDesignTimeServices, HuaweiCloud.EntityFrameworkCore.GaussDB.NodaTime</_Parameter1>
+        <_Parameter2>HuaweiCloud.EntityFrameworkCore.GaussDB</_Parameter2>
       </EFCoreNpgsqlNodaTimeServices>
     </ItemGroup>
     <WriteCodeFragment AssemblyAttributes="@(EFCoreNpgsqlNodaTimeServices)"

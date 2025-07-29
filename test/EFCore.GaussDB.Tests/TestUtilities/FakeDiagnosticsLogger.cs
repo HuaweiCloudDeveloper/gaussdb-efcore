@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore.Diagnostics.Internal;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.TestUtilities;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.TestUtilities;
 
 public class FakeDiagnosticsLogger<T> : IDiagnosticsLogger<T>, ILogger
     where T : LoggerCategory<T>, new()

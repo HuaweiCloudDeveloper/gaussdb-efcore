@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore.TestModels.Array;
-using TypeExtensions = Npgsql.EntityFrameworkCore.PostgreSQL.TypeExtensions;
+using TypeExtensions = HuaweiCloud.EntityFrameworkCore.GaussDB.TypeExtensions;
 
 namespace Microsoft.EntityFrameworkCore.Query;
 

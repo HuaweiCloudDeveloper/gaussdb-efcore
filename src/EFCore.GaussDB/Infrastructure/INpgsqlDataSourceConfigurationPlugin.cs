@@ -1,4 +1,4 @@
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure;
 
 /// <summary>
 ///     Represents a plugin that configures an <see cref="NpgsqlDataSource" /> via <see cref="NpgsqlDataSourceBuilder" />.

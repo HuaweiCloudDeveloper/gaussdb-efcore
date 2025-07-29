@@ -1,6 +1,6 @@
-using static Npgsql.EntityFrameworkCore.PostgreSQL.Utilities.Statics;
+using static HuaweiCloud.EntityFrameworkCore.GaussDB.Utilities.Statics;
 
-namespace Npgsql.EntityFrameworkCore.PostgreSQL.Query.ExpressionTranslators.Internal;
+namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.ExpressionTranslators.Internal;
 
 /// <summary>
 ///     Provides translation services for PostgreSQL UUID functions.
