@@ -14,12 +14,12 @@
     <File Path=".github/workflows/codeql-analysis.yml" />
   </Folder>
   <Folder Name="/src/">
-    <Project Path="src/EFCore.PG.NodaTime/EFCore.PG.NodaTime.csproj" />
-    <Project Path="src/EFCore.PG.NTS/EFCore.PG.NTS.csproj" />
-    <Project Path="src/EFCore.PG/EFCore.PG.csproj" />
+    <Project Path="src/EFCore.GaussDB.NodaTime/EFCore.GaussDB.NodaTime.csproj" />
+    <Project Path="src/EFCore.GaussDB.NTS/EFCore.GaussDB.NTS.csproj" />
+    <Project Path="src/EFCore.GaussDB/EFCore.GaussDB.csproj" />
   </Folder>
   <Folder Name="/test/">
-    <Project Path="test/EFCore.PG.FunctionalTests/EFCore.PG.FunctionalTests.csproj" />
-    <Project Path="test/EFCore.PG.Tests/EFCore.PG.Tests.csproj" />
+    <Project Path="test/EFCore.GaussDB.FunctionalTests/EFCore.GaussDB.FunctionalTests.csproj" />
+    <Project Path="test/EFCore.GaussDB.Tests/EFCore.GaussDB.Tests.csproj" />
   </Folder>
 </Solution>

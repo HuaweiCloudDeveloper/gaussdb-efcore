@@ -5,7 +5,7 @@
     <RootNamespace>Npgsql.EntityFrameworkCore.PostgreSQL</RootNamespace>
 
     <Authors>Shay Rojansky;Austin Drenski;Yoh Deadfall;</Authors>
-    <Description>PostgreSQL/Npgsql provider for Entity Framework Core.</Description>
+    <Description>GaussDB provider for Entity Framework Core.</Description>
     <PackageTags>npgsql;postgresql;postgres;Entity Framework Core;entity-framework-core;ef;efcore;orm;sql</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <NoWarn>EF9100</NoWarn> <!-- Precompiled query is experimental -->
