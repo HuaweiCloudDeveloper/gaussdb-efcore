@@ -841,7 +841,7 @@ WHERE (
     }
 
     [ConditionalTheory] // #3012
-    [MinimumPostgresVersion(14, 0)] // Multiranges were introduced in PostgreSQL 14
+    [MinimumPostgresVersion(14, 0)] // Multiranges were introduced in GaussDB 14
     [MemberData(nameof(IsAsyncData))]
     public virtual async Task Parameter_collection_of_ranges_Contains(bool async)
     {

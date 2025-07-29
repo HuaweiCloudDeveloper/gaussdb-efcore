@@ -181,12 +181,12 @@ public class NpgsqlAnnotationCodeGenerator : AnnotationCodeGenerator
         Check.NotNull(property, nameof(property));
         Check.NotNull(annotation, nameof(annotation));
 
-        // The default by-convention value generation strategy is serial in pre-10 PostgreSQL,
+        // The default by-convention value generation strategy is serial in pre-10 GaussDB,
         // and IdentityByDefault otherwise.
         if (annotation.Name == NpgsqlAnnotationNames.ValueGenerationStrategy)
         {
             // Note: both serial and identity-by-default columns are considered by-convention - we don't want
-            // to assume that the PostgreSQL version of the scaffolded database necessarily determines the
+            // to assume that the GaussDB version of the scaffolded database necessarily determines the
             // version of the database that the scaffolded model will target. This makes life difficult for
             // models with mixed strategies but that's an edge case.
             return (NpgsqlValueGenerationStrategy?)annotation.Value switch

@@ -216,7 +216,7 @@ public class NpgsqlTypeMappingSource : RelationalTypeMappingSource
             "daterange", typeof(NpgsqlRange<DateTime>), NpgsqlDbType.DateRange, _dateDateTime);
 
 // ReSharper disable CoVariantArrayConversion
-        // Note that PostgreSQL has aliases to some built-in type name aliases (e.g. int4 for integer),
+        // Note that GaussDB has aliases to some built-in type name aliases (e.g. int4 for integer),
         // these are mapped as well.
         // https://www.postgresql.org/docs/current/static/datatype.html#DATATYPE-TABLE
         var storeTypeMappings = new Dictionary<string, RelationalTypeMapping[]>(StringComparer.OrdinalIgnoreCase)
@@ -490,7 +490,7 @@ public class NpgsqlTypeMappingSource : RelationalTypeMappingSource
             {
                 if (storeTypeName == "smallint[]")
                 {
-                    // PostgreSQL has no tinyint (single-byte) type, but we allow mapping CLR byte to PG smallint (2-bytes).
+                    // GaussDB has no tinyint (single-byte) type, but we allow mapping CLR byte to PG smallint (2-bytes).
                     // The same applies to arrays - as always - so byte[] should be mappable to smallint[].
                     // However, byte[] also has a base mapping to bytea, which is the default. So when the user explicitly specified
                     // mapping to smallint[], we don't return that to allow the array mapping to work.
@@ -565,7 +565,7 @@ public class NpgsqlTypeMappingSource : RelationalTypeMappingSource
             }
 
             // If no mapping was found for the element CLR type, there's no mapping for the array.
-            // Also, arrays of arrays aren't supported (as opposed to multidimensional arrays) by PostgreSQL
+            // Also, arrays of arrays aren't supported (as opposed to multidimensional arrays) by GaussDB
             Check.DebugAssert(elementType is not null, "elementClrType is null");
 
             var relationalElementMapping = elementMapping as RelationalTypeMapping ?? FindMapping(elementType);
@@ -644,7 +644,7 @@ public class NpgsqlTypeMappingSource : RelationalTypeMappingSource
             }
 
             // If no mapping was found for the element, there's no mapping for the array.
-            // Also, arrays of arrays aren't supported (as opposed to multidimensional arrays) by PostgreSQL
+            // Also, arrays of arrays aren't supported (as opposed to multidimensional arrays) by GaussDB
             if (relationalElementMapping is not null and not NpgsqlArrayTypeMapping)
             {
                 if (modelType is null)
@@ -674,7 +674,7 @@ public class NpgsqlTypeMappingSource : RelationalTypeMappingSource
                 : FindMapping(elementType, rangeStoreType);
 
             // If no mapping was found for the element, there's no mapping for the array.
-            // Also, arrays of arrays aren't supported (as opposed to multidimensional arrays) by PostgreSQL
+            // Also, arrays of arrays aren't supported (as opposed to multidimensional arrays) by GaussDB
             if (relationalElementMapping is NpgsqlRangeTypeMapping rangeMapping
                 // TODO: Why exclude if there's an element converter??
                 && (relationalElementMapping.Converter is null || modelType is null || modelType.IsArrayOrGenericList()))

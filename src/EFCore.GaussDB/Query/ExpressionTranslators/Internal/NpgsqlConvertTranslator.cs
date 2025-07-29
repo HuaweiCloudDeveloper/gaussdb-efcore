@@ -1,7 +1,7 @@
 namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.ExpressionTranslators.Internal;
 
 /// <summary>
-///     Translates methods defined on <see cref="T:System.Convert" /> into PostgreSQL CAST expressions.
+///     Translates methods defined on <see cref="T:System.Convert" /> into GaussDB CAST expressions.
 /// </summary>
 public class NpgsqlConvertTranslator : IMethodCallTranslator
 {

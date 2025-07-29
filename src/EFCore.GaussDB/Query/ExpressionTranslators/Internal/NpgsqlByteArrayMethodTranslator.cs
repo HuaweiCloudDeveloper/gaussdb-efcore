@@ -45,12 +45,12 @@ public class NpgsqlByteArrayMethodTranslator : IMethodCallTranslator
         {
             // Note: we only translate if the array argument is a column mapped to bytea. There are various other
             // cases (e.g. Where(b => new byte[] { 1, 2, 3 }.Contains(b.SomeByte))) where we prefer to translate via
-            // regular PostgreSQL array logic.
+            // regular GaussDB array logic.
             if (method.GetGenericMethodDefinition().Equals(EnumerableMethods.Contains))
             {
                 var source = arguments[0];
 
-                // We have a byte value, but we need a bytea for PostgreSQL POSITION.
+                // We have a byte value, but we need a bytea for GaussDB POSITION.
                 var value = arguments[1] is SqlConstantExpression constantValue
                     ? _sqlExpressionFactory.Constant(new[] { (byte)constantValue.Value! }, typeMapping)
                     // Create bytea from non-constant byte: SELECT set_byte('\x00', 0, 8::smallint);

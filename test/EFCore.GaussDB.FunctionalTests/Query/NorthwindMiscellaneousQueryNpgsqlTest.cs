@@ -222,7 +222,7 @@ ORDER BY o0."CustomerID" NULLS FIRST
             async,
             ss => ss.Set<Customer>().Where(c => new[] { "ALFKI", "ANATR" }.Contains(c.CustomerID)));
 
-        // Note: for constant lists there's no advantage in using the PostgreSQL-specific x = ANY (a b, c), unlike
+        // Note: for constant lists there's no advantage in using the GaussDB-specific x = ANY (a b, c), unlike
         // for parameterized lists.
 
         AssertSql(
@@ -243,7 +243,7 @@ WHERE c."CustomerID" IN ('ALFKI', 'ANATR')
             async,
             ss => ss.Set<Customer>().Where(c => regions.Contains(c.Region)));
 
-        // Instead of c."Region" IN ('UK', 'SP') we generate the PostgreSQL-specific x = ANY (a, b, c), which can
+        // Instead of c."Region" IN ('UK', 'SP') we generate the GaussDB-specific x = ANY (a, b, c), which can
         // be parameterized.
         // Ideally parameter sniffing would allow us to produce SQL without the null check since the regions array doesn't contain one
         // (see https://github.com/aspnet/EntityFrameworkCore/issues/17598).
@@ -267,7 +267,7 @@ WHERE c."Region" = ANY (@regions) OR (c."Region" IS NULL AND array_position(@reg
             async,
             ss => ss.Set<Customer>().Where(c => regions.Contains(c.Region)));
 
-        // Instead of c."Region" IN ('UK', 'SP') we generate the PostgreSQL-specific x = ANY (a, b, c), which can
+        // Instead of c."Region" IN ('UK', 'SP') we generate the GaussDB-specific x = ANY (a, b, c), which can
         // be parameterized.
         // Ideally parameter sniffing would allow us to produce SQL with an optimized null check (no need to check the array server-side)
         // (see https://github.com/aspnet/EntityFrameworkCore/issues/17598).

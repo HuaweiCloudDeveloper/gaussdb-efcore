@@ -1,7 +1,7 @@
 ﻿namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.Expressions.Internal;
 
 /// <summary>
-///     Represents a PostgreSQL ILIKE expression.
+///     Represents a GaussDB ILIKE expression.
 /// </summary>
 // ReSharper disable once InconsistentNaming
 public class PgILikeExpression : SqlExpression, IEquatable<PgILikeExpression>

@@ -267,7 +267,7 @@ public static class NpgsqlModelExtensions
 
     #endregion
 
-    #region PostgreSQL Extensions
+    #region GaussDB Extensions
 
     /// <summary>
     ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to

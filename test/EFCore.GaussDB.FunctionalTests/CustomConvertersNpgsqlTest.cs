@@ -3,7 +3,7 @@
 public class CustomConvertersNpgsqlTest(CustomConvertersNpgsqlTest.CustomConvertersNpgsqlFixture fixture)
     : CustomConvertersTestBase<CustomConvertersNpgsqlTest.CustomConvertersNpgsqlFixture>(fixture)
 {
-    // Disabled: PostgreSQL is case-sensitive
+    // Disabled: GaussDB is case-sensitive
     public override Task Can_insert_and_read_back_with_case_insensitive_string_key()
         => Task.CompletedTask;
 

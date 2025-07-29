@@ -7,13 +7,13 @@ namespace Microsoft.EntityFrameworkCore;
 
 /// <summary>
 ///     Provides extension methods on <see cref="DbContextOptionsBuilder" /> and <see cref="DbContextOptionsBuilder{T}" />
-///     used to configure a <see cref="DbContext" /> to context to a PostgreSQL database with Npgsql.
+///     used to configure a <see cref="DbContext" /> to context to a GaussDB database with Npgsql.
 /// </summary>
 public static class NpgsqlDbContextOptionsBuilderExtensions
 {
     /// <summary>
     ///     <para>
-    ///         Configures the context to connect to a PostgreSQL server with Npgsql, but without initially setting any
+    ///         Configures the context to connect to a GaussDB server with Npgsql, but without initially setting any
     ///         <see cref="DbConnection" /> or connection string.
     ///     </para>
     ///     <para>
@@ -41,7 +41,7 @@ public static class NpgsqlDbContextOptionsBuilderExtensions
     }
 
     /// <summary>
-    ///     Configures the context to connect to a PostgreSQL database with Npgsql.
+    ///     Configures the context to connect to a GaussDB database with Npgsql.
     /// </summary>
     /// <param name="optionsBuilder">A builder for setting options on the context.</param>
     /// <param name="connectionString">The connection string of the database to connect to.</param>
@@ -67,7 +67,7 @@ public static class NpgsqlDbContextOptionsBuilderExtensions
     }
 
     /// <summary>
-    ///     Configures the context to connect to a PostgreSQL database with Npgsql.
+    ///     Configures the context to connect to a GaussDB database with Npgsql.
     /// </summary>
     /// <param name="optionsBuilder">The builder being used to configure the context.</param>
     /// <param name="connection">
@@ -85,7 +85,7 @@ public static class NpgsqlDbContextOptionsBuilderExtensions
         => UseNpgsql(optionsBuilder, connection, contextOwnsConnection: false, npgsqlOptionsAction);
 
     /// <summary>
-    ///     Configures the context to connect to a PostgreSQL database with Npgsql.
+    ///     Configures the context to connect to a GaussDB database with Npgsql.
     /// </summary>
     /// <param name="optionsBuilder">A builder for setting options on the context.</param>
     /// <param name="connection">
@@ -122,7 +122,7 @@ public static class NpgsqlDbContextOptionsBuilderExtensions
     }
 
     /// <summary>
-    ///     Configures the context to connect to a PostgreSQL database with Npgsql.
+    ///     Configures the context to connect to a GaussDB database with Npgsql.
     /// </summary>
     /// <param name="optionsBuilder">A builder for setting options on the context.</param>
     /// <param name="dataSource">A <see cref="DbDataSource" /> which will be used to get database connections.</param>
@@ -150,7 +150,7 @@ public static class NpgsqlDbContextOptionsBuilderExtensions
 
     /// <summary>
     ///     <para>
-    ///         Configures the context to connect to a PostgreSQL server with Npgsql, but without initially setting any
+    ///         Configures the context to connect to a GaussDB server with Npgsql, but without initially setting any
     ///         <see cref="DbConnection" />, <see cref="DbDataSource" /> or connection string.
     ///     </para>
     ///     <para>
@@ -172,7 +172,7 @@ public static class NpgsqlDbContextOptionsBuilderExtensions
             (DbContextOptionsBuilder)optionsBuilder, npgsqlOptionsAction);
 
     /// <summary>
-    ///     Configures the context to connect to a PostgreSQL database with Npgsql.
+    ///     Configures the context to connect to a GaussDB database with Npgsql.
     /// </summary>
     /// <param name="optionsBuilder">A builder for setting options on the context.</param>
     /// <param name="connectionString">The connection string of the database to connect to.</param>
@@ -189,7 +189,7 @@ public static class NpgsqlDbContextOptionsBuilderExtensions
             (DbContextOptionsBuilder)optionsBuilder, connectionString, npgsqlOptionsAction);
 
     /// <summary>
-    ///     Configures the context to connect to a PostgreSQL database with Npgsql.
+    ///     Configures the context to connect to a GaussDB database with Npgsql.
     /// </summary>
     /// <param name="optionsBuilder">A builder for setting options on the context.</param>
     /// <param name="connection">
@@ -211,7 +211,7 @@ public static class NpgsqlDbContextOptionsBuilderExtensions
             (DbContextOptionsBuilder)optionsBuilder, connection, npgsqlOptionsAction);
 
     /// <summary>
-    ///     Configures the context to connect to a PostgreSQL database with Npgsql.
+    ///     Configures the context to connect to a GaussDB database with Npgsql.
     /// </summary>
     /// <typeparam name="TContext">The type of context to be configured.</typeparam>
     /// <param name="optionsBuilder">The builder being used to configure the context.</param>
@@ -237,7 +237,7 @@ public static class NpgsqlDbContextOptionsBuilderExtensions
             (DbContextOptionsBuilder)optionsBuilder, connection, contextOwnsConnection, npgsqlOptionsAction);
 
     /// <summary>
-    ///     Configures the context to connect to a PostgreSQL database with Npgsql.
+    ///     Configures the context to connect to a GaussDB database with Npgsql.
     /// </summary>
     /// <param name="optionsBuilder">A builder for setting options on the context.</param>
     /// <param name="dataSource">A <see cref="DbDataSource" /> which will be used to get database connections.</param>

@@ -10,7 +10,7 @@ public static class NpgsqlDbFunctionsExtensions
 {
     // ReSharper disable once InconsistentNaming
     /// <summary>
-    ///     An implementation of the PostgreSQL ILIKE operation, which is an insensitive LIKE.
+    ///     An implementation of the GaussDB ILIKE operation, which is an insensitive LIKE.
     /// </summary>
     /// <param name="_">The <see cref="DbFunctions" /> instance.</param>
     /// <param name="matchExpression">The string that is to be matched.</param>
@@ -21,7 +21,7 @@ public static class NpgsqlDbFunctionsExtensions
 
     // ReSharper disable once InconsistentNaming
     /// <summary>
-    ///     An implementation of the PostgreSQL ILIKE operation, which is an insensitive LIKE.
+    ///     An implementation of the GaussDB ILIKE operation, which is an insensitive LIKE.
     /// </summary>
     /// <param name="_">The <see cref="DbFunctions" /> instance.</param>
     /// <param name="matchExpression">The string that is to be matched.</param>
@@ -61,7 +61,7 @@ public static class NpgsqlDbFunctionsExtensions
         => throw new InvalidOperationException(CoreStrings.FunctionOnClient(nameof(StringToArray)));
 
     /// <summary>
-    ///     Reverses a string by calling PostgreSQL <c>reverse()</c>.
+    ///     Reverses a string by calling GaussDB <c>reverse()</c>.
     /// </summary>
     /// <param name="_">The <see cref="DbFunctions" /> instance.</param>
     /// <param name="value">The string that is to be reversed.</param>
@@ -76,7 +76,7 @@ public static class NpgsqlDbFunctionsExtensions
     /// <remarks>
     ///     For more information on row value comparisons, see
     ///     <see href="https://www.postgresql.org/docs/current/functions-comparisons.html#ROW-WISE-COMPARISON">
-    ///         the PostgreSQL documentation.
+    ///         the GaussDB documentation.
     ///     </see>
     /// </remarks>
     public static bool GreaterThan(this DbFunctions _, ITuple a, ITuple b)
@@ -88,7 +88,7 @@ public static class NpgsqlDbFunctionsExtensions
     /// <remarks>
     ///     For more information on row value comparisons, see
     ///     <see href="https://www.postgresql.org/docs/current/functions-comparisons.html#ROW-WISE-COMPARISON">
-    ///         the PostgreSQL documentation.
+    ///         the GaussDB documentation.
     ///     </see>
     /// </remarks>
     public static bool LessThan(this DbFunctions _, ITuple a, ITuple b)
@@ -101,7 +101,7 @@ public static class NpgsqlDbFunctionsExtensions
     /// <remarks>
     ///     For more information on row value comparisons, see
     ///     <see href="https://www.postgresql.org/docs/current/functions-comparisons.html#ROW-WISE-COMPARISON">
-    ///         the PostgreSQL documentation.
+    ///         the GaussDB documentation.
     ///     </see>
     /// </remarks>
     public static bool GreaterThanOrEqual(this DbFunctions _, ITuple a, ITuple b)
@@ -114,7 +114,7 @@ public static class NpgsqlDbFunctionsExtensions
     /// <remarks>
     ///     For more information on row value comparisons, see
     ///     <see href="https://www.postgresql.org/docs/current/functions-comparisons.html#ROW-WISE-COMPARISON">
-    ///         the PostgreSQL documentation.
+    ///         the GaussDB documentation.
     ///     </see>
     /// </remarks>
     public static bool LessThanOrEqual(this DbFunctions _, ITuple a, ITuple b)
@@ -125,18 +125,18 @@ public static class NpgsqlDbFunctionsExtensions
     ///     defined.
     /// </summary>
     /// <remarks>
-    ///     This requires the <c>btree_gist</c> built-in PostgreSQL extension, see
+    ///     This requires the <c>btree_gist</c> built-in GaussDB extension, see
     ///     <see href="https://www.postgresql.org/docs/current/btree-gist.html" />.
     /// </remarks>
     public static int Distance(this DbFunctions _, DateOnly a, DateOnly b)
         => throw new InvalidOperationException(CoreStrings.FunctionOnClient(nameof(Distance)));
 
     /// <summary>
-    ///     Returns the distance between two timestamps as a PostgreSQL <c>interval</c>, particularly suitable for sorting where the appropriate
+    ///     Returns the distance between two timestamps as a GaussDB <c>interval</c>, particularly suitable for sorting where the appropriate
     ///     index is defined.
     /// </summary>
     /// <remarks>
-    ///     This requires the <c>btree_gist</c> built-in PostgreSQL extension, see
+    ///     This requires the <c>btree_gist</c> built-in GaussDB extension, see
     ///     <see href="https://www.postgresql.org/docs/current/btree-gist.html" />.
     /// </remarks>
     public static TimeSpan Distance(this DbFunctions _, DateTime a, DateTime b)

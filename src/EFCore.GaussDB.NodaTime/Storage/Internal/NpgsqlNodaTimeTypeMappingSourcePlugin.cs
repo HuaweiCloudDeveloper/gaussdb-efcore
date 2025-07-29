@@ -57,7 +57,7 @@ public class NpgsqlNodaTimeTypeMappingSourcePlugin : IRelationalTypeMappingSourc
     private readonly PeriodIntervalMapping _periodInterval = PeriodIntervalMapping.Default;
     private readonly DurationIntervalMapping _durationInterval = DurationIntervalMapping.Default;
 
-    // PostgreSQL has no native type for representing time zones - it just uses the IANA ID as text.
+    // GaussDB has no native type for representing time zones - it just uses the IANA ID as text.
     private readonly DateTimeZoneMapping _timeZone = new("text");
 
     // Built-in ranges

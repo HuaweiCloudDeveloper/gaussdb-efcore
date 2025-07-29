@@ -2,7 +2,7 @@
 
 /// <summary>
 ///     A convention that configures the default model <see cref="NpgsqlValueGenerationStrategy" /> as
-///     <see cref="NpgsqlValueGenerationStrategy.IdentityByDefaultColumn" /> for newer PostgreSQL versions,
+///     <see cref="NpgsqlValueGenerationStrategy.IdentityByDefaultColumn" /> for newer GaussDB versions,
 ///     and <see cref="NpgsqlValueGenerationStrategy.SerialColumn" /> for pre-10.0 versions.
 /// </summary>
 public class NpgsqlValueGenerationStrategyConvention : IModelInitializedConvention, IModelFinalizingConvention
@@ -14,7 +14,7 @@ public class NpgsqlValueGenerationStrategyConvention : IModelInitializedConventi
     /// </summary>
     /// <param name="dependencies">Parameter object containing dependencies for this convention.</param>
     /// <param name="relationalDependencies"> Parameter object containing relational dependencies for this convention.</param>
-    /// <param name="postgresVersion">The PostgreSQL version being targeted. This affects the default value generation strategy.</param>
+    /// <param name="postgresVersion">The GaussDB version being targeted. This affects the default value generation strategy.</param>
     public NpgsqlValueGenerationStrategyConvention(
         ProviderConventionSetBuilderDependencies dependencies,
         RelationalConventionSetBuilderDependencies relationalDependencies,

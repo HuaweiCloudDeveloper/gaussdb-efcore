@@ -3,7 +3,7 @@ using static HuaweiCloud.EntityFrameworkCore.GaussDB.Utilities.Statics;
 namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.ExpressionTranslators.Internal;
 
 /// <summary>
-///     Provides translation services for PostgreSQL UUID functions.
+///     Provides translation services for GaussDB UUID functions.
 /// </summary>
 /// <remarks>
 ///     See: https://www.postgresql.org/docs/current/datatype-uuid.html
@@ -36,7 +36,7 @@ public class NpgsqlGuidTranslator(ISqlExpressionFactory sqlExpressionFactory, Ve
                         argumentsPropagateNullability: FalseArrays[0],
                         method.ReturnType),
 
-                // Note: uuidv7() was introduce in PostgreSQL 18.
+                // Note: uuidv7() was introduce in GaussDB 18.
                 // In NpgsqlEvaluatableExpressionFilter we only prevent local evaluation when targeting PG18 or later;
                 // that means that for lower version, the call gets evaluated locally and the result sent as a parameter
                 // (and we never see the method call here).

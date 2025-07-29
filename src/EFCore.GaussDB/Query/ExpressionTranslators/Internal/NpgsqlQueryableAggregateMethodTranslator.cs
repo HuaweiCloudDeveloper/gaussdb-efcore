@@ -78,7 +78,7 @@ public class NpgsqlQueryableAggregateMethodTranslator : IAggregateMethodCallTran
                             averageSqlExpression.Type,
                             averageSqlExpression.TypeMapping);
 
-                // PostgreSQL COUNT() always returns bigint, so we need to downcast to int
+                // GaussDB COUNT() always returns bigint, so we need to downcast to int
                 case nameof(Queryable.Count)
                     when methodInfo == QueryableMethods.CountWithoutPredicate
                     || methodInfo == QueryableMethods.CountWithPredicate:
@@ -132,7 +132,7 @@ public class NpgsqlQueryableAggregateMethodTranslator : IAggregateMethodCallTran
                         minSqlExpression.Type,
                         minSqlExpression.TypeMapping);
 
-                // In PostgreSQL SUM() doesn't return the same type as its argument for smallint, int and bigint.
+                // In GaussDB SUM() doesn't return the same type as its argument for smallint, int and bigint.
                 // Cast to get the same type.
                 // http://www.postgresql.org/docs/current/static/functions-aggregate.html
                 case nameof(Queryable.Sum)

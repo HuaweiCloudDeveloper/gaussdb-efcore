@@ -36,15 +36,15 @@ public class BasicTypesQueryNpgsqlFixture : BasicTypesQueryFixtureBase, ITestSql
 
         foreach (var item in data.BasicTypesEntities)
         {
-            // For all relevant temporal types, chop sub-microsecond precision which PostgreSQL does not support.
-            // Temporal types which aren't set (default) get mapped to -infinity on PostgreSQL; this value causes many tests to fail.
+            // For all relevant temporal types, chop sub-microsecond precision which GaussDB does not support.
+            // Temporal types which aren't set (default) get mapped to -infinity on GaussDB; this value causes many tests to fail.
 
             if (item.DateTime == default)
             {
                 item.DateTime += TimeSpan.FromSeconds(1);
             }
 
-            // PostgreSQL maps DateTime to timestamptz by default, but that represents UTC timestamps which require DateTimeKind.Utc.
+            // GaussDB maps DateTime to timestamptz by default, but that represents UTC timestamps which require DateTimeKind.Utc.
             item.DateTime = DateTime.SpecifyKind(new DateTime(StripSubMicrosecond(item.DateTime.Ticks)), DateTimeKind.Utc);
 
             if (item.DateOnly == default)
@@ -60,9 +60,9 @@ public class BasicTypesQueryNpgsqlFixture : BasicTypesQueryFixtureBase, ITestSql
                 item.DateTimeOffset += TimeSpan.FromSeconds(1);
             }
 
-            // PostgreSQL doesn't have a real DateTimeOffset type; we map .NET DateTimeOffset to timestamptz, which represents a UTC
+            // GaussDB doesn't have a real DateTimeOffset type; we map .NET DateTimeOffset to timestamptz, which represents a UTC
             // timestamp, and so we only support offset=0.
-            // Also chop sub-microsecond precision which PostgreSQL does not support.
+            // Also chop sub-microsecond precision which GaussDB does not support.
             item.DateTimeOffset = new DateTimeOffset(StripSubMicrosecond(item.DateTimeOffset.Ticks), TimeSpan.Zero);
         }
 

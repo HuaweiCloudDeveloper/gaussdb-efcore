@@ -6,7 +6,7 @@ using static HuaweiCloud.EntityFrameworkCore.GaussDB.Utilities.Statics;
 namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.ExpressionTranslators.Internal;
 
 /// <summary>
-///     Provides translation services for operators and functions of PostgreSQL network typess (cidr, inet, macaddr, macaddr8).
+///     Provides translation services for operators and functions of GaussDB network typess (cidr, inet, macaddr, macaddr8).
 /// </summary>
 /// <remarks>
 ///     See: https://www.postgresql.org/docs/current/static/functions-net.html

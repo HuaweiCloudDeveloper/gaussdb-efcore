@@ -6,7 +6,7 @@ using ExpressionExtensions = Microsoft.EntityFrameworkCore.Query.ExpressionExten
 namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.ExpressionTranslators.Internal;
 
 /// <summary>
-///     Translates method and property calls on arrays/lists into their corresponding PostgreSQL operations.
+///     Translates method and property calls on arrays/lists into their corresponding GaussDB operations.
 /// </summary>
 /// <remarks>
 ///     https://www.postgresql.org/docs/current/static/functions-array.html

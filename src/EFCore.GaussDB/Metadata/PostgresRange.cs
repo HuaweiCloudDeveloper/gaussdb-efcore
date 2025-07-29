@@ -3,7 +3,7 @@
 namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Metadata;
 
 /// <summary>
-///     Represents the metadata for a PostgreSQL range.
+///     Represents the metadata for a GaussDB range.
 /// </summary>
 public class PostgresRange
 {

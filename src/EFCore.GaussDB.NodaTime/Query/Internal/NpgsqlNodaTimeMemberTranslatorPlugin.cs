@@ -242,7 +242,7 @@ public class NpgsqlNodaTimeMemberTranslator : IMemberTranslator
     private SqlExpression? TranslateDateInterval(SqlExpression instance, MemberInfo member)
     {
         // NodaTime DateInterval is inclusive on both ends.
-        // PostgreSQL daterange is a discrete range type; this means it gets normalized to inclusive lower bound, exclusive upper bound.
+        // GaussDB daterange is a discrete range type; this means it gets normalized to inclusive lower bound, exclusive upper bound.
         // So we can translate Start as-is, but need to subtract a day for End.
         if (member == DateInterval_Start)
         {
@@ -251,7 +251,7 @@ public class NpgsqlNodaTimeMemberTranslator : IMemberTranslator
 
         if (member == DateInterval_End)
         {
-            // PostgreSQL creates a result of type 'timestamp without time zone' when subtracting intervals from dates, so add a cast back
+            // GaussDB creates a result of type 'timestamp without time zone' when subtracting intervals from dates, so add a cast back
             // to date.
             return _sqlExpressionFactory.Convert(
                 _sqlExpressionFactory.Subtract(
@@ -298,9 +298,9 @@ public class NpgsqlNodaTimeMemberTranslator : IMemberTranslator
             "Second" or "Seconds" => GetDatePartExpression(instance, "second", true),
             "Millisecond" or "Milliseconds" => null, // Too annoying
 
-            // Unlike DateTime.DayOfWeek, NodaTime's IsoDayOfWeek enum doesn't exactly correspond to PostgreSQL's
+            // Unlike DateTime.DayOfWeek, NodaTime's IsoDayOfWeek enum doesn't exactly correspond to GaussDB's
             // values returned by date_part('dow', ...): in NodaTime Sunday is 7 and not 0, which is None.
-            // So we generate a CASE WHEN expression to translate PostgreSQL's 0 to 7.
+            // So we generate a CASE WHEN expression to translate GaussDB's 0 to 7.
             "DayOfWeek" when GetDatePartExpression(instance, "dow", true) is var getValueExpression
                 => _sqlExpressionFactory.Case(
                     getValueExpression,

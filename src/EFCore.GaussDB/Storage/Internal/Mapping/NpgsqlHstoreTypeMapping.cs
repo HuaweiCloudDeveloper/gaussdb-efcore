@@ -4,7 +4,7 @@ using System.Text;
 namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal.Mapping;
 
 /// <summary>
-///     The type mapping for the PostgreSQL hstore type. Supports both <see cref="Dictionary{TKey,TValue} " />
+///     The type mapping for the GaussDB hstore type. Supports both <see cref="Dictionary{TKey,TValue} " />
 ///     and <see cref="ImmutableDictionary{TKey,TValue}" /> over strings.
 /// </summary>
 /// <remarks>

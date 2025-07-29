@@ -130,7 +130,7 @@ public class NpgsqlJsonDomTranslator : IMemberTranslator, IMethodCallTranslator
                 typeof(string),
                 _stringTypeMapping);
 
-            // The PostgreSQL traversal operator always returns text - for these scalar-returning methods, apply a conversion from string.
+            // The GaussDB traversal operator always returns text - for these scalar-returning methods, apply a conversion from string.
             return method.Name == nameof(JsonElement.GetString)
                 ? traversalToText
                 : _sqlExpressionFactory.Convert(

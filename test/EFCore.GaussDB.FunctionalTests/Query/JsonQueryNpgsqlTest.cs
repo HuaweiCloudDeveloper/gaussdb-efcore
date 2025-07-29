@@ -3229,7 +3229,7 @@ FROM "JsonEntitiesBasic" AS j
                     b.Ignore(j => j.TestGuidCollection);
                 });
 
-            // Ignore nested collections - these aren't supported on PostgreSQL (no arrays of arrays).
+            // Ignore nested collections - these aren't supported on GaussDB (no arrays of arrays).
             // TODO: Remove these after syncing to 9.0.0-rc.1, and extending from the relational test base and fixture
             modelBuilder.Entity<JsonEntityAllTypes>(
                 b =>
@@ -3300,7 +3300,7 @@ FROM "JsonEntitiesBasic" AS j
                 _expectedData = (JsonQueryData)base.GetExpectedData();
 
                 // The test data contains DateTimeOffsets with various offsets, which we don't support. Change these to UTC.
-                // Also chop sub-microsecond precision which PostgreSQL does not support.
+                // Also chop sub-microsecond precision which GaussDB does not support.
                 foreach (var j in _expectedData.JsonEntitiesAllTypes)
                 {
                     j.Reference.TestDateTimeOffset = new DateTimeOffset(
@@ -3325,7 +3325,7 @@ FROM "JsonEntitiesBasic" AS j
         protected override async Task SeedAsync(JsonQueryContext context)
         {
             // The test data contains DateTimeOffsets with various offsets, which we don't support. Change these to UTC.
-            // Also chop sub-microsecond precision which PostgreSQL does not support.
+            // Also chop sub-microsecond precision which GaussDB does not support.
             // See https://github.com/dotnet/efcore/issues/26068
 
             var jsonEntitiesBasic = JsonQueryData.CreateJsonEntitiesBasic();

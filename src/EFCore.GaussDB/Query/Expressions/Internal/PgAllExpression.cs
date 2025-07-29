@@ -1,7 +1,7 @@
 ﻿namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.Expressions.Internal;
 
 /// <summary>
-///     Represents a PostgreSQL array ALL expression.
+///     Represents a GaussDB array ALL expression.
 /// </summary>
 /// <remarks>
 ///     See https://www.postgresql.org/docs/current/static/functions-comparisons.html
@@ -126,12 +126,12 @@ public class PgAllExpression : SqlExpression, IEquatable<PgAllExpression>
 public enum PgAllOperatorType
 {
     /// <summary>
-    ///     Represents a PostgreSQL LIKE ALL operator.
+    ///     Represents a GaussDB LIKE ALL operator.
     /// </summary>
     Like,
 
     /// <summary>
-    ///     Represents a PostgreSQL ILIKE ALL operator.
+    ///     Represents a GaussDB ILIKE ALL operator.
     /// </summary>
     ILike,
 }

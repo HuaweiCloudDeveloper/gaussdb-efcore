@@ -3,7 +3,7 @@
 namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Metadata;
 
 /// <summary>
-///     Represents the metadata for a PostgreSQL extension.
+///     Represents the metadata for a GaussDB extension.
 /// </summary>
 public class PostgresExtension
 {

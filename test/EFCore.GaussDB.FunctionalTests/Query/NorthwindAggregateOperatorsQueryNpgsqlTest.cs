@@ -64,7 +64,7 @@ FROM (
     {
         await base.Contains_with_local_uint_array_closure(async);
 
-        // Note: PostgreSQL doesn't support uint, but value converters make this into bigint
+        // Note: GaussDB doesn't support uint, but value converters make this into bigint
         AssertSql(
             """
 @ids={ '0', '1' } (DbType = Object)
@@ -87,7 +87,7 @@ WHERE e."EmployeeID" = ANY (@ids)
     {
         await base.Contains_with_local_nullable_uint_array_closure(async);
 
-        // Note: PostgreSQL doesn't support uint, but value converters make this into bigint
+        // Note: GaussDB doesn't support uint, but value converters make this into bigint
 
         AssertSql(
             """

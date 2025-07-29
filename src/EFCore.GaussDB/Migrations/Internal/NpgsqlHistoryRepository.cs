@@ -268,7 +268,7 @@ END $EF$;
     }
 
     /// <summary>
-    ///     Always returns <see langword="true" /> for PostgreSQL - it's difficult to reliably check if the migration history table
+    ///     Always returns <see langword="true" /> for GaussDB - it's difficult to reliably check if the migration history table
     ///     exists or not (because user may set PG <c>search_path</c>, which determines unqualified tables references when creating,
     ///     selecting). So we instead catch the "table doesn't exist" exceptions instead.
     /// </summary>
@@ -276,7 +276,7 @@ END $EF$;
         => true;
 
     /// <summary>
-    ///     Always returns <see langword="true" /> for PostgreSQL - it's difficult to reliably check if the migration history table
+    ///     Always returns <see langword="true" /> for GaussDB - it's difficult to reliably check if the migration history table
     ///     exists or not (because user may set PG <c>search_path</c>, which determines unqualified tables references when creating,
     ///     selecting). So we instead catch the "table doesn't exist" exceptions instead.
     /// </summary>

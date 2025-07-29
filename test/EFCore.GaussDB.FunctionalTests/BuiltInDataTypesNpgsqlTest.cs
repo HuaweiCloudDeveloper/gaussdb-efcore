@@ -154,7 +154,7 @@ WHERE m."TimeSpanAsTime" = @timeSpan
             bool? param8 = true;
             Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 999 && e.BoolAsBoolean == param8));
 
-            // PostgreSQL doesn't support comparing money to decimal
+            // GaussDB doesn't support comparing money to decimal
             //decimal? param9 = 81.1m;
             //Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 999 && e.DecimalAsMoney == param9));
 
@@ -233,7 +233,7 @@ WHERE m."TimeSpanAsTime" = @timeSpan
             Assert.Same(
                 entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 999 && e.PhysicalAddressAsMacaddr.Equals(param28)));
 
-            // PostgreSQL doesn't support equality comparison on point
+            // GaussDB doesn't support equality comparison on point
             // NpgsqlPoint? param29 = new NpgsqlPoint(5.2, 3.3);
             // Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 999 && e.Point == param29));
 
@@ -407,14 +407,14 @@ WHERE m."TimeSpanAsTime" = @timeSpan
             // ReSharper disable once PossibleUnintendedReferenceComparison
             Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 911 && e.PhysicalAddressAsMacaddr == param28));
 
-            // PostgreSQL does not support equality comparison on geometry types, see https://www.postgresql.org/docs/current/functions-geometry.html
+            // GaussDB does not support equality comparison on geometry types, see https://www.postgresql.org/docs/current/functions-geometry.html
             //NpgsqlPoint? param29 = null;
             //Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 911 && e.NpgsqlPointAsPoint == param29));
 
             string param30 = null;
             Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 911 && e.StringAsJsonb == param30));
 
-            // PostgreSQL does not support equality comparison on json
+            // GaussDB does not support equality comparison on json
             //string param31 = null;
             //Assert.Same(entity, context.Set<MappedNullableDataTypes>().Single(e => e.Int == 911 && e.StringAsJson == param31));
 
@@ -930,7 +930,7 @@ WHERE m."TimeSpanAsTime" = @timeSpan
     {
         using var context = CreateContext();
 
-        // PostgreSQL SUM() returns numeric for bigint input, bigint for int/smallint ints.
+        // GaussDB SUM() returns numeric for bigint input, bigint for int/smallint ints.
         // Make sure the proper conversion is done
         _ = context.Set<MappedDataTypes>().Sum(m => m.LongAsBigint);
         _ = context.Set<MappedDataTypes>().Sum(m => m.Int);
@@ -1240,7 +1240,7 @@ FROM "MappedDataTypes" AS m
         [Column(TypeName = "varchar")]
         public StringEnumU16 EnumAsVarchar { get; set; }
 
-        // PostgreSQL-specific types from here
+        // GaussDB-specific types from here
 
         [Column(TypeName = "macaddr")]
         public PhysicalAddress PhysicalAddressAsMacaddr { get; set; }
@@ -1435,7 +1435,7 @@ FROM "MappedDataTypes" AS m
         [Column(TypeName = "varchar")]
         public StringEnumU16? EnumAsVarchar { get; set; }
 
-        // PostgreSQL-specific types from here
+        // GaussDB-specific types from here
 
         [Column(TypeName = "macaddr")]
         public PhysicalAddress PhysicalAddressAsMacaddr { get; set; }

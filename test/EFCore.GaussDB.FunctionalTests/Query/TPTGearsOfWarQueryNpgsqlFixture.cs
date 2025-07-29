@@ -34,7 +34,7 @@ public class TPTGearsOfWarQueryNpgsqlFixture : TPTGearsOfWarQueryRelationalFixtu
             _expectedData = (GearsOfWarData)base.GetExpectedData();
 
             // GearsOfWarData contains DateTimeOffsets with various offsets, which we don't support. Change these to UTC.
-            // Also chop sub-microsecond precision which PostgreSQL does not support.
+            // Also chop sub-microsecond precision which GaussDB does not support.
             foreach (var mission in _expectedData.Missions)
             {
                 mission.Timeline = new DateTimeOffset(
@@ -49,7 +49,7 @@ public class TPTGearsOfWarQueryNpgsqlFixture : TPTGearsOfWarQueryRelationalFixtu
 
     protected override Task SeedAsync(GearsOfWarContext context)
         // GearsOfWarData contains DateTimeOffsets with various offsets, which we don't support. Change these to UTC.
-        // Also chop sub-microsecond precision which PostgreSQL does not support.
+        // Also chop sub-microsecond precision which GaussDB does not support.
         => SeedForNpgsqlAsync(context);
 
     public static async Task SeedForNpgsqlAsync(GearsOfWarContext context)

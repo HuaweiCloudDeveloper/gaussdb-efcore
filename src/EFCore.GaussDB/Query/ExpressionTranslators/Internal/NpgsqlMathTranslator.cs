@@ -39,7 +39,7 @@ public class NpgsqlMathTranslator : IMethodCallTranslator
         { typeof(MathF).GetRuntimeMethod(nameof(MathF.Log10), [typeof(float)])!, "log" },
         { typeof(Math).GetRuntimeMethod(nameof(Math.Log), [typeof(double)])!, "ln" },
         { typeof(MathF).GetRuntimeMethod(nameof(MathF.Log), [typeof(float)])!, "ln" },
-        // Note: PostgreSQL has log(x,y) but only for decimal, whereas .NET has it only for double/float
+        // Note: GaussDB has log(x,y) but only for decimal, whereas .NET has it only for double/float
 
         { typeof(Math).GetRuntimeMethod(nameof(Math.Sqrt), [typeof(double)])!, "sqrt" },
         { typeof(MathF).GetRuntimeMethod(nameof(MathF.Sqrt), [typeof(float)])!, "sqrt" },
@@ -224,7 +224,7 @@ public class NpgsqlMathTranslator : IMethodCallTranslator
             return _sqlExpressionFactory.ApplyTypeMapping(result, argument.TypeMapping);
         }
 
-        // PostgreSQL sign() returns 1, 0, -1, but in the same type as the argument, so we need to convert
+        // GaussDB sign() returns 1, 0, -1, but in the same type as the argument, so we need to convert
         // the return type to int.
         if (SignMethodInfos.Contains(method))
         {
@@ -254,7 +254,7 @@ public class NpgsqlMathTranslator : IMethodCallTranslator
                 _decimalTypeMapping);
         }
 
-        // PostgreSQL treats NaN values as equal, against IEEE754
+        // GaussDB treats NaN values as equal, against IEEE754
         if (method == DoubleIsNanMethodInfo)
         {
             return _sqlExpressionFactory.Equal(arguments[0], _sqlExpressionFactory.Constant(double.NaN));

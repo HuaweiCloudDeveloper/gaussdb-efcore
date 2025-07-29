@@ -1,7 +1,7 @@
 ﻿namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.Expressions.Internal;
 
 /// <summary>
-///     Represents a PostgreSQL JSON operator traversing a JSON document with a path (i.e. x#>y or x#>>y)
+///     Represents a GaussDB JSON operator traversing a JSON document with a path (i.e. x#>y or x#>>y)
 /// </summary>
 public class PgJsonTraversalExpression : SqlExpression, IEquatable<PgJsonTraversalExpression>
 {

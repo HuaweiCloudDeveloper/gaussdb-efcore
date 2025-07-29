@@ -18,8 +18,8 @@ public class NpgsqlOptionsExtension : RelationalOptionsExtension
     private Version? _postgresVersion;
 
     // We override ParameterizedCollectionMode to set Parameter as the default instead of MultipleParameters,
-    // which is the EF relational default. In PostgreSQL using native array parameters is better, and the
-    // query plan problem can be mitigated by telling PostgreSQL to use a custom plan (see #3269).
+    // which is the EF relational default. In GaussDB using native array parameters is better, and the
+    // query plan problem can be mitigated by telling GaussDB to use a custom plan (see #3269).
 
     /// <summary>
     ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to
@@ -274,11 +274,11 @@ public class NpgsqlOptionsExtension : RelationalOptionsExtension
     }
 
     /// <summary>
-    ///     Returns a copy of the current instance with the specified PostgreSQL version.
+    ///     Returns a copy of the current instance with the specified GaussDB version.
     /// </summary>
     /// <param name="postgresVersion">The backend version to target.</param>
     /// <returns>
-    ///     A copy of the current instance with the specified PostgreSQL version.
+    ///     A copy of the current instance with the specified GaussDB version.
     /// </returns>
     public virtual NpgsqlOptionsExtension WithPostgresVersion(Version? postgresVersion)
     {

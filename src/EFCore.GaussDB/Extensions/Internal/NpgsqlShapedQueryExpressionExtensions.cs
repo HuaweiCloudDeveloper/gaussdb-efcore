@@ -121,7 +121,7 @@ public static class NpgsqlShapedQueryExpressionExtensions
     }
 
     /// <summary>
-    ///     Checks whether the given expression maps to a PostgreSQL array, as opposed to a multirange type.
+    ///     Checks whether the given expression maps to a GaussDB array, as opposed to a multirange type.
     /// </summary>
     private static bool IsPostgresArray(SqlExpression expression)
         => expression switch

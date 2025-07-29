@@ -1,7 +1,7 @@
 namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.ExpressionTranslators.Internal;
 
 /// <summary>
-///     Translates <see cref="T:DbFunctionsExtensions.Like" /> methods into PostgreSQL LIKE expressions.
+///     Translates <see cref="T:DbFunctionsExtensions.Like" /> methods into GaussDB LIKE expressions.
 /// </summary>
 public class NpgsqlLikeTranslator : IMethodCallTranslator
 {
@@ -69,7 +69,7 @@ public class NpgsqlLikeTranslator : IMethodCallTranslator
             return null;
         }
 
-        // PostgreSQL has backslash as the default LIKE escape character, but EF Core expects
+        // GaussDB has backslash as the default LIKE escape character, but EF Core expects
         // no escape character unless explicitly requested (https://github.com/aspnet/EntityFramework/issues/8696).
 
         // If we have a constant expression, we check that there are no backslashes in order to render with

@@ -914,7 +914,7 @@ WHERE CAST(e."TimestamptzDateTime" AT TIME ZONE 'UTC' AS time without time zone)
         protected override string StoreName
             => "TimestampQueryTest";
 
-        // Set the PostgreSQL TimeZone parameter to something local, to ensure that operations which take TimeZone into account
+        // Set the GaussDB TimeZone parameter to something local, to ensure that operations which take TimeZone into account
         // don't depend on the database's time zone, and also that operations which shouldn't take TimeZone into account indeed
         // don't.
         protected override ITestStoreFactory TestStoreFactory

@@ -34,7 +34,7 @@ public class NpgsqlSqlExpressionFactory : SqlExpressionFactory
     #region Expression factory methods
 
     /// <summary>
-    ///     Creates a new <see cref="PgRegexMatchExpression" />, corresponding to the PostgreSQL-specific <c>~</c> operator.
+    ///     Creates a new <see cref="PgRegexMatchExpression" />, corresponding to the GaussDB-specific <c>~</c> operator.
     /// </summary>
     public virtual PgRegexMatchExpression RegexMatch(
         SqlExpression match,
@@ -43,7 +43,7 @@ public class NpgsqlSqlExpressionFactory : SqlExpressionFactory
         => (PgRegexMatchExpression)ApplyDefaultTypeMapping(new PgRegexMatchExpression(match, pattern, options, null));
 
     /// <summary>
-    ///     Creates a new <see cref="PgAnyExpression" />, corresponding to the PostgreSQL-specific <c>= ANY</c> operator.
+    ///     Creates a new <see cref="PgAnyExpression" />, corresponding to the GaussDB-specific <c>= ANY</c> operator.
     /// </summary>
     public virtual PgAnyExpression Any(
         SqlExpression item,
@@ -52,7 +52,7 @@ public class NpgsqlSqlExpressionFactory : SqlExpressionFactory
         => (PgAnyExpression)ApplyDefaultTypeMapping(new PgAnyExpression(item, array, operatorType, null));
 
     /// <summary>
-    ///     Creates a new <see cref="PgAllExpression" />, corresponding to the PostgreSQL-specific <c>LIKE ALL</c> operator.
+    ///     Creates a new <see cref="PgAllExpression" />, corresponding to the GaussDB-specific <c>LIKE ALL</c> operator.
     /// </summary>
     public virtual PgAllExpression All(
         SqlExpression item,
@@ -61,7 +61,7 @@ public class NpgsqlSqlExpressionFactory : SqlExpressionFactory
         => (PgAllExpression)ApplyDefaultTypeMapping(new PgAllExpression(item, array, operatorType, null));
 
     /// <summary>
-    ///     Creates a new <see cref="PgArrayIndexExpression" />, corresponding to the PostgreSQL-specific array subscripting operator.
+    ///     Creates a new <see cref="PgArrayIndexExpression" />, corresponding to the GaussDB-specific array subscripting operator.
     /// </summary>
     public virtual PgArrayIndexExpression ArrayIndex(
         SqlExpression array,
@@ -80,7 +80,7 @@ public class NpgsqlSqlExpressionFactory : SqlExpressionFactory
     }
 
     /// <summary>
-    ///     Creates a new <see cref="PgArrayIndexExpression" />, corresponding to the PostgreSQL-specific array subscripting operator.
+    ///     Creates a new <see cref="PgArrayIndexExpression" />, corresponding to the GaussDB-specific array subscripting operator.
     /// </summary>
     public virtual PgArraySliceExpression ArraySlice(
         SqlExpression array,
@@ -111,7 +111,7 @@ public class NpgsqlSqlExpressionFactory : SqlExpressionFactory
     {
         if (typeMapping is null)
         {
-            // PostgreSQL AT TIME ZONE flips the given type from timestamptz to timestamp and vice versa
+            // GaussDB AT TIME ZONE flips the given type from timestamptz to timestamp and vice versa
             // See https://www.postgresql.org/docs/current/functions-datetime.html#FUNCTIONS-DATETIME-ZONECONVERT
             typeMapping = timestamp.TypeMapping ?? _typeMappingSource.FindMapping(timestamp.Type, Dependencies.Model)!;
             var storeType = typeMapping.StoreType;
@@ -134,7 +134,7 @@ public class NpgsqlSqlExpressionFactory : SqlExpressionFactory
     }
 
     /// <summary>
-    ///     Creates a new <see cref="AtTimeZoneExpression" />, for performing a PostgreSQL-specific case-insensitive string match
+    ///     Creates a new <see cref="AtTimeZoneExpression" />, for performing a GaussDB-specific case-insensitive string match
     ///     (<c>ILIKE</c>).
     /// </summary>
     public virtual PgILikeExpression ILike(
@@ -216,7 +216,7 @@ public class NpgsqlSqlExpressionFactory : SqlExpressionFactory
     }
 
     /// <summary>
-    ///     Creates a new <see cref="PgNewArrayExpression" />, for creating a new PostgreSQL array.
+    ///     Creates a new <see cref="PgNewArrayExpression" />, for creating a new GaussDB array.
     /// </summary>
     public virtual PgNewArrayExpression NewArray(
         IReadOnlyList<SqlExpression> expressions,
@@ -353,7 +353,7 @@ public class NpgsqlSqlExpressionFactory : SqlExpressionFactory
     }
 
     /// <summary>
-    ///     Creates a new <see cref="PgFunctionExpression" /> for a PostgreSQL aggregate function call..
+    ///     Creates a new <see cref="PgFunctionExpression" /> for a GaussDB aggregate function call..
     /// </summary>
     public virtual PgFunctionExpression AggregateFunction(
         string name,
@@ -395,7 +395,7 @@ public class NpgsqlSqlExpressionFactory : SqlExpressionFactory
             {
                 SqlBinaryExpression e => ApplyTypeMappingOnSqlBinary(e, typeMapping),
 
-                // PostgreSQL-specific expression types
+                // GaussDB-specific expression types
                 PgAnyExpression e => ApplyTypeMappingOnAny(e),
                 PgAllExpression e => ApplyTypeMappingOnAll(e),
                 PgArrayIndexExpression e => ApplyTypeMappingOnArrayIndex(e, typeMapping),
@@ -830,7 +830,7 @@ public class NpgsqlSqlExpressionFactory : SqlExpressionFactory
 
                     null => throw new InvalidOperationException("No inferred type mapping for distance operator"),
                     _ => throw new InvalidOperationException(
-                        $"PostgreSQL type '{inferredTypeMapping.StoreTypeNameBase}' isn't supported with the distance operator")
+                        $"GaussDB type '{inferredTypeMapping.StoreTypeNameBase}' isn't supported with the distance operator")
                 };
                 break;
             }
@@ -1047,7 +1047,7 @@ public class NpgsqlSqlExpressionFactory : SqlExpressionFactory
     }
 
     /// <summary>
-    ///     PostgreSQL array indexing is 1-based. If the index happens to be a constant,
+    ///     GaussDB array indexing is 1-based. If the index happens to be a constant,
     ///     just increment it. Otherwise, append a +1 in the SQL.
     /// </summary>
     public virtual SqlExpression GenerateOneBasedIndexExpression(SqlExpression expression)

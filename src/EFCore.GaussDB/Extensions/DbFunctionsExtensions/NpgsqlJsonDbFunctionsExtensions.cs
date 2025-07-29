@@ -4,7 +4,7 @@ using System.Text.Json;
 namespace Microsoft.EntityFrameworkCore;
 
 /// <summary>
-///     Provides methods for supporting translation to PostgreSQL JSON operators and functions.
+///     Provides methods for supporting translation to GaussDB JSON operators and functions.
 /// </summary>
 public static class NpgsqlJsonDbFunctionsExtensions
 {
@@ -20,7 +20,7 @@ public static class NpgsqlJsonDbFunctionsExtensions
     ///     A JSON column or value. Can be a <see cref="JsonDocument" />, a string, or a user POCO mapped to JSON.
     /// </param>
     /// <remarks>
-    ///     This operation is only supported with PostgreSQL <c>jsonb</c>, not <c>json</c>.
+    ///     This operation is only supported with GaussDB <c>jsonb</c>, not <c>json</c>.
     ///     See https://www.postgresql.org/docs/current/functions-json.html.
     /// </remarks>
     public static bool JsonContains(
@@ -40,7 +40,7 @@ public static class NpgsqlJsonDbFunctionsExtensions
     ///     A JSON column or value. Can be a <see cref="JsonDocument" />, a string, or a user POCO mapped to JSON.
     /// </param>
     /// <remarks>
-    ///     This operation is only supported with PostgreSQL <c>jsonb</c>, not <c>json</c>.
+    ///     This operation is only supported with GaussDB <c>jsonb</c>, not <c>json</c>.
     ///     See https://www.postgresql.org/docs/current/functions-json.html.
     /// </remarks>
     public static bool JsonContained(
@@ -58,7 +58,7 @@ public static class NpgsqlJsonDbFunctionsExtensions
     /// </param>
     /// <param name="key">A key to be checked inside <paramref name="json" />.</param>
     /// <remarks>
-    ///     This operation is only supported with PostgreSQL <c>jsonb</c>, not <c>json</c>.
+    ///     This operation is only supported with GaussDB <c>jsonb</c>, not <c>json</c>.
     ///     See https://www.postgresql.org/docs/current/functions-json.html.
     /// </remarks>
     public static bool JsonExists(this DbFunctions _, object json, string key)
@@ -73,7 +73,7 @@ public static class NpgsqlJsonDbFunctionsExtensions
     /// </param>
     /// <param name="keys">A set of keys to be checked inside <paramref name="json" />.</param>
     /// <remarks>
-    ///     This operation is only supported with PostgreSQL <c>jsonb</c>, not <c>json</c>.
+    ///     This operation is only supported with GaussDB <c>jsonb</c>, not <c>json</c>.
     ///     See https://www.postgresql.org/docs/current/functions-json.html.
     /// </remarks>
     public static bool JsonExistAny(this DbFunctions _, object json, params string[] keys)
@@ -88,7 +88,7 @@ public static class NpgsqlJsonDbFunctionsExtensions
     /// </param>
     /// <param name="keys">A set of keys to be checked inside <paramref name="json" />.</param>
     /// <remarks>
-    ///     This operation is only supported with PostgreSQL <c>jsonb</c>, not <c>json</c>.
+    ///     This operation is only supported with GaussDB <c>jsonb</c>, not <c>json</c>.
     ///     See https://www.postgresql.org/docs/current/functions-json.html.
     /// </remarks>
     public static bool JsonExistAll(this DbFunctions _, object json, params string[] keys)

@@ -3,7 +3,7 @@
 namespace Microsoft.EntityFrameworkCore;
 
 /// <summary>
-///     Provides extension methods for multiranges supporting PostgreSQL translation.
+///     Provides extension methods for multiranges supporting GaussDB translation.
 /// </summary>
 public static class NpgsqlMultirangeDbFunctionsExtensions
 {

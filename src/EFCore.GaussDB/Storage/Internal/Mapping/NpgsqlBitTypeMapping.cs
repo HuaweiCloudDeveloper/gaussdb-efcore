@@ -5,7 +5,7 @@ using HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal.Json;
 namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal.Mapping;
 
 /// <summary>
-///     The type mapping for the PostgreSQL bit string type.
+///     The type mapping for the GaussDB bit string type.
 /// </summary>
 /// <remarks>
 ///     See: https://www.postgresql.org/docs/current/static/datatype-bit.html

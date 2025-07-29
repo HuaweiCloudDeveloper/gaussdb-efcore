@@ -550,7 +550,7 @@ public class NpgsqlDatabaseCreatorCreateTest : NpgsqlDatabaseCreatorTest
     }
 }
 
-// When database creation/drop happens in parallel, there seem to be some deadlocks on the PostgreSQL side
+// When database creation/drop happens in parallel, there seem to be some deadlocks on the GaussDB side
 // which make the tests run significantly slower. This makes all the test suites run in serial.
 [Collection("NpgsqlDatabaseCreatorTest")]
 public class NpgsqlDatabaseCreatorTest

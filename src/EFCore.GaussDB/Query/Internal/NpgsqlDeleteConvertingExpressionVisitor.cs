@@ -4,7 +4,7 @@ namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.Internal;
 
 /// <summary>
 ///     Converts the relational <see cref="DeleteExpression" /> into a PG-specific <see cref="PgDeleteExpression" />, which
-///     precisely models a DELETE statement in PostgreSQL. This is done to handle the PG-specific USING syntax for table joining.
+///     precisely models a DELETE statement in GaussDB. This is done to handle the PG-specific USING syntax for table joining.
 /// </summary>
 public class NpgsqlDeleteConvertingExpressionVisitor : ExpressionVisitor
 {
@@ -48,7 +48,7 @@ public class NpgsqlDeleteConvertingExpressionVisitor : ExpressionVisitor
         SqlExpression? joinPredicates = null;
 
         // The SelectExpression also contains the target table being modified (same as deleteExpression.Table).
-        // If it has additional inner joins, use the PostgreSQL-specific USING syntax to express the join.
+        // If it has additional inner joins, use the GaussDB-specific USING syntax to express the join.
         // Note that the non-join TableExpression isn't necessary the target table - through projection the last table being
         // joined may be the one being modified.
         foreach (var tableBase in selectExpression.Tables)

@@ -1366,7 +1366,7 @@ LIMIT 2
 
     public override async Task Edit_single_property_collection_of_char()
     {
-        // PostgreSQL does not support the 0 char in text
+        // GaussDB does not support the 0 char in text
         var exception = await Assert.ThrowsAsync<DbUpdateException>(() => base.Edit_single_property_collection_of_char());
         var pgException = Assert.IsType<PostgresException>(exception.InnerException);
         Assert.Equal("22P05", pgException.SqlState); // untranslatable_character
@@ -1919,7 +1919,7 @@ LIMIT 2
 
     public override async Task Add_and_update_nested_optional_primitive_collection(bool? value)
     {
-        // PostgreSQL does not support the 0 char in text
+        // GaussDB does not support the 0 char in text
         var exception = await Assert.ThrowsAsync<DbUpdateException>(() => base.Edit_single_property_collection_of_char());
         var pgException = Assert.IsType<PostgresException>(exception.InnerException);
         Assert.Equal("22P05", pgException.SqlState); // untranslatable_character
@@ -2079,7 +2079,7 @@ LIMIT 2
                     b.Ignore(j => j.TestGuidCollection);
                 });
 
-            // Ignore nested collections - these aren't supported on PostgreSQL (no arrays of arrays).
+            // Ignore nested collections - these aren't supported on GaussDB (no arrays of arrays).
             // TODO: Remove these after syncing to 9.0.0-rc.1, and extending from the relational test base and fixture
             modelBuilder.Entity<JsonEntityAllTypes>(
                 b =>

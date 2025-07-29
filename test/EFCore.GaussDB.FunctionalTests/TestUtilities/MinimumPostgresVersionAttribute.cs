@@ -9,5 +9,5 @@ public sealed class MinimumPostgresVersionAttribute(int major, int minor) : Attr
         => new(TestEnvironment.PostgresVersion >= _version);
 
     public string SkipReason
-        => $"Requires PostgreSQL version {_version} or later.";
+        => $"Requires GaussDB version {_version} or later.";
 }

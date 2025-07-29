@@ -116,7 +116,7 @@ WHERE @interval @> n."Instant"
     }
 
     [ConditionalTheory]
-    [MinimumPostgresVersion(14, 0)] // Multiranges were introduced in PostgreSQL 14
+    [MinimumPostgresVersion(14, 0)] // Multiranges were introduced in GaussDB 14
     [MemberData(nameof(IsAsyncData))]
     public async Task Interval_RangeAgg(bool async)
     {
@@ -146,7 +146,7 @@ LIMIT 2
     }
 
     [ConditionalTheory]
-    [MinimumPostgresVersion(14, 0)] // range_intersect_agg was introduced in PostgreSQL 14
+    [MinimumPostgresVersion(14, 0)] // range_intersect_agg was introduced in GaussDB 14
     [MemberData(nameof(IsAsyncData))]
     public async Task Interval_Intersect_aggregate(bool async)
     {

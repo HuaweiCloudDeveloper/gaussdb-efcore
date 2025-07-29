@@ -5,7 +5,7 @@ using System.Net.NetworkInformation;
 namespace Microsoft.EntityFrameworkCore;
 
 /// <summary>
-///     Provides extension methods supporting operator translation for PostgreSQL network types.
+///     Provides extension methods supporting operator translation for GaussDB network types.
 /// </summary>
 /// <remarks>
 ///     See: https://www.postgresql.org/docs/current/static/functions-net.html

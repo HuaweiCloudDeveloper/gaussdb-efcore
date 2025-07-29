@@ -1,7 +1,7 @@
 namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.Expressions.Internal;
 
 /// <summary>
-///     An expression that represents a PostgreSQL <c>unnest</c> function call in a SQL tree.
+///     An expression that represents a GaussDB <c>unnest</c> function call in a SQL tree.
 /// </summary>
 /// <remarks>
 ///     <para>

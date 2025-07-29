@@ -4,7 +4,7 @@ using HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal.Json;
 namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal.Mapping;
 
 /// <summary>
-///     The type mapping for the PostgreSQL macaddr8 type.
+///     The type mapping for the GaussDB macaddr8 type.
 /// </summary>
 /// <remarks>
 ///     See: https://www.postgresql.org/docs/current/static/datatype-net-types.html#DATATYPE-MACADDR8

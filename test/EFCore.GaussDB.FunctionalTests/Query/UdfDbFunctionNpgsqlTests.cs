@@ -620,7 +620,7 @@ LIMIT 2
                         isDateMethodInfo2.ReturnType,
                         typeMapping: null));
 
-            // Base class maps to len(), but in PostgreSQL it's called length()
+            // Base class maps to len(), but in GaussDB it's called length()
             var methodInfo = typeof(UDFSqlContext).GetMethod(nameof(MyCustomLengthStatic));
             modelBuilder.HasDbFunction(methodInfo)
                 .HasTranslation(

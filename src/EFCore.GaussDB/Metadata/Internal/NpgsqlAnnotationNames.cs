@@ -211,7 +211,7 @@ public static class NpgsqlAnnotationNames
     // Database model annotations
 
     /// <summary>
-    ///     Identifies the type of the PostgreSQL type of this column (e.g. array, range, base).
+    ///     Identifies the type of the GaussDB type of this column (e.g. array, range, base).
     /// </summary>
     public const string PostgresTypeType = Prefix + "PostgresTypeType";
 

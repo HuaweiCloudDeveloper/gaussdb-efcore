@@ -102,7 +102,7 @@ public class NpgsqlUpdateSqlGenerator : UpdateSqlGenerator
         int commandPosition,
         out bool requiresTransaction)
     {
-        // The default implementation adds RETURNING 1 to do concurrency check (was the row actually updated), but in PostgreSQL we check
+        // The default implementation adds RETURNING 1 to do concurrency check (was the row actually updated), but in GaussDB we check
         // the per-statement row-affected value exposed by Npgsql in the batch; so no need for RETURNING 1.
         var name = command.TableName;
         var schema = command.Schema;
@@ -136,7 +136,7 @@ public class NpgsqlUpdateSqlGenerator : UpdateSqlGenerator
             if (columnModification.TypeMapping.StoreType is "json")
             {
                 throw new NotSupportedException(
-                    "Cannot perform partial update because the PostgreSQL 'json' type has no json_set method. Use 'jsonb' instead.");
+                    "Cannot perform partial update because the GaussDB 'json' type has no json_set method. Use 'jsonb' instead.");
             }
 
             Check.DebugAssert(columnModification.TypeMapping.StoreType is "jsonb", "Non-jsonb type mapping in JSON partial update");
@@ -217,7 +217,7 @@ public class NpgsqlUpdateSqlGenerator : UpdateSqlGenerator
         int commandPosition,
         out bool requiresTransaction)
     {
-        // The default implementation adds RETURNING 1 to do concurrency check (was the row actually deleted), but in PostgreSQL we check
+        // The default implementation adds RETURNING 1 to do concurrency check (was the row actually deleted), but in GaussDB we check
         // the per-statement row-affected value exposed by Npgsql in the batch; so no need for RETURNING 1.
         var name = command.TableName;
         var schema = command.Schema;
@@ -254,7 +254,7 @@ public class NpgsqlUpdateSqlGenerator : UpdateSqlGenerator
 
         commandStringBuilder.Append("CALL ");
 
-        // PostgreSQL supports neither a return value nor a result set with stored procedures, only output parameters.
+        // GaussDB supports neither a return value nor a result set with stored procedures, only output parameters.
         Check.DebugAssert(storedProcedure.ReturnValue is null, "storedProcedure.Return is null");
         Check.DebugAssert(!storedProcedure.ResultColumns.Any(), "!storedProcedure.ResultColumns.Any()");
 
@@ -297,7 +297,7 @@ public class NpgsqlUpdateSqlGenerator : UpdateSqlGenerator
                         : columnModification.ParameterName!);
             }
 
-            // PostgreSQL stored procedures cannot return a regular result set, and output parameter values are simply sent back as the
+            // GaussDB stored procedures cannot return a regular result set, and output parameter values are simply sent back as the
             // result set; this is very different from SQL Server, where output parameter values can be sent back in addition to result
             // sets.
             if (parameter.Direction.HasFlag(ParameterDirection.Output))

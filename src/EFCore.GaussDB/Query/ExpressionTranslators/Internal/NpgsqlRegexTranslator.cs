@@ -7,7 +7,7 @@ using static HuaweiCloud.EntityFrameworkCore.GaussDB.Utilities.Statics;
 namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.ExpressionTranslators.Internal;
 
 /// <summary>
-///     Translates Regex method calls into their corresponding PostgreSQL equivalent for database-side processing.
+///     Translates Regex method calls into their corresponding GaussDB equivalent for database-side processing.
 /// </summary>
 /// <remarks>
 ///     http://www.postgresql.org/docs/current/static/functions-matching.html
@@ -145,7 +145,7 @@ public class NpgsqlRegexTranslator : IMethodCallTranslator
         {
             passingArguments.AddRange(
             [
-                _sqlExpressionFactory.Constant(1), // The starting position has to be set to use the options in PostgreSQL
+                _sqlExpressionFactory.Constant(1), // The starting position has to be set to use the options in GaussDB
                 _sqlExpressionFactory.Constant(translatedOptions)
             ]);
         }

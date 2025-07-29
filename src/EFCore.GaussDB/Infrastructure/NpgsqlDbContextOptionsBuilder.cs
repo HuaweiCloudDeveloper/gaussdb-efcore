@@ -4,7 +4,7 @@ using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure.Internal;
 namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure;
 
 /// <summary>
-///     Allows for options specific to PostgreSQL to be configured for a <see cref="DbContext" />.
+///     Allows for options specific to GaussDB to be configured for a <see cref="DbContext" />.
 /// </summary>
 public class NpgsqlDbContextOptionsBuilder
     : RelationalDbContextOptionsBuilder<NpgsqlDbContextOptionsBuilder, NpgsqlOptionsExtension>
@@ -48,14 +48,14 @@ public class NpgsqlDbContextOptionsBuilder
     /// <summary>
     ///     Configures the backend version to target.
     /// </summary>
-    /// <param name="major">The PostgreSQL major version to target.</param>
-    /// <param name="minor">The PostgreSQL minor version to target.</param>
+    /// <param name="major">The GaussDB major version to target.</param>
+    /// <param name="minor">The GaussDB minor version to target.</param>
     public virtual NpgsqlDbContextOptionsBuilder SetPostgresVersion(int major, int minor)
         => SetPostgresVersion(new Version(major, minor));
 
     /// <summary>
     ///     Configures the provider to work in Redshift compatibility mode, which avoids certain unsupported features from modern
-    ///     PostgreSQL versions.
+    ///     GaussDB versions.
     /// </summary>
     /// <param name="useRedshift">Whether to target Redshift.</param>
     public virtual NpgsqlDbContextOptionsBuilder UseRedshift(bool useRedshift = true)
@@ -64,20 +64,20 @@ public class NpgsqlDbContextOptionsBuilder
     #region MapRange
 
     /// <summary>
-    ///     Maps a user-defined PostgreSQL range type for use.
+    ///     Maps a user-defined GaussDB range type for use.
     /// </summary>
     /// <typeparam name="TSubtype">
     ///     The CLR type of the range's subtype (or element).
     ///     The actual mapped type will be an <see cref="NpgsqlRange{T}" /> over this type.
     /// </typeparam>
-    /// <param name="rangeName">The name of the PostgreSQL range type to be mapped.</param>
-    /// <param name="schemaName">The name of the PostgreSQL schema in which the range is defined.</param>
+    /// <param name="rangeName">The name of the GaussDB range type to be mapped.</param>
+    /// <param name="schemaName">The name of the GaussDB schema in which the range is defined.</param>
     /// <param name="subtypeName">
-    ///     Optionally, the name of the range's PostgreSQL subtype (or element).
+    ///     Optionally, the name of the range's GaussDB subtype (or element).
     ///     This is usually not needed - the subtype will be inferred based on <typeparamref name="TSubtype" />.
     /// </param>
     /// <example>
-    ///     To map a range of PostgreSQL real, use the following:
+    ///     To map a range of GaussDB real, use the following:
     ///     <code>NpgsqlTypeMappingSource.MapRange{float}("floatrange");</code>
     /// </example>
     public virtual NpgsqlDbContextOptionsBuilder MapRange<TSubtype>(
@@ -87,20 +87,20 @@ public class NpgsqlDbContextOptionsBuilder
         => MapRange(rangeName, typeof(TSubtype), schemaName, subtypeName);
 
     /// <summary>
-    ///     Maps a user-defined PostgreSQL range type for use.
+    ///     Maps a user-defined GaussDB range type for use.
     /// </summary>
-    /// <param name="rangeName">The name of the PostgreSQL range type to be mapped.</param>
-    /// <param name="schemaName">The name of the PostgreSQL schema in which the range is defined.</param>
+    /// <param name="rangeName">The name of the GaussDB range type to be mapped.</param>
+    /// <param name="schemaName">The name of the GaussDB schema in which the range is defined.</param>
     /// <param name="subtypeClrType">
     ///     The CLR type of the range's subtype (or element).
     ///     The actual mapped type will be an <see cref="NpgsqlRange{T}" /> over this type.
     /// </param>
     /// <param name="subtypeName">
-    ///     Optionally, the name of the range's PostgreSQL subtype (or element).
+    ///     Optionally, the name of the range's GaussDB subtype (or element).
     ///     This is usually not needed - the subtype will be inferred based on <paramref name="subtypeClrType" />.
     /// </param>
     /// <example>
-    ///     To map a range of PostgreSQL real, use the following:
+    ///     To map a range of GaussDB real, use the following:
     ///     <code>NpgsqlTypeMappingSource.MapRange("floatrange", typeof(float));</code>
     /// </example>
     public virtual NpgsqlDbContextOptionsBuilder MapRange(
@@ -115,11 +115,11 @@ public class NpgsqlDbContextOptionsBuilder
     #region MapEnum
 
     /// <summary>
-    ///     Maps a PostgreSQL enum type for use.
+    ///     Maps a GaussDB enum type for use.
     /// </summary>
-    /// <param name="enumName">The name of the PostgreSQL enum type to be mapped.</param>
-    /// <param name="schemaName">The name of the PostgreSQL schema in which the range is defined.</param>
-    /// <param name="nameTranslator">The name translator used to map enum value names to PostgreSQL enum values.</param>
+    /// <param name="enumName">The name of the GaussDB enum type to be mapped.</param>
+    /// <param name="schemaName">The name of the GaussDB schema in which the range is defined.</param>
+    /// <param name="nameTranslator">The name translator used to map enum value names to GaussDB enum values.</param>
     public virtual NpgsqlDbContextOptionsBuilder MapEnum<T>(
         string? enumName = null,
         string? schemaName = null,
@@ -128,12 +128,12 @@ public class NpgsqlDbContextOptionsBuilder
         => MapEnum(typeof(T), enumName, schemaName, nameTranslator);
 
     /// <summary>
-    ///     Maps a PostgreSQL enum type for use.
+    ///     Maps a GaussDB enum type for use.
     /// </summary>
     /// <param name="clrType">The CLR type of the enum.</param>
-    /// <param name="enumName">The name of the PostgreSQL enum type to be mapped.</param>
-    /// <param name="schemaName">The name of the PostgreSQL schema in which the range is defined.</param>
-    /// <param name="nameTranslator">The name translator used to map enum value names to PostgreSQL enum values.</param>
+    /// <param name="enumName">The name of the GaussDB enum type to be mapped.</param>
+    /// <param name="schemaName">The name of the GaussDB schema in which the range is defined.</param>
+    /// <param name="nameTranslator">The name translator used to map enum value names to GaussDB enum values.</param>
     public virtual NpgsqlDbContextOptionsBuilder MapEnum(
         Type clrType,
         string? enumName = null,

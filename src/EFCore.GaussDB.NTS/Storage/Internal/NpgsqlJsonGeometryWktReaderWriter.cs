@@ -33,7 +33,7 @@ public sealed class NpgsqlJsonGeometryWktReaderWriter : JsonValueReaderWriter<Ge
         var wkt = value.ToText();
 
         // If the SRID is defined, prefix the WKT with it (SRID=4326;POINT(-44.3 60.1))
-        // Although this is a PostgreSQL extension, NetTopologySuite supports it (see #3236)
+        // Although this is a GaussDB extension, NetTopologySuite supports it (see #3236)
         if (value.SRID > 0)
         {
             wkt = $"SRID={value.SRID};{wkt}";

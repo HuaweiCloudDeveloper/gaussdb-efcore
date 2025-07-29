@@ -14,7 +14,7 @@ public static class NpgsqlIndexBuilderExtensions
     #region Method
 
     /// <summary>
-    ///     The PostgreSQL index method to be used. Null selects the default (currently btree).
+    ///     The GaussDB index method to be used. Null selects the default (currently btree).
     /// </summary>
     /// <remarks>
     ///     http://www.postgresql.org/docs/current/static/sql-createindex.html
@@ -35,7 +35,7 @@ public static class NpgsqlIndexBuilderExtensions
     }
 
     /// <summary>
-    ///     The PostgreSQL index method to be used. Null selects the default (currently btree).
+    ///     The GaussDB index method to be used. Null selects the default (currently btree).
     /// </summary>
     /// <remarks>
     ///     http://www.postgresql.org/docs/current/static/sql-createindex.html
@@ -49,7 +49,7 @@ public static class NpgsqlIndexBuilderExtensions
         => (IndexBuilder<TEntity>)HasMethod((IndexBuilder)indexBuilder, method);
 
     /// <summary>
-    ///     The PostgreSQL index method to be used. Null selects the default (currently btree).
+    ///     The GaussDB index method to be used. Null selects the default (currently btree).
     /// </summary>
     /// <remarks>
     ///     http://www.postgresql.org/docs/current/static/sql-createindex.html
@@ -74,7 +74,7 @@ public static class NpgsqlIndexBuilderExtensions
     }
 
     /// <summary>
-    ///     The PostgreSQL index method to be used. Null selects the default (currently btree).
+    ///     The GaussDB index method to be used. Null selects the default (currently btree).
     /// </summary>
     /// <remarks>
     ///     http://www.postgresql.org/docs/current/static/sql-createindex.html
@@ -98,7 +98,7 @@ public static class NpgsqlIndexBuilderExtensions
     #region Operators
 
     /// <summary>
-    ///     The PostgreSQL index operators to be used.
+    ///     The GaussDB index operators to be used.
     /// </summary>
     /// <remarks>
     ///     https://www.postgresql.org/docs/current/static/indexes-opclass.html
@@ -119,7 +119,7 @@ public static class NpgsqlIndexBuilderExtensions
     }
 
     /// <summary>
-    ///     The PostgreSQL index operators to be used.
+    ///     The GaussDB index operators to be used.
     /// </summary>
     /// <remarks>
     ///     https://www.postgresql.org/docs/current/static/indexes-opclass.html
@@ -133,7 +133,7 @@ public static class NpgsqlIndexBuilderExtensions
         => (IndexBuilder<TEntity>)HasOperators((IndexBuilder)indexBuilder, operators);
 
     /// <summary>
-    ///     The PostgreSQL index operators to be used.
+    ///     The GaussDB index operators to be used.
     /// </summary>
     /// <remarks>
     ///     https://www.postgresql.org/docs/current/static/indexes-opclass.html
@@ -158,7 +158,7 @@ public static class NpgsqlIndexBuilderExtensions
     }
 
     /// <summary>
-    ///     Returns a value indicating whether the PostgreSQL index operators can be set.
+    ///     Returns a value indicating whether the GaussDB index operators can be set.
     /// </summary>
     /// <remarks>
     ///     https://www.postgresql.org/docs/current/static/indexes-opclass.html
@@ -288,7 +288,7 @@ public static class NpgsqlIndexBuilderExtensions
     #region Collation
 
     /// <summary>
-    ///     The PostgreSQL index collation to be used.
+    ///     The GaussDB index collation to be used.
     /// </summary>
     /// <remarks>
     ///     https://www.postgresql.org/docs/current/static/indexes-collations.html
@@ -309,7 +309,7 @@ public static class NpgsqlIndexBuilderExtensions
     }
 
     /// <summary>
-    ///     The PostgreSQL index collation to be used.
+    ///     The GaussDB index collation to be used.
     /// </summary>
     /// <remarks>
     ///     https://www.postgresql.org/docs/current/static/indexes-collations.html
@@ -323,7 +323,7 @@ public static class NpgsqlIndexBuilderExtensions
         => (IndexBuilder<TEntity>)UseCollation((IndexBuilder)indexBuilder, values);
 
     /// <summary>
-    ///     The PostgreSQL index collation to be used.
+    ///     The GaussDB index collation to be used.
     /// </summary>
     /// <remarks>
     ///     https://www.postgresql.org/docs/current/static/indexes-collations.html
@@ -348,7 +348,7 @@ public static class NpgsqlIndexBuilderExtensions
     }
 
     /// <summary>
-    ///     Returns a value indicating whether the PostgreSQL index collation can be set.
+    ///     Returns a value indicating whether the GaussDB index collation can be set.
     /// </summary>
     /// <remarks>
     ///     https://www.postgresql.org/docs/current/static/indexes-collations.html
@@ -372,7 +372,7 @@ public static class NpgsqlIndexBuilderExtensions
     #region Null sort order
 
     /// <summary>
-    ///     The PostgreSQL index NULL sort ordering to be used.
+    ///     The GaussDB index NULL sort ordering to be used.
     /// </summary>
     /// <remarks>
     ///     https://www.postgresql.org/docs/current/static/indexes-ordering.html
@@ -396,7 +396,7 @@ public static class NpgsqlIndexBuilderExtensions
     }
 
     /// <summary>
-    ///     The PostgreSQL index NULL sort ordering to be used.
+    ///     The GaussDB index NULL sort ordering to be used.
     /// </summary>
     /// <remarks>
     ///     https://www.postgresql.org/docs/current/static/indexes-ordering.html
@@ -410,7 +410,7 @@ public static class NpgsqlIndexBuilderExtensions
         => (IndexBuilder<TEntity>)HasNullSortOrder((IndexBuilder)indexBuilder, values);
 
     /// <summary>
-    ///     The PostgreSQL index NULL sort ordering to be used.
+    ///     The GaussDB index NULL sort ordering to be used.
     /// </summary>
     /// <remarks>
     ///     https://www.postgresql.org/docs/current/static/indexes-ordering.html
@@ -438,7 +438,7 @@ public static class NpgsqlIndexBuilderExtensions
     }
 
     /// <summary>
-    ///     Returns a value indicating whether the PostgreSQL index null sort ordering can be set.
+    ///     Returns a value indicating whether the GaussDB index null sort ordering can be set.
     /// </summary>
     /// <remarks>
     ///     https://www.postgresql.org/docs/current/static/indexes-ordering.html
@@ -587,7 +587,7 @@ public static class NpgsqlIndexBuilderExtensions
     #region Created concurrently
 
     /// <summary>
-    ///     When this option is used, PostgreSQL will build the index without taking any locks that prevent concurrent inserts,
+    ///     When this option is used, GaussDB will build the index without taking any locks that prevent concurrent inserts,
     ///     updates, or deletes on the table; whereas a standard index build locks out writes (but not reads) on the table until it's done.
     /// </summary>
     /// <remarks>
@@ -606,7 +606,7 @@ public static class NpgsqlIndexBuilderExtensions
     }
 
     /// <summary>
-    ///     When this option is used, PostgreSQL will build the index without taking any locks that prevent concurrent inserts,
+    ///     When this option is used, GaussDB will build the index without taking any locks that prevent concurrent inserts,
     ///     updates, or deletes on the table; whereas a standard index build locks out writes (but not reads) on the table until it's done.
     /// </summary>
     /// <remarks>
@@ -621,7 +621,7 @@ public static class NpgsqlIndexBuilderExtensions
         => (IndexBuilder<TEntity>)IsCreatedConcurrently((IndexBuilder)indexBuilder, createdConcurrently);
 
     /// <summary>
-    ///     When this option is used, PostgreSQL will build the index without taking any locks that prevent concurrent inserts,
+    ///     When this option is used, GaussDB will build the index without taking any locks that prevent concurrent inserts,
     ///     updates, or deletes on the table; whereas a standard index build locks out writes (but not reads) on the table until it's done.
     /// </summary>
     /// <remarks>
@@ -758,7 +758,7 @@ public static class NpgsqlIndexBuilderExtensions
     #region Storage parameters
 
     /// <summary>
-    ///     Sets a PostgreSQL storage parameter on the index.
+    ///     Sets a GaussDB storage parameter on the index.
     /// </summary>
     /// <remarks>
     ///     See https://www.postgresql.org/docs/current/sql-createindex.html#SQL-CREATEINDEX-STORAGE-PARAMETERS
@@ -780,7 +780,7 @@ public static class NpgsqlIndexBuilderExtensions
     }
 
     /// <summary>
-    ///     Sets a PostgreSQL storage parameter on the index.
+    ///     Sets a GaussDB storage parameter on the index.
     /// </summary>
     /// <remarks>
     ///     See https://www.postgresql.org/docs/current/sql-createindex.html#SQL-CREATEINDEX-STORAGE-PARAMETERS
@@ -797,7 +797,7 @@ public static class NpgsqlIndexBuilderExtensions
         => (IndexBuilder<TEntity>)HasStorageParameter((IndexBuilder)indexBuilder, parameterName, parameterValue);
 
     /// <summary>
-    ///     Sets a PostgreSQL storage parameter on the index.
+    ///     Sets a GaussDB storage parameter on the index.
     /// </summary>
     /// <remarks>
     ///     See https://www.postgresql.org/docs/current/sql-createindex.html#SQL-CREATEINDEX-STORAGE-PARAMETERS
@@ -824,7 +824,7 @@ public static class NpgsqlIndexBuilderExtensions
     }
 
     /// <summary>
-    ///     Returns a value indicating whether the PostgreSQL storage parameter is set on the table created for this entity.
+    ///     Returns a value indicating whether the GaussDB storage parameter is set on the table created for this entity.
     /// </summary>
     /// <remarks>
     ///     See https://www.postgresql.org/docs/current/static/sql-createtable.html#SQL-CREATETABLE-STORAGE-PARAMETERS

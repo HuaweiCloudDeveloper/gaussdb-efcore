@@ -13,7 +13,7 @@ namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal.Mapping;
 public class NpgsqlEnumTypeMapping : RelationalTypeMapping
 {
     /// <summary>
-    ///     Maps the CLR member values to the PostgreSQL value labels.
+    ///     Maps the CLR member values to the GaussDB value labels.
     /// </summary>
     /// <remarks>
     ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to

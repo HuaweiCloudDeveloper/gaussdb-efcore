@@ -54,7 +54,7 @@ public class NpgsqlSqlTranslatingExpressionVisitor : RelationalSqlTranslatingExp
     private static readonly MethodInfo EscapeLikePatternParameterMethod =
         typeof(NpgsqlSqlTranslatingExpressionVisitor).GetTypeInfo().GetDeclaredMethod(nameof(ConstructLikePatternParameter))!;
 
-    // Note: This is the PostgreSQL default and does not need to be explicitly specified
+    // Note: This is the GaussDB default and does not need to be explicitly specified
     private const char LikeEscapeChar = '\\';
 
     /// <summary>
@@ -184,7 +184,7 @@ public class NpgsqlSqlTranslatingExpressionVisitor : RelationalSqlTranslatingExp
 
             // We map both IPAddress and NpgsqlInet to PG inet, and translate many methods accepting NpgsqlInet, so ignore casts from
             // IPAddress to NpgsqlInet.
-            // On the PostgreSQL side, cidr is also implicitly convertible to inet, and at the ADO.NET level NpgsqlCidr has a similar
+            // On the GaussDB side, cidr is also implicitly convertible to inet, and at the ADO.NET level NpgsqlCidr has a similar
             // implicit conversion operator to NpgsqlInet. So remove that cast as well.
             case ExpressionType.Convert
                 when unaryExpression.Type == typeof(NpgsqlInet)
@@ -262,7 +262,7 @@ public class NpgsqlSqlTranslatingExpressionVisitor : RelationalSqlTranslatingExp
                     _nodaTimePeriodType ??= binaryExpression.Left.Type.Assembly.GetType("NodaTime.Period")!,
                     typeMapping: null);
 
-                // Note: many other date/time arithmetic operators are fully supported as-is by PostgreSQL - see NpgsqlSqlExpressionFactory
+                // Note: many other date/time arithmetic operators are fully supported as-is by GaussDB - see NpgsqlSqlExpressionFactory
             }
 
             case ExpressionType.ArrayIndex:
@@ -391,7 +391,7 @@ public class NpgsqlSqlTranslatingExpressionVisitor : RelationalSqlTranslatingExp
                     return QueryCompilationContext.NotTranslatedExpression;
                 }
 
-                // DateTime's second component is an int, but PostgreSQL's MAKE_TIMESTAMP accepts a double precision
+                // DateTime's second component is an int, but GaussDB's MAKE_TIMESTAMP accepts a double precision
                 sqlArguments[5] = _sqlExpressionFactory.Convert(sqlArguments[5], typeof(double));
 
                 return _sqlExpressionFactory.Function(
@@ -406,8 +406,8 @@ public class NpgsqlSqlTranslatingExpressionVisitor : RelationalSqlTranslatingExp
                     return QueryCompilationContext.NotTranslatedExpression;
                 }
 
-                // DateTime's second component is an int, but PostgreSQL's make_timestamp/make_timestamptz accepts a double precision.
-                // Also chop off the last Kind argument which does not get sent to PostgreSQL
+                // DateTime's second component is an int, but GaussDB's make_timestamp/make_timestamptz accepts a double precision.
+                // Also chop off the last Kind argument which does not get sent to GaussDB
                 var rewrittenArguments = new List<SqlExpression>
                 {
                     sqlArguments[0],

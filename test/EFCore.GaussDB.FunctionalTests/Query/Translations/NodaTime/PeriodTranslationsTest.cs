@@ -108,7 +108,7 @@ WHERE floor(date_part('second', n."Period"))::int = 23
 """);
     }
 
-    // PostgreSQL does not support extracting weeks from intervals
+    // GaussDB does not support extracting weeks from intervals
     [ConditionalFact]
     public Task Weeks_is_not_translated()
     {

@@ -71,7 +71,7 @@ public class NpgsqlMigrator : Migrator
             return;
         }
 
-        // If a PostgreSQL extension, enum or range was added, we want Npgsql to reload all types at the ADO.NET level.
+        // If a GaussDB extension, enum or range was added, we want Npgsql to reload all types at the ADO.NET level.
         var migrations = migratorData.AppliedMigrations.Count > 0 ? migratorData.AppliedMigrations : migratorData.RevertedMigrations;
         var reloadTypes = migrations
             .SelectMany(m => m.UpOperations)
@@ -114,7 +114,7 @@ public class NpgsqlMigrator : Migrator
             return;
         }
 
-        // If a PostgreSQL extension, enum or range was added, we want Npgsql to reload all types at the ADO.NET level.
+        // If a GaussDB extension, enum or range was added, we want Npgsql to reload all types at the ADO.NET level.
         var migrations = migratorData.AppliedMigrations.Count > 0 ? migratorData.AppliedMigrations : migratorData.RevertedMigrations;
         var reloadTypes = migrations
             .SelectMany(m => m.UpOperations)

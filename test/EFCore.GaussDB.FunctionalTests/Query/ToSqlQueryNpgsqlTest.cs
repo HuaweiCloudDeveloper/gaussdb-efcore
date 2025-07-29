@@ -9,7 +9,7 @@ public class ToSqlQuerySqlServerTest(NonSharedFixture fixture) : ToSqlQueryTestB
     public virtual void Check_all_tests_overridden()
         => TestHelpers.AssertAllMethodsOverridden(GetType());
 
-    // Base test implementation does not properly use identifier delimiters in raw SQL and isn't usable on PostgreSQL
+    // Base test implementation does not properly use identifier delimiters in raw SQL and isn't usable on GaussDB
     public override Task Entity_type_with_navigation_mapped_to_SqlQuery(bool async)
         => Task.CompletedTask;
 

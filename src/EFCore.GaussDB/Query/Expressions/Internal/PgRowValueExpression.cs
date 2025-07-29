@@ -3,10 +3,10 @@ using System.Runtime.CompilerServices;
 namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.Expressions.Internal;
 
 /// <summary>
-///     An expression that represents a PostgreSQL-specific row value expression in a SQL tree.
+///     An expression that represents a GaussDB-specific row value expression in a SQL tree.
 /// </summary>
 /// <remarks>
-///     See the <see href="https://www.postgresql.org/docs/current/sql-expressions.html#SQL-SYNTAX-ROW-CONSTRUCTORS">PostgreSQL docs</see>
+///     See the <see href="https://www.postgresql.org/docs/current/sql-expressions.html#SQL-SYNTAX-ROW-CONSTRUCTORS">GaussDB docs</see>
 ///     for more information.
 /// </remarks>
 public class PgRowValueExpression : SqlExpression, IEquatable<PgRowValueExpression>
@@ -14,7 +14,7 @@ public class PgRowValueExpression : SqlExpression, IEquatable<PgRowValueExpressi
     private static ConstructorInfo? _quotingConstructor;
 
     /// <summary>
-    ///     The values of this PostgreSQL row value expression.
+    ///     The values of this GaussDB row value expression.
     /// </summary>
     public virtual IReadOnlyList<SqlExpression> Values { get; }
 

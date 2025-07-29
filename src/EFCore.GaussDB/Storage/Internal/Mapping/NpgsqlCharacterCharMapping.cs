@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Storage.Json;
 namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal.Mapping;
 
 /// <summary>
-///     Type mapping for the PostgreSQL 'character' data type. Handles both CLR strings and chars.
+///     Type mapping for the GaussDB 'character' data type. Handles both CLR strings and chars.
 /// </summary>
 /// <remarks>
 ///     See: https://www.postgresql.org/docs/current/static/datatype-character.html

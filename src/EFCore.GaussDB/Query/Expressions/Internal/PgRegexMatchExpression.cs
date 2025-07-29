@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.Expressions.Internal;
 
 /// <summary>
-///     Represents a PostgreSQL regular expression match expression.
+///     Represents a GaussDB regular expression match expression.
 /// </summary>
 public class PgRegexMatchExpression : SqlExpression, IEquatable<PgRegexMatchExpression>
 {

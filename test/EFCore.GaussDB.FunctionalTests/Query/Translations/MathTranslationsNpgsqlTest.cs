@@ -204,11 +204,11 @@ WHERE round(b."Decimal", 1) = 255.1
 """);
     }
 
-    // PostgreSQL only has round(v, s) over numeric, may be possible to cast back and forth though
+    // GaussDB only has round(v, s) over numeric, may be possible to cast back and forth though
     public override Task Round_with_digits_double(bool async)
         => AssertTranslationFailed(() => base.Round_with_digits_double(async));
 
-    // PostgreSQL only has round(v, s) over numeric, may be possible to cast back and forth though
+    // GaussDB only has round(v, s) over numeric, may be possible to cast back and forth though
     public override Task Round_with_digits_float(bool async)
         => AssertTranslationFailed(() => base.Round_with_digits_float(async));
 
@@ -359,11 +359,11 @@ WHERE b."Float" > 0 AND ln(b."Float") <> 0
 """);
     }
 
-    // PostgreSQL only has log(x, base) over numeric, may be possible to cast back and forth though
+    // GaussDB only has log(x, base) over numeric, may be possible to cast back and forth though
     public override Task Log_with_newBase(bool async)
         => AssertTranslationFailed(() => base.Log_with_newBase(async));
 
-    // PostgreSQL only has log(x, base) over numeric, may be possible to cast back and forth though
+    // GaussDB only has log(x, base) over numeric, may be possible to cast back and forth though
     public override Task Log_with_newBase_float(bool async)
         => AssertTranslationFailed(() => base.Log_with_newBase_float(async));
 

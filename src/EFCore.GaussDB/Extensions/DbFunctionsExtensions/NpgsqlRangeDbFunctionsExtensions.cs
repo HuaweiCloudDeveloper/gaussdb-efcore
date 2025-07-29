@@ -3,7 +3,7 @@
 namespace Microsoft.EntityFrameworkCore;
 
 /// <summary>
-///     Provides extension methods for <see cref="NpgsqlRange{T}" /> supporting PostgreSQL translation.
+///     Provides extension methods for <see cref="NpgsqlRange{T}" /> supporting GaussDB translation.
 /// </summary>
 public static class NpgsqlRangeDbFunctionsExtensions
 {
@@ -227,10 +227,10 @@ public static class NpgsqlRangeDbFunctionsExtensions
         => throw new InvalidOperationException(CoreStrings.FunctionOnClient(nameof(Merge)));
 
     /// <summary>
-    ///     Computes the union of the non-null input ranges. Corresponds to the PostgreSQL <c>range_agg</c> aggregate function.
+    ///     Computes the union of the non-null input ranges. Corresponds to the GaussDB <c>range_agg</c> aggregate function.
     /// </summary>
     /// <param name="input">The ranges to be aggregated via union into a multirange.</param>
-    /// <seealso href="https://www.postgresql.org/docs/current/functions-aggregate.html">PostgreSQL documentation for aggregate functions.</seealso>
+    /// <seealso href="https://www.postgresql.org/docs/current/functions-aggregate.html">GaussDB documentation for aggregate functions.</seealso>
     /// <exception cref="NotSupportedException">
     ///     <see cref="RangeAgg{T}" /> is only intended for use via SQL translation as part of an EF Core LINQ query.
     /// </exception>
@@ -238,10 +238,10 @@ public static class NpgsqlRangeDbFunctionsExtensions
         => throw new InvalidOperationException(CoreStrings.FunctionOnClient(nameof(RangeAgg)));
 
     /// <summary>
-    ///     Computes the intersection of the non-null input ranges. Corresponds to the PostgreSQL <c>range_intersect_agg</c> aggregate function.
+    ///     Computes the intersection of the non-null input ranges. Corresponds to the GaussDB <c>range_intersect_agg</c> aggregate function.
     /// </summary>
     /// <param name="input">The ranges on which to perform the intersection operation.</param>
-    /// <seealso href="https://www.postgresql.org/docs/current/functions-aggregate.html">PostgreSQL documentation for aggregate functions.</seealso>
+    /// <seealso href="https://www.postgresql.org/docs/current/functions-aggregate.html">GaussDB documentation for aggregate functions.</seealso>
     /// <exception cref="NotSupportedException">
     ///     <see cref="RangeIntersectAgg{T}(IEnumerable{NpgsqlRange{T}})" /> is only intended for use via SQL translation as part of an EF Core
     ///     LINQ query.
@@ -251,10 +251,10 @@ public static class NpgsqlRangeDbFunctionsExtensions
 
     /// <summary>
     ///     Computes the intersection of the non-null input multiranges.
-    ///     Corresponds to the PostgreSQL <c>range_intersect_agg</c> aggregate function.
+    ///     Corresponds to the GaussDB <c>range_intersect_agg</c> aggregate function.
     /// </summary>
     /// <param name="input">The multiranges on which to perform the intersection operation.</param>
-    /// <seealso href="https://www.postgresql.org/docs/current/functions-aggregate.html">PostgreSQL documentation for aggregate functions.</seealso>
+    /// <seealso href="https://www.postgresql.org/docs/current/functions-aggregate.html">GaussDB documentation for aggregate functions.</seealso>
     /// <exception cref="NotSupportedException">
     ///     <see cref="RangeIntersectAgg{T}(IEnumerable{NpgsqlRange{T}[]})" /> is only intended for use via SQL translation as part of an EF Core
     ///     LINQ query.

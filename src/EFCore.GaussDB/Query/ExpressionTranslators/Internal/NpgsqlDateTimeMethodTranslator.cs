@@ -369,7 +369,7 @@ public class NpgsqlDateTimeMethodTranslator : IMethodCallTranslator
 
     private SqlExpression? CreateIntervalExpression(SqlExpression intervalNum, string datePart)
     {
-        // Note: ideally we'd simply generate a PostgreSQL interval expression, but the .NET mapping of that is TimeSpan,
+        // Note: ideally we'd simply generate a GaussDB interval expression, but the .NET mapping of that is TimeSpan,
         // which does not work for months, years, etc. So we generate special fragments instead.
         if (intervalNum is SqlConstantExpression constantExpression)
         {

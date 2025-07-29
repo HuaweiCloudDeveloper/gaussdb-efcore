@@ -9,7 +9,7 @@ using HuaweiCloud.EntityFrameworkCore.GaussDB.Update.Internal;
 namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Migrations;
 
 /// <summary>
-///     PostgreSQL-specific implementation of <see cref="MigrationsSqlGenerator" />.
+///     GaussDB-specific implementation of <see cref="MigrationsSqlGenerator" />.
 /// </summary>
 /// <remarks>
 ///     <para>
@@ -383,7 +383,7 @@ public class NpgsqlMigrationsSqlGenerator : MigrationsSqlGenerator
             || operation.IsStored != operation.OldColumn.IsStored)
         {
             // TODO: The following will fail if the column being altered is part of an index.
-            // SqlServer recreates indexes, but wait to see if PostgreSQL will introduce a proper ALTER TABLE ALTER COLUMN
+            // SqlServer recreates indexes, but wait to see if GaussDB will introduce a proper ALTER TABLE ALTER COLUMN
             // that allows us to do this cleanly.
             var dropColumnOperation = new DropColumnOperation
             {
@@ -480,7 +480,7 @@ public class NpgsqlMigrationsSqlGenerator : MigrationsSqlGenerator
         else if (operation is { IsNullable: false, OldColumn.IsNullable: true })
         {
             // The column is being made non-nullable. Generate an update statement before doing that, to convert any existing null values to
-            // the default value (otherwise PostgreSQL fails).
+            // the default value (otherwise GaussDB fails).
             if (operation.DefaultValueSql is not null || operation.DefaultValue is not null)
             {
                 string defaultValueSql;
@@ -840,7 +840,7 @@ public class NpgsqlMigrationsSqlGenerator : MigrationsSqlGenerator
     /// <inheritdoc />
     protected override void Generate(RestartSequenceOperation operation, IModel? model, MigrationCommandListBuilder builder)
     {
-        // PostgreSQL has ALTER SEQUENCE ... RESTART WITH x, which resets the current sequence value but does not change its start value
+        // GaussDB has ALTER SEQUENCE ... RESTART WITH x, which resets the current sequence value but does not change its start value
         // in the schema (so a subsequence RESTART without an argument resets it back to its original start value, not to x).
         // It also has ALTER SEQUENCE ... STARTS WITH x, which resets the schema start value but not the current value.
         // So we use both statements to reset both the current value and the schema value.
@@ -984,7 +984,7 @@ public class NpgsqlMigrationsSqlGenerator : MigrationsSqlGenerator
             return;
         }
 
-        // PostgreSQL has CREATE SCHEMA IF NOT EXISTS, but that requires CREATE privileges on the database even if the schema already
+        // GaussDB has CREATE SCHEMA IF NOT EXISTS, but that requires CREATE privileges on the database even if the schema already
         // exists. This blocks multi-tenant scenarios where the user has no database privileges.
         // So we procedurally check if the schema exists instead, and create it if not.
         var schemaName = operation.Name.Replace("'", "''");
@@ -1084,7 +1084,7 @@ public class NpgsqlMigrationsSqlGenerator : MigrationsSqlGenerator
 
         if (operation.Collation != operation.OldDatabase.Collation)
         {
-            throw new NotSupportedException("PostgreSQL does not support altering the collation on an existing database.");
+            throw new NotSupportedException("GaussDB does not support altering the collation on an existing database.");
         }
 
         GenerateCollationStatements(operation, model, builder);
@@ -1260,7 +1260,7 @@ public class NpgsqlMigrationsSqlGenerator : MigrationsSqlGenerator
         {
             var (oldLabels, newLabels) = (oldEnum.Labels, newEnum.Labels);
 
-            // We only support adding enum values - dropping is unsupported by PostgreSQL, and we don't want to
+            // We only support adding enum values - dropping is unsupported by GaussDB, and we don't want to
             // go into rename detection heuristics (users can do that in raw SQL).
             // See https://www.postgresql.org/docs/current/sql-altertype.html
 
@@ -1569,7 +1569,7 @@ public class NpgsqlMigrationsSqlGenerator : MigrationsSqlGenerator
         }
         else
         {
-            // "CREATE SEQUENCE name AS type" expression is supported only in PostgreSQL 10 or above.
+            // "CREATE SEQUENCE name AS type" expression is supported only in GaussDB 10 or above.
             // The base MigrationsSqlGenerator.Generate method generates that expression.
             // https://github.com/aspnet/EntityFrameworkCore/blob/master/src/EFCore.Relational/Migrations/MigrationsSqlGenerator.cs#L533-L535
             var oldValue = operation.ClrType;
@@ -1802,7 +1802,7 @@ public class NpgsqlMigrationsSqlGenerator : MigrationsSqlGenerator
                 optionsWritten = true;
             }
 
-            // Note: in older versions of PostgreSQL there's a slight variation, see NpgsqlDatabaseModelFactory.
+            // Note: in older versions of GaussDB there's a slight variation, see NpgsqlDatabaseModelFactory.
             // This is currently only used by identity, which is only supported on PG 10 anyway.
             long Min(Type type)
             {
@@ -1869,13 +1869,13 @@ public class NpgsqlMigrationsSqlGenerator : MigrationsSqlGenerator
 
         if (_postgresVersion < new Version(12, 0))
         {
-            throw new NotSupportedException("Computed/generated columns aren't supported in PostgreSQL prior to version 12");
+            throw new NotSupportedException("Computed/generated columns aren't supported in GaussDB prior to version 12");
         }
 
         if (operation.IsStored is not true && _postgresVersion < new Version(18, 0))
         {
             throw new NotSupportedException(
-                "Virtual (non-stored) generated columns are only supported on PostgreSQL 18 and up. " +
+                "Virtual (non-stored) generated columns are only supported on GaussDB 18 and up. " +
                 "On older versions, specify 'stored: true' in "
                 + $"'{nameof(RelationalPropertyBuilderExtensions.HasComputedColumnSql)}' in your context's OnModelCreating.");
         }
@@ -1916,7 +1916,7 @@ public class NpgsqlMigrationsSqlGenerator : MigrationsSqlGenerator
         if (annotatable.FindAnnotation(NpgsqlAnnotationNames.ValueGeneratedOnAdd) is not null)
         {
             throw new NotSupportedException(
-                "The Npgsql:ValueGeneratedOnAdd annotation has been found in your migrations, but is no longer supported. Please replace it with '.Annotation(\"Npgsql:ValueGenerationStrategy\", NpgsqlValueGenerationStrategy.SerialColumn)' where you want PostgreSQL serial (autoincrement) columns, and remove it in all other cases.");
+                "The Npgsql:ValueGeneratedOnAdd annotation has been found in your migrations, but is no longer supported. Please replace it with '.Annotation(\"Npgsql:ValueGenerationStrategy\", NpgsqlValueGenerationStrategy.SerialColumn)' where you want GaussDB serial (autoincrement) columns, and remove it in all other cases.");
         }
     }
 #pragma warning restore 618
@@ -2029,7 +2029,7 @@ public class NpgsqlMigrationsSqlGenerator : MigrationsSqlGenerator
         => name == "oid" && _postgresVersion.IsUnder(12) || SystemColumnNames.Contains(name);
 
     /// <summary>
-    ///     Tables in PostgreSQL implicitly have a set of system columns, which are always there.
+    ///     Tables in GaussDB implicitly have a set of system columns, which are always there.
     ///     We want to allow users to access these columns (i.e. xmin for optimistic concurrency) but
     ///     they should never generate migration operations.
     /// </summary>

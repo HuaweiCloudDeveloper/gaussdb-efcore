@@ -202,7 +202,7 @@ public class NpgsqlNodaTimeMethodCallTranslator : IMethodCallTranslator
 
         if (method == Instant_InZone)
         {
-            // When InZone is called, we have a mismatch: on the .NET NodaTime side, we have a ZonedDateTime; but on the PostgreSQL side,
+            // When InZone is called, we have a mismatch: on the .NET NodaTime side, we have a ZonedDateTime; but on the GaussDB side,
             // the AT TIME ZONE expression returns a 'timestamp without time zone' (when applied to a 'timestamp with time zone', which is
             // what ZonedDateTime is mapped to).
             return new PendingZonedDateTimeExpression(instance!, arguments[0]);

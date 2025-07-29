@@ -14,7 +14,7 @@ public static class NpgsqlModelBuilderExtensions
 
     /// <summary>
     ///     Configures the model to use a sequence-based hi-lo pattern to generate values for properties
-    ///     marked as <see cref="ValueGenerated.OnAdd" />, when targeting PostgreSQL.
+    ///     marked as <see cref="ValueGenerated.OnAdd" />, when targeting GaussDB.
     /// </summary>
     /// <param name="modelBuilder">The model builder.</param>
     /// <param name="name">The name of the sequence.</param>
@@ -46,7 +46,7 @@ public static class NpgsqlModelBuilderExtensions
 
     /// <summary>
     ///     Configures the database sequence used for the hi-lo pattern to generate values for key properties
-    ///     marked as <see cref="ValueGenerated.OnAdd" />, when targeting PostgreSQL.
+    ///     marked as <see cref="ValueGenerated.OnAdd" />, when targeting GaussDB.
     /// </summary>
     /// <param name="modelBuilder"> The model builder. </param>
     /// <param name="name"> The name of the sequence. </param>
@@ -98,11 +98,11 @@ public static class NpgsqlModelBuilderExtensions
 
     /// <summary>
     ///     <para>
-    ///         Configures the model to use the PostgreSQL SERIAL feature to generate values for properties
-    ///         marked as <see cref="ValueGenerated.OnAdd" />, when targeting PostgreSQL.
+    ///         Configures the model to use the GaussDB SERIAL feature to generate values for properties
+    ///         marked as <see cref="ValueGenerated.OnAdd" />, when targeting GaussDB.
     ///     </para>
     ///     <para>
-    ///         This option should be considered deprecated starting with PostgreSQL 10, consider using <see cref="UseIdentityColumns" /> instead.
+    ///         This option should be considered deprecated starting with GaussDB 10, consider using <see cref="UseIdentityColumns" /> instead.
     ///     </para>
     /// </summary>
     /// <param name="modelBuilder">The model builder.</param>
@@ -127,12 +127,12 @@ public static class NpgsqlModelBuilderExtensions
 
     /// <summary>
     ///     <para>
-    ///         Configures the model to use the PostgreSQL IDENTITY feature to generate values for properties
-    ///         marked as <see cref="ValueGenerated.OnAdd" />, when targeting PostgreSQL. Values for these
+    ///         Configures the model to use the GaussDB IDENTITY feature to generate values for properties
+    ///         marked as <see cref="ValueGenerated.OnAdd" />, when targeting GaussDB. Values for these
     ///         columns will always be generated as identity, and the application will not be able to override
     ///         this behavior by providing a value.
     ///     </para>
-    ///     <para>Available only starting PostgreSQL 10.</para>
+    ///     <para>Available only starting GaussDB 10.</para>
     /// </summary>
     /// <param name="modelBuilder">The model builder.</param>
     /// <returns>The same builder instance so that multiple calls can be chained.</returns>
@@ -153,13 +153,13 @@ public static class NpgsqlModelBuilderExtensions
 
     /// <summary>
     ///     <para>
-    ///         Configures the model to use the PostgreSQL IDENTITY feature to generate values for properties
-    ///         marked as <see cref="ValueGenerated.OnAdd" />, when targeting PostgreSQL. Values for these
+    ///         Configures the model to use the GaussDB IDENTITY feature to generate values for properties
+    ///         marked as <see cref="ValueGenerated.OnAdd" />, when targeting GaussDB. Values for these
     ///         columns will be generated as identity by default, but the application will be able to override
     ///         this behavior by providing a value.
     ///     </para>
     ///     <para>
-    ///         This is the default behavior when targeting PostgreSQL. Available only starting PostgreSQL 10.
+    ///         This is the default behavior when targeting GaussDB. Available only starting GaussDB 10.
     ///     </para>
     /// </summary>
     /// <param name="modelBuilder">The model builder.</param>
@@ -181,13 +181,13 @@ public static class NpgsqlModelBuilderExtensions
 
     /// <summary>
     ///     <para>
-    ///         Configures the model to use the PostgreSQL IDENTITY feature to generate values for properties
-    ///         marked as <see cref="ValueGenerated.OnAdd" />, when targeting PostgreSQL. Values for these
+    ///         Configures the model to use the GaussDB IDENTITY feature to generate values for properties
+    ///         marked as <see cref="ValueGenerated.OnAdd" />, when targeting GaussDB. Values for these
     ///         columns will be generated as identity by default, but the application will be able to override
     ///         this behavior by providing a value.
     ///     </para>
     ///     <para>
-    ///         This is the default behavior when targeting PostgreSQL. Available only starting PostgreSQL 10.
+    ///         This is the default behavior when targeting GaussDB. Available only starting GaussDB 10.
     ///     </para>
     /// </summary>
     /// <param name="modelBuilder">The model builder.</param>
@@ -196,7 +196,7 @@ public static class NpgsqlModelBuilderExtensions
         => modelBuilder.UseIdentityByDefaultColumns();
 
     /// <summary>
-    ///     Configures the value generation strategy for the key property, when targeting PostgreSQL.
+    ///     Configures the value generation strategy for the key property, when targeting GaussDB.
     /// </summary>
     /// <param name="modelBuilder">The builder for the property being configured.</param>
     /// <param name="valueGenerationStrategy">The value generation strategy.</param>
@@ -258,7 +258,7 @@ public static class NpgsqlModelBuilderExtensions
 
     /// <summary>
     ///     Configures the model to use a sequence per hierarchy to generate values for key properties marked as
-    ///     <see cref="ValueGenerated.OnAdd" />, when targeting PostgreSQL.
+    ///     <see cref="ValueGenerated.OnAdd" />, when targeting GaussDB.
     /// </summary>
     /// <param name="modelBuilder">The model builder.</param>
     /// <param name="nameSuffix">The name that will suffix the table name for each sequence created automatically.</param>
@@ -290,7 +290,7 @@ public static class NpgsqlModelBuilderExtensions
     #region Extensions
 
     /// <summary>
-    ///     Registers a PostgreSQL extension in the model.
+    ///     Registers a GaussDB extension in the model.
     /// </summary>
     /// <param name="modelBuilder">The model builder in which to define the extension.</param>
     /// <param name="schema">The schema in which to create the extension.</param>
@@ -319,7 +319,7 @@ public static class NpgsqlModelBuilderExtensions
     }
 
     /// <summary>
-    ///     Registers a PostgreSQL extension in the model.
+    ///     Registers a GaussDB extension in the model.
     /// </summary>
     /// <param name="modelBuilder">The model builder in which to define the extension.</param>
     /// <param name="name">The name of the extension to create.</param>
@@ -336,7 +336,7 @@ public static class NpgsqlModelBuilderExtensions
         => modelBuilder.HasPostgresExtension(null, name);
 
     /// <summary>
-    ///     Registers a PostgreSQL extension in the model.
+    ///     Registers a GaussDB extension in the model.
     /// </summary>
     /// <param name="modelBuilder">The model builder in which to define the extension.</param>
     /// <param name="schema">The schema in which to create the extension.</param>
@@ -367,7 +367,7 @@ public static class NpgsqlModelBuilderExtensions
     }
 
     /// <summary>
-    ///     Registers a PostgreSQL extension in the model.
+    ///     Registers a GaussDB extension in the model.
     /// </summary>
     /// <param name="modelBuilder">The model builder in which to define the extension.</param>
     /// <param name="name">The name of the extension to create.</param>
@@ -386,7 +386,7 @@ public static class NpgsqlModelBuilderExtensions
         => modelBuilder.HasPostgresExtension(schema: null, name, version: null, fromDataAnnotation);
 
     /// <summary>
-    ///     Returns a value indicating whether the given PostgreSQL extension can be registered in the model.
+    ///     Returns a value indicating whether the given GaussDB extension can be registered in the model.
     /// </summary>
     /// <remarks>
     ///     See <see href="https://aka.ms/efcore-docs-modeling">Modeling entity types and relationships</see>, and
@@ -475,7 +475,7 @@ public static class NpgsqlModelBuilderExtensions
     }
 
     /// <summary>
-    ///     Returns a value indicating whether the given PostgreSQL extension can be registered in the model.
+    ///     Returns a value indicating whether the given GaussDB extension can be registered in the model.
     /// </summary>
     /// <remarks>
     ///     See <see href="https://aka.ms/efcore-docs-modeling">Modeling entity types and relationships</see>, and
@@ -557,7 +557,7 @@ public static class NpgsqlModelBuilderExtensions
     #region Templates
 
     /// <summary>
-    ///     Specifies the PostgreSQL database to use as a template when creating a new database for this model.
+    ///     Specifies the GaussDB database to use as a template when creating a new database for this model.
     /// </summary>
     public static ModelBuilder UseDatabaseTemplate(this ModelBuilder modelBuilder, string templateDatabaseName)
     {
@@ -580,12 +580,12 @@ public static class NpgsqlModelBuilderExtensions
     /// <param name="name">The name of the range type to be created.</param>
     /// <param name="subtype">The subtype (or element type) of the range</param>
     /// <param name="canonicalFunction">
-    ///     An optional PostgreSQL function which converts range values to a canonical form.
+    ///     An optional GaussDB function which converts range values to a canonical form.
     /// </param>
     /// <param name="subtypeOpClass">Used to specify a non-default operator class.</param>
     /// <param name="collation">Used to specify a non-default collation in the range's order.</param>
     /// <param name="subtypeDiff">
-    ///     An optional PostgreSQL function taking two values of the subtype type as argument, and return a double
+    ///     An optional GaussDB function taking two values of the subtype type as argument, and return a double
     ///     precision value representing the difference between the two given values.
     /// </param>
     /// <remarks>
@@ -638,7 +638,7 @@ public static class NpgsqlModelBuilderExtensions
     #region Tablespaces
 
     /// <summary>
-    ///     Specifies the PostgreSQL tablespace in which to place the new database created for this model.
+    ///     Specifies the GaussDB tablespace in which to place the new database created for this model.
     /// </summary>
     public static ModelBuilder UseTablespace(
         this ModelBuilder modelBuilder,

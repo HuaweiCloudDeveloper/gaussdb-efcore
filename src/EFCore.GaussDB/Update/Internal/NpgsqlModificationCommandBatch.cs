@@ -8,11 +8,11 @@ namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Update.Internal;
 /// <remarks>
 ///     The usual ModificationCommandBatch implementation is <see cref="AffectedCountModificationCommandBatch" />,
 ///     which selects the number of rows modified via a SQL query.
-///     PostgreSQL actually has no way of selecting the modified row count.
-///     SQL defines GET DIAGNOSTICS which should provide this, but in PostgreSQL it's only available
+///     GaussDB actually has no way of selecting the modified row count.
+///     SQL defines GET DIAGNOSTICS which should provide this, but in GaussDB it's only available
 ///     in PL/pgSQL. See http://www.postgresql.org/docs/9.4/static/unsupported-features-sql-standard.html,
 ///     identifier F121-01.
-///     Instead, the affected row count can be accessed in the PostgreSQL protocol itself, which seems
+///     Instead, the affected row count can be accessed in the GaussDB protocol itself, which seems
 ///     cleaner and more efficient anyway (no additional query).
 /// </remarks>
 public class NpgsqlModificationCommandBatch : ReaderModificationCommandBatch
@@ -41,7 +41,7 @@ public class NpgsqlModificationCommandBatch : ReaderModificationCommandBatch
     /// </summary>
     protected override void AddParameter(IColumnModification columnModification)
     {
-        // PostgreSQL stored procedures cannot return a regular result set, and output parameter values are simply sent back as the
+        // GaussDB stored procedures cannot return a regular result set, and output parameter values are simply sent back as the
         // result set; this is very different from SQL Server, where output parameter values can be sent back in addition to result
         // sets. So we avoid adding NpgsqlParameters for output parameters - we'll just retrieve and propagate the values below when
         // consuming the result set.

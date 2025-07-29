@@ -4,7 +4,7 @@ using static HuaweiCloud.EntityFrameworkCore.GaussDB.Utilities.Statics;
 namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.ExpressionTranslators.Internal;
 
 /// <summary>
-///     Provides translations for PostgreSQL full-text search methods.
+///     Provides translations for GaussDB full-text search methods.
 /// </summary>
 public class NpgsqlFullTextSearchMethodTranslator : IMethodCallTranslator
 {

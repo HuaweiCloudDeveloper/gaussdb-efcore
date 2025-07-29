@@ -5,7 +5,7 @@ using System.Text;
 namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal.Mapping;
 
 /// <summary>
-///     The type mapping for PostgreSQL range types.
+///     The type mapping for GaussDB range types.
 /// </summary>
 /// <remarks>
 ///     See: https://www.postgresql.org/docs/current/static/rangetypes.html

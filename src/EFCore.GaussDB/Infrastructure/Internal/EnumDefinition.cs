@@ -11,7 +11,7 @@ namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure.Internal;
 public sealed class EnumDefinition : IEquatable<EnumDefinition>
 {
     /// <summary>
-    ///     Maps the CLR member values to the PostgreSQL value labels.
+    ///     Maps the CLR member values to the GaussDB value labels.
     /// </summary>
     /// <remarks>
     ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to
@@ -22,7 +22,7 @@ public sealed class EnumDefinition : IEquatable<EnumDefinition>
     public IReadOnlyDictionary<object, string> Labels { get; }
 
     /// <summary>
-    ///     The name of the PostgreSQL enum type to be mapped.
+    ///     The name of the GaussDB enum type to be mapped.
     /// </summary>
     /// <remarks>
     ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to
@@ -33,7 +33,7 @@ public sealed class EnumDefinition : IEquatable<EnumDefinition>
     public string StoreTypeName { get; }
 
     /// <summary>
-    ///     The PostgreSQL schema in which the enum is defined. If null, the default schema is used
+    ///     The GaussDB schema in which the enum is defined. If null, the default schema is used
     ///     (which is public unless changed on the model).
     /// </summary>
     /// <remarks>

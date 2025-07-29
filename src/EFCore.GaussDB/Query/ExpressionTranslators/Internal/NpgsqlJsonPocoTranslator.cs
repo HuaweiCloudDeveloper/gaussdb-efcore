@@ -120,7 +120,7 @@ public class NpgsqlJsonPocoTranslator : IMemberTranslator, IMethodCallTranslator
             _ => null
         };
 
-        // The PostgreSQL traversal operator always returns text.
+        // The GaussDB traversal operator always returns text.
         // If the type returned is a scalar (int, bool, etc.), we need to apply a conversion from string.
         SqlExpression ConvertFromText(SqlExpression expression, Type returnType)
             => _typeMappingSource.FindMapping(returnType.UnwrapNullableType(), _model) switch

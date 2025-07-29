@@ -1147,7 +1147,7 @@ public static class NpgsqlPropertyExtensions
     /// <summary>
     ///     Returns the compression method to be used, or <c>null</c> if it hasn't been specified.
     /// </summary>
-    /// <remarks>This feature was introduced in PostgreSQL 14.</remarks>
+    /// <remarks>This feature was introduced in GaussDB 14.</remarks>
     public static string? GetCompressionMethod(this IReadOnlyProperty property)
         => (property is RuntimeProperty)
             ? throw new InvalidOperationException(CoreStrings.RuntimeModelMissingData)
@@ -1156,7 +1156,7 @@ public static class NpgsqlPropertyExtensions
     /// <summary>
     ///     Returns the compression method to be used, or <c>null</c> if it hasn't been specified.
     /// </summary>
-    /// <remarks>This feature was introduced in PostgreSQL 14.</remarks>
+    /// <remarks>This feature was introduced in GaussDB 14.</remarks>
     public static string? GetCompressionMethod(this IReadOnlyProperty property, in StoreObjectIdentifier storeObject)
         => property is RuntimeProperty
             ? throw new InvalidOperationException(CoreStrings.RuntimeModelMissingData)
@@ -1167,14 +1167,14 @@ public static class NpgsqlPropertyExtensions
     /// <summary>
     ///     Sets the compression method to be used, or <c>null</c> if it hasn't been specified.
     /// </summary>
-    /// <remarks>This feature was introduced in PostgreSQL 14.</remarks>
+    /// <remarks>This feature was introduced in GaussDB 14.</remarks>
     public static void SetCompressionMethod(this IMutableProperty property, string? compressionMethod)
         => property.SetOrRemoveAnnotation(NpgsqlAnnotationNames.CompressionMethod, compressionMethod);
 
     /// <summary>
     ///     Sets the compression method to be used, or <c>null</c> if it hasn't been specified.
     /// </summary>
-    /// <remarks>This feature was introduced in PostgreSQL 14.</remarks>
+    /// <remarks>This feature was introduced in GaussDB 14.</remarks>
     public static string? SetCompressionMethod(
         this IConventionProperty property,
         string? compressionMethod,

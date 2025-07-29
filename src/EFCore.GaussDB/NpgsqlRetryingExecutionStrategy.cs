@@ -3,7 +3,7 @@
 namespace HuaweiCloud.EntityFrameworkCore.GaussDB;
 
 /// <summary>
-///     An <see cref="IExecutionStrategy" /> implementation for retrying failed executions on PostgreSQL.
+///     An <see cref="IExecutionStrategy" /> implementation for retrying failed executions on GaussDB.
 /// </summary>
 /// <remarks>
 ///     <para>

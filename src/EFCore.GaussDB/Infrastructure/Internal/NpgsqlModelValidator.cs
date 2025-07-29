@@ -46,7 +46,7 @@ public class NpgsqlModelValidator : RelationalModelValidator
     }
 
     /// <summary>
-    ///     Validates that identity columns are used only with PostgreSQL 10.0 or later.
+    ///     Validates that identity columns are used only with GaussDB 10.0 or later.
     /// </summary>
     /// <param name="model">The model to validate.</param>
     protected virtual void ValidateIdentityVersionCompatibility(IModel model)
@@ -61,8 +61,8 @@ public class NpgsqlModelValidator : RelationalModelValidator
         if (strategy is NpgsqlValueGenerationStrategy.IdentityAlwaysColumn or NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
         {
             throw new InvalidOperationException(
-                $"'{strategy}' requires PostgreSQL 10.0 or later. "
-                + "If you're using an older version, set PostgreSQL compatibility mode by calling "
+                $"'{strategy}' requires GaussDB 10.0 or later. "
+                + "If you're using an older version, set GaussDB compatibility mode by calling "
                 + $"'optionsBuilder.{nameof(NpgsqlDbContextOptionsBuilder.SetPostgresVersion)}()' in your model's OnConfiguring. "
                 + "See the docs for more info.");
         }
@@ -75,7 +75,7 @@ public class NpgsqlModelValidator : RelationalModelValidator
                 or NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
             {
                 throw new InvalidOperationException(
-                    $"{property.DeclaringType}.{property.Name}: '{propertyStrategy}' requires PostgreSQL 10.0 or later.");
+                    $"{property.DeclaringType}.{property.Name}: '{propertyStrategy}' requires GaussDB 10.0 or later.");
             }
         }
     }

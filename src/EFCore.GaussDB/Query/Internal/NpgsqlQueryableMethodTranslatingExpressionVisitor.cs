@@ -112,7 +112,7 @@ public class NpgsqlQueryableMethodTranslatingExpressionVisitor : RelationalQuery
             ? elementClrType.IsNullableType()
             : property.GetElementType()!.IsNullable;
 
-        // We support two kinds of primitive collections: the standard one with PostgreSQL arrays (where we use the unnest function), and
+        // We support two kinds of primitive collections: the standard one with GaussDB arrays (where we use the unnest function), and
         // a special case for geometry collections, where we use
         SelectExpression selectExpression;
 
@@ -139,7 +139,7 @@ public class NpgsqlQueryableMethodTranslatingExpressionVisitor : RelationalQuery
 
             // TODO: When we have metadata to determine if the element is nullable, pass that here to SelectExpression
 
-            // Note also that with PostgreSQL unnest, the output ordering is guaranteed to be the same as the input array. However, we still
+            // Note also that with GaussDB unnest, the output ordering is guaranteed to be the same as the input array. However, we still
             // need to add an explicit ordering on the ordinality column, since once the unnest is joined into a select, its "natural"
             // orderings is lost and an explicit ordering is needed again (see #3207).
             var (ordinalityColumn, ordinalityComparer) = GenerateOrdinalityIdentifier(tableAlias);
@@ -620,7 +620,7 @@ public class NpgsqlQueryableMethodTranslatingExpressionVisitor : RelationalQuery
                 case SqlConstantExpression or PgNewArrayExpression:
                     break;
 
-                // Similar to ParameterExpression below, but when a bare subquery is present inside ANY(), PostgreSQL just compares
+                // Similar to ParameterExpression below, but when a bare subquery is present inside ANY(), GaussDB just compares
                 // against each of its resulting rows (just like IN). To "extract" the array result of the scalar subquery, we need
                 // to add an explicit cast (see #1803).
                 case ScalarSubqueryExpression subqueryExpression:
@@ -741,7 +741,7 @@ public class NpgsqlQueryableMethodTranslatingExpressionVisitor : RelationalQuery
             && source.TryExtractArray(out var array, out var projectedColumn)
             && TranslateExpression(index) is { } translatedIndex)
         {
-            // Note that PostgreSQL arrays are 1-based, so adjust the index.
+            // Note that GaussDB arrays are 1-based, so adjust the index.
 #pragma warning disable EF1001 // SelectExpression constructors are currently internal
             return source.UpdateQueryExpression(
                 new SelectExpression(
@@ -846,7 +846,7 @@ public class NpgsqlQueryableMethodTranslatingExpressionVisitor : RelationalQuery
     /// </summary>
     protected override ShapedQueryExpression? TranslateSkip(ShapedQueryExpression source, Expression count)
     {
-        // Translate Skip over array to the PostgreSQL slice operator (array.Skip(2) -> array[3,])
+        // Translate Skip over array to the GaussDB slice operator (array.Skip(2) -> array[3,])
         // Note that we have unnest over multiranges, not just arrays - but multiranges don't support subscripting/slicing.
         if (source.TryExtractArray(out var array, out var projectedColumn)
             && TranslateExpression(count) is { } translatedCount)
@@ -897,7 +897,7 @@ public class NpgsqlQueryableMethodTranslatingExpressionVisitor : RelationalQuery
     /// </summary>
     protected override ShapedQueryExpression? TranslateTake(ShapedQueryExpression source, Expression count)
     {
-        // Translate Take over array to the PostgreSQL slice operator (array.Take(2) -> array[,2])
+        // Translate Take over array to the GaussDB slice operator (array.Take(2) -> array[,2])
         // Note that we have unnest over multiranges, not just arrays - but multiranges don't support subscripting/slicing.
         if (source.TryExtractArray(out var array, out var projectedColumn)
             && TranslateExpression(count) is { } translatedCount)
@@ -1052,7 +1052,7 @@ public class NpgsqlQueryableMethodTranslatingExpressionVisitor : RelationalQuery
             return false;
         }
 
-        // PostgreSQL doesn't support referencing the main update table from anywhere except for the UPDATE WHERE clause.
+        // GaussDB doesn't support referencing the main update table from anywhere except for the UPDATE WHERE clause.
         // This specifically makes it impossible to have joins which reference the main table in their predicate (ON ...).
         // Because of this, we detect all such inner joins and lift their predicates to the main WHERE clause (where a reference to the
         // main table is allowed) - see NpgsqlQuerySqlGenerator.VisitUpdate.
@@ -1098,7 +1098,7 @@ public class NpgsqlQueryableMethodTranslatingExpressionVisitor : RelationalQuery
     /// </summary>
     protected override bool IsValidSelectExpressionForExecuteDelete(SelectExpression selectExpression)
         // The default relational behavior is to allow only single-table expressions, and the only permitted feature is a predicate.
-        // Here we extend this to also inner joins to tables, which we generate via the PostgreSQL-specific USING construct.
+        // Here we extend this to also inner joins to tables, which we generate via the GaussDB-specific USING construct.
         => selectExpression is
         {
             Orderings: [],
@@ -1109,7 +1109,7 @@ public class NpgsqlQueryableMethodTranslatingExpressionVisitor : RelationalQuery
         }
         && selectExpression.Tables[0] is TableExpression && selectExpression.Tables.Skip(1).All(t => t is InnerJoinExpression);
 
-    // PostgreSQL unnest is guaranteed to return output rows in the same order as its input array,
+    // GaussDB unnest is guaranteed to return output rows in the same order as its input array,
     // https://www.postgresql.org/docs/current/functions-array.html.
     /// <inheritdoc />
     protected override bool IsOrdered(SelectExpression selectExpression)
@@ -1125,7 +1125,7 @@ public class NpgsqlQueryableMethodTranslatingExpressionVisitor : RelationalQuery
     }
 
     /// <summary>
-    ///     PostgreSQL array indexing is 1-based. If the index happens to be a constant, just increment it. Otherwise, append a +1 in the
+    ///     GaussDB array indexing is 1-based. If the index happens to be a constant, just increment it. Otherwise, append a +1 in the
     ///     SQL.
     /// </summary>
     private SqlExpression GenerateOneBasedIndexExpression(SqlExpression expression)

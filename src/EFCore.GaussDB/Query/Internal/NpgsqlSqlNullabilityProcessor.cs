@@ -52,7 +52,7 @@ public class NpgsqlSqlNullabilityProcessor : SqlNullabilityProcessor
             // Row value equality/inequality works the same as regular equals/non-equals; this means that it's fine as long as we're
             // comparing non-nullable values (no need to compensate), but for nullable values, we need to compensate. We go over the value
             // pairs, and extract out pairs that require compensation to an expanded, non-value-tuple expression (regular equality null
-            // semantics). Note that PostgreSQL does have DISTINCT FROM/NOT DISTINCT FROM which would have been perfect here, but those
+            // semantics). Note that GaussDB does have DISTINCT FROM/NOT DISTINCT FROM which would have been perfect here, but those
             // still don't use indexes.
             // Note that we don't do compensation for comparisons (e.g. greater than) since these are expressed via EF.Functions, which
             // correspond directly to SQL constructs.

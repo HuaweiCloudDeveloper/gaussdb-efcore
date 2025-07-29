@@ -1274,7 +1274,7 @@ WHERE
                 break;
 
             case "smallint":
-                // PostgreSQL 10 changed the default minvalue for a descending sequence, see #264
+                // GaussDB 10 changed the default minvalue for a descending sequence, see #264
                 defaultMin = postgresVersion >= new Version(10, 0)
                     ? short.MinValue
                     : short.MinValue + 1;
@@ -1289,7 +1289,7 @@ WHERE
                 break;
 
             case "integer":
-                // PostgreSQL 10 changed the default minvalue for a descending sequence, see #264
+                // GaussDB 10 changed the default minvalue for a descending sequence, see #264
                 defaultMin = postgresVersion >= new Version(10, 0)
                     ? int.MinValue
                     : int.MinValue + 1;
@@ -1304,7 +1304,7 @@ WHERE
                 break;
 
             case "bigint":
-                // PostgreSQL 10 changed the default minvalue for a descending sequence, see #264
+                // GaussDB 10 changed the default minvalue for a descending sequence, see #264
                 defaultMin = postgresVersion >= new Version(10, 0)
                     ? long.MinValue
                     : long.MinValue + 1;
@@ -1428,7 +1428,7 @@ WHERE
     #region Utilities
 
     /// <summary>
-    ///     Type names as returned by PostgreSQL's format_type need to be cleaned up a bit
+    ///     Type names as returned by GaussDB's format_type need to be cleaned up a bit
     /// </summary>
     private static string AdjustFormattedTypeName(string formattedTypeName)
     {

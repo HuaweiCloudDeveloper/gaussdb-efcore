@@ -146,7 +146,7 @@ namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Internal
             => GetString("CannotUseDataSourceWithAuthCallbacks");
 
         /// <summary>
-        ///     PostgreSQL sequences cannot be used to generate values for the property '{property}' on entity type '{entityType}' because the property type is '{propertyType}'. Sequences can only be used with integer properties.
+        ///     GaussDB sequences cannot be used to generate values for the property '{property}' on entity type '{entityType}' because the property type is '{propertyType}'. Sequences can only be used with integer properties.
         /// </summary>
         public static string SequenceBadType(object? property, object? entityType, object? propertyType)
             => string.Format(
@@ -154,7 +154,7 @@ namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Internal
                 property, entityType, propertyType);
 
         /// <summary>
-        ///     The entity type '{entityType}' is mapped to the stored procedure '{sproc}', which is configured with result columns. PostgreSQL stored procedures do not support result columns; use output parameters instead.
+        ///     The entity type '{entityType}' is mapped to the stored procedure '{sproc}', which is configured with result columns. GaussDB stored procedures do not support result columns; use output parameters instead.
         /// </summary>
         public static string StoredProcedureResultColumnsNotSupported(object? entityType, object? sproc)
             => string.Format(
@@ -162,7 +162,7 @@ namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Internal
                 entityType, sproc);
 
         /// <summary>
-        ///     The entity type '{entityType}' is mapped to the stored procedure '{sproc}', which is configured with result columns. PostgreSQL stored procedures do not support return values; use output parameters instead.
+        ///     The entity type '{entityType}' is mapped to the stored procedure '{sproc}', which is configured with result columns. GaussDB stored procedures do not support return values; use output parameters instead.
         /// </summary>
         public static string StoredProcedureReturnValueNotSupported(object? entityType, object? sproc)
             => string.Format(

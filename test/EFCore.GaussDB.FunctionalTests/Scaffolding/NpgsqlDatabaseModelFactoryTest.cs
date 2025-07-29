@@ -733,7 +733,7 @@ DROP DOMAIN db2.text_domain;
 """);
     }
 
-    // Note: in PostgreSQL decimal is simply an alias for numeric
+    // Note: in GaussDB decimal is simply an alias for numeric
     [Fact]
     public void Decimal_numeric_types_have_precision_scale()
         => Test(
@@ -923,7 +923,7 @@ CREATE TABLE "ComputedValues" (
             {
                 var columns = dbModel.Tables.Single().Columns;
 
-                // Note that on-the-fly computed columns aren't (yet) supported by PostgreSQL, only stored/persisted
+                // Note that on-the-fly computed columns aren't (yet) supported by GaussDB, only stored/persisted
                 // columns.
                 var column = columns.Single(c => c.Name == "SumOfAAndB");
                 Assert.Null(column.DefaultValueSql);
@@ -1573,7 +1573,7 @@ DROP TABLE "PrincipalTable";
 
     #endregion
 
-    #region PostgreSQL-specific
+    #region GaussDB-specific
 
     [Fact]
     public void SequenceSerial()

@@ -29,20 +29,20 @@ public enum NpgsqlValueGenerationStrategy
     ///         Selects the serial column strategy, which is a regular column backed by an auto-created index.
     ///     </para>
     ///     <para>
-    ///         If you are creating a new project on PostgreSQL 10 or above, consider using <see cref="IdentityByDefaultColumn" /> instead.
+    ///         If you are creating a new project on GaussDB 10 or above, consider using <see cref="IdentityByDefaultColumn" /> instead.
     ///     </para>
     /// </summary>
     SerialColumn,
 
     /// <summary>
     ///     <para>Selects the always-identity column strategy (a value cannot be provided).</para>
-    ///     <para>Available only starting PostgreSQL 10.</para>
+    ///     <para>Available only starting GaussDB 10.</para>
     /// </summary>
     IdentityAlwaysColumn,
 
     /// <summary>
     ///     <para>Selects the by-default-identity column strategy (a value can be provided to override the identity mechanism).</para>
-    ///     <para>Available only starting PostgreSQL 10.</para>
+    ///     <para>Available only starting GaussDB 10.</para>
     /// </summary>
     IdentityByDefaultColumn,
 

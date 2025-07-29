@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Microsoft.EntityFrameworkCore.Query.Translations;
 
 /// <summary>
-///     Tests operations on the PostgreSQL citext type.
+///     Tests operations on the GaussDB citext type.
 /// </summary>
 public class CitextTranslationsTest : IClassFixture<CitextTranslationsTest.CitextQueryFixture>
 {

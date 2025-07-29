@@ -3,7 +3,7 @@
 namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Metadata;
 
 /// <summary>
-///     Represents the metadata for a PostgreSQL enum.
+///     Represents the metadata for a GaussDB enum.
 /// </summary>
 public class PostgresEnum
 {

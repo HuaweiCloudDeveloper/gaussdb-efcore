@@ -27,7 +27,7 @@ public class NpgsqlAnnotationCodeGeneratorTest
             });
 
         // Note: both serial and identity-by-default columns are considered by-convention - we don't want
-        // to assume that the PostgreSQL version of the scaffolded database necessarily determines the
+        // to assume that the GaussDB version of the scaffolded database necessarily determines the
         // version of the database that the scaffolded model will target. This makes life difficult for
         // models with mixed strategies but that's an edge case.
 
@@ -214,7 +214,7 @@ public class NpgsqlAnnotationCodeGeneratorTest
 
     #endregion Identity / sequence / HiLo
 
-    #region PostgreSQL extensions
+    #region GaussDB extensions
 
     [ConditionalFact]
     public void Extension()
@@ -264,7 +264,7 @@ public class NpgsqlAnnotationCodeGeneratorTest
         Assert.Collection(result.Arguments, name => Assert.Equal("postgis", name));
     }
 
-    #endregion PostgreSQL extensions
+    #endregion GaussDB extensions
 
     #region Enum
 

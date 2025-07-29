@@ -32,7 +32,7 @@ public class TransactionNpgsqlTest(TransactionNpgsqlTest.TransactionNpgsqlFixtur
         return new DbContext(options.Options);
     }
 
-    // In PostgreSQL, once the transaction enters the failed state it is always rolled back completely,
+    // In GaussDB, once the transaction enters the failed state it is always rolled back completely,
     // so none of the inserts are left.
     public override async Task SaveChanges_can_be_used_with_no_savepoint(bool async)
     {

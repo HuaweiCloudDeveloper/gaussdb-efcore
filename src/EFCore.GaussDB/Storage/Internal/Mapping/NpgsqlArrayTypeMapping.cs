@@ -10,7 +10,7 @@ using HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.ValueConversion;
 namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal.Mapping;
 
 /// <summary>
-///     Type mapping for PostgreSQL arrays.
+///     Type mapping for GaussDB arrays.
 /// </summary>
 /// <remarks>
 ///     See: https://www.postgresql.org/docs/current/static/arrays.html
@@ -51,7 +51,7 @@ public abstract class NpgsqlArrayTypeMapping : RelationalTypeMapping
 }
 
 /// <summary>
-///     Type mapping for PostgreSQL arrays.
+///     Type mapping for GaussDB arrays.
 /// </summary>
 /// <remarks>
 ///     See: https://www.postgresql.org/docs/current/static/arrays.html
@@ -187,7 +187,7 @@ public class NpgsqlArrayTypeMapping<TCollection, TConcreteCollection, TElement> 
         }
 
         // If the element mapping has an NpgsqlDbType or DbType, set our own NpgsqlDbType as an array of that.
-        // Otherwise let the ADO.NET layer infer the PostgreSQL type. We can't always let it infer, otherwise
+        // Otherwise let the ADO.NET layer infer the GaussDB type. We can't always let it infer, otherwise
         // when given a byte[] it will infer byte (but we want smallint[])
         NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Array
             | (ElementTypeMapping is INpgsqlTypeMapping { NpgsqlDbType: not NpgsqlTypes.NpgsqlDbType.Unknown } elementNpgsqlTypeMapping
@@ -246,7 +246,7 @@ public class NpgsqlArrayTypeMapping<TCollection, TConcreteCollection, TElement> 
                 $"Npgsql-specific type mapping {GetType().Name} being used with non-Npgsql parameter type {param.GetType().Name}");
         }
 
-        // Enums and user-defined ranges require setting NpgsqlParameter.DataTypeName to specify the PostgreSQL type name.
+        // Enums and user-defined ranges require setting NpgsqlParameter.DataTypeName to specify the GaussDB type name.
         // Make this work for arrays over these types as well.
         switch (ElementTypeMapping)
         {

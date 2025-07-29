@@ -1,7 +1,7 @@
 namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.Expressions.Internal;
 
 /// <summary>
-///     An SQL expression that represents a PostgreSQL DELETE operation.
+///     An SQL expression that represents a GaussDB DELETE operation.
 /// </summary>
 public sealed class PgDeleteExpression : Expression, IPrintableExpression
 {

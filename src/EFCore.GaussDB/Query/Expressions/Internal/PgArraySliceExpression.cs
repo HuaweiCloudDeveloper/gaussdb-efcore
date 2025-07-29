@@ -1,7 +1,7 @@
 namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.Expressions.Internal;
 
 /// <summary>
-///     A SQL expression that represents a slicing into a PostgreSQL array (e.g. array[2:3]).
+///     A SQL expression that represents a slicing into a GaussDB array (e.g. array[2:3]).
 /// </summary>
 /// <remarks>
 ///     <see href="https://www.postgresql.org/docs/current/arrays.html#ARRAYS-ACCESSING" />.

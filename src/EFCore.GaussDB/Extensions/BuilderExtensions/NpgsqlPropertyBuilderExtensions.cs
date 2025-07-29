@@ -14,7 +14,7 @@ public static class NpgsqlPropertyBuilderExtensions
 
     /// <summary>
     ///     Configures the property to use a sequence-based hi-lo pattern to generate values for new entities,
-    ///     when targeting PostgreSQL. This method sets the property to be <see cref="ValueGenerated.OnAdd" />.
+    ///     when targeting GaussDB. This method sets the property to be <see cref="ValueGenerated.OnAdd" />.
     /// </summary>
     /// <param name="propertyBuilder"> The builder for the property being configured.</param>
     /// <param name="name"> The comment of the sequence.</param>
@@ -52,7 +52,7 @@ public static class NpgsqlPropertyBuilderExtensions
 
     /// <summary>
     ///     Configures the property to use a sequence-based hi-lo pattern to generate values for new entities,
-    ///     when targeting PostgreSQL. This method sets the property to be <see cref="ValueGenerated.OnAdd" />.
+    ///     when targeting GaussDB. This method sets the property to be <see cref="ValueGenerated.OnAdd" />.
     /// </summary>
     /// <param name="propertyBuilder"> The builder for the property being configured.</param>
     /// <param name="name"> The comment of the sequence.</param>
@@ -120,7 +120,7 @@ public static class NpgsqlPropertyBuilderExtensions
 
     /// <summary>
     ///     Configures the key property to use a sequence-based key value generation pattern to generate values for new entities,
-    ///     when targeting PostgreSQL. This method sets the property to be <see cref="ValueGenerated.OnAdd" />.
+    ///     when targeting GaussDB. This method sets the property to be <see cref="ValueGenerated.OnAdd" />.
     /// </summary>
     /// <param name="propertyBuilder">The builder for the property being configured.</param>
     /// <param name="name">The name of the sequence.</param>
@@ -167,7 +167,7 @@ public static class NpgsqlPropertyBuilderExtensions
 
     /// <summary>
     ///     Configures the database sequence used for the key value generation pattern to generate values for the key property,
-    ///     when targeting PostgreSQL.
+    ///     when targeting GaussDB.
     /// </summary>
     /// <param name="propertyBuilder">The builder for the property being configured.</param>
     /// <param name="name">The name of the sequence.</param>
@@ -219,11 +219,11 @@ public static class NpgsqlPropertyBuilderExtensions
     #region Serial
 
     /// <summary>
-    ///     Configures the property to use the PostgreSQL SERIAL feature to generate values for new entities,
-    ///     when targeting PostgreSQL. This method sets the property to be <see cref="ValueGenerated.OnAdd" />.
+    ///     Configures the property to use the GaussDB SERIAL feature to generate values for new entities,
+    ///     when targeting GaussDB. This method sets the property to be <see cref="ValueGenerated.OnAdd" />.
     /// </summary>
     /// <para>
-    ///     This option should be considered deprecated starting with PostgreSQL 10, consider using <see cref="UseIdentityColumn" /> instead.
+    ///     This option should be considered deprecated starting with GaussDB 10, consider using <see cref="UseIdentityColumn" /> instead.
     /// </para>
     /// <param name="propertyBuilder"> The builder for the property being configured.</param>
     /// <returns>The same builder instance so that multiple calls can be chained.</returns>
@@ -243,11 +243,11 @@ public static class NpgsqlPropertyBuilderExtensions
     }
 
     /// <summary>
-    ///     Configures the property to use the PostgreSQL SERIAL feature to generate values for new entities,
-    ///     when targeting PostgreSQL. This method sets the property to be <see cref="ValueGenerated.OnAdd" />.
+    ///     Configures the property to use the GaussDB SERIAL feature to generate values for new entities,
+    ///     when targeting GaussDB. This method sets the property to be <see cref="ValueGenerated.OnAdd" />.
     /// </summary>
     /// <para>
-    ///     This option should be considered deprecated starting with PostgreSQL 10, consider using <see cref="UseIdentityColumn" /> instead.
+    ///     This option should be considered deprecated starting with GaussDB 10, consider using <see cref="UseIdentityColumn" /> instead.
     /// </para>
     /// <typeparam name="TProperty"> The type of the property being configured.</typeparam>
     /// <param name="propertyBuilder"> The builder for the property being configured.</param>
@@ -262,12 +262,12 @@ public static class NpgsqlPropertyBuilderExtensions
 
     /// <summary>
     ///     <para>
-    ///         Configures the property to use the PostgreSQL IDENTITY feature to generate values for new entities,
-    ///         when targeting PostgreSQL. This method sets the property to be <see cref="ValueGenerated.OnAdd" />.
+    ///         Configures the property to use the GaussDB IDENTITY feature to generate values for new entities,
+    ///         when targeting GaussDB. This method sets the property to be <see cref="ValueGenerated.OnAdd" />.
     ///         Values for this property will always be generated as identity, and the application will not be able
     ///         to override this behavior by providing a value.
     ///     </para>
-    ///     <para>Available only starting PostgreSQL 10.</para>
+    ///     <para>Available only starting GaussDB 10.</para>
     /// </summary>
     /// <param name="propertyBuilder"> The builder for the property being configured.</param>
     /// <returns>The same builder instance so that multiple calls can be chained.</returns>
@@ -287,12 +287,12 @@ public static class NpgsqlPropertyBuilderExtensions
 
     /// <summary>
     ///     <para>
-    ///         Configures the property to use the PostgreSQL IDENTITY feature to generate values for new entities,
-    ///         when targeting PostgreSQL. This method sets the property to be <see cref="ValueGenerated.OnAdd" />.
+    ///         Configures the property to use the GaussDB IDENTITY feature to generate values for new entities,
+    ///         when targeting GaussDB. This method sets the property to be <see cref="ValueGenerated.OnAdd" />.
     ///         Values for this property will always be generated as identity, and the application will not be able
     ///         to override this behavior by providing a value.
     ///     </para>
-    ///     <para>Available only starting PostgreSQL 10.</para>
+    ///     <para>Available only starting GaussDB 10.</para>
     /// </summary>
     /// <param name="propertyBuilder"> The builder for the property being configured.</param>
     /// <returns>The same builder instance so that multiple calls can be chained.</returns>
@@ -306,13 +306,13 @@ public static class NpgsqlPropertyBuilderExtensions
 
     /// <summary>
     ///     <para>
-    ///         Configures the property to use the PostgreSQL IDENTITY feature to generate values for new entities,
-    ///         when targeting PostgreSQL. This method sets the property to be <see cref="ValueGenerated.OnAdd" />.
+    ///         Configures the property to use the GaussDB IDENTITY feature to generate values for new entities,
+    ///         when targeting GaussDB. This method sets the property to be <see cref="ValueGenerated.OnAdd" />.
     ///         Values for this property will be generated as identity by default, but the application will be able
     ///         to override this behavior by providing a value.
     ///     </para>
     ///     <para>
-    ///         This is the default behavior when targeting PostgreSQL. Available only starting PostgreSQL 10.
+    ///         This is the default behavior when targeting GaussDB. Available only starting GaussDB 10.
     ///     </para>
     /// </summary>
     /// <param name="propertyBuilder"> The builder for the property being configured.</param>
@@ -333,13 +333,13 @@ public static class NpgsqlPropertyBuilderExtensions
 
     /// <summary>
     ///     <para>
-    ///         Configures the property to use the PostgreSQL IDENTITY feature to generate values for new entities,
-    ///         when targeting PostgreSQL. This method sets the property to be <see cref="ValueGenerated.OnAdd" />.
+    ///         Configures the property to use the GaussDB IDENTITY feature to generate values for new entities,
+    ///         when targeting GaussDB. This method sets the property to be <see cref="ValueGenerated.OnAdd" />.
     ///         Values for this property will be generated as identity by default, but the application will be able
     ///         to override this behavior by providing a value.
     ///     </para>
     ///     <para>
-    ///         This is the default behavior when targeting PostgreSQL. Available only starting PostgreSQL 10.
+    ///         This is the default behavior when targeting GaussDB. Available only starting GaussDB 10.
     ///     </para>
     /// </summary>
     /// <typeparam name="TProperty"> The type of the property being configured.</typeparam>
@@ -351,14 +351,14 @@ public static class NpgsqlPropertyBuilderExtensions
 
     /// <summary>
     ///     <para>
-    ///         Configures the property to use the PostgreSQL IDENTITY feature to generate values for new entities,
-    ///         when targeting PostgreSQL. This method sets the property to be <see cref="ValueGenerated.OnAdd" />.
+    ///         Configures the property to use the GaussDB IDENTITY feature to generate values for new entities,
+    ///         when targeting GaussDB. This method sets the property to be <see cref="ValueGenerated.OnAdd" />.
     ///         Values for this property will be generated as identity by default, but the application will be able
     ///         to override this behavior by providing a value.
     ///     </para>
     ///     <para>
     ///         This internally calls <see cref="UseIdentityByDefaultColumn(Microsoft.EntityFrameworkCore.Metadata.Builders.PropertyBuilder)" />.
-    ///         This is the default behavior when targeting PostgreSQL. Available only starting PostgreSQL 10.
+    ///         This is the default behavior when targeting GaussDB. Available only starting GaussDB 10.
     ///     </para>
     /// </summary>
     /// <param name="propertyBuilder"> The builder for the property being configured.</param>
@@ -369,14 +369,14 @@ public static class NpgsqlPropertyBuilderExtensions
 
     /// <summary>
     ///     <para>
-    ///         Configures the property to use the PostgreSQL IDENTITY feature to generate values for new entities,
-    ///         when targeting PostgreSQL. This method sets the property to be <see cref="ValueGenerated.OnAdd" />.
+    ///         Configures the property to use the GaussDB IDENTITY feature to generate values for new entities,
+    ///         when targeting GaussDB. This method sets the property to be <see cref="ValueGenerated.OnAdd" />.
     ///         Values for this property will be generated as identity by default, but the application will be able
     ///         to override this behavior by providing a value.
     ///     </para>
     ///     <para>
     ///         This internally calls <see cref="UseIdentityByDefaultColumn(Microsoft.EntityFrameworkCore.Metadata.Builders.PropertyBuilder)" />.
-    ///         This is the default behavior when targeting PostgreSQL. Available only starting PostgreSQL 10.
+    ///         This is the default behavior when targeting GaussDB. Available only starting GaussDB 10.
     ///     </para>
     /// </summary>
     /// <typeparam name="TProperty"> The type of the property being configured.</typeparam>
@@ -391,7 +391,7 @@ public static class NpgsqlPropertyBuilderExtensions
     #region General value generation strategy
 
     /// <summary>
-    ///     Configures the value generation strategy for the key property, when targeting PostgreSQL.
+    ///     Configures the value generation strategy for the key property, when targeting GaussDB.
     /// </summary>
     /// <param name="propertyBuilder">The builder for the property being configured.</param>
     /// <param name="valueGenerationStrategy">The value generation strategy.</param>
@@ -656,7 +656,7 @@ public static class NpgsqlPropertyBuilderExtensions
     #region Array value conversion
 
     /// <summary>
-    ///     Configures a PostgreSQL array conversion.
+    ///     Configures a GaussDB array conversion.
     /// </summary>
     [Obsolete(
         "HasPostgresArrayConversion has been replaced with the standard EF 8 primitive collection API, see https://www.npgsql.org/efcore/release-notes/8.0.html",
@@ -669,7 +669,7 @@ public static class NpgsqlPropertyBuilderExtensions
             "HasPostgresArrayConversion has been replaced with the standard EF 8 primitive collection API, see https://www.npgsql.org/efcore/release-notes/8.0.html");
 
     /// <summary>
-    ///     Configures a PostgreSQL array conversion.
+    ///     Configures a GaussDB array conversion.
     /// </summary>
     [Obsolete(
         "HasPostgresArrayConversion has been replaced with the standard EF 8 primitive collection API, see https://www.npgsql.org/efcore/release-notes/8.0.html",
@@ -682,7 +682,7 @@ public static class NpgsqlPropertyBuilderExtensions
             "HasPostgresArrayConversion has been replaced with the standard EF 8 primitive collection API, see https://www.npgsql.org/efcore/release-notes/8.0.html");
 
     /// <summary>
-    ///     Configures a PostgreSQL array conversion.
+    ///     Configures a GaussDB array conversion.
     /// </summary>
     [Obsolete(
         "HasPostgresArrayConversion has been replaced with the standard EF 8 primitive collection API, see https://www.npgsql.org/efcore/release-notes/8.0.html",
@@ -694,7 +694,7 @@ public static class NpgsqlPropertyBuilderExtensions
             "HasPostgresArrayConversion has been replaced with the standard EF 8 primitive collection API, see https://www.npgsql.org/efcore/release-notes/8.0.html");
 
     /// <summary>
-    ///     Configures a PostgreSQL array conversion.
+    ///     Configures a GaussDB array conversion.
     /// </summary>
     [Obsolete(
         "HasPostgresArrayConversion has been replaced with the standard EF 8 primitive collection API, see https://www.npgsql.org/efcore/release-notes/8.0.html",
@@ -841,7 +841,7 @@ public static class NpgsqlPropertyBuilderExtensions
     /// <summary>
     ///     Sets the compression method for the column.
     /// </summary>
-    /// <remarks>This feature was introduced in PostgreSQL 14.</remarks>
+    /// <remarks>This feature was introduced in GaussDB 14.</remarks>
     /// <param name="propertyBuilder">The builder for the property being configured.</param>
     /// <param name="compressionMethod">The compression method.</param>
     /// <returns>A builder to further configure the property.</returns>
@@ -860,7 +860,7 @@ public static class NpgsqlPropertyBuilderExtensions
     /// <summary>
     ///     Sets the compression method for the column.
     /// </summary>
-    /// <remarks>This feature was introduced in PostgreSQL 14.</remarks>
+    /// <remarks>This feature was introduced in GaussDB 14.</remarks>
     /// <param name="propertyBuilder">The builder for the property being configured.</param>
     /// <param name="compressionMethod">The compression method.</param>
     /// <returns>A builder to further configure the property.</returns>
@@ -872,7 +872,7 @@ public static class NpgsqlPropertyBuilderExtensions
     /// <summary>
     ///     Sets the compression method for the column.
     /// </summary>
-    /// <remarks>This feature was introduced in PostgreSQL 14.</remarks>
+    /// <remarks>This feature was introduced in GaussDB 14.</remarks>
     /// <param name="propertyBuilder">The builder for the property being configured.</param>
     /// <param name="compressionMethod">The compression method.</param>
     /// <param name="fromDataAnnotation">Indicates whether the configuration was specified using a data annotation.</param>
@@ -895,7 +895,7 @@ public static class NpgsqlPropertyBuilderExtensions
     /// <summary>
     ///     Whether the compression method for the column can be set.
     /// </summary>
-    /// <remarks>This feature was introduced in PostgreSQL 14.</remarks>
+    /// <remarks>This feature was introduced in GaussDB 14.</remarks>
     /// <param name="propertyBuilder">The builder for the property being configured.</param>
     /// <param name="compressionMethod">The compression method.</param>
     /// <param name="fromDataAnnotation">Indicates whether the configuration was specified using a data annotation.</param>

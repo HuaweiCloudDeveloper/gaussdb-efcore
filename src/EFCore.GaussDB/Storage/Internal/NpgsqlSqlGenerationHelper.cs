@@ -64,7 +64,7 @@ public class NpgsqlSqlGenerationHelper : RelationalSqlGenerationHelper
     }
 
     /// <summary>
-    ///     Returns whether the given string can be used as an unquoted identifier in PostgreSQL, without quotes.
+    ///     Returns whether the given string can be used as an unquoted identifier in GaussDB, without quotes.
     /// </summary>
     private static bool RequiresQuoting(string identifier)
     {

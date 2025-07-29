@@ -1,7 +1,7 @@
 ﻿namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Migrations.Operations;
 
 /// <summary>
-///     A PostgreSQL-specific <see cref="MigrationOperation" /> to create a database.
+///     A GaussDB-specific <see cref="MigrationOperation" /> to create a database.
 /// </summary>
 /// <remarks>
 ///     See <see href="https://aka.ms/efcore-docs-migrations">Database migrations</see>.
@@ -15,12 +15,12 @@ public class NpgsqlCreateDatabaseOperation : DatabaseOperation
     public virtual string Name { get; set; } = null!;
 
     /// <summary>
-    ///     The PostgreSQL database to use as a template for the new database to be created.
+    ///     The GaussDB database to use as a template for the new database to be created.
     /// </summary>
     public virtual string? Template { get; set; }
 
     /// <summary>
-    ///     The PostgreSQL tablespace in which to create the database.
+    ///     The GaussDB tablespace in which to create the database.
     /// </summary>
     public virtual string? Tablespace { get; set; }
 }

@@ -48,10 +48,10 @@ jobs:
         run: dotnet build --configuration Debug
         shell: bash
 
-      - name: Start PostgreSQL ${{ matrix.pg_major }} (Linux)
+      - name: Start GaussDB ${{ matrix.pg_major }} (Linux)
         if: startsWith(matrix.os, 'ubuntu')
         run: |
-          # First uninstall any PostgreSQL installed on the image
+          # First uninstall any GaussDB installed on the image
           dpkg-query -W --showformat='${Package}\n' 'postgresql-*' | xargs sudo dpkg -P postgresql
 
           # Automated repository configuration
@@ -69,7 +69,7 @@ jobs:
           sudo systemctl restart postgresql
           sudo -u postgres psql -c "CREATE USER npgsql_tests SUPERUSER PASSWORD 'npgsql_tests'"
 
-      - name: Start PostgreSQL ${{ matrix.pg_major }} (Windows)
+      - name: Start GaussDB ${{ matrix.pg_major }} (Windows)
         if: startsWith(matrix.os, 'windows')
         run: |
           # Find EnterpriseDB version number
@@ -81,8 +81,8 @@ jobs:
                   Select-Object -First 1 -ExpandProperty Node |
                   Select-Object -ExpandProperty Value")
 
-          # Install PostgreSQL
-          echo "Installing PostgreSQL (version: ${EDB_VERSION})"
+          # Install GaussDB
+          echo "Installing GaussDB (version: ${EDB_VERSION})"
           curl -o pgsql.zip -L https://get.enterprisedb.com/postgresql/postgresql-${EDB_VERSION}-windows-x64-binaries.zip
           unzip pgsql.zip -x 'pgsql/include/**' 'pgsql/doc/**' 'pgsql/pgAdmin 4/**' 'pgsql/StackBuilder/**'
 
@@ -111,7 +111,7 @@ jobs:
           unzip postgis.zip -d postgis
           cp -a postgis/$POSTGIS_FILE/. pgsql/
 
-          # Start PostgreSQL
+          # Start GaussDB
           pgsql/bin/initdb -D pgsql/PGDATA -E UTF8 -U postgres
           pgsql/bin/pg_ctl -D pgsql/PGDATA -l logfile -o '-c max_connections=200 -c max_prepared_transactions=10 -c ssl=true -c ssl_cert_file=../server.crt -c ssl_key_file=../server.key' start
 

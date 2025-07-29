@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Storage.Json;
 namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal.Mapping;
 
 /// <summary>
-///     The type mapping for the PostgreSQL cidr type.
+///     The type mapping for the GaussDB cidr type.
 /// </summary>
 /// <remarks>
 ///     See: https://www.postgresql.org/docs/current/static/datatype-net-types.html#DATATYPE-CIDR

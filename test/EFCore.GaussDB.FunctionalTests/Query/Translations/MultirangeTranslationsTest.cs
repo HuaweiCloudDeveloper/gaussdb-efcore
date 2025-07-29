@@ -2,7 +2,7 @@
 
 namespace Microsoft.EntityFrameworkCore.Query.Translations;
 
-[MinimumPostgresVersion(14, 0)] // Multiranges were introduced in PostgreSQL 14
+[MinimumPostgresVersion(14, 0)] // Multiranges were introduced in GaussDB 14
 public class MultirangeTranslationsTest : IClassFixture<MultirangeTranslationsTest.MultirangeQueryNpgsqlFixture>
 {
     private MultirangeQueryNpgsqlFixture Fixture { get; }

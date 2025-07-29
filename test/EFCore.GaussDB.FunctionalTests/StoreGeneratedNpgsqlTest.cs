@@ -79,7 +79,7 @@ public class StoreGeneratedNpgsqlTest(StoreGeneratedNpgsqlTest.StoreGeneratedNpg
                 });
 
             // In StoreGeneratedSqlServerTest the following are defined with HasComputedValueSql, but that's
-            // not supported by PostgreSQL
+            // not supported by GaussDB
             modelBuilder.Entity<WithBackingFields>(
                 b =>
                 {

@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <AssemblyName>GaussDB.EntityFrameworkCore.PostgreSQL</AssemblyName>
-    <RootNamespace>GaussDB.EntityFrameworkCore.PostgreSQL</RootNamespace>
+    <AssemblyName>GaussDB.EntityFrameworkCore.GaussDB</AssemblyName>
+    <RootNamespace>GaussDB.EntityFrameworkCore.GaussDB</RootNamespace>
 
     <Authors>Shay Rojansky;Austin Drenski;Yoh Deadfall;</Authors>
     <Description>GaussDB provider for Entity Framework Core.</Description>

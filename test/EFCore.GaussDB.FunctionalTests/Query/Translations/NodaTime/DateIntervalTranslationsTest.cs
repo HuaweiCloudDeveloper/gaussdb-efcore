@@ -158,7 +158,7 @@ WHERE n."DateInterval" + @dateInterval = '[2018-04-20,2018-04-26]'::daterange
     }
 
     [ConditionalTheory]
-    [MinimumPostgresVersion(14, 0)] // Multiranges were introduced in PostgreSQL 14
+    [MinimumPostgresVersion(14, 0)] // Multiranges were introduced in GaussDB 14
     [MemberData(nameof(IsAsyncData))]
     public async Task RangeAgg(bool async)
     {
@@ -187,7 +187,7 @@ LIMIT 2
     }
 
     [ConditionalTheory]
-    [MinimumPostgresVersion(14, 0)] // range_intersect_agg was introduced in PostgreSQL 14
+    [MinimumPostgresVersion(14, 0)] // range_intersect_agg was introduced in GaussDB 14
     [MemberData(nameof(IsAsyncData))]
     public async Task Intersect_aggregate(bool async)
     {

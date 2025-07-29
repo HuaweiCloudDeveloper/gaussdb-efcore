@@ -3,7 +3,7 @@
 namespace Microsoft.EntityFrameworkCore;
 
 /// <summary>
-///     Represents a PostgreSQL ltree type. This type is implicitly convertible to a .NET <see cref="string" />.
+///     Represents a GaussDB ltree type. This type is implicitly convertible to a .NET <see cref="string" />.
 /// </summary>
 /// <remarks>See https://www.postgresql.org/docs/current/ltree.html</remarks>
 public readonly struct LTree : IEquatable<LTree>

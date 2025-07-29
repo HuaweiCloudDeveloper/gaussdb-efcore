@@ -1,7 +1,7 @@
 namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.Expressions.Internal;
 
 /// <summary>
-///     Represents creating a new PostgreSQL array.
+///     Represents creating a new GaussDB array.
 /// </summary>
 public class PgNewArrayExpression : SqlExpression
 {
@@ -30,7 +30,7 @@ public class PgNewArrayExpression : SqlExpression
     }
 
     /// <summary>
-    ///     The operator of this PostgreSQL binary operation.
+    ///     The operator of this GaussDB binary operation.
     /// </summary>
     public virtual IReadOnlyList<SqlExpression> Expressions { get; }
 

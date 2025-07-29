@@ -330,7 +330,7 @@ WHERE
         var operations = Dependencies.ModelDiffer.GetDifferences(null, designTimeModel.GetRelationalModel());
         var commands = Dependencies.MigrationsSqlGenerator.Generate(operations, designTimeModel);
 
-        // If a PostgreSQL extension, enum or range was added, we want Npgsql to reload all types at the ADO.NET level.
+        // If a GaussDB extension, enum or range was added, we want Npgsql to reload all types at the ADO.NET level.
         var reloadTypes =
             operations.OfType<AlterDatabaseOperation>()
                 .Any(
@@ -384,7 +384,7 @@ WHERE
             // (happens in the tests). Simply ignore the error.
         }
 
-        // If a PostgreSQL extension, enum or range was added, we want Npgsql to reload all types at the ADO.NET level.
+        // If a GaussDB extension, enum or range was added, we want Npgsql to reload all types at the ADO.NET level.
         var reloadTypes = operations
             .OfType<AlterDatabaseOperation>()
             .Any(o => o.GetPostgresExtensions().Any() || o.GetPostgresEnums().Any() || o.GetPostgresRanges().Any());

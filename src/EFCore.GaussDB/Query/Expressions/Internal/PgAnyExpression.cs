@@ -1,7 +1,7 @@
 ﻿namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.Expressions.Internal;
 
 /// <summary>
-///     Represents a PostgreSQL array ANY expression.
+///     Represents a GaussDB array ANY expression.
 /// </summary>
 /// <example>
 ///     1 = ANY ('{0,1,2}'), 'cat' LIKE ANY ('{a%,b%,c%}')
@@ -138,17 +138,17 @@ public class PgAnyExpression : SqlExpression, IEquatable<PgAnyExpression>
 public enum PgAnyOperatorType
 {
     /// <summary>
-    ///     Represents a PostgreSQL = ANY operator.
+    ///     Represents a GaussDB = ANY operator.
     /// </summary>
     Equal,
 
     /// <summary>
-    ///     Represents a PostgreSQL LIKE ANY operator.
+    ///     Represents a GaussDB LIKE ANY operator.
     /// </summary>
     Like,
 
     /// <summary>
-    ///     Represents a PostgreSQL ILIKE ANY operator.
+    ///     Represents a GaussDB ILIKE ANY operator.
     /// </summary>
     ILike,
 }

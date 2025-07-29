@@ -71,7 +71,7 @@ WHERE random() >= 0.0 AND random() < 1.0
 
     #region Convert
 
-    // These tests convert (among other things) to and from boolean, which PostgreSQL
+    // These tests convert (among other things) to and from boolean, which GaussDB
     // does not support (https://github.com/dotnet/efcore/issues/19606)
 
     public override async Task Convert_ToBoolean(bool async)
@@ -240,7 +240,7 @@ WHERE b."Int" <= @orderId
 
     public override async Task DateTime_Compare_to_simple_zero(bool async, bool compareTo)
     {
-        // The base test implementation uses an Unspecified DateTime, which isn't supported with PostgreSQL timestamptz
+        // The base test implementation uses an Unspecified DateTime, which isn't supported with GaussDB timestamptz
         var dateTime = new DateTime(1998, 5, 4, 15, 30, 10, DateTimeKind.Utc);
 
         if (compareTo)

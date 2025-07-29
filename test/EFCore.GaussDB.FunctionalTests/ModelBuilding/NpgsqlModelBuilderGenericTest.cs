@@ -6,7 +6,7 @@ public class NpgsqlModelBuilderGenericTest : NpgsqlModelBuilderTestBase
 {
     public class NpgsqlGenericNonRelationship(NpgsqlModelBuilderFixture fixture) : NpgsqlNonRelationship(fixture)
     {
-        // PostgreSQL actually does support mapping multi-dimensional arrays, so no exception is thrown as expected
+        // GaussDB actually does support mapping multi-dimensional arrays, so no exception is thrown as expected
         protected override void Mapping_throws_for_non_ignored_three_dimensional_array()
             => Assert.Throws<ThrowsException>(() => base.Mapping_throws_for_non_ignored_three_dimensional_array());
 
@@ -66,7 +66,7 @@ public class NpgsqlModelBuilderGenericTest : NpgsqlModelBuilderTestBase
 
     public class NpgsqlGenericOwnedTypes(NpgsqlModelBuilderFixture fixture) : NpgsqlOwnedTypes(fixture)
     {
-        // PostgreSQL stored procedures do not support result columns
+        // GaussDB stored procedures do not support result columns
         public override void Can_use_sproc_mapping_with_owned_reference()
             => Assert.Throws<InvalidOperationException>(() => base.Can_use_sproc_mapping_with_owned_reference());
 

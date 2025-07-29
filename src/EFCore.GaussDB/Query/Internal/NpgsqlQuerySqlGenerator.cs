@@ -116,7 +116,7 @@ public class NpgsqlQuerySqlGenerator : QuerySqlGenerator
     protected override string GetOperator(SqlBinaryExpression e)
         => e.OperatorType switch
         {
-            // PostgreSQL has a special string concatenation operator: ||
+            // GaussDB has a special string concatenation operator: ||
             // We switch to it if the expression itself has type string, or if one of the sides has a string type mapping.
             // Same for full-text search's TsVector, arrays.
             ExpressionType.Add when
@@ -132,7 +132,7 @@ public class NpgsqlQuerySqlGenerator : QuerySqlGenerator
             ExpressionType.And when e.Type == typeof(bool) => " AND ",
             ExpressionType.Or when e.Type == typeof(bool) => " OR ",
 
-            // In most databases/languages, the caret (^) is the bitwise XOR operator. But in PostgreSQL the caret is the exponentiation
+            // In most databases/languages, the caret (^) is the bitwise XOR operator. But in GaussDB the caret is the exponentiation
             // operator, and hash (#) is used instead.
             ExpressionType.ExclusiveOr when e.Type == typeof(bool) => " <> ",
             ExpressionType.ExclusiveOr => " # ",
@@ -156,7 +156,7 @@ public class NpgsqlQuerySqlGenerator : QuerySqlGenerator
     /// <inheritdoc />
     protected override void GenerateTop(SelectExpression selectExpression)
     {
-        // No TOP() in PostgreSQL, see GenerateLimitOffset
+        // No TOP() in GaussDB, see GenerateLimitOffset
     }
 
     /// <summary>
@@ -171,7 +171,7 @@ public class NpgsqlQuerySqlGenerator : QuerySqlGenerator
 
         if (crossApplyExpression.Table is TableExpression table)
         {
-            // PostgreSQL doesn't support LATERAL JOIN over table, and it doesn't really make sense to do it - but EF Core
+            // GaussDB doesn't support LATERAL JOIN over table, and it doesn't really make sense to do it - but EF Core
             // will sometimes generate that. #1560
             Sql
                 .Append("(SELECT * FROM ")
@@ -201,7 +201,7 @@ public class NpgsqlQuerySqlGenerator : QuerySqlGenerator
 
         if (outerApplyExpression.Table is TableExpression table)
         {
-            // PostgreSQL doesn't support LATERAL JOIN over table, and it doesn't really make sense to do it - but EF Core
+            // GaussDB doesn't support LATERAL JOIN over table, and it doesn't really make sense to do it - but EF Core
             // will sometimes generate that. #1560
             Sql
                 .Append("(SELECT * FROM ")
@@ -231,7 +231,7 @@ public class NpgsqlQuerySqlGenerator : QuerySqlGenerator
                     return base.VisitSqlBinary(binary);
                 }
 
-                // PostgreSQL 9.4 and below has some weird operator precedence fixed in 9.5 and described here:
+                // GaussDB 9.4 and below has some weird operator precedence fixed in 9.5 and described here:
                 // http://git.postgresql.org/gitweb/?p=postgresql.git&a=commitdiff&h=c6b3c939b7e0f1d35f4ed4996e71420a993810d2
                 // As a result we must surround string concatenation with parentheses
                 if (binary.Left.Type == typeof(string) && binary.Right.Type == typeof(string))
@@ -349,7 +349,7 @@ public class NpgsqlQuerySqlGenerator : QuerySqlGenerator
 
                     visitor ??= new OuterReferenceFindingExpressionVisitor(updateExpression.Table);
 
-                    // PostgreSQL doesn't support referencing the main update table from anywhere except for the UPDATE WHERE clause.
+                    // GaussDB doesn't support referencing the main update table from anywhere except for the UPDATE WHERE clause.
                     // This specifically makes it impossible to have joins which reference the main table in their predicate (ON ...).
                     // Because of this, we detect all such inner joins and lift their predicates to the main WHERE clause (where a reference to the
                     // main table is allowed), producing UPDATE ... FROM x, y WHERE y.foreign_key = x.id instead of INNER JOIN ... ON.
@@ -578,7 +578,7 @@ public class NpgsqlQuerySqlGenerator : QuerySqlGenerator
         {
             case ExpressionType.Convert:
             {
-                // PostgreSQL supports the standard CAST(x AS y), but also a lighter x::y which we use
+                // GaussDB supports the standard CAST(x AS y), but also a lighter x::y which we use
                 // where there's no precedence issues
                 switch (sqlUnaryExpression.Operand)
                 {
@@ -650,7 +650,7 @@ public class NpgsqlQuerySqlGenerator : QuerySqlGenerator
     /// </summary>
     protected override void GenerateSetOperationOperand(SetOperationBase setOperation, SelectExpression operand)
     {
-        // PostgreSQL allows ORDER BY and LIMIT in set operation operands, but requires parentheses
+        // GaussDB allows ORDER BY and LIMIT in set operation operands, but requires parentheses
         if (operand.Orderings.Count > 0 || operand.Limit is not null)
         {
             Sql.AppendLine("(");
@@ -693,7 +693,7 @@ public class NpgsqlQuerySqlGenerator : QuerySqlGenerator
     ///     doing so can result in application failures when updating to a new Entity Framework Core release.
     /// </summary>
     protected override bool TryGenerateWithoutWrappingSelect(SelectExpression selectExpression)
-        // PostgreSQL supports VALUES as a top-level statement - and directly under set operations.
+        // GaussDB supports VALUES as a top-level statement - and directly under set operations.
         // However, when on the left side of a set operation, we need the column coming out of VALUES to be named, so we need the wrapping
         // SELECT for that.
         => selectExpression.Tables is not [ValuesExpression]
@@ -758,7 +758,7 @@ public class NpgsqlQuerySqlGenerator : QuerySqlGenerator
     {
         base.VisitValues(valuesExpression);
 
-        // PostgreSQL VALUES supports setting the projects column names: FROM (VALUES (1), (2)) AS v(foo)
+        // GaussDB VALUES supports setting the projects column names: FROM (VALUES (1), (2)) AS v(foo)
         Sql.Append("(");
 
         for (var i = 0; i < valuesExpression.ColumnNames.Count; i++)
@@ -794,7 +794,7 @@ public class NpgsqlQuerySqlGenerator : QuerySqlGenerator
             throw new InvalidOperationException(RelationalStrings.EmptyCollectionNotSupportedAsInlineQueryRoot);
         }
 
-        // PostgreSQL supports providing the names of columns projected out of VALUES: (VALUES (1, 3), (2, 4)) AS x(a, b).
+        // GaussDB supports providing the names of columns projected out of VALUES: (VALUES (1, 3), (2, 4)) AS x(a, b).
         // But since other databases sometimes don't, the default relational implementation is complex, involving a SELECT for the first row
         // and a UNION All on the rest. Override to do the nice simple thing.
         var rowValues = valuesExpression.RowValues;
@@ -813,7 +813,7 @@ public class NpgsqlQuerySqlGenerator : QuerySqlGenerator
         }
     }
 
-    #region PostgreSQL-specific expression types
+    #region GaussDB-specific expression types
 
     /// <summary>
     ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to
@@ -925,7 +925,7 @@ public class NpgsqlQuerySqlGenerator : QuerySqlGenerator
     }
 
     /// <summary>
-    ///     Produces SQL for PostgreSQL regex matching.
+    ///     Produces SQL for GaussDB regex matching.
     /// </summary>
     /// <remarks>
     ///     See: http://www.postgresql.org/docs/current/static/functions-matching.html
@@ -968,7 +968,7 @@ public class NpgsqlQuerySqlGenerator : QuerySqlGenerator
         }
         else if (!options.HasFlag(RegexOptions.Singleline))
         {
-            // In .NET's default mode, . doesn't match newlines but in PostgreSQL it does.
+            // In .NET's default mode, . doesn't match newlines but in GaussDB it does.
             Sql.Append("p");
         }
 
@@ -1184,7 +1184,7 @@ public class NpgsqlQuerySqlGenerator : QuerySqlGenerator
         // PostgresTableValuedFunctionExpression extends the standard TableValuedFunctionExpression, adding the possibility to specify
         // column names and types at the end, as well as an optional WITH ORDINALITY to project an index out.
 
-        // Note that PostgreSQL doesn't support specifying both a column definition (with type) *and* WITH ORDINALITY; but it does allow
+        // Note that GaussDB doesn't support specifying both a column definition (with type) *and* WITH ORDINALITY; but it does allow
         // wrapping the function invocation and column definition inside ROWS FROM, and placing the table alias and WITH ORDINALITY outside.
         // We take care of that here.
         if (tableValuedFunctionExpression is
@@ -1399,7 +1399,7 @@ public class NpgsqlQuerySqlGenerator : QuerySqlGenerator
         return e;
     }
 
-    #endregion PostgreSQL-specific expression types
+    #endregion GaussDB-specific expression types
 
     /// <summary>
     ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to

@@ -175,19 +175,19 @@ WHERE strpos(b."String", @pattern) - 1 = 1
 """);
     }
 
-    // PostgreSQL does not have strpos with starting position
+    // GaussDB does not have strpos with starting position
     public override Task IndexOf_with_constant_starting_position(bool async)
         => AssertTranslationFailed(() => base.IndexOf_with_constant_starting_position(async));
 
-    // PostgreSQL does not have strpos with starting position
+    // GaussDB does not have strpos with starting position
     public override Task IndexOf_with_constant_starting_position_char(bool async)
         => AssertTranslationFailed(() => base.IndexOf_with_constant_starting_position_char(async));
 
-    // PostgreSQL does not have strpos with starting position
+    // GaussDB does not have strpos with starting position
     public override Task IndexOf_with_parameter_starting_position(bool async)
         => AssertTranslationFailed(() => base.IndexOf_with_parameter_starting_position(async));
 
-    // PostgreSQL does not have strpos with starting position
+    // GaussDB does not have strpos with starting position
     public override Task IndexOf_with_parameter_starting_position_char(bool async)
         => AssertTranslationFailed(() => base.IndexOf_with_parameter_starting_position_char(async));
 

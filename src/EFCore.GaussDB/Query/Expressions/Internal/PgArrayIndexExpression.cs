@@ -1,11 +1,11 @@
 namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.Expressions.Internal;
 
 /// <summary>
-///     An SQL expression that represents an indexing into a PostgreSQL array.
+///     An SQL expression that represents an indexing into a GaussDB array.
 /// </summary>
 /// <remarks>
 ///     <see cref="SqlBinaryExpression" /> specifically disallows having an <see cref="SqlBinaryExpression.OperatorType" />
-///     of value <see cref="ExpressionType.ArrayIndex" /> as arrays are a PostgreSQL-only feature.
+///     of value <see cref="ExpressionType.ArrayIndex" /> as arrays are a GaussDB-only feature.
 /// </remarks>
 public class PgArrayIndexExpression : SqlExpression, IEquatable<PgArrayIndexExpression>
 {

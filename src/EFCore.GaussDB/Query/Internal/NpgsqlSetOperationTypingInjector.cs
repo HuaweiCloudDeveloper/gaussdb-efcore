@@ -1,12 +1,12 @@
 namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.Internal;
 
 /// <summary>
-///     A visitor that injects explicit typing on null projections in set operations, to ensure PostgreSQL gets the typing right.
+///     A visitor that injects explicit typing on null projections in set operations, to ensure GaussDB gets the typing right.
 /// </summary>
 /// <remarks>
 ///     <para>
 ///         See the <see href="https://www.postgresql.org/docs/current/typeconv-union-case.html">
-///         PostgreSQL docs on type conversion and set operations</see>.
+///         GaussDB docs on type conversion and set operations</see>.
 ///     </para>
 ///     <para>
 ///         This is an internal API that supports the Entity Framework Core infrastructure and not subject to

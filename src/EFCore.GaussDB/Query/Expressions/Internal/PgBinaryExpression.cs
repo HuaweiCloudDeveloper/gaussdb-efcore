@@ -3,7 +3,7 @@ using HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal.Mapping;
 namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.Expressions.Internal;
 
 /// <summary>
-///     An expression that represents a PostgreSQL-specific binary operation in a SQL tree.
+///     An expression that represents a GaussDB-specific binary operation in a SQL tree.
 /// </summary>
 public class PgBinaryExpression : SqlExpression
 {
@@ -34,7 +34,7 @@ public class PgBinaryExpression : SqlExpression
     }
 
     /// <summary>
-    ///     The operator of this PostgreSQL binary operation.
+    ///     The operator of this GaussDB binary operation.
     /// </summary>
     public virtual PgExpressionType OperatorType { get; }
 

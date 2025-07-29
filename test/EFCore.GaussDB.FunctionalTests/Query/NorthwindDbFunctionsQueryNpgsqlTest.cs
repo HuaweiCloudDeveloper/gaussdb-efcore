@@ -21,7 +21,7 @@ public class NorthwindDbFunctionsQueryNpgsqlTest : NorthwindDbFunctionsQueryRela
 
     public override async Task Like_literal(bool async)
     {
-        // PostgreSQL like is case-sensitive, while the EF Core "default" (i.e. SqlServer) is insensitive.
+        // GaussDB like is case-sensitive, while the EF Core "default" (i.e. SqlServer) is insensitive.
         // So we override and assert only 19 matches unlike the default's 34.
         await AssertCount(
             async,

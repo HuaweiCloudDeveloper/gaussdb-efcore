@@ -55,7 +55,7 @@ WHERE date_part('second', b."TimeOnly")::int = 10
     public override Task Microsecond(bool async)
         => AssertTranslationFailed(() => base.Millisecond(async));
 
-    // Probably not relevant for PostgreSQL, which supports microsecond precision only
+    // Probably not relevant for GaussDB, which supports microsecond precision only
     public override Task Nanosecond(bool async)
         => AssertTranslationFailed(() => base.Millisecond(async));
 

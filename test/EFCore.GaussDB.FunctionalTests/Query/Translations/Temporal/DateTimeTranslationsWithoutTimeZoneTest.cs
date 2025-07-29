@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.TestModels.BasicTypesModel;
 namespace Microsoft.EntityFrameworkCore.Query.Translations.Temporal;
 
 /// <summary>
-///     Same as <see cref="DateTimeTranslationsNpgsqlTest" />, but the <see cref="DateTime" /> property is mapped to a PostgreSQL
+///     Same as <see cref="DateTimeTranslationsNpgsqlTest" />, but the <see cref="DateTime" /> property is mapped to a GaussDB
 ///     <c>timestamp without time zone</c>, which corresponds to a <see cref="DateTime" /> with <see cref="DateTime.Kind" />
 ///     <see cref="DateTimeKind.Unspecified" />.
 /// </summary>

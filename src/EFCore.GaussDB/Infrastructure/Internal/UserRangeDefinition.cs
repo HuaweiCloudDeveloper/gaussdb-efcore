@@ -1,7 +1,7 @@
 namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure.Internal;
 
 /// <summary>
-///     A definition for a user-defined PostgreSQL range to be mapped.
+///     A definition for a user-defined GaussDB range to be mapped.
 /// </summary>
 /// <remarks>
 ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to
@@ -12,7 +12,7 @@ namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure.Internal;
 public sealed record UserRangeDefinition
 {
     /// <summary>
-    ///     The name of the PostgreSQL range type to be mapped.
+    ///     The name of the GaussDB range type to be mapped.
     /// </summary>
     /// <remarks>
     ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to
@@ -23,7 +23,7 @@ public sealed record UserRangeDefinition
     public string StoreTypeName { get; }
 
     /// <summary>
-    ///     The PostgreSQL schema in which the range is defined. If null, the default schema is used
+    ///     The GaussDB schema in which the range is defined. If null, the default schema is used
     ///     (which is public unless changed on the model).
     /// </summary>
     /// <remarks>
@@ -47,7 +47,7 @@ public sealed record UserRangeDefinition
     public Type SubtypeClrType { get; }
 
     /// <summary>
-    ///     Optionally, the name of the range's PostgreSQL subtype (or element).
+    ///     Optionally, the name of the range's GaussDB subtype (or element).
     ///     This is usually not needed - the subtype will be inferred based on <see cref="SubtypeClrType" />.
     /// </summary>
     /// <remarks>

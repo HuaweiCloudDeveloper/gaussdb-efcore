@@ -3,7 +3,7 @@ using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure.Internal;
 namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Metadata.Conventions;
 
 /// <summary>
-///     A convention that discovers certain common PostgreSQL extensions based on store types used in the model (e.g. hstore).
+///     A convention that discovers certain common GaussDB extensions based on store types used in the model (e.g. hstore).
 /// </summary>
 /// <remarks>
 ///     See <see href="https://aka.ms/efcore-docs-conventions">Model building conventions</see>.
@@ -48,7 +48,7 @@ public class NpgsqlPostgresModelFinalizingConvention : IModelFinalizingConventio
     }
 
     /// <summary>
-    ///     Configures the model to create PostgreSQL enums based on the user's enum definitions in the context options.
+    ///     Configures the model to create GaussDB enums based on the user's enum definitions in the context options.
     /// </summary>
     protected virtual void SetupEnums(IConventionModelBuilder modelBuilder)
     {
@@ -62,7 +62,7 @@ public class NpgsqlPostgresModelFinalizingConvention : IModelFinalizingConventio
     }
 
     /// <summary>
-    ///     Discovers certain common PostgreSQL extensions based on property store types (e.g. hstore).
+    ///     Discovers certain common GaussDB extensions based on property store types (e.g. hstore).
     /// </summary>
     protected virtual void DiscoverPostgresExtensions(
         IConventionProperty property,
@@ -87,7 +87,7 @@ public class NpgsqlPostgresModelFinalizingConvention : IModelFinalizingConventio
     }
 
     /// <summary>
-    ///     Detects properties which are uint, OnAddOrUpdate and configured as concurrency tokens, and maps these to the PostgreSQL
+    ///     Detects properties which are uint, OnAddOrUpdate and configured as concurrency tokens, and maps these to the GaussDB
     ///     internal "xmin" column, which changes every time the row is modified.
     /// </summary>
     protected virtual void ProcessRowVersionProperty(IConventionProperty property, RelationalTypeMapping typeMapping)

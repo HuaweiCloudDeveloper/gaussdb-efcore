@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Storage.Json;
 namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal.Mapping;
 
 /// <summary>
-///     The type mapping for the PostgreSQL pg_lsn type.
+///     The type mapping for the GaussDB pg_lsn type.
 /// </summary>
 /// <remarks>
 ///     See: https://www.postgresql.org/docs/current/datatype-pg-lsn.html

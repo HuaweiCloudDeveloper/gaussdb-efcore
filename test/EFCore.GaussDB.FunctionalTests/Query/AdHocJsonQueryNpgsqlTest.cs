@@ -140,7 +140,7 @@ VALUES(
 
     #region BadJsonProperties
 
-    // PostgreSQL stores JSON as jsonb, which doesn't allow badly-formed JSON; so the following tests are irrelevant.
+    // GaussDB stores JSON as jsonb, which doesn't allow badly-formed JSON; so the following tests are irrelevant.
 
     public override async Task Bad_json_properties_duplicated_navigations(bool noTracking)
     {
@@ -170,7 +170,7 @@ VALUES(
         => Assert.ThrowsAsync<ThrowsAnyException>(() => base.Bad_json_properties_null_scalars(noTracking));
 
     protected override Task SeedBadJsonProperties(ContextBadJsonProperties ctx)
-        => throw new NotSupportedException("PostgreSQL stores JSON as jsonb, which doesn't allow badly-formed JSON");
+        => throw new NotSupportedException("GaussDB stores JSON as jsonb, which doesn't allow badly-formed JSON");
 
     #endregion
 

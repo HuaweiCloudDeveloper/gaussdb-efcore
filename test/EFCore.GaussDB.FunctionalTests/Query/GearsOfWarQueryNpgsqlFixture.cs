@@ -38,7 +38,7 @@ public class GearsOfWarQueryNpgsqlFixture : GearsOfWarQueryRelationalFixture
             _expectedData = (GearsOfWarData)base.GetExpectedData();
 
             // GearsOfWarData contains DateTimeOffsets with various offsets, which we don't support. Change these to UTC.
-            // Also chop sub-microsecond precision which PostgreSQL does not support.
+            // Also chop sub-microsecond precision which GaussDB does not support.
             foreach (var mission in _expectedData.Missions)
             {
                 mission.Timeline = new DateTimeOffset(
@@ -54,7 +54,7 @@ public class GearsOfWarQueryNpgsqlFixture : GearsOfWarQueryRelationalFixture
     protected override async Task SeedAsync(GearsOfWarContext context)
     {
         // GearsOfWarData contains DateTimeOffsets with various offsets, which we don't support. Change these to UTC.
-        // Also chop sub-microsecond precision which PostgreSQL does not support.
+        // Also chop sub-microsecond precision which GaussDB does not support.
         // See https://github.com/dotnet/efcore/issues/26068
 
         var squads = GearsOfWarData.CreateSquads();

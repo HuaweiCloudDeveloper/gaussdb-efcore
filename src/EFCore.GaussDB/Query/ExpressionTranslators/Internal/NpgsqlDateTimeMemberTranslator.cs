@@ -90,7 +90,7 @@ public class NpgsqlDateTimeMemberTranslator : IMemberTranslator
                         returnType,
                         instance.TypeMapping);
 
-                // If DateTime.Date is invoked on a PostgreSQL date (or DateOnly, which can only be mapped to datE), simply no-op.
+                // If DateTime.Date is invoked on a GaussDB date (or DateOnly, which can only be mapped to datE), simply no-op.
                 case { TypeMapping: NpgsqlDateTimeDateTypeMapping }:
                 case { Type: var type } when type == typeof(DateOnly):
                     return instance;
@@ -133,7 +133,7 @@ public class NpgsqlDateTimeMemberTranslator : IMemberTranslator
 
             nameof(DateTime.Millisecond) => null, // Too annoying
 
-            // .NET's DayOfWeek is an enum, but its int values happen to correspond to PostgreSQL
+            // .NET's DayOfWeek is an enum, but its int values happen to correspond to GaussDB
             nameof(DateTime.DayOfWeek) => DatePart(instance!, "dow", floor: true),
 
             // Casting a timestamptz to time (to get the time component) converts it to a local timestamp based on TimeZone.

@@ -59,7 +59,7 @@ public class NonSharedPrimitiveCollectionsQueryNpgsqlTest(NonSharedFixture fixtu
     [ConditionalFact]
     public override async Task Multidimensional_array_is_not_supported()
     {
-        // Multidimensional arrays are supported in PostgreSQL (via the regular array type); the EFCore.GaussDB maps .NET
+        // Multidimensional arrays are supported in GaussDB (via the regular array type); the EFCore.GaussDB maps .NET
         // multidimensional arrays. However, arrays of multidimensional arrays aren't supported (since arrays of arrays generally aren't
         // supported).
         var contextFactory = await InitializeAsync<TestContext>(

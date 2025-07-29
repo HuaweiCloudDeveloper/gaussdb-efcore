@@ -3,7 +3,7 @@
 namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.Expressions.Internal;
 
 /// <summary>
-///     Represents a SQL function call expression, supporting PostgreSQL's named parameter notation
+///     Represents a SQL function call expression, supporting GaussDB's named parameter notation
 ///     (e.g. make_interval(weeks => 2) and non-comma parameter separators (e.g. position(substring in string)).
 /// </summary>
 public class PgFunctionExpression : SqlFunctionExpression, IEquatable<PgFunctionExpression>

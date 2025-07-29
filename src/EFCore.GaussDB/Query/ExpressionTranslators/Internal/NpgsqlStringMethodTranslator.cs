@@ -7,7 +7,7 @@ using ExpressionExtensions = Microsoft.EntityFrameworkCore.Query.ExpressionExten
 namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Query.ExpressionTranslators.Internal;
 
 /// <summary>
-///     Provides translation services for PostgreSQL string functions.
+///     Provides translation services for GaussDB string functions.
 /// </summary>
 /// <remarks>
 ///     See: https://www.postgresql.org/docs/current/static/functions-string.html

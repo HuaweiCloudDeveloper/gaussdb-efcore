@@ -107,7 +107,7 @@ public class NpgsqlTestStore : RelationalTestStore
     {
         Action<NpgsqlDbContextOptionsBuilder> npgsqlOptionsBuilder = b => b.ApplyConfiguration()
             .CommandTimeout(CommandTimeout)
-            // The tests are written with the assumption that NULLs are sorted first (SQL Server and .NET behavior), but PostgreSQL
+            // The tests are written with the assumption that NULLs are sorted first (SQL Server and .NET behavior), but GaussDB
             // sorts NULLs last by default. This configures the provider to emit NULLS FIRST.
             .ReverseNullOrdering();
 
