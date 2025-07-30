@@ -2,7 +2,8 @@
   <PropertyGroup>
     <EFCoreVersion>10.0.0-preview.7.25352.2</EFCoreVersion>
     <MicrosoftExtensionsVersion>10.0.0-preview.7.25351.105</MicrosoftExtensionsVersion>
-    <NpgsqlVersion>9.0.3</NpgsqlVersion>
+    <GaussDBVersion>9.0.3</GaussDBVersion>
+    <DriverVersion>0.1.0</DriverVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,10 +17,10 @@
     <PackageVersion Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="$(MicrosoftExtensionsVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Logging" Version="$(MicrosoftExtensionsVersion)" />
 
-    <PackageVersion Include="Npgsql" Version="$(NpgsqlVersion)" />
-    <PackageVersion Include="Npgsql.NodaTime" Version="$(NpgsqlVersion)" />
-    <PackageVersion Include="Npgsql.NetTopologySuite" Version="$(NpgsqlVersion)" />
-    <PackageVersion Include="Npgsql.DependencyInjection" Version="$(NpgsqlVersion)" />
+    <PackageVersion Include="HuaweiCloud.Driver.GaussDB" Version="$(DriverVersion)" />
+    <PackageVersion Include="HuaweiCloud.GaussDB.NodaTime" Version="$(GaussDBVersion)" />
+    <PackageVersion Include="HuaweiCloud.GaussDB.NetTopologySuite" Version="$(GaussDBVersion)" />
+    <PackageVersion Include="HuaweiCloud.GaussDB.DependencyInjection" Version="$(GaussDBVersion)" />
 
     <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />

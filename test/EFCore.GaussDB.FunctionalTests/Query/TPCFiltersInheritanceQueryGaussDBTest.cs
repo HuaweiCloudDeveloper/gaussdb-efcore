@@ -1,0 +1,4 @@
+namespace Microsoft.EntityFrameworkCore.Query;
+
+public class TPCFiltersInheritanceQueryGaussDBTest(TPCFiltersInheritanceQueryGaussDBFixture fixture)
+    : TPCFiltersInheritanceQueryTestBase<TPCFiltersInheritanceQueryGaussDBFixture>(fixture);

@@ -72,7 +72,7 @@ WHERE REGEXP_REPLACE(""c"".""ContactTitle"", '^\s*', '') = 'Owner'");
 
 
 
-Microsoft.EntityFrameworkCore.Query.SimpleQueryNpgsqlTest.Regex_IsMatchOptionsSingleline() : line() na R:\RafaelNuvem\ProjetosGit\EFCorePostgreSQL\test\EFCore.PG.FunctionalTests\Query\SimpleQueryNpgsqlTest.Functions.cs:linha 238
+Microsoft.EntityFrameworkCore.Query.SimpleQueryNpgsqlTest.Regex_IsMatchOptionsSingleline() : line() na R:\RafaelNuvem\ProjetosGit\EFCorePostgreSQL\test\EFCore.GaussDB.FunctionalTests\Query\SimpleQueryNpgsqlTest.Functions.cs:linha 238
             AssertSql(
                 @"SELECT ""c"".""CustomerID"", ""c"".""Address"", ""c"".""City"", ""c"".""CompanyName"", ""c"".""ContactName"", ""c"".""ContactTitle"", ""c"".""Country"", ""c"".""Fax"", ""c"".""Phone"", ""c"".""PostalCode"", ""c"".""Region""
 FROM ""Customers"" AS ""c""
@@ -120,7 +120,7 @@ WHERE STRPOS(""c"".""ContactName"", 'M') > 0");
 
 
 
-Microsoft.EntityFrameworkCore.Query.SimpleQueryNpgsqlTest.Regex_IsMatchOptionsMultiline() : line() na R:\RafaelNuvem\ProjetosGit\EFCorePostgreSQL\test\EFCore.PG.FunctionalTests\Query\SimpleQueryNpgsqlTest.Functions.cs:linha 229
+Microsoft.EntityFrameworkCore.Query.SimpleQueryNpgsqlTest.Regex_IsMatchOptionsMultiline() : line() na R:\RafaelNuvem\ProjetosGit\EFCorePostgreSQL\test\EFCore.GaussDB.FunctionalTests\Query\SimpleQueryNpgsqlTest.Functions.cs:linha 229
             AssertSql(
                 @"SELECT ""c"".""CustomerID"", ""c"".""Address"", ""c"".""City"", ""c"".""CompanyName"", ""c"".""ContactName"", ""c"".""ContactTitle"", ""c"".""Country"", ""c"".""Fax"", ""c"".""Phone"", ""c"".""PostalCode"", ""c"".""Region""
 FROM ""Customers"" AS ""c""
@@ -366,7 +366,7 @@ WHERE REGEXP_REPLACE(""c"".""ContactTitle"", '^\s*', '') = 'Owner'");
 
 
 
-Microsoft.EntityFrameworkCore.Query.SimpleQueryNpgsqlTest.Regex_IsMatchOptionsSingleline() : line() na R:\RafaelNuvem\ProjetosGit\EFCorePostgreSQL\test\EFCore.PG.FunctionalTests\Query\SimpleQueryNpgsqlTest.Functions.cs:linha 238
+Microsoft.EntityFrameworkCore.Query.SimpleQueryNpgsqlTest.Regex_IsMatchOptionsSingleline() : line() na R:\RafaelNuvem\ProjetosGit\EFCorePostgreSQL\test\EFCore.GaussDB.FunctionalTests\Query\SimpleQueryNpgsqlTest.Functions.cs:linha 238
             AssertSql(
                 @"SELECT ""c"".""CustomerID"", ""c"".""Address"", ""c"".""City"", ""c"".""CompanyName"", ""c"".""ContactName"", ""c"".""ContactTitle"", ""c"".""Country"", ""c"".""Fax"", ""c"".""Phone"", ""c"".""PostalCode"", ""c"".""Region""
 FROM ""Customers"" AS ""c""
@@ -414,7 +414,7 @@ WHERE STRPOS(""c"".""ContactName"", 'M') > 0");
 
 
 
-Microsoft.EntityFrameworkCore.Query.SimpleQueryNpgsqlTest.Regex_IsMatchOptionsMultiline() : line() na R:\RafaelNuvem\ProjetosGit\EFCorePostgreSQL\test\EFCore.PG.FunctionalTests\Query\SimpleQueryNpgsqlTest.Functions.cs:linha 229
+Microsoft.EntityFrameworkCore.Query.SimpleQueryNpgsqlTest.Regex_IsMatchOptionsMultiline() : line() na R:\RafaelNuvem\ProjetosGit\EFCorePostgreSQL\test\EFCore.GaussDB.FunctionalTests\Query\SimpleQueryNpgsqlTest.Functions.cs:linha 229
             AssertSql(
                 @"SELECT ""c"".""CustomerID"", ""c"".""Address"", ""c"".""City"", ""c"".""CompanyName"", ""c"".""ContactName"", ""c"".""ContactTitle"", ""c"".""Country"", ""c"".""Fax"", ""c"".""Phone"", ""c"".""PostalCode"", ""c"".""Region""
 FROM ""Customers"" AS ""c""
@@ -660,7 +660,7 @@ WHERE REGEXP_REPLACE(""c"".""ContactTitle"", '^\s*', '') = 'Owner'");
 
 
 
-Microsoft.EntityFrameworkCore.Query.SimpleQueryNpgsqlTest.Regex_IsMatchOptionsSingleline() : line() na R:\RafaelNuvem\ProjetosGit\EFCorePostgreSQL\test\EFCore.PG.FunctionalTests\Query\SimpleQueryNpgsqlTest.Functions.cs:linha 238
+Microsoft.EntityFrameworkCore.Query.SimpleQueryNpgsqlTest.Regex_IsMatchOptionsSingleline() : line() na R:\RafaelNuvem\ProjetosGit\EFCorePostgreSQL\test\EFCore.GaussDB.FunctionalTests\Query\SimpleQueryNpgsqlTest.Functions.cs:linha 238
             AssertSql(
                 @"SELECT ""c"".""CustomerID"", ""c"".""Address"", ""c"".""City"", ""c"".""CompanyName"", ""c"".""ContactName"", ""c"".""ContactTitle"", ""c"".""Country"", ""c"".""Fax"", ""c"".""Phone"", ""c"".""PostalCode"", ""c"".""Region""
 FROM ""Customers"" AS ""c""
@@ -708,7 +708,7 @@ WHERE STRPOS(""c"".""ContactName"", 'M') > 0");
 
 
 
-Microsoft.EntityFrameworkCore.Query.SimpleQueryNpgsqlTest.Regex_IsMatchOptionsMultiline() : line() na R:\RafaelNuvem\ProjetosGit\EFCorePostgreSQL\test\EFCore.PG.FunctionalTests\Query\SimpleQueryNpgsqlTest.Functions.cs:linha 229
+Microsoft.EntityFrameworkCore.Query.SimpleQueryNpgsqlTest.Regex_IsMatchOptionsMultiline() : line() na R:\RafaelNuvem\ProjetosGit\EFCorePostgreSQL\test\EFCore.GaussDB.FunctionalTests\Query\SimpleQueryNpgsqlTest.Functions.cs:linha 229
             AssertSql(
                 @"SELECT ""c"".""CustomerID"", ""c"".""Address"", ""c"".""City"", ""c"".""CompanyName"", ""c"".""ContactName"", ""c"".""ContactTitle"", ""c"".""Country"", ""c"".""Fax"", ""c"".""Phone"", ""c"".""PostalCode"", ""c"".""Region""
 FROM ""Customers"" AS ""c""
@@ -962,7 +962,7 @@ WHERE REGEXP_REPLACE(""c"".""ContactTitle"", '^\s*', '') = 'Owner'");
 
 
 
-Microsoft.EntityFrameworkCore.Query.SimpleQueryNpgsqlTest.Regex_IsMatchOptionsSingleline() : line() na R:\RafaelNuvem\ProjetosGit\EFCorePostgreSQL\test\EFCore.PG.FunctionalTests\Query\SimpleQueryNpgsqlTest.Functions.cs:linha 238
+Microsoft.EntityFrameworkCore.Query.SimpleQueryNpgsqlTest.Regex_IsMatchOptionsSingleline() : line() na R:\RafaelNuvem\ProjetosGit\EFCorePostgreSQL\test\EFCore.GaussDB.FunctionalTests\Query\SimpleQueryNpgsqlTest.Functions.cs:linha 238
             AssertSql(
                 @"SELECT ""c"".""CustomerID"", ""c"".""Address"", ""c"".""City"", ""c"".""CompanyName"", ""c"".""ContactName"", ""c"".""ContactTitle"", ""c"".""Country"", ""c"".""Fax"", ""c"".""Phone"", ""c"".""PostalCode"", ""c"".""Region""
 FROM ""Customers"" AS ""c""
@@ -1010,7 +1010,7 @@ WHERE STRPOS(""c"".""ContactName"", 'M') > 0");
 
 
 
-Microsoft.EntityFrameworkCore.Query.SimpleQueryNpgsqlTest.Regex_IsMatchOptionsMultiline() : line() na R:\RafaelNuvem\ProjetosGit\EFCorePostgreSQL\test\EFCore.PG.FunctionalTests\Query\SimpleQueryNpgsqlTest.Functions.cs:linha 229
+Microsoft.EntityFrameworkCore.Query.SimpleQueryNpgsqlTest.Regex_IsMatchOptionsMultiline() : line() na R:\RafaelNuvem\ProjetosGit\EFCorePostgreSQL\test\EFCore.GaussDB.FunctionalTests\Query\SimpleQueryNpgsqlTest.Functions.cs:linha 229
             AssertSql(
                 @"SELECT ""c"".""CustomerID"", ""c"".""Address"", ""c"".""City"", ""c"".""CompanyName"", ""c"".""ContactName"", ""c"".""ContactTitle"", ""c"".""Country"", ""c"".""Fax"", ""c"".""Phone"", ""c"".""PostalCode"", ""c"".""Region""
 FROM ""Customers"" AS ""c""
@@ -1288,7 +1288,7 @@ WHERE STRPOS(""c"".""ContactName"", 'M') > 0");
 
 
 
-Microsoft.EntityFrameworkCore.Query.SimpleQueryNpgsqlTest.Regex_IsMatchOptionsMultiline() : line() na R:\RafaelNuvem\ProjetosGit\EFCorePostgreSQL\test\EFCore.PG.FunctionalTests\Query\SimpleQueryNpgsqlTest.Functions.cs:linha 229
+Microsoft.EntityFrameworkCore.Query.SimpleQueryNpgsqlTest.Regex_IsMatchOptionsMultiline() : line() na R:\RafaelNuvem\ProjetosGit\EFCorePostgreSQL\test\EFCore.GaussDB.FunctionalTests\Query\SimpleQueryNpgsqlTest.Functions.cs:linha 229
             AssertSql(
                 @"SELECT ""c"".""CustomerID"", ""c"".""Address"", ""c"".""City"", ""c"".""CompanyName"", ""c"".""ContactName"", ""c"".""ContactTitle"", ""c"".""Country"", ""c"".""Fax"", ""c"".""Phone"", ""c"".""PostalCode"", ""c"".""Region""
 FROM ""Customers"" AS ""c""
@@ -1534,7 +1534,7 @@ WHERE REGEXP_REPLACE(""c"".""ContactTitle"", '^\s*', '') = 'Owner'");
 
 
 
-Microsoft.EntityFrameworkCore.Query.SimpleQueryNpgsqlTest.Regex_IsMatchOptionsSingleline() : line() na R:\RafaelNuvem\ProjetosGit\EFCorePostgreSQL\test\EFCore.PG.FunctionalTests\Query\SimpleQueryNpgsqlTest.Functions.cs:linha 238
+Microsoft.EntityFrameworkCore.Query.SimpleQueryNpgsqlTest.Regex_IsMatchOptionsSingleline() : line() na R:\RafaelNuvem\ProjetosGit\EFCorePostgreSQL\test\EFCore.GaussDB.FunctionalTests\Query\SimpleQueryNpgsqlTest.Functions.cs:linha 238
             AssertSql(
                 @"SELECT ""c"".""CustomerID"", ""c"".""Address"", ""c"".""City"", ""c"".""CompanyName"", ""c"".""ContactName"", ""c"".""ContactTitle"", ""c"".""Country"", ""c"".""Fax"", ""c"".""Phone"", ""c"".""PostalCode"", ""c"".""Region""
 FROM ""Customers"" AS ""c""
@@ -1582,7 +1582,7 @@ WHERE STRPOS(""c"".""ContactName"", 'M') > 0");
 
 
 
-Microsoft.EntityFrameworkCore.Query.SimpleQueryNpgsqlTest.Regex_IsMatchOptionsMultiline() : line() na R:\RafaelNuvem\ProjetosGit\EFCorePostgreSQL\test\EFCore.PG.FunctionalTests\Query\SimpleQueryNpgsqlTest.Functions.cs:linha 229
+Microsoft.EntityFrameworkCore.Query.SimpleQueryNpgsqlTest.Regex_IsMatchOptionsMultiline() : line() na R:\RafaelNuvem\ProjetosGit\EFCorePostgreSQL\test\EFCore.GaussDB.FunctionalTests\Query\SimpleQueryNpgsqlTest.Functions.cs:linha 229
             AssertSql(
                 @"SELECT ""c"".""CustomerID"", ""c"".""Address"", ""c"".""City"", ""c"".""CompanyName"", ""c"".""ContactName"", ""c"".""ContactTitle"", ""c"".""Country"", ""c"".""Fax"", ""c"".""Phone"", ""c"".""PostalCode"", ""c"".""Region""
 FROM ""Customers"" AS ""c""
@@ -1828,7 +1828,7 @@ WHERE REGEXP_REPLACE(""c"".""ContactTitle"", '^\s*', '') = 'Owner'");
 
 
 
-Microsoft.EntityFrameworkCore.Query.SimpleQueryNpgsqlTest.Regex_IsMatchOptionsSingleline() : line() na R:\RafaelNuvem\ProjetosGit\EFCorePostgreSQL\test\EFCore.PG.FunctionalTests\Query\SimpleQueryNpgsqlTest.Functions.cs:linha 238
+Microsoft.EntityFrameworkCore.Query.SimpleQueryNpgsqlTest.Regex_IsMatchOptionsSingleline() : line() na R:\RafaelNuvem\ProjetosGit\EFCorePostgreSQL\test\EFCore.GaussDB.FunctionalTests\Query\SimpleQueryNpgsqlTest.Functions.cs:linha 238
             AssertSql(
                 @"SELECT ""c"".""CustomerID"", ""c"".""Address"", ""c"".""City"", ""c"".""CompanyName"", ""c"".""ContactName"", ""c"".""ContactTitle"", ""c"".""Country"", ""c"".""Fax"", ""c"".""Phone"", ""c"".""PostalCode"", ""c"".""Region""
 FROM ""Customers"" AS ""c""
@@ -1876,7 +1876,7 @@ WHERE STRPOS(""c"".""ContactName"", 'M') > 0");
 
 
 
-Microsoft.EntityFrameworkCore.Query.SimpleQueryNpgsqlTest.Regex_IsMatchOptionsMultiline() : line() na R:\RafaelNuvem\ProjetosGit\EFCorePostgreSQL\test\EFCore.PG.FunctionalTests\Query\SimpleQueryNpgsqlTest.Functions.cs:linha 229
+Microsoft.EntityFrameworkCore.Query.SimpleQueryNpgsqlTest.Regex_IsMatchOptionsMultiline() : line() na R:\RafaelNuvem\ProjetosGit\EFCorePostgreSQL\test\EFCore.GaussDB.FunctionalTests\Query\SimpleQueryNpgsqlTest.Functions.cs:linha 229
             AssertSql(
                 @"SELECT ""c"".""CustomerID"", ""c"".""Address"", ""c"".""City"", ""c"".""CompanyName"", ""c"".""ContactName"", ""c"".""ContactTitle"", ""c"".""Country"", ""c"".""Fax"", ""c"".""Phone"", ""c"".""PostalCode"", ""c"".""Region""
 FROM ""Customers"" AS ""c""
@@ -2122,7 +2122,7 @@ WHERE REGEXP_REPLACE(""c"".""ContactTitle"", '^\s*', '') = 'Owner'");
 
 
 
-Microsoft.EntityFrameworkCore.Query.SimpleQueryNpgsqlTest.Regex_IsMatchOptionsSingleline() : line() na R:\RafaelNuvem\ProjetosGit\EFCorePostgreSQL\test\EFCore.PG.FunctionalTests\Query\SimpleQueryNpgsqlTest.Functions.cs:linha 238
+Microsoft.EntityFrameworkCore.Query.SimpleQueryNpgsqlTest.Regex_IsMatchOptionsSingleline() : line() na R:\RafaelNuvem\ProjetosGit\EFCorePostgreSQL\test\EFCore.GaussDB.FunctionalTests\Query\SimpleQueryNpgsqlTest.Functions.cs:linha 238
             AssertSql(
                 @"SELECT ""c"".""CustomerID"", ""c"".""Address"", ""c"".""City"", ""c"".""CompanyName"", ""c"".""ContactName"", ""c"".""ContactTitle"", ""c"".""Country"", ""c"".""Fax"", ""c"".""Phone"", ""c"".""PostalCode"", ""c"".""Region""
 FROM ""Customers"" AS ""c""
@@ -2170,7 +2170,7 @@ WHERE STRPOS(""c"".""ContactName"", 'M') > 0");
 
 
 
-Microsoft.EntityFrameworkCore.Query.SimpleQueryNpgsqlTest.Regex_IsMatchOptionsMultiline() : line() na R:\RafaelNuvem\ProjetosGit\EFCorePostgreSQL\test\EFCore.PG.FunctionalTests\Query\SimpleQueryNpgsqlTest.Functions.cs:linha 229
+Microsoft.EntityFrameworkCore.Query.SimpleQueryNpgsqlTest.Regex_IsMatchOptionsMultiline() : line() na R:\RafaelNuvem\ProjetosGit\EFCorePostgreSQL\test\EFCore.GaussDB.FunctionalTests\Query\SimpleQueryNpgsqlTest.Functions.cs:linha 229
             AssertSql(
                 @"SELECT ""c"".""CustomerID"", ""c"".""Address"", ""c"".""City"", ""c"".""CompanyName"", ""c"".""ContactName"", ""c"".""ContactTitle"", ""c"".""Country"", ""c"".""Fax"", ""c"".""Phone"", ""c"".""PostalCode"", ""c"".""Region""
 FROM ""Customers"" AS ""c""
@@ -3958,7 +3958,7 @@ LIMIT 1");
 
 
 
-Npgsql.EntityFrameworkCore.PostgreSQL.Query.FullTextSearchDbFunctionsNpgsqlTest.TsQueryAnd() : 
+HuaweiCloud.EntityFrameworkCore.GaussDB.Query.FullTextSearchDbFunctionsNpgsqlTest.TsQueryAnd() : 
             AssertSql(
                 @"SELECT (to_tsquery('a & b') && to_tsquery('c & d'))
 FROM ""Customers"" AS c
@@ -3966,7 +3966,7 @@ LIMIT 1");
 
 
 
-Npgsql.EntityFrameworkCore.PostgreSQL.Query.FullTextSearchDbFunctionsNpgsqlTest.TsQueryOr() : 
+HuaweiCloud.EntityFrameworkCore.GaussDB.Query.FullTextSearchDbFunctionsNpgsqlTest.TsQueryOr() : 
             AssertSql(
                 @"SELECT (to_tsquery('a & b') || to_tsquery('c & d'))
 FROM ""Customers"" AS c
@@ -3974,7 +3974,7 @@ LIMIT 1");
 
 
 
-Npgsql.EntityFrameworkCore.PostgreSQL.Query.FullTextSearchDbFunctionsNpgsqlTest.Matches_With_String() : 
+HuaweiCloud.EntityFrameworkCore.GaussDB.Query.FullTextSearchDbFunctionsNpgsqlTest.Matches_With_String() : 
             AssertSql(
                 @"SELECT (to_tsvector('a') @@ 'b')
 FROM ""Customers"" AS c
@@ -3982,7 +3982,7 @@ LIMIT 1");
 
 
 
-Npgsql.EntityFrameworkCore.PostgreSQL.Query.FullTextSearchDbFunctionsNpgsqlTest.Matches_With_Tsquery() : 
+HuaweiCloud.EntityFrameworkCore.GaussDB.Query.FullTextSearchDbFunctionsNpgsqlTest.Matches_With_Tsquery() : 
             AssertSql(
                 @"SELECT (to_tsvector('a') @@ to_tsquery('b'))
 FROM ""Customers"" AS c
@@ -3990,7 +3990,7 @@ LIMIT 1");
 
 
 
-Npgsql.EntityFrameworkCore.PostgreSQL.Query.FullTextSearchDbFunctionsNpgsqlTest.TsQueryIsContainedIn() : 
+HuaweiCloud.EntityFrameworkCore.GaussDB.Query.FullTextSearchDbFunctionsNpgsqlTest.TsQueryIsContainedIn() : 
             AssertSql(
                 @"SELECT (to_tsquery('b') <@ to_tsquery('a & b'))
 FROM ""Customers"" AS c
@@ -3998,7 +3998,7 @@ LIMIT 1");
 
 
 
-Npgsql.EntityFrameworkCore.PostgreSQL.Query.FullTextSearchDbFunctionsNpgsqlTest.TsQueryContains() : 
+HuaweiCloud.EntityFrameworkCore.GaussDB.Query.FullTextSearchDbFunctionsNpgsqlTest.TsQueryContains() : 
             AssertSql(
                 @"SELECT (to_tsquery('a & b') @> to_tsquery('b'))
 FROM ""Customers"" AS c
@@ -4006,7 +4006,7 @@ LIMIT 1");
 
 
 
-Npgsql.EntityFrameworkCore.PostgreSQL.Query.FullTextSearchDbFunctionsNpgsqlTest.TsVectorConcat() : 
+HuaweiCloud.EntityFrameworkCore.GaussDB.Query.FullTextSearchDbFunctionsNpgsqlTest.TsVectorConcat() : 
             AssertSql(
                 @"SELECT (to_tsvector('b') || to_tsvector('c'))
 FROM ""Customers"" AS c
@@ -4014,7 +4014,7 @@ LIMIT 1");
 
 
 
-Npgsql.EntityFrameworkCore.PostgreSQL.Query.SpatialQueryNpgsqlGeographyTest.<IsWithinDistance>d__9.MoveNext() : line 84
+HuaweiCloud.EntityFrameworkCore.GaussDB.Query.SpatialQueryNpgsqlGeographyTest.<IsWithinDistance>d__9.MoveNext() : line 84
             AssertSql(
                 @"@__point_0='POINT (0 1)' (DbType = Object)
 
@@ -4023,7 +4023,7 @@ FROM ""PointEntity"" AS e");
 
 
 
-Npgsql.EntityFrameworkCore.PostgreSQL.Query.SpatialQueryNpgsqlGeographyTest.<IsWithinDistance>d__9.MoveNext() : line 84
+HuaweiCloud.EntityFrameworkCore.GaussDB.Query.SpatialQueryNpgsqlGeographyTest.<IsWithinDistance>d__9.MoveNext() : line 84
             AssertSql(
                 @"@__point_0='POINT (0 1)' (DbType = Object)
 
@@ -4048,7 +4048,7 @@ LIMIT 1");
 
 
 
-Npgsql.EntityFrameworkCore.PostgreSQL.Query.FullTextSearchDbFunctionsNpgsqlTest.WebSearchToTsQuery_With_Config_From_Variable() : 
+HuaweiCloud.EntityFrameworkCore.GaussDB.Query.FullTextSearchDbFunctionsNpgsqlTest.WebSearchToTsQuery_With_Config_From_Variable() : 
             AssertSql(
                 @"@__config_1='english'
 
@@ -4058,7 +4058,7 @@ LIMIT 1");
 
 
 
-Npgsql.EntityFrameworkCore.PostgreSQL.Query.FullTextSearchDbFunctionsNpgsqlTest.WebSearchToTsQuery_With_Config() : 
+HuaweiCloud.EntityFrameworkCore.GaussDB.Query.FullTextSearchDbFunctionsNpgsqlTest.WebSearchToTsQuery_With_Config() : 
             AssertSql(
                 @"SELECT websearch_to_tsquery(CAST('english' AS regconfig), 'a OR b')
 FROM ""Customers"" AS c

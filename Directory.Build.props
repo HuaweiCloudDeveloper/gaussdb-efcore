@@ -8,22 +8,22 @@
     <AnalysisLevel>latest</AnalysisLevel>
     <NoWarn>$(NoWarn);NU5105</NoWarn> <!-- The package version '1.2.3+semver2.metadata' uses SemVer 2.0.0 or components of SemVer 1.0.0 that are not supported on legacy clients. -->
     <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
-    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)Npgsql.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)GaussDB.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     <ImplicitUsings>true</ImplicitUsings>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
 
-    <Copyright>Copyright 2025 © The Npgsql Development Team</Copyright>
-    <Company>Npgsql</Company>
+    <Copyright>Copyright 2025 © The GaussDB Development Team</Copyright>
+    <Company>GaussDB</Company>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <PackageLicenseExpression>PostgreSQL</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/npgsql/efcore.pg</PackageProjectUrl>
-    <PackageIcon>postgresql.png</PackageIcon>
+    <PackageProjectUrl>https://github.com/HuaweiCloudDeveloper/gaussdb-efcore</PackageProjectUrl>
+    <PackageIcon>gaussdb.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)postgresql.png" Pack="true" PackagePath="" />
+    <None Include="$(MSBuildThisFileDirectory)gaussdb.png" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <ItemGroup>
@@ -52,8 +52,8 @@
     <Using Include="Microsoft.EntityFrameworkCore.Utilities" />
     <Using Include="Microsoft.Extensions.Logging" />
     <Using Include="Microsoft.Extensions.DependencyInjection" />
-    <Using Include="Npgsql" />
-    <Using Include="NpgsqlTypes" />
+    <Using Include="HuaweiCloud.GaussDB" />
+    <Using Include="HuaweiCloud.GaussDBTypes" />
   </ItemGroup>
 
 </Project>
