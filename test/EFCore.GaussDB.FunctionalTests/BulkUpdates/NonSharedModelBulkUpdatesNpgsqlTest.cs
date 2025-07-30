@@ -1,9 +1,9 @@
 namespace Microsoft.EntityFrameworkCore.BulkUpdates;
 
-public class NonSharedModelBulkUpdatesNpgsqlTest(NonSharedFixture fixture) : NonSharedModelBulkUpdatesRelationalTestBase(fixture)
+public class NonSharedModelBulkUpdatesGaussDBTest(NonSharedFixture fixture) : NonSharedModelBulkUpdatesRelationalTestBase(fixture)
 {
     protected override ITestStoreFactory TestStoreFactory
-        => NpgsqlTestStoreFactory.Instance;
+        => GaussDBTestStoreFactory.Instance;
 
     [ConditionalFact]
     public virtual void Check_all_tests_overridden()
@@ -138,7 +138,7 @@ SET "Title" = COALESCE(o."OwnedReference_Number"::text, ''),
 
     public override async Task Update_main_table_in_entity_with_entity_splitting(bool async)
     {
-        // Overridden/duplicated because we update DateTime, which Npgsql requires to be a UTC timestamp
+        // Overridden/duplicated because we update DateTime, which GaussDB requires to be a UTC timestamp
         var contextFactory = await InitializeAsync<DbContext>(
             onModelCreating: mb => mb.Entity<Blog>()
                 .ToTable("Blogs")

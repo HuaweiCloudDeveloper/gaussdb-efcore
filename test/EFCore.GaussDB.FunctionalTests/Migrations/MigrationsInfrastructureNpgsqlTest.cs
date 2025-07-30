@@ -4,8 +4,8 @@ using HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal;
 namespace Microsoft.EntityFrameworkCore.Migrations;
 #nullable disable
 
-public class MigrationsInfrastructureNpgsqlTest(MigrationsInfrastructureNpgsqlTest.MigrationsInfrastructureNpgsqlFixture fixture)
-    : MigrationsInfrastructureTestBase<MigrationsInfrastructureNpgsqlTest.MigrationsInfrastructureNpgsqlFixture>(fixture)
+public class MigrationsInfrastructureGaussDBTest(MigrationsInfrastructureGaussDBTest.MigrationsInfrastructureGaussDBFixture fixture)
+    : MigrationsInfrastructureTestBase<MigrationsInfrastructureGaussDBTest.MigrationsInfrastructureGaussDBFixture>(fixture)
 {
     public override void Can_get_active_provider()
     {
@@ -22,7 +22,7 @@ public class MigrationsInfrastructureNpgsqlTest(MigrationsInfrastructureNpgsqlTe
     public override Task Can_apply_two_migrations_in_transaction_async()
         => Assert.ThrowsAnyAsync<Exception>(() => base.Can_apply_two_migrations_in_transaction_async());
 
-    // This tests uses Fixture.CreateEmptyContext(), which does not go through MigrationsInfrastructureNpgsqlFixture.CreateContext()
+    // This tests uses Fixture.CreateEmptyContext(), which does not go through MigrationsInfrastructureGaussDBFixture.CreateContext()
     // and therefore does not set the PostgresVersion in the context options. As a result, we try to drop the database with
     // WITH (FORCE), which is only supported starting with PG 13.
     [MinimumPostgresVersion(13, 0)]
@@ -57,7 +57,7 @@ public class MigrationsInfrastructureNpgsqlTest(MigrationsInfrastructureNpgsqlTe
                     new DbContextOptionsBuilder().EnableServiceProviderCaching(false))
                 .ConfigureWarnings(e => e.Log(RelationalEventId.PendingModelChangesWarning)).Options);
 
-        var creator = (NpgsqlDatabaseCreator)context.GetService<IRelationalDatabaseCreator>();
+        var creator = (GaussDBDatabaseCreator)context.GetService<IRelationalDatabaseCreator>();
         creator.RetryTimeout = TimeSpan.FromMinutes(10);
 
         await context.Database.MigrateAsync();
@@ -105,8 +105,8 @@ public class MigrationsInfrastructureNpgsqlTest(MigrationsInfrastructureNpgsqlTe
                 .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation(
-                    "Npgsql:ValueGenerationStrategy",
-                    NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                    "GaussDB:ValueGenerationStrategy",
+                    GaussDBValueGenerationStrategy.IdentityByDefaultColumn);
 
             modelBuilder.Entity(
                 "ModelSnapshot22.Blog", b =>
@@ -114,8 +114,8 @@ public class MigrationsInfrastructureNpgsqlTest(MigrationsInfrastructureNpgsqlTe
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation(
-                            "Npgsql:ValueGenerationStrategy",
-                            NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                            "GaussDB:ValueGenerationStrategy",
+                            GaussDBValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Name");
 
@@ -130,8 +130,8 @@ public class MigrationsInfrastructureNpgsqlTest(MigrationsInfrastructureNpgsqlTe
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation(
-                            "Npgsql:ValueGenerationStrategy",
-                            NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                            "GaussDB:ValueGenerationStrategy",
+                            GaussDBValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<int?>("BlogId");
 
@@ -175,18 +175,18 @@ public class MigrationsInfrastructureNpgsqlTest(MigrationsInfrastructureNpgsqlTe
     }
 
     protected override Task ExecuteSqlAsync(string value)
-        => ((NpgsqlTestStore)Fixture.TestStore).ExecuteNonQueryAsync(value);
+        => ((GaussDBTestStore)Fixture.TestStore).ExecuteNonQueryAsync(value);
 
-    public class MigrationsInfrastructureNpgsqlFixture : MigrationsInfrastructureFixtureBase
+    public class MigrationsInfrastructureGaussDBFixture : MigrationsInfrastructureFixtureBase
     {
         protected override ITestStoreFactory TestStoreFactory
-            => NpgsqlTestStoreFactory.Instance;
+            => GaussDBTestStoreFactory.Instance;
 
         public override MigrationsContext CreateContext()
         {
             var options = AddOptions(
                     TestStore.AddProviderOptions(new DbContextOptionsBuilder())
-                        .UseNpgsql(
+                        .UseGaussDB(
                             TestStore.ConnectionString, b => b.ApplyConfiguration()
                                 .SetPostgresVersion(TestEnvironment.PostgresVersion)))
                 .UseInternalServiceProvider(ServiceProvider)
@@ -217,7 +217,7 @@ public class Post
 public class BloggingContext : DbContext
 {
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseNpgsql(TestEnvironment.DefaultConnection);
+        => optionsBuilder.UseGaussDB(TestEnvironment.DefaultConnection);
 
     public DbSet<Blog> Blogs { get; set; }
 }

@@ -63,7 +63,7 @@ public class SystemColumnTest : IClassFixture<SystemColumnTest.SystemColumnFixtu
             => "SystemColumnTest";
 
         protected override ITestStoreFactory TestStoreFactory
-            => NpgsqlTestStoreFactory.Instance;
+            => GaussDBTestStoreFactory.Instance;
 
         public TestSqlLoggerFactory TestSqlLoggerFactory
             => (TestSqlLoggerFactory)ListLoggerFactory;

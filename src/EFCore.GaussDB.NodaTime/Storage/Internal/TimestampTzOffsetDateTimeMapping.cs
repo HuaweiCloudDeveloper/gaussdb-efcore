@@ -13,7 +13,7 @@ namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal;
 ///     any release. You should only use it directly in your code with extreme caution and knowing that
 ///     doing so can result in application failures when updating to a new Entity Framework Core release.
 /// </summary>
-public class TimestampTzOffsetDateTimeMapping : NpgsqlTypeMapping
+public class TimestampTzOffsetDateTimeMapping : GaussDBTypeMapping
 {
     private static readonly ConstructorInfo Constructor =
         typeof(OffsetDateTime).GetConstructor([typeof(LocalDateTime), typeof(Offset)])!;
@@ -39,7 +39,7 @@ public class TimestampTzOffsetDateTimeMapping : NpgsqlTypeMapping
     ///     doing so can result in application failures when updating to a new Entity Framework Core release.
     /// </summary>
     public TimestampTzOffsetDateTimeMapping()
-        : base("timestamp with time zone", typeof(OffsetDateTime), NpgsqlDbType.TimestampTz, JsonOffsetDateTimeReaderWriter.Instance)
+        : base("timestamp with time zone", typeof(OffsetDateTime), GaussDBDbType.TimestampTz, JsonOffsetDateTimeReaderWriter.Instance)
     {
     }
 
@@ -50,7 +50,7 @@ public class TimestampTzOffsetDateTimeMapping : NpgsqlTypeMapping
     ///     doing so can result in application failures when updating to a new Entity Framework Core release.
     /// </summary>
     protected TimestampTzOffsetDateTimeMapping(RelationalTypeMappingParameters parameters)
-        : base(parameters, NpgsqlDbType.TimestampTz)
+        : base(parameters, GaussDBDbType.TimestampTz)
     {
     }
 

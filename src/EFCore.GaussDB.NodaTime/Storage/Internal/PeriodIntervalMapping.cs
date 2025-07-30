@@ -12,7 +12,7 @@ namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal;
 ///     any release. You should only use it directly in your code with extreme caution and knowing that
 ///     doing so can result in application failures when updating to a new Entity Framework Core release.
 /// </summary>
-public class PeriodIntervalMapping : NpgsqlTypeMapping
+public class PeriodIntervalMapping : GaussDBTypeMapping
 {
     private static readonly MethodInfo FromYears = typeof(Period).GetRuntimeMethod(nameof(Period.FromYears), [typeof(int)])!;
     private static readonly MethodInfo FromMonths = typeof(Period).GetRuntimeMethod(nameof(Period.FromMonths), [typeof(int)])!;
@@ -45,7 +45,7 @@ public class PeriodIntervalMapping : NpgsqlTypeMapping
     ///     doing so can result in application failures when updating to a new Entity Framework Core release.
     /// </summary>
     public PeriodIntervalMapping()
-        : base("interval", typeof(Period), NpgsqlDbType.Interval, JsonPeriodReaderWriter.Instance)
+        : base("interval", typeof(Period), GaussDBDbType.Interval, JsonPeriodReaderWriter.Instance)
     {
     }
 
@@ -56,7 +56,7 @@ public class PeriodIntervalMapping : NpgsqlTypeMapping
     ///     doing so can result in application failures when updating to a new Entity Framework Core release.
     /// </summary>
     protected PeriodIntervalMapping(RelationalTypeMappingParameters parameters)
-        : base(parameters, NpgsqlDbType.Interval)
+        : base(parameters, GaussDBDbType.Interval)
     {
     }
 

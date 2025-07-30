@@ -206,7 +206,7 @@ public class TestRelationalCommandBuilderFactory(RelationalCommandBuilderDepende
         private string? PreExecution(IRelationalConnection connection)
         {
             string? errorNumber = null;
-            var testConnection = (TestNpgsqlConnection)connection;
+            var testConnection = (TestPostgisConnection)connection;
 
             testConnection.ExecutionCount++;
             if (testConnection.ExecutionFailures.Count > 0)

@@ -99,7 +99,7 @@ public class IdentitySequenceOptionsData : IEquatable<IdentitySequenceOptionsDat
     ///     doing so can result in application failures when updating to a new Entity Framework Core release.
     /// </summary>
     public static IdentitySequenceOptionsData Get(IReadOnlyAnnotatable annotatable)
-        => Deserialize((string?)annotatable[NpgsqlAnnotationNames.IdentityOptions]);
+        => Deserialize((string?)annotatable[GaussDBAnnotationNames.IdentityOptions]);
 
     /// <summary>
     ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to

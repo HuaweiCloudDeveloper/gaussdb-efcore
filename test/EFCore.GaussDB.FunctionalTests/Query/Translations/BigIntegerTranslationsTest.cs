@@ -152,7 +152,7 @@ WHERE e."BigInteger" % 2 = 0
             => "BigIntegerQueryTest";
 
         protected override ITestStoreFactory TestStoreFactory
-            => NpgsqlTestStoreFactory.Instance;
+            => GaussDBTestStoreFactory.Instance;
 
         public TestSqlLoggerFactory TestSqlLoggerFactory
             => (TestSqlLoggerFactory)ListLoggerFactory;

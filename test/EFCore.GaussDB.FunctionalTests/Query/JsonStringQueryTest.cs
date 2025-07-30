@@ -362,7 +362,7 @@ WHERE j."CustomerJsonb" ?& ARRAY['foo','Age']::text[]
             => "JsonStringQueryTest";
 
         protected override ITestStoreFactory TestStoreFactory
-            => NpgsqlTestStoreFactory.Instance;
+            => GaussDBTestStoreFactory.Instance;
 
         public TestSqlLoggerFactory TestSqlLoggerFactory
             => (TestSqlLoggerFactory)ListLoggerFactory;

@@ -36,7 +36,7 @@ public sealed record UserRangeDefinition
 
     /// <summary>
     ///     The CLR type of the range's subtype (or element).
-    ///     The actual mapped type will be an <see cref="NpgsqlRange{T}" /> over this type.
+    ///     The actual mapped type will be an <see cref="GaussDBRange{T}" /> over this type.
     /// </summary>
     /// <remarks>
     ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to

@@ -80,13 +80,13 @@ public class NavigationTestFixture
     public NavigationTestFixture()
     {
         var serviceProvider = new ServiceCollection()
-            .AddEntityFrameworkNpgsql()
+            .AddEntityFrameworkGaussDB()
             .BuildServiceProvider();
 
-        var connStrBuilder = new NpgsqlConnectionStringBuilder(TestEnvironment.DefaultConnection) { Database = "StateManagerBug" };
+        var connStrBuilder = new GaussDBConnectionStringBuilder(TestEnvironment.DefaultConnection) { Database = "StateManagerBug" };
 
         _options = new DbContextOptionsBuilder()
-            .UseNpgsql(connStrBuilder.ConnectionString)
+            .UseGaussDB(connStrBuilder.ConnectionString)
             .UseInternalServiceProvider(serviceProvider)
             .Options;
     }

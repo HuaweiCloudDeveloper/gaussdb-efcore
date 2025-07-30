@@ -6,12 +6,12 @@ using HuaweiCloud.EntityFrameworkCore.GaussDB.Migrations.Operations;
 
 namespace Microsoft.EntityFrameworkCore.Migrations;
 
-public class NpgsqlMigrationsSqlGeneratorTest() : MigrationsSqlGeneratorTestBase(
-    NpgsqlTestHelpers.Instance,
-    new ServiceCollection().AddEntityFrameworkNpgsqlNetTopologySuite(),
-    NpgsqlTestHelpers.Instance.AddProviderOptions(
+public class GaussDBMigrationsSqlGeneratorTest() : MigrationsSqlGeneratorTestBase(
+    GaussDBTestHelpers.Instance,
+    new ServiceCollection().AddEntityFrameworkGaussDBNetTopologySuite(),
+    GaussDBTestHelpers.Instance.AddProviderOptions(
         ((IRelationalDbContextOptionsBuilderInfrastructure)
-            new NpgsqlDbContextOptionsBuilder(new DbContextOptionsBuilder()).UseNetTopologySuite())
+            new GaussDBDbContextOptionsBuilder(new DbContextOptionsBuilder()).UseNetTopologySuite())
         .OptionsBuilder).Options)
 {
     #region Database
@@ -19,7 +19,7 @@ public class NpgsqlMigrationsSqlGeneratorTest() : MigrationsSqlGeneratorTestBase
     [Fact]
     public virtual void CreateDatabaseOperation()
     {
-        Generate(new NpgsqlCreateDatabaseOperation { Name = "Northwind" });
+        Generate(new GaussDBCreateDatabaseOperation { Name = "Northwind" });
 
         AssertSql(
             """
@@ -32,7 +32,7 @@ CREATE DATABASE "Northwind";
     public virtual void CreateDatabaseOperation_with_collation()
     {
         Generate(
-            new NpgsqlCreateDatabaseOperation { Name = "Northwind", Collation = "POSIX" });
+            new GaussDBCreateDatabaseOperation { Name = "Northwind", Collation = "POSIX" });
 
         AssertSql(
             """
@@ -45,7 +45,7 @@ LC_COLLATE "POSIX";
     [Fact]
     public virtual void CreateDatabaseOperation_with_template()
     {
-        Generate(new NpgsqlCreateDatabaseOperation { Name = "Northwind", Template = "MyTemplate" });
+        Generate(new GaussDBCreateDatabaseOperation { Name = "Northwind", Template = "MyTemplate" });
 
         AssertSql(
             """
@@ -58,7 +58,7 @@ TEMPLATE "MyTemplate";
     [Fact]
     public virtual void CreateDatabaseOperation_with_tablespace()
     {
-        Generate(new NpgsqlCreateDatabaseOperation { Name = "some_db", Tablespace = "MyTablespace" });
+        Generate(new GaussDBCreateDatabaseOperation { Name = "some_db", Tablespace = "MyTablespace" });
 
         AssertSql(
             """
@@ -497,15 +497,15 @@ ALTER SEQUENCE dbo."TestRestartSequenceOperation" RESTART;
                     Table = "Person",
                     Name = "Id",
                     ClrType = typeof(int),
-                    [NpgsqlAnnotationNames.ValueGenerationStrategy] =
-                        NpgsqlValueGenerationStrategy.IdentityByDefaultColumn,
+                    [GaussDBAnnotationNames.ValueGenerationStrategy] =
+                        GaussDBValueGenerationStrategy.IdentityByDefaultColumn,
                     OldColumn = new AddColumnOperation
                     {
                         Table = "Person",
                         Name = "Id",
                         ClrType = typeof(int),
-                        [NpgsqlAnnotationNames.ValueGenerationStrategy] =
-                            NpgsqlValueGenerationStrategy.SerialColumn,
+                        [GaussDBAnnotationNames.ValueGenerationStrategy] =
+                            GaussDBValueGenerationStrategy.SerialColumn,
                     }
                 }
             ],
@@ -599,7 +599,7 @@ INTERLEAVE IN PARENT my_schema.my_parent (col_a, col_b);
                         ClrType = typeof(int),
                         ColumnType = "int",
                         IsNullable = false,
-                        [NpgsqlAnnotationNames.ValueGeneratedOnAdd] = true
+                        [GaussDBAnnotationNames.ValueGeneratedOnAdd] = true
                     }));
 
     public override void InsertDataOperation_throws_for_unsupported_column_types()

@@ -2,9 +2,9 @@ using Xunit.Sdk;
 
 namespace Microsoft.EntityFrameworkCore.ModelBuilding;
 
-public class NpgsqlModelBuilderGenericTest : NpgsqlModelBuilderTestBase
+public class GaussDBModelBuilderGenericTest : GaussDBModelBuilderTestBase
 {
-    public class NpgsqlGenericNonRelationship(NpgsqlModelBuilderFixture fixture) : NpgsqlNonRelationship(fixture)
+    public class GaussDBGenericNonRelationship(GaussDBModelBuilderFixture fixture) : GaussDBNonRelationship(fixture)
     {
         // GaussDB actually does support mapping multi-dimensional arrays, so no exception is thrown as expected
         protected override void Mapping_throws_for_non_ignored_three_dimensional_array()
@@ -15,56 +15,56 @@ public class NpgsqlModelBuilderGenericTest : NpgsqlModelBuilderTestBase
             => new GenericTestModelBuilder(Fixture, configure);
     }
 
-    public class NpgsqlGenericComplexType(NpgsqlModelBuilderFixture fixture) : NpgsqlComplexType(fixture)
+    public class GaussDBGenericComplexType(GaussDBModelBuilderFixture fixture) : GaussDBComplexType(fixture)
     {
         protected override TestModelBuilder CreateModelBuilder(
             Action<ModelConfigurationBuilder>? configure)
             => new GenericTestModelBuilder(Fixture, configure);
     }
 
-    public class NpgsqlGenericComplexCollection(NpgsqlModelBuilderFixture fixture) : NpgsqlComplexCollection(fixture)
+    public class GaussDBGenericComplexCollection(GaussDBModelBuilderFixture fixture) : GaussDBComplexCollection(fixture)
     {
         protected override TestModelBuilder CreateModelBuilder(
             Action<ModelConfigurationBuilder>? configure)
             => new GenericTestModelBuilder(Fixture, configure);
     }
 
-    public class NpgsqlGenericInheritance(NpgsqlModelBuilderFixture fixture) : NpgsqlInheritance(fixture)
+    public class GaussDBGenericInheritance(GaussDBModelBuilderFixture fixture) : GaussDBInheritance(fixture)
     {
         protected override TestModelBuilder CreateModelBuilder(
             Action<ModelConfigurationBuilder>? configure)
             => new GenericTestModelBuilder(Fixture, configure);
     }
 
-    public class NpgsqlGenericOneToMany(NpgsqlModelBuilderFixture fixture) : NpgsqlOneToMany(fixture)
+    public class GaussDBGenericOneToMany(GaussDBModelBuilderFixture fixture) : GaussDBOneToMany(fixture)
     {
         protected override TestModelBuilder CreateModelBuilder(
             Action<ModelConfigurationBuilder>? configure)
             => new GenericTestModelBuilder(Fixture, configure);
     }
 
-    public class NpgsqlGenericManyToOne(NpgsqlModelBuilderFixture fixture) : NpgsqlManyToOne(fixture)
+    public class GaussDBGenericManyToOne(GaussDBModelBuilderFixture fixture) : GaussDBManyToOne(fixture)
     {
         protected override TestModelBuilder CreateModelBuilder(
             Action<ModelConfigurationBuilder>? configure)
             => new GenericTestModelBuilder(Fixture, configure);
     }
 
-    public class NpgsqlGenericOneToOne(NpgsqlModelBuilderFixture fixture) : NpgsqlOneToOne(fixture)
+    public class GaussDBGenericOneToOne(GaussDBModelBuilderFixture fixture) : GaussDBOneToOne(fixture)
     {
         protected override TestModelBuilder CreateModelBuilder(
             Action<ModelConfigurationBuilder>? configure)
             => new GenericTestModelBuilder(Fixture, configure);
     }
 
-    public class NpgsqlGenericManyToMany(NpgsqlModelBuilderFixture fixture) : NpgsqlManyToMany(fixture)
+    public class GaussDBGenericManyToMany(GaussDBModelBuilderFixture fixture) : GaussDBManyToMany(fixture)
     {
         protected override TestModelBuilder CreateModelBuilder(
             Action<ModelConfigurationBuilder>? configure)
             => new GenericTestModelBuilder(Fixture, configure);
     }
 
-    public class NpgsqlGenericOwnedTypes(NpgsqlModelBuilderFixture fixture) : NpgsqlOwnedTypes(fixture)
+    public class GaussDBGenericOwnedTypes(GaussDBModelBuilderFixture fixture) : GaussDBOwnedTypes(fixture)
     {
         // GaussDB stored procedures do not support result columns
         public override void Can_use_sproc_mapping_with_owned_reference()

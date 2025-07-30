@@ -10,7 +10,7 @@ namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal;
 ///     any release. You should only use it directly in your code with extreme caution and knowing that
 ///     doing so can result in application failures when updating to a new Entity Framework Core release.
 /// </summary>
-public class DateIntervalRangeMapping : NpgsqlTypeMapping
+public class DateIntervalRangeMapping : GaussDBTypeMapping
 {
     private static readonly ConstructorInfo _constructorWithDates =
         typeof(DateInterval).GetConstructor([typeof(LocalDate), typeof(LocalDate)])!;
@@ -33,7 +33,7 @@ public class DateIntervalRangeMapping : NpgsqlTypeMapping
     ///     doing so can result in application failures when updating to a new Entity Framework Core release.
     /// </summary>
     public DateIntervalRangeMapping()
-        : base("daterange", typeof(DateInterval), NpgsqlDbType.DateRange)
+        : base("daterange", typeof(DateInterval), GaussDBDbType.DateRange)
     {
     }
 
@@ -44,7 +44,7 @@ public class DateIntervalRangeMapping : NpgsqlTypeMapping
     ///     doing so can result in application failures when updating to a new Entity Framework Core release.
     /// </summary>
     protected DateIntervalRangeMapping(RelationalTypeMappingParameters parameters)
-        : base(parameters, NpgsqlDbType.DateRange)
+        : base(parameters, GaussDBDbType.DateRange)
     {
     }
 

@@ -90,7 +90,7 @@ public class TimestampTranslationsTest : QueryTestBase<TimestampTranslationsTest
     [MemberData(nameof(IsAsyncData))]
     public async Task Compare_timestamp_column_to_local_DateTime_literal(bool async)
     {
-        // Note that we're in the Europe/Berlin timezone (see NpgsqlTestStore below)
+        // Note that we're in the Europe/Berlin timezone (see GaussDBTestStore below)
         await AssertQuery(
             async,
             ss => ss.Set<Entity>().Where(e => e.TimestampDateTime == new DateTime(1998, 4, 12, 15, 26, 38, DateTimeKind.Local)));
@@ -425,7 +425,7 @@ WHERE e."TimestampDateTimeOffset" = TIMESTAMPTZ '1998-04-12T13:26:38Z'
     [ConditionalFact]
     public async Task DateTimeOffset_LocalDateTime()
     {
-        // Note that we're in the Europe/Berlin timezone (see NpgsqlTestStore below)
+        // Note that we're in the Europe/Berlin timezone (see GaussDBTestStore below)
 
         // We can't use AssertQuery since the local (expected) evaluation is dependent on the machine's timezone, which is out of
         // our control.
@@ -858,7 +858,7 @@ WHERE CAST(e."TimestamptzDateTime" AT TIME ZONE 'UTC' AS time without time zone)
         // This scenario requires that the provider correctly infer the range's type mapping from the subtype's
         using var ctx = CreateContext();
 
-        var range = new NpgsqlRange<DateTime>(new DateTime(1998, 4, 12), new DateTime(1998, 4, 13));
+        var range = new GaussDBRange<DateTime>(new DateTime(1998, 4, 12), new DateTime(1998, 4, 13));
 
         var id = ctx.Entities.Single(e => range.Contains(e.TimestampDateTime)).Id;
         Assert.Equal(1, id);
@@ -903,10 +903,10 @@ WHERE CAST(e."TimestamptzDateTime" AT TIME ZONE 'UTC' AS time without time zone)
 
         public DateTimeOffset[]? TimestampDateTimeOffsetArray { get; set; }
 
-        public NpgsqlRange<DateTime> TimestamptzDateTimeRange { get; set; }
+        public GaussDBRange<DateTime> TimestamptzDateTimeRange { get; set; }
 
         [Column(TypeName = "tsrange")]
-        public NpgsqlRange<DateTime> TimestampDateTimeRange { get; set; }
+        public GaussDBRange<DateTime> TimestampDateTimeRange { get; set; }
     }
 
     public class TimestampQueryFixture : SharedStoreFixtureBase<TimestampQueryContext>, IQueryFixtureBase, ITestSqlLoggerFactory
@@ -918,7 +918,7 @@ WHERE CAST(e."TimestamptzDateTime" AT TIME ZONE 'UTC' AS time without time zone)
         // don't depend on the database's time zone, and also that operations which shouldn't take TimeZone into account indeed
         // don't.
         protected override ITestStoreFactory TestStoreFactory
-            => new NpgsqlTestStoreFactory(connectionStringOptions: "-c TimeZone=Europe/Berlin");
+            => new GaussDBTestStoreFactory(connectionStringOptions: "-c TimeZone=Europe/Berlin");
 
         public TestSqlLoggerFactory TestSqlLoggerFactory
             => (TestSqlLoggerFactory)ListLoggerFactory;
@@ -1011,11 +1011,11 @@ WHERE CAST(e."TimestamptzDateTime" AT TIME ZONE 'UTC' AS time without time zone)
                 new DateTime(2015, 1, 28, 10, 45, 12, 345, DateTimeKind.Unspecified)
             };
 
-            var utcDateTimeRange1 = new NpgsqlRange<DateTime>(utcDateTimeArray1[0], utcDateTimeArray1[1]);
-            var localDateTimeRange1 = new NpgsqlRange<DateTime>(localDateTimeArray1[0], localDateTimeArray1[1]);
+            var utcDateTimeRange1 = new GaussDBRange<DateTime>(utcDateTimeArray1[0], utcDateTimeArray1[1]);
+            var localDateTimeRange1 = new GaussDBRange<DateTime>(localDateTimeArray1[0], localDateTimeArray1[1]);
 
-            var utcDateTimeRange2 = new NpgsqlRange<DateTime>(utcDateTimeArray2[0], utcDateTimeArray2[1]);
-            var localDateTimeRange2 = new NpgsqlRange<DateTime>(localDateTimeArray2[0], localDateTimeArray2[1]);
+            var utcDateTimeRange2 = new GaussDBRange<DateTime>(utcDateTimeArray2[0], utcDateTimeArray2[1]);
+            var localDateTimeRange2 = new GaussDBRange<DateTime>(localDateTimeArray2[0], localDateTimeArray2[1]);
 
             return new List<Entity>
             {

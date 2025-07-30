@@ -1,4 +1,4 @@
-# Npgsql Entity Framework Core provider for GaussDB
+# GaussDB Entity Framework Core provider for GaussDB
 
 HuaweiCloud.EntityFrameworkCore.GaussDB is the open source EF Core provider for GaussDB. It allows you to interact with GaussDB via the most widely-used .NET O/RM from Microsoft, and use familiar LINQ syntax to express queries.
 
@@ -27,7 +27,7 @@ public class BlogContext : DbContext
     public DbSet<City> Cities { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseNpgsql(
+        => optionsBuilder.UseGaussDB(
             @"Host=myserver;Username=mylogin;Password=mypass;Database=mydatabase",
             o => o.UseNetTopologySuite());
 }

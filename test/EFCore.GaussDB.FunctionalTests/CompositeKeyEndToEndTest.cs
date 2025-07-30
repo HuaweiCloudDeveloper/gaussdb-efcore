@@ -1,11 +1,11 @@
 ﻿namespace Microsoft.EntityFrameworkCore;
 
-public class CompositeKeyEndToEndNpgsqlTest(CompositeKeyEndToEndNpgsqlTest.CompositeKeyEndToEndNpgsqlFixture fixture)
-    : CompositeKeyEndToEndTestBase<CompositeKeyEndToEndNpgsqlTest.CompositeKeyEndToEndNpgsqlFixture>(fixture)
+public class CompositeKeyEndToEndGaussDBTest(CompositeKeyEndToEndGaussDBTest.CompositeKeyEndToEndGaussDBFixture fixture)
+    : CompositeKeyEndToEndTestBase<CompositeKeyEndToEndGaussDBTest.CompositeKeyEndToEndGaussDBFixture>(fixture)
 {
-    public class CompositeKeyEndToEndNpgsqlFixture : CompositeKeyEndToEndFixtureBase
+    public class CompositeKeyEndToEndGaussDBFixture : CompositeKeyEndToEndFixtureBase
     {
         protected override ITestStoreFactory TestStoreFactory
-            => NpgsqlTestStoreFactory.Instance;
+            => GaussDBTestStoreFactory.Instance;
     }
 }

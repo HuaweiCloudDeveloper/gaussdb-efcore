@@ -154,9 +154,9 @@ public class BatchingTest(BatchingTest.BatchingTestFixture fixture) : IClassFixt
 
                 Assert.Contains(
                     minBatchSize == 3
-                        ? RelationalResources.LogBatchReadyForExecution(new TestLogger<NpgsqlLoggingDefinitions>())
+                        ? RelationalResources.LogBatchReadyForExecution(new TestLogger<GaussDBLoggingDefinitions>())
                             .GenerateMessage(3)
-                        : RelationalResources.LogBatchSmallerThanMinBatchSize(new TestLogger<NpgsqlLoggingDefinitions>())
+                        : RelationalResources.LogBatchSmallerThanMinBatchSize(new TestLogger<GaussDBLoggingDefinitions>())
                             .GenerateMessage(3, 4),
                     Fixture.TestSqlLoggerFactory.Log.Select(l => l.Message));
 
@@ -248,7 +248,7 @@ public class BatchingTest(BatchingTest.BatchingTestFixture fixture) : IClassFixt
             => (TestSqlLoggerFactory)ListLoggerFactory;
 
         protected override ITestStoreFactory TestStoreFactory
-            => NpgsqlTestStoreFactory.Instance;
+            => GaussDBTestStoreFactory.Instance;
 
         protected override Type ContextType { get; } = typeof(BloggingContext);
 
@@ -261,7 +261,7 @@ public class BatchingTest(BatchingTest.BatchingTestFixture fixture) : IClassFixt
         public DbContext CreateContext(int minBatchSize)
         {
             var optionsBuilder = new DbContextOptionsBuilder(CreateOptions());
-            new NpgsqlDbContextOptionsBuilder(optionsBuilder).MinBatchSize(minBatchSize);
+            new GaussDBDbContextOptionsBuilder(optionsBuilder).MinBatchSize(minBatchSize);
             return new BloggingContext(optionsBuilder.Options);
         }
     }

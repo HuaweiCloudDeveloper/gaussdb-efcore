@@ -16,7 +16,7 @@ public static class TestEnvironment
             .AddEnvironmentVariables();
 
         Config = configBuilder.Build()
-            .GetSection("Test:Npgsql");
+            .GetSection("Test:GaussDB");
 
         Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
     }
@@ -37,7 +37,7 @@ public static class TestEnvironment
                 return _postgresVersion;
             }
 
-            using var conn = new NpgsqlConnection(NpgsqlTestStore.CreateConnectionString("postgres"));
+            using var conn = new GaussDBConnection(GaussDBTestStore.CreateConnectionString("postgres"));
             conn.Open();
             return _postgresVersion = conn.PostgreSqlVersion;
         }
@@ -54,7 +54,7 @@ public static class TestEnvironment
                 return _isPostgisAvailable.Value;
             }
 
-            using var conn = new NpgsqlConnection(NpgsqlTestStore.CreateConnectionString("postgres"));
+            using var conn = new GaussDBConnection(GaussDBTestStore.CreateConnectionString("postgres"));
             conn.Open();
             using var cmd = conn.CreateCommand();
 

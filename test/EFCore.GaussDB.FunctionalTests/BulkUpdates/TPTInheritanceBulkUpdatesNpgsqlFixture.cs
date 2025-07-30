@@ -1,7 +1,7 @@
 namespace Microsoft.EntityFrameworkCore.BulkUpdates;
 
-public class TPTInheritanceBulkUpdatesNpgsqlFixture : TPTInheritanceBulkUpdatesFixture
+public class TPTInheritanceBulkUpdatesGaussDBFixture : TPTInheritanceBulkUpdatesFixture
 {
     protected override ITestStoreFactory TestStoreFactory
-        => NpgsqlTestStoreFactory.Instance;
+        => GaussDBTestStoreFactory.Instance;
 }

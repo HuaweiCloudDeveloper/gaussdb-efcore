@@ -23,14 +23,14 @@ internal static class TypeExtensions
     }
 
     internal static bool IsRange(this SqlExpression expression)
-        => expression.TypeMapping is NpgsqlRangeTypeMapping || expression.Type.IsRange();
+        => expression.TypeMapping is GaussDBCidrTypeMapping || expression.Type.IsRange();
 
     internal static bool IsRange(this Type type)
-        => type.IsGenericType && type.GetGenericTypeDefinition() == typeof(NpgsqlRange<>)
+        => type.IsGenericType && type.GetGenericTypeDefinition() == typeof(GaussDBRange<>)
             || type is { Name: "Interval" or "DateInterval", Namespace: "NodaTime" };
 
     internal static bool IsMultirange(this SqlExpression expression)
-        => expression.TypeMapping is NpgsqlMultirangeTypeMapping
+        => expression.TypeMapping is GaussDBMultirangeTypeMapping
             || expression.Type.IsMultirange();
 
     internal static bool IsMultirange(this Type type)

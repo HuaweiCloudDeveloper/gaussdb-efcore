@@ -315,10 +315,10 @@ WHERE s."UppercaseNamedEnum" = ANY (@values)
         protected override string StoreName
             => "EnumQueryTest";
 
-        // We instruct the test store to pass a connection string to UseNpgsql() instead of a DbConnection - that's required to allow
-        // EF's UseNodaTime() to function properly and instantiate an NpgsqlDataSource internally.
+        // We instruct the test store to pass a connection string to UseGaussDB() instead of a DbConnection - that's required to allow
+        // EF's UseNodaTime() to function properly and instantiate an GaussDBDataSource internally.
         protected override ITestStoreFactory TestStoreFactory
-            => new NpgsqlTestStoreFactory(useConnectionString: true);
+            => new GaussDBTestStoreFactory(useConnectionString: true);
 
         public TestSqlLoggerFactory TestSqlLoggerFactory
             => (TestSqlLoggerFactory)ListLoggerFactory;
@@ -327,7 +327,7 @@ WHERE s."UppercaseNamedEnum" = ANY (@values)
         {
             var optionsBuilder = base.AddOptions(builder);
 
-            new NpgsqlDbContextOptionsBuilder(optionsBuilder)
+            new GaussDBDbContextOptionsBuilder(optionsBuilder)
                 .MapEnum<MappedEnum>("mapped_enum", "test")
                 .MapEnum<InferredEnum>("inferred_enum", "test")
                 .MapEnum<ByteEnum>("byte_enum", "test")

@@ -2,11 +2,11 @@ using Microsoft.EntityFrameworkCore.TestModels.Northwind;
 
 namespace Microsoft.EntityFrameworkCore.BulkUpdates;
 
-public class NorthwindBulkUpdatesNpgsqlFixture<TModelCustomizer> : NorthwindBulkUpdatesRelationalFixture<TModelCustomizer>
+public class NorthwindBulkUpdatesGaussDBFixture<TModelCustomizer> : NorthwindBulkUpdatesRelationalFixture<TModelCustomizer>
     where TModelCustomizer : ITestModelCustomizer, new()
 {
     protected override ITestStoreFactory TestStoreFactory
-        => NpgsqlNorthwindTestStoreFactory.Instance;
+        => GaussDBNorthwindTestStoreFactory.Instance;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder, DbContext context)
     {
@@ -18,5 +18,5 @@ public class NorthwindBulkUpdatesNpgsqlFixture<TModelCustomizer> : NorthwindBulk
     }
 
     protected override Type ContextType
-        => typeof(NorthwindNpgsqlContext);
+        => typeof(NorthwindGaussDBContext);
 }

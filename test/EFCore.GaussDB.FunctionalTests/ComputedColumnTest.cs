@@ -7,7 +7,7 @@ public class ComputedColumnTest : IAsyncLifetime
     public void Can_use_computed_columns()
     {
         var serviceProvider = new ServiceCollection()
-            .AddEntityFrameworkNpgsql()
+            .AddEntityFrameworkGaussDB()
             .BuildServiceProvider();
 
         using var context = new Context(serviceProvider, TestStore.Name);
@@ -31,7 +31,7 @@ public class ComputedColumnTest : IAsyncLifetime
     public void Can_use_computed_columns_with_null_values()
     {
         var serviceProvider = new ServiceCollection()
-            .AddEntityFrameworkNpgsql()
+            .AddEntityFrameworkGaussDB()
             .BuildServiceProvider();
 
         using var context = new Context(serviceProvider, TestStore.Name);
@@ -54,7 +54,7 @@ public class ComputedColumnTest : IAsyncLifetime
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
-                .UseNpgsql(NpgsqlTestStore.CreateConnectionString(_databaseName), b => b.ApplyConfiguration())
+                .UseGaussDB(GaussDBTestStore.CreateConnectionString(_databaseName), b => b.ApplyConfiguration())
                 .UseInternalServiceProvider(_serviceProvider);
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -105,7 +105,7 @@ public class ComputedColumnTest : IAsyncLifetime
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
-                .UseNpgsql(NpgsqlTestStore.CreateConnectionString(databaseName), b => b.ApplyConfiguration())
+                .UseGaussDB(GaussDBTestStore.CreateConnectionString(databaseName), b => b.ApplyConfiguration())
                 .UseInternalServiceProvider(serviceProvider);
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -120,7 +120,7 @@ public class ComputedColumnTest : IAsyncLifetime
     public void Can_use_computed_columns_with_nullable_enum()
     {
         var serviceProvider = new ServiceCollection()
-            .AddEntityFrameworkNpgsql()
+            .AddEntityFrameworkGaussDB()
             .BuildServiceProvider();
 
         using var context = new NullableContext(serviceProvider, TestStore.Name);
@@ -132,10 +132,10 @@ public class ComputedColumnTest : IAsyncLifetime
         Assert.Equal(FlagEnum.AValue | FlagEnum.BValue, entity.CalculatedFlagEnum);
     }
 
-    protected NpgsqlTestStore TestStore { get; private set; } = null!;
+    protected GaussDBTestStore TestStore { get; private set; } = null!;
 
     public async Task InitializeAsync()
-        => TestStore = await NpgsqlTestStore.CreateInitializedAsync("ComputedColumnTest");
+        => TestStore = await GaussDBTestStore.CreateInitializedAsync("ComputedColumnTest");
 
     public async Task DisposeAsync()
         => await TestStore.DisposeAsync();

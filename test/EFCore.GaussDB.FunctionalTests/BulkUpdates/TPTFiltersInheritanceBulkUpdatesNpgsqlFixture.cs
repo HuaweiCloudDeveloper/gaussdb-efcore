@@ -1,6 +1,6 @@
 namespace Microsoft.EntityFrameworkCore.BulkUpdates;
 
-public class TPTFiltersInheritanceBulkUpdatesNpgsqlFixture : TPTInheritanceBulkUpdatesNpgsqlFixture
+public class TPTFiltersInheritanceBulkUpdatesGaussDBFixture : TPTInheritanceBulkUpdatesGaussDBFixture
 {
     public override bool EnableFilters
         => true;

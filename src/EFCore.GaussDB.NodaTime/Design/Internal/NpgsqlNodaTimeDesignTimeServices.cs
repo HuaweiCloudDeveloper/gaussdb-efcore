@@ -12,7 +12,7 @@ namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Design.Internal;
 ///     doing so can result in application failures when updating to a new Entity Framework Core release.
 /// </summary>
 [UsedImplicitly]
-public class NpgsqlNodaTimeDesignTimeServices : IDesignTimeServices
+public class GaussDBNodaTimeDesignTimeServices : IDesignTimeServices
 {
     /// <summary>
     ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to
@@ -22,6 +22,6 @@ public class NpgsqlNodaTimeDesignTimeServices : IDesignTimeServices
     /// </summary>
     public virtual void ConfigureDesignTimeServices(IServiceCollection serviceCollection)
         => serviceCollection
-            .AddSingleton<IRelationalTypeMappingSourcePlugin, NpgsqlNodaTimeTypeMappingSourcePlugin>()
-            .AddSingleton<IProviderCodeGeneratorPlugin, NpgsqlNodaTimeCodeGeneratorPlugin>();
+            .AddSingleton<IRelationalTypeMappingSourcePlugin, GaussDBNodaTimeTypeMappingSourcePlugin>()
+            .AddSingleton<IProviderCodeGeneratorPlugin, GaussDBNodaTimeCodeGeneratorPlugin>();
 }

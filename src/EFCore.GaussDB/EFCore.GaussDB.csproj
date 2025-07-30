@@ -1,21 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <AssemblyName>GaussDB.EntityFrameworkCore.GaussDB</AssemblyName>
-    <RootNamespace>GaussDB.EntityFrameworkCore.GaussDB</RootNamespace>
+    <AssemblyName>HuaweiCloud.EntityFrameworkCore.GaussDB</AssemblyName>
+    <RootNamespace>HuaweiCloud.EntityFrameworkCore.GaussDB</RootNamespace>
 
-    <Authors>Shay Rojansky;Austin Drenski;Yoh Deadfall;</Authors>
+    <Authors>Conan Yao</Authors>
     <Description>GaussDB provider for Entity Framework Core.</Description>
-    <PackageTags>npgsql;postgresql;postgres;Entity Framework Core;entity-framework-core;ef;efcore;orm;sql</PackageTags>
+    <PackageTags>gaussdb;opengauss;Entity Framework Core;entity-framework-core;ef;efcore;orm;sql</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <NoWarn>EF9100</NoWarn> <!-- Precompiled query is experimental -->
+    <NoWarn>EF9100</NoWarn>
+    <PackageProjectUrl>https://github.com/HuaweiCloudDeveloper/gaussdb-efcore</PackageProjectUrl>
+    <Copyright>Copyright 2025 © The HuaweiCloud Development Team</Copyright> <!-- Precompiled query is experimental -->
   </PropertyGroup>
 
   <ItemGroup>
     <!-- PrivateAssets="none" is set to flow the EF Core analyzer to users referencing this package https://github.com/aspnet/EntityFrameworkCore/pull/11350 -->
     <PackageReference Include="Microsoft.EntityFrameworkCore" PrivateAssets="none" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" PrivateAssets="none" />
-    <PackageReference Include="Npgsql" />
+    <PackageReference Include="HuaweiCloud.Driver.GaussDB" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,24 +27,9 @@
   <ItemGroup>
     <Compile Include="..\Shared\*.cs" />
 
-    <None Update="Properties\NpgsqlStrings.Designer.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>NpgsqlStrings.Designer.cs</LastGenOutput>
-    </None>
-
     <None Update="Properties\SqlServerStrings.Designer.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
     </None>
-
-    <Compile Update="Properties\NpgsqlStrings.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>NpgsqlStrings.Designer.tt</DependentUpon>
-    </Compile>
-
-    <EmbeddedResource Update="Properties\NpgsqlStrings.resx">
-      <CustomToolNamespace>HuaweiCloud.EntityFrameworkCore.GaussDB.Internal</CustomToolNamespace>
-    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>

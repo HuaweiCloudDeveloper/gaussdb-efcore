@@ -138,7 +138,7 @@ public abstract class ArrayQueryTest<TFixture> : QueryTestBase<TFixture>
 
     #region Containment
 
-    // See also tests in NorthwindMiscellaneousQueryNpgsqlTest
+    // See also tests in NorthwindMiscellaneousQueryGaussDBTest
 
     [ConditionalTheory]
     [MemberData(nameof(IsAsyncData))]
@@ -401,7 +401,7 @@ FROM "SomeEntities" AS s
             : Assert.Throws<InvalidOperationException>(
                 () => context.Set<ArrayEntity>().Select(e => new[] { e.Bytea, e.ByteArray }).ToList());
 
-        Assert.Equal(NpgsqlStrings.HeterogeneousTypesInNewArray("bytea", "smallint[]"), exception.Message);
+        Assert.Equal(GaussDBStrings.HeterogeneousTypesInNewArray("bytea", "smallint[]"), exception.Message);
     }
 
     [Theory]
@@ -500,7 +500,7 @@ FROM "SomeEntities" AS s
     [MemberData(nameof(IsAsyncData))]
     public abstract Task Array_IndexOf2(bool async);
 
-    // Note: see NorthwindFunctionsQueryNpgsqlTest.String_Join_non_aggregate for regular use without an array column/parameter
+    // Note: see NorthwindFunctionsQueryGaussDBTest.String_Join_non_aggregate for regular use without an array column/parameter
     [ConditionalTheory]
     [MemberData(nameof(IsAsyncData))]
     public virtual Task String_Join_with_array_of_int_column(bool async)

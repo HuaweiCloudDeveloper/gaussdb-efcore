@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Npgsql.NetTopologySuite" />
+    <PackageReference Include="HuaweiCloud.EntityFrameworkCore.GaussDB.NetTopologySuite" />
   </ItemGroup>
 
   <ItemGroup>

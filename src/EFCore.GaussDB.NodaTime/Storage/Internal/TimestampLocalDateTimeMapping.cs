@@ -13,7 +13,7 @@ namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal;
 ///     any release. You should only use it directly in your code with extreme caution and knowing that
 ///     doing so can result in application failures when updating to a new Entity Framework Core release.
 /// </summary>
-public class TimestampLocalDateTimeMapping : NpgsqlTypeMapping
+public class TimestampLocalDateTimeMapping : GaussDBTypeMapping
 {
     private static readonly ConstructorInfo ConstructorWithMinutes =
         typeof(LocalDateTime).GetConstructor([typeof(int), typeof(int), typeof(int), typeof(int), typeof(int)])!;
@@ -39,7 +39,7 @@ public class TimestampLocalDateTimeMapping : NpgsqlTypeMapping
     ///     doing so can result in application failures when updating to a new Entity Framework Core release.
     /// </summary>
     public TimestampLocalDateTimeMapping()
-        : base("timestamp without time zone", typeof(LocalDateTime), NpgsqlDbType.Timestamp, JsonLocalDateTimeReaderWriter.Instance)
+        : base("timestamp without time zone", typeof(LocalDateTime), GaussDBDbType.Timestamp, JsonLocalDateTimeReaderWriter.Instance)
     {
     }
 
@@ -50,7 +50,7 @@ public class TimestampLocalDateTimeMapping : NpgsqlTypeMapping
     ///     doing so can result in application failures when updating to a new Entity Framework Core release.
     /// </summary>
     protected TimestampLocalDateTimeMapping(RelationalTypeMappingParameters parameters)
-        : base(parameters, NpgsqlDbType.Timestamp)
+        : base(parameters, GaussDBDbType.Timestamp)
     {
     }
 
@@ -103,7 +103,7 @@ public class TimestampLocalDateTimeMapping : NpgsqlTypeMapping
 
     private static string Format(LocalDateTime localDateTime)
     {
-        if (!NpgsqlNodaTimeTypeMappingSourcePlugin.DisableDateTimeInfinityConversions)
+        if (!GaussDBNodaTimeTypeMappingSourcePlugin.DisableDateTimeInfinityConversions)
         {
             if (localDateTime == LocalDateTime.MinIsoValue)
             {
@@ -153,7 +153,7 @@ public class TimestampLocalDateTimeMapping : NpgsqlTypeMapping
         {
             var s = manager.CurrentReader.GetString()!;
 
-            if (!NpgsqlNodaTimeTypeMappingSourcePlugin.DisableDateTimeInfinityConversions)
+            if (!GaussDBNodaTimeTypeMappingSourcePlugin.DisableDateTimeInfinityConversions)
             {
                 switch (s)
                 {

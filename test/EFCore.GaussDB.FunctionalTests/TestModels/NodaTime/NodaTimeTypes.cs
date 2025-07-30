@@ -16,9 +16,9 @@ public class NodaTimeTypes
     public Period Period { get; set; } = null!;
     public Duration Duration { get; set; }
     public DateInterval DateInterval { get; set; } = null!;
-    public NpgsqlRange<LocalDate> LocalDateRange { get; set; }
+    public GaussDBRange<LocalDate> LocalDateRange { get; set; }
     public Interval Interval { get; set; }
-    public NpgsqlRange<Instant> InstantRange { get; set; }
+    public GaussDBRange<Instant> InstantRange { get; set; }
     public long Long { get; set; }
 
     public string TimeZoneId { get; set; } = null!;

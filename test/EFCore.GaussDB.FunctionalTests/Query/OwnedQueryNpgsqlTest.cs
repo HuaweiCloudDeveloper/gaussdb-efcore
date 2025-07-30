@@ -1,12 +1,12 @@
 ﻿namespace Microsoft.EntityFrameworkCore.Query;
 
-public class OwnedQueryNpgsqlTest(OwnedQueryNpgsqlTest.OwnedQueryNpgsqlFixture fixture)
-    : OwnedQueryRelationalTestBase<OwnedQueryNpgsqlTest.OwnedQueryNpgsqlFixture>(fixture)
+public class OwnedQueryGaussDBTest(OwnedQueryGaussDBTest.OwnedQueryGaussDBFixture fixture)
+    : OwnedQueryRelationalTestBase<OwnedQueryGaussDBTest.OwnedQueryGaussDBFixture>(fixture)
 {
-    public class OwnedQueryNpgsqlFixture : RelationalOwnedQueryFixture
+    public class OwnedQueryGaussDBFixture : RelationalOwnedQueryFixture
     {
         protected override ITestStoreFactory TestStoreFactory
-            => NpgsqlTestStoreFactory.Instance;
+            => GaussDBTestStoreFactory.Instance;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder, DbContext context)
         {

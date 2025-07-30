@@ -3,9 +3,9 @@ using NodaTime;
 
 namespace Microsoft.EntityFrameworkCore.Query.Translations.NodaTime;
 
-public class DateIntervalTranslationsTest : QueryTestBase<NodaTimeQueryNpgsqlFixture>
+public class DateIntervalTranslationsTest : QueryTestBase<NodaTimeQueryGaussDBFixture>
 {
-    public DateIntervalTranslationsTest(NodaTimeQueryNpgsqlFixture fixture, ITestOutputHelper testOutputHelper)
+    public DateIntervalTranslationsTest(NodaTimeQueryGaussDBFixture fixture, ITestOutputHelper testOutputHelper)
         : base(fixture)
     {
         Fixture.TestSqlLoggerFactory.Clear();

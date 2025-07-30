@@ -5,9 +5,9 @@ using HuaweiCloud.EntityFrameworkCore.GaussDB.Scaffolding.Internal;
 
 namespace Microsoft.EntityFrameworkCore.Migrations;
 
-public class MigrationsNpgsqlTest : MigrationsTestBase<MigrationsNpgsqlTest.MigrationsNpgsqlFixture>
+public class MigrationsGaussDBTest : MigrationsTestBase<MigrationsGaussDBTest.MigrationsGaussDBFixture>
 {
-    public MigrationsNpgsqlTest(MigrationsNpgsqlFixture fixture, ITestOutputHelper testOutputHelper)
+    public MigrationsGaussDBTest(MigrationsGaussDBFixture fixture, ITestOutputHelper testOutputHelper)
         : base(fixture)
     {
         Fixture.TestSqlLoggerFactory.Clear();
@@ -147,8 +147,8 @@ CREATE TABLE "People" (
             {
                 var table = Assert.Single(model.Tables);
                 var column = Assert.Single(table.Columns);
-                Assert.Equal(NpgsqlValueGenerationStrategy.IdentityByDefaultColumn, column[NpgsqlAnnotationNames.ValueGenerationStrategy]);
-                Assert.Null(column[NpgsqlAnnotationNames.IdentityOptions]);
+                Assert.Equal(GaussDBValueGenerationStrategy.IdentityByDefaultColumn, column[GaussDBAnnotationNames.ValueGenerationStrategy]);
+                Assert.Null(column[GaussDBAnnotationNames.IdentityOptions]);
             });
 
         AssertSql(
@@ -171,8 +171,8 @@ CREATE TABLE "People" (
             {
                 var table = Assert.Single(model.Tables);
                 var column = Assert.Single(table.Columns);
-                Assert.Equal(NpgsqlValueGenerationStrategy.IdentityAlwaysColumn, column[NpgsqlAnnotationNames.ValueGenerationStrategy]);
-                Assert.Null(column[NpgsqlAnnotationNames.IdentityOptions]);
+                Assert.Equal(GaussDBValueGenerationStrategy.IdentityAlwaysColumn, column[GaussDBAnnotationNames.ValueGenerationStrategy]);
+                Assert.Null(column[GaussDBAnnotationNames.IdentityOptions]);
             });
 
         AssertSql(
@@ -196,7 +196,7 @@ CREATE TABLE "People" (
             {
                 var table = Assert.Single(model.Tables);
                 var column = Assert.Single(table.Columns);
-                Assert.Equal(NpgsqlValueGenerationStrategy.IdentityAlwaysColumn, column[NpgsqlAnnotationNames.ValueGenerationStrategy]);
+                Assert.Equal(GaussDBValueGenerationStrategy.IdentityAlwaysColumn, column[GaussDBAnnotationNames.ValueGenerationStrategy]);
                 var options = IdentitySequenceOptionsData.Get(column);
                 Assert.Equal(10, options.StartValue);
                 Assert.Equal(2, options.IncrementBy);
@@ -226,7 +226,7 @@ CREATE TABLE "People" (
             {
                 var table = Assert.Single(model.Tables);
                 var column = Assert.Single(table.Columns);
-                Assert.Equal(NpgsqlValueGenerationStrategy.SerialColumn, column[NpgsqlAnnotationNames.ValueGenerationStrategy]);
+                Assert.Equal(GaussDBValueGenerationStrategy.SerialColumn, column[GaussDBAnnotationNames.ValueGenerationStrategy]);
 
                 Assert.Empty(model.Sequences);
             });
@@ -330,17 +330,17 @@ CREATE TABLE "People" (
 
                 Assert.Collection(
                     table.GetAnnotations()
-                        .Where(a => a.Name.StartsWith(NpgsqlAnnotationNames.StorageParameterPrefix, StringComparison.Ordinal))
+                        .Where(a => a.Name.StartsWith(GaussDBAnnotationNames.StorageParameterPrefix, StringComparison.Ordinal))
                         .OrderBy(a => a.Name),
                     annotation =>
                     {
-                        Assert.Equal(NpgsqlAnnotationNames.StorageParameterPrefix + "fillfactor", annotation.Name);
+                        Assert.Equal(GaussDBAnnotationNames.StorageParameterPrefix + "fillfactor", annotation.Name);
                         // Storage parameter values always get scaffolded as strings (PG storage is simply 'name=value')
                         Assert.Equal("70", annotation.Value);
                     },
                     annotation =>
                     {
-                        Assert.Equal(NpgsqlAnnotationNames.StorageParameterPrefix + "user_catalog_table", annotation.Name);
+                        Assert.Equal(GaussDBAnnotationNames.StorageParameterPrefix + "user_catalog_table", annotation.Name);
                         // Storage parameter values always get scaffolded as strings (PG storage is simply 'name=value')
                         Assert.Equal("true", annotation.Value);
                     });
@@ -746,8 +746,8 @@ CREATE TABLE "People" (
             {
                 var table = Assert.Single(model.Tables);
                 var column = Assert.Single(table.Columns, c => c.Name == "SomeColumn");
-                Assert.Equal(NpgsqlValueGenerationStrategy.IdentityByDefaultColumn, column[NpgsqlAnnotationNames.ValueGenerationStrategy]);
-                Assert.Null(column[NpgsqlAnnotationNames.IdentityOptions]);
+                Assert.Equal(GaussDBValueGenerationStrategy.IdentityByDefaultColumn, column[GaussDBAnnotationNames.ValueGenerationStrategy]);
+                Assert.Null(column[GaussDBAnnotationNames.IdentityOptions]);
             });
 
         AssertSql("""ALTER TABLE "People" ADD "SomeColumn" integer GENERATED BY DEFAULT AS IDENTITY;""");
@@ -770,8 +770,8 @@ CREATE TABLE "People" (
             {
                 var table = Assert.Single(model.Tables);
                 var column = Assert.Single(table.Columns, c => c.Name == "SomeColumn");
-                Assert.Equal(NpgsqlValueGenerationStrategy.IdentityAlwaysColumn, column[NpgsqlAnnotationNames.ValueGenerationStrategy]);
-                Assert.Null(column[NpgsqlAnnotationNames.IdentityOptions]);
+                Assert.Equal(GaussDBValueGenerationStrategy.IdentityAlwaysColumn, column[GaussDBAnnotationNames.ValueGenerationStrategy]);
+                Assert.Null(column[GaussDBAnnotationNames.IdentityOptions]);
             });
 
         AssertSql("""ALTER TABLE "People" ADD "SomeColumn" integer GENERATED ALWAYS AS IDENTITY;""");
@@ -801,7 +801,7 @@ CREATE TABLE "People" (
             {
                 var table = Assert.Single(model.Tables);
                 var column = Assert.Single(table.Columns, c => c.Name == "SomeColumn");
-                Assert.Equal(NpgsqlValueGenerationStrategy.IdentityByDefaultColumn, column[NpgsqlAnnotationNames.ValueGenerationStrategy]);
+                Assert.Equal(GaussDBValueGenerationStrategy.IdentityByDefaultColumn, column[GaussDBAnnotationNames.ValueGenerationStrategy]);
                 var options = IdentitySequenceOptionsData.Get(column);
                 Assert.Equal(5, options.StartValue);
                 Assert.Equal(2, options.IncrementBy);
@@ -847,8 +847,8 @@ ALTER TABLE "People" ADD "SomeColumn" integer GENERATED BY DEFAULT AS IDENTITY (
             {
                 var table = Assert.Single(model.Tables);
                 var column = Assert.Single(table.Columns, c => c.Name == "SomeColumn");
-                Assert.Equal(NpgsqlValueGenerationStrategy.SerialColumn, column[NpgsqlAnnotationNames.ValueGenerationStrategy]);
-                Assert.Null(column[NpgsqlAnnotationNames.IdentityOptions]);
+                Assert.Equal(GaussDBValueGenerationStrategy.SerialColumn, column[GaussDBAnnotationNames.ValueGenerationStrategy]);
+                Assert.Null(column[GaussDBAnnotationNames.IdentityOptions]);
             });
 
         AssertSql("""ALTER TABLE "People" ADD "SomeColumn" serial NOT NULL;""");
@@ -871,8 +871,8 @@ ALTER TABLE "People" ADD "SomeColumn" integer GENERATED BY DEFAULT AS IDENTITY (
             {
                 var table = Assert.Single(model.Tables);
                 var column = Assert.Single(table.Columns, c => c.Name == "SomeColumn");
-                Assert.Equal(NpgsqlValueGenerationStrategy.IdentityByDefaultColumn, column[NpgsqlAnnotationNames.ValueGenerationStrategy]);
-                Assert.Null(column[NpgsqlAnnotationNames.IdentityOptions]);
+                Assert.Equal(GaussDBValueGenerationStrategy.IdentityByDefaultColumn, column[GaussDBAnnotationNames.ValueGenerationStrategy]);
+                Assert.Null(column[GaussDBAnnotationNames.IdentityOptions]);
             });
 
         AssertSql("""ALTER TABLE "People" ADD "SomeColumn" integer GENERATED BY DEFAULT AS IDENTITY;""");
@@ -941,7 +941,7 @@ ALTER TABLE "People" ADD "SomeColumn" integer GENERATED BY DEFAULT AS IDENTITY (
             {
                 var table = Assert.Single(model.Tables);
                 var column = Assert.Single(table.Columns, c => c.Name == "Title");
-                Assert.Equal("pglz", column[NpgsqlAnnotationNames.CompressionMethod]);
+                Assert.Equal("pglz", column[GaussDBAnnotationNames.CompressionMethod]);
             });
 
         AssertSql("""ALTER TABLE "Blogs" ADD "Title" text COMPRESSION pglz;""");
@@ -1182,8 +1182,8 @@ ALTER TABLE "People" ALTER COLUMN "FirstName" SET DEFAULT '';
             {
                 var table = Assert.Single(model.Tables);
                 var column = Assert.Single(table.Columns);
-                Assert.Equal(NpgsqlValueGenerationStrategy.IdentityByDefaultColumn, column[NpgsqlAnnotationNames.ValueGenerationStrategy]);
-                Assert.Null(column[NpgsqlAnnotationNames.IdentityOptions]);
+                Assert.Equal(GaussDBValueGenerationStrategy.IdentityByDefaultColumn, column[GaussDBAnnotationNames.ValueGenerationStrategy]);
+                Assert.Null(column[GaussDBAnnotationNames.IdentityOptions]);
             });
 
         AssertSql(
@@ -1210,8 +1210,8 @@ ALTER TABLE "People" ALTER COLUMN "Id" ADD GENERATED BY DEFAULT AS IDENTITY;
             {
                 var table = Assert.Single(model.Tables);
                 var column = Assert.Single(table.Columns);
-                Assert.Equal(NpgsqlValueGenerationStrategy.IdentityAlwaysColumn, column[NpgsqlAnnotationNames.ValueGenerationStrategy]);
-                Assert.Null(column[NpgsqlAnnotationNames.IdentityOptions]);
+                Assert.Equal(GaussDBValueGenerationStrategy.IdentityAlwaysColumn, column[GaussDBAnnotationNames.ValueGenerationStrategy]);
+                Assert.Null(column[GaussDBAnnotationNames.IdentityOptions]);
             });
 
         AssertSql("""ALTER TABLE "People" ALTER COLUMN "Id" SET GENERATED ALWAYS;""");
@@ -1234,8 +1234,8 @@ ALTER TABLE "People" ALTER COLUMN "Id" ADD GENERATED BY DEFAULT AS IDENTITY;
             {
                 var table = Assert.Single(model.Tables);
                 var column = Assert.Single(table.Columns);
-                Assert.Equal(NpgsqlValueGenerationStrategy.IdentityAlwaysColumn, column[NpgsqlAnnotationNames.ValueGenerationStrategy]);
-                Assert.Null(column[NpgsqlAnnotationNames.IdentityOptions]);
+                Assert.Equal(GaussDBValueGenerationStrategy.IdentityAlwaysColumn, column[GaussDBAnnotationNames.ValueGenerationStrategy]);
+                Assert.Null(column[GaussDBAnnotationNames.IdentityOptions]);
             });
 
         AssertSql(
@@ -1258,7 +1258,7 @@ ALTER TABLE "People" ALTER COLUMN "Id" ADD GENERATED ALWAYS AS IDENTITY;
             {
                 var table = Assert.Single(model.Tables);
                 var column = Assert.Single(table.Columns);
-                Assert.Equal(NpgsqlValueGenerationStrategy.IdentityByDefaultColumn, column[NpgsqlAnnotationNames.ValueGenerationStrategy]);
+                Assert.Equal(GaussDBValueGenerationStrategy.IdentityByDefaultColumn, column[GaussDBAnnotationNames.ValueGenerationStrategy]);
                 var options = IdentitySequenceOptionsData.Get(column);
                 Assert.Equal(10, options.StartValue);
                 Assert.Equal(2, options.IncrementBy);
@@ -1293,7 +1293,7 @@ ALTER TABLE "People" ALTER COLUMN "Id" ADD GENERATED BY DEFAULT AS IDENTITY (STA
             {
                 var table = Assert.Single(model.Tables);
                 var column = Assert.Single(table.Columns);
-                Assert.Equal(NpgsqlValueGenerationStrategy.IdentityByDefaultColumn, column[NpgsqlAnnotationNames.ValueGenerationStrategy]);
+                Assert.Equal(GaussDBValueGenerationStrategy.IdentityByDefaultColumn, column[GaussDBAnnotationNames.ValueGenerationStrategy]);
                 var options = IdentitySequenceOptionsData.Get(column);
                 Assert.Null(options.StartValue);
                 Assert.Equal(1, options.IncrementBy);
@@ -1328,7 +1328,7 @@ ALTER TABLE "People" ALTER COLUMN "Id" SET MINVALUE 1;
             {
                 var table = Assert.Single(model.Tables);
                 var column = Assert.Single(table.Columns);
-                Assert.Equal(NpgsqlValueGenerationStrategy.IdentityByDefaultColumn, column[NpgsqlAnnotationNames.ValueGenerationStrategy]);
+                Assert.Equal(GaussDBValueGenerationStrategy.IdentityByDefaultColumn, column[GaussDBAnnotationNames.ValueGenerationStrategy]);
                 var options = IdentitySequenceOptionsData.Get(column);
                 Assert.Equal(2, options.IncrementBy);
                 Assert.Equal(1000, options.MaxValue);
@@ -1359,7 +1359,7 @@ ALTER TABLE "People" ALTER COLUMN "Id" SET CYCLE;
             {
                 var table = Assert.Single(model.Tables);
                 var column = Assert.Single(table.Columns);
-                Assert.Equal(NpgsqlValueGenerationStrategy.IdentityByDefaultColumn, column[NpgsqlAnnotationNames.ValueGenerationStrategy]);
+                Assert.Equal(GaussDBValueGenerationStrategy.IdentityByDefaultColumn, column[GaussDBAnnotationNames.ValueGenerationStrategy]);
                 var options = IdentitySequenceOptionsData.Get(column);
                 Assert.Equal(5, options.StartValue); // Restarting doesn't change the scaffolded start value
                 Assert.Equal(1, options.IncrementBy);
@@ -1388,8 +1388,8 @@ ALTER TABLE "People" ALTER COLUMN "Id" SET CACHE 1;
             {
                 var table = Assert.Single(model.Tables);
                 var column = Assert.Single(table.Columns);
-                Assert.Equal(NpgsqlValueGenerationStrategy.SerialColumn, column[NpgsqlAnnotationNames.ValueGenerationStrategy]);
-                Assert.Null(column[NpgsqlAnnotationNames.IdentityOptions]);
+                Assert.Equal(GaussDBValueGenerationStrategy.SerialColumn, column[GaussDBAnnotationNames.ValueGenerationStrategy]);
+                Assert.Null(column[GaussDBAnnotationNames.IdentityOptions]);
 
                 Assert.Empty(model.Sequences);
             });
@@ -1418,8 +1418,8 @@ ALTER SEQUENCE "People_Id_seq" OWNED BY "People"."Id";
             {
                 var table = Assert.Single(model.Tables);
                 var column = Assert.Single(table.Columns);
-                Assert.Equal(NpgsqlValueGenerationStrategy.SerialColumn, column[NpgsqlAnnotationNames.ValueGenerationStrategy]);
-                Assert.Null(column[NpgsqlAnnotationNames.IdentityOptions]);
+                Assert.Equal(GaussDBValueGenerationStrategy.SerialColumn, column[GaussDBAnnotationNames.ValueGenerationStrategy]);
+                Assert.Null(column[GaussDBAnnotationNames.IdentityOptions]);
 
                 Assert.Empty(model.Sequences);
             });
@@ -1447,9 +1447,9 @@ ALTER SEQUENCE some_schema."People_Id_seq" OWNED BY some_schema."People"."Id";
             {
                 var table = Assert.Single(model.Tables);
                 var column = Assert.Single(table.Columns);
-                Assert.Equal(NpgsqlValueGenerationStrategy.SerialColumn, column[NpgsqlAnnotationNames.ValueGenerationStrategy]);
+                Assert.Equal(GaussDBValueGenerationStrategy.SerialColumn, column[GaussDBAnnotationNames.ValueGenerationStrategy]);
                 Assert.Equal("bigint", column.StoreType);
-                Assert.Null(column[NpgsqlAnnotationNames.IdentityOptions]);
+                Assert.Null(column[GaussDBAnnotationNames.IdentityOptions]);
 
                 Assert.Empty(model.Sequences);
             });
@@ -1481,8 +1481,8 @@ ALTER SEQUENCE "People_Id_seq" OWNED BY "People"."Id";
             {
                 var table = Assert.Single(model.Tables);
                 var column = Assert.Single(table.Columns);
-                Assert.Equal(NpgsqlValueGenerationStrategy.IdentityAlwaysColumn, column[NpgsqlAnnotationNames.ValueGenerationStrategy]);
-                Assert.Null(column[NpgsqlAnnotationNames.IdentityOptions]);
+                Assert.Equal(GaussDBValueGenerationStrategy.IdentityAlwaysColumn, column[GaussDBAnnotationNames.ValueGenerationStrategy]);
+                Assert.Null(column[GaussDBAnnotationNames.IdentityOptions]);
             });
 
         AssertSql(
@@ -1505,8 +1505,8 @@ ALTER SEQUENCE "People_Id_seq" OWNED BY "People"."Id";
             {
                 var table = Assert.Single(model.Tables);
                 var column = Assert.Single(table.Columns);
-                Assert.Equal(NpgsqlValueGenerationStrategy.IdentityAlwaysColumn, column[NpgsqlAnnotationNames.ValueGenerationStrategy]);
-                Assert.Null(column[NpgsqlAnnotationNames.IdentityOptions]);
+                Assert.Equal(GaussDBValueGenerationStrategy.IdentityAlwaysColumn, column[GaussDBAnnotationNames.ValueGenerationStrategy]);
+                Assert.Null(column[GaussDBAnnotationNames.IdentityOptions]);
             });
 
         AssertSql(
@@ -1539,9 +1539,9 @@ DROP SEQUENCE "People_Id_old_seq";
             {
                 var table = Assert.Single(model.Tables);
                 var column = Assert.Single(table.Columns);
-                Assert.Equal(NpgsqlValueGenerationStrategy.SerialColumn, column[NpgsqlAnnotationNames.ValueGenerationStrategy]);
+                Assert.Equal(GaussDBValueGenerationStrategy.SerialColumn, column[GaussDBAnnotationNames.ValueGenerationStrategy]);
                 Assert.Equal("bigint", column.StoreType);
-                Assert.Null(column[NpgsqlAnnotationNames.IdentityOptions]);
+                Assert.Null(column[GaussDBAnnotationNames.IdentityOptions]);
             });
 
         AssertSql("""ALTER TABLE "People" ALTER COLUMN "Id" TYPE bigint;""");
@@ -1563,7 +1563,7 @@ DROP SEQUENCE "People_Id_old_seq";
             {
                 var table = Assert.Single(model.Tables);
                 var column = Assert.Single(table.Columns);
-                Assert.Equal(NpgsqlValueGenerationStrategy.IdentityByDefaultColumn, column[NpgsqlAnnotationNames.ValueGenerationStrategy]);
+                Assert.Equal(GaussDBValueGenerationStrategy.IdentityByDefaultColumn, column[GaussDBAnnotationNames.ValueGenerationStrategy]);
                 var options = IdentitySequenceOptionsData.Get(column);
                 Assert.Equal(10, options.StartValue); // Restarting doesn't change the scaffolded start value
             });
@@ -1654,7 +1654,7 @@ DROP SEQUENCE "People_Id_old_seq";
             {
                 var table = Assert.Single(model.Tables);
                 var column = Assert.Single(table.Columns, c => c.Name == "Title");
-                Assert.Equal("pglz", column[NpgsqlAnnotationNames.CompressionMethod]);
+                Assert.Equal("pglz", column[GaussDBAnnotationNames.CompressionMethod]);
             });
 
         AssertSql("""ALTER TABLE "Blogs" ALTER COLUMN "Title" SET COMPRESSION pglz""");
@@ -1676,7 +1676,7 @@ DROP SEQUENCE "People_Id_old_seq";
             {
                 var table = Assert.Single(model.Tables);
                 var column = Assert.Single(table.Columns, c => c.Name == "Title");
-                Assert.Null(column[NpgsqlAnnotationNames.CompressionMethod]);
+                Assert.Null(column[GaussDBAnnotationNames.CompressionMethod]);
             });
 
         AssertSql("""ALTER TABLE "Blogs" ALTER COLUMN "Title" SET COMPRESSION default""");
@@ -1791,7 +1791,7 @@ DROP SEQUENCE "People_Id_old_seq";
             builder => { },
             builder => builder.Entity("People")
                 .HasIndex("X", "Y", "Z")
-                .HasAnnotation(NpgsqlAnnotationNames.IndexSortOrder, new[] { SortOrder.Ascending, SortOrder.Descending }),
+                .HasAnnotation(GaussDBAnnotationNames.IndexSortOrder, new[] { SortOrder.Ascending, SortOrder.Descending }),
             model =>
             {
                 var table = Assert.Single(model.Tables);
@@ -1839,7 +1839,7 @@ DROP SEQUENCE "People_Id_old_seq";
                 Assert.Contains(table.Columns.Single(c => c.Name == "Name"), index.Columns);
 
                 // Scaffolding included/covered properties is currently blocked, see #2194
-                var includedColumns = (string[])index[NpgsqlAnnotationNames.IndexInclude]!;
+                var includedColumns = (string[])index[GaussDBAnnotationNames.IndexInclude]!;
                 Assert.Null(includedColumns);
 
                 // if (TestEnvironment.PostgresVersion.AtLeast(11))
@@ -1886,7 +1886,7 @@ DROP SEQUENCE "People_Id_old_seq";
                 Assert.Contains(table.Columns.Single(c => c.Name == "Name"), index.Columns);
 
                 // Scaffolding included/covered properties is currently blocked, see #2194
-                var includedColumns = (string[])index[NpgsqlAnnotationNames.IndexInclude]!;
+                var includedColumns = (string[])index[GaussDBAnnotationNames.IndexInclude]!;
                 Assert.Null(includedColumns);
 
                 // if (TestEnvironment.PostgresVersion.AtLeast(11))
@@ -1931,7 +1931,7 @@ DROP SEQUENCE "People_Id_old_seq";
                 Assert.Contains(table.Columns.Single(c => c.Name == "Name"), index.Columns);
 
                 // Scaffolding included/covered properties is currently blocked, see #2194
-                var includedColumns = (string[])index[NpgsqlAnnotationNames.IndexInclude]!;
+                var includedColumns = (string[])index[GaussDBAnnotationNames.IndexInclude]!;
                 Assert.Null(includedColumns);
 
                 // if (TestEnvironment.PostgresVersion.AtLeast(11))
@@ -1980,7 +1980,7 @@ DROP SEQUENCE "People_Id_old_seq";
                 Assert.Contains(table.Columns.Single(c => c.Name == "Name"), index.Columns);
 
                 // Scaffolding included/covered properties is currently blocked, see #2194
-                var includedColumns = (string[])index[NpgsqlAnnotationNames.IndexInclude]!;
+                var includedColumns = (string[])index[GaussDBAnnotationNames.IndexInclude]!;
                 Assert.Null(includedColumns);
 
                 // if (TestEnvironment.PostgresVersion.AtLeast(11))
@@ -2035,7 +2035,7 @@ DROP SEQUENCE "People_Id_old_seq";
             {
                 var table = Assert.Single(model.Tables);
                 var index = Assert.Single(table.Indexes);
-                Assert.Equal("hash", index[NpgsqlAnnotationNames.IndexMethod]);
+                Assert.Equal("hash", index[GaussDBAnnotationNames.IndexMethod]);
             });
 
         AssertSql("""CREATE INDEX "IX_People_Age" ON "People" USING hash ("Age");""");
@@ -2059,7 +2059,7 @@ DROP SEQUENCE "People_Id_old_seq";
             {
                 var table = Assert.Single(model.Tables);
                 var index = Assert.Single(table.Indexes);
-                Assert.Equal(new[] { "text_pattern_ops", null }, index[NpgsqlAnnotationNames.IndexOperators]);
+                Assert.Equal(new[] { "text_pattern_ops", null }, index[GaussDBAnnotationNames.IndexOperators]);
             });
 
         AssertSql("""CREATE INDEX "IX_People_FirstName_LastName" ON "People" ("FirstName" text_pattern_ops, "LastName");""");
@@ -2103,7 +2103,7 @@ DROP SEQUENCE "People_Id_old_seq";
             {
                 var table = Assert.Single(model.Tables);
                 var index = Assert.Single(table.Indexes);
-                Assert.Equal("text_pattern_ops", Assert.Single((IReadOnlyList<string>)index[NpgsqlAnnotationNames.IndexOperators]!));
+                Assert.Equal("text_pattern_ops", Assert.Single((IReadOnlyList<string>)index[GaussDBAnnotationNames.IndexOperators]!));
                 Assert.Equal("some_collation", Assert.Single((IReadOnlyList<string>)index[RelationalAnnotationNames.Collation]!));
             });
 
@@ -2131,7 +2131,7 @@ DROP SEQUENCE "People_Id_old_seq";
                 var index = Assert.Single(table.Indexes);
                 Assert.Equal(
                     new[] { NullSortOrder.NullsFirst, NullSortOrder.NullsLast, NullSortOrder.NullsLast },
-                    index[NpgsqlAnnotationNames.IndexNullSortOrder]);
+                    index[GaussDBAnnotationNames.IndexNullSortOrder]);
             });
 
         AssertSql(
@@ -2206,11 +2206,11 @@ DROP SEQUENCE "People_Id_old_seq";
                 var table = Assert.Single(model.Tables);
 
                 Assert.Null(
-                    Assert.Single(table.Indexes, i => i.Name == "IX_NullsDistinct")[NpgsqlAnnotationNames.NullsDistinct]);
+                    Assert.Single(table.Indexes, i => i.Name == "IX_NullsDistinct")[GaussDBAnnotationNames.NullsDistinct]);
 
                 Assert.Equal(
                     false,
-                    Assert.Single(table.Indexes, i => i.Name == "IX_NullsNotDistinct")[NpgsqlAnnotationNames.NullsDistinct]);
+                    Assert.Single(table.Indexes, i => i.Name == "IX_NullsNotDistinct")[GaussDBAnnotationNames.NullsDistinct]);
             });
 
         AssertSql(
@@ -2238,9 +2238,9 @@ DROP SEQUENCE "People_Id_old_seq";
                 var index = Assert.Single(table.Indexes);
                 var storageParameter = Assert.Single(
                     index.GetAnnotations(),
-                    a => a.Name.StartsWith(NpgsqlAnnotationNames.StorageParameterPrefix, StringComparison.Ordinal));
+                    a => a.Name.StartsWith(GaussDBAnnotationNames.StorageParameterPrefix, StringComparison.Ordinal));
 
-                Assert.Equal(NpgsqlAnnotationNames.StorageParameterPrefix + "fillfactor", storageParameter.Name);
+                Assert.Equal(GaussDBAnnotationNames.StorageParameterPrefix + "fillfactor", storageParameter.Name);
                 // Storage parameter values always get scaffolded as strings (PG storage is simply 'name=value')
                 Assert.Equal("70", storageParameter.Value);
             });
@@ -2876,7 +2876,7 @@ CREATE TYPE some_schema."Mood" AS ENUM ('Happy', 'Sad');
             builder => builder.HasCollation("dummy", locale: "POSIX", provider: "libc"),
             model =>
             {
-                var collation = Assert.Single(PostgresCollation.GetCollations(model));
+                var collation = Assert.Single(GaussDBCollation.GetCollations(model));
 
                 Assert.Equal("dummy", collation.Name);
                 Assert.Equal("libc", collation.Provider);
@@ -2902,7 +2902,7 @@ CREATE COLLATION dummy (LOCALE = 'POSIX',
             builder => builder.HasCollation("some_collation", locale: "en-u-ks-level1", provider: "icu", deterministic: false),
             model =>
             {
-                var collation = Assert.Single(PostgresCollation.GetCollations(model));
+                var collation = Assert.Single(GaussDBCollation.GetCollations(model));
 
                 Assert.Equal("some_collation", collation.Name);
                 Assert.Equal("icu", collation.Provider);
@@ -2926,7 +2926,7 @@ CREATE COLLATION some_collation (LOCALE = 'en-u-ks-level1',
         await Test(
             builder => builder.HasCollation("dummy", locale: "POSIX", provider: "libc"),
             _ => { },
-            model => Assert.Empty(PostgresCollation.GetCollations(model)));
+            model => Assert.Empty(GaussDBCollation.GetCollations(model)));
 
         AssertSql("""DROP COLLATION dummy;""");
     }
@@ -2947,7 +2947,7 @@ CREATE COLLATION some_collation (LOCALE = 'en-u-ks-level1',
         await Test(
             builder => builder.Entity("Blogs", e => e.Property<string>("TextColumn").IsRequired()),
             _ => { },
-            builder => builder.Entity("Blogs").Property<NpgsqlTsVector>("SearchColumn").IsGeneratedTsVectorColumn("english", "TextColumn"),
+            builder => builder.Entity("Blogs").Property<GaussDBTsVector>("SearchColumn").IsGeneratedTsVectorColumn("english", "TextColumn"),
             model =>
             {
                 var table = Assert.Single(model.Tables);
@@ -2964,7 +2964,7 @@ CREATE COLLATION some_collation (LOCALE = 'en-u-ks-level1',
         await Test(
             builder => builder.Entity("People").Property<string>("JsonbColumn").HasColumnType("jsonb").IsRequired(),
             _ => { },
-            builder => builder.Entity("People").Property<NpgsqlTsVector>("SearchColumn")
+            builder => builder.Entity("People").Property<GaussDBTsVector>("SearchColumn")
                 .IsGeneratedTsVectorColumn("english", "JsonbColumn"),
             model =>
             {
@@ -2989,7 +2989,7 @@ CREATE COLLATION some_collation (LOCALE = 'en-u-ks-level1',
                 builder.Entity("People").Property<string>("OptionalJsonColumn").HasColumnType("json");
             },
             _ => { },
-            builder => builder.Entity("People").Property<NpgsqlTsVector>("SearchColumn")
+            builder => builder.Entity("People").Property<GaussDBTsVector>("SearchColumn")
                 .IsGeneratedTsVectorColumn(
                     "english", "RequiredTextColumn", "OptionalTextColumn", "RequiredJsonbColumn", "OptionalJsonColumn"),
             model =>
@@ -3013,9 +3013,9 @@ CREATE COLLATION some_collation (LOCALE = 'en-u-ks-level1',
                     e.Property<string>("Title").IsRequired();
                     e.Property<string>("Description");
                 }),
-            builder => builder.Entity("Blogs").Property<NpgsqlTsVector>("TsVector")
+            builder => builder.Entity("Blogs").Property<GaussDBTsVector>("TsVector")
                 .IsGeneratedTsVectorColumn("german", "Title", "Description"),
-            builder => builder.Entity("Blogs").Property<NpgsqlTsVector>("TsVector")
+            builder => builder.Entity("Blogs").Property<GaussDBTsVector>("TsVector")
                 .IsGeneratedTsVectorColumn("english", "Title", "Description"),
             model =>
             {
@@ -3165,28 +3165,28 @@ CREATE TABLE "Contacts" (
     protected override string NonDefaultCollation
         => "POSIX";
 
-    public class MigrationsNpgsqlFixture : MigrationsFixtureBase
+    public class MigrationsGaussDBFixture : MigrationsFixtureBase
     {
         protected override string StoreName
-            => nameof(MigrationsNpgsqlTest);
+            => nameof(MigrationsGaussDBTest);
 
         protected override ITestStoreFactory TestStoreFactory
-            => NpgsqlTestStoreFactory.Instance;
+            => GaussDBTestStoreFactory.Instance;
 
         public override RelationalTestHelpers TestHelpers
-            => NpgsqlTestHelpers.Instance;
+            => GaussDBTestHelpers.Instance;
 
         protected override IServiceCollection AddServices(IServiceCollection serviceCollection)
             => base.AddServices(serviceCollection)
-                .AddScoped<IDatabaseModelFactory, NpgsqlDatabaseModelFactory>();
+                .AddScoped<IDatabaseModelFactory, GaussDBDatabaseModelFactory>();
 
         public override DbContextOptionsBuilder AddOptions(DbContextOptionsBuilder builder)
         {
-            new NpgsqlDbContextOptionsBuilder(
+            new GaussDBDbContextOptionsBuilder(
                     base.AddOptions(builder)
                         // Some tests create expression indexes, but these cannot be reverse-engineered.
                         .ConfigureWarnings(
-                            w => { w.Ignore(NpgsqlEfEventId.ExpressionIndexSkippedWarning); }))
+                            w => { w.Ignore(GaussDBEfEventId.ExpressionIndexSkippedWarning); }))
                 // Various migration operations PG-version sensitive, configure the context with the actual version
                 // we're connecting to.
                 .SetPostgresVersion(TestEnvironment.PostgresVersion);
@@ -3198,5 +3198,5 @@ CREATE TABLE "Contacts" (
     protected override ICollection<BuildReference> GetAdditionalReferences()
         => AdditionalReferences;
 
-    private static readonly BuildReference[] AdditionalReferences = [BuildReference.ByName("Npgsql")];
+    private static readonly BuildReference[] AdditionalReferences = [BuildReference.ByName("GaussDB")];
 }

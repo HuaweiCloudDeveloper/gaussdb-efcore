@@ -8,7 +8,7 @@ public class SequenceEndToEndTest : IAsyncLifetime
     public void Can_use_sequence_end_to_end()
     {
         var serviceProvider = new ServiceCollection()
-            .AddEntityFrameworkNpgsql()
+            .AddEntityFrameworkGaussDB()
             .BuildServiceProvider();
 
         using (var context = new BronieContext(serviceProvider, TestStore.Name))
@@ -22,7 +22,7 @@ public class SequenceEndToEndTest : IAsyncLifetime
         // Use a different service provider so a different generator is used but with
         // the same server sequence.
         serviceProvider = new ServiceCollection()
-            .AddEntityFrameworkNpgsql()
+            .AddEntityFrameworkGaussDB()
             .BuildServiceProvider();
 
         AddEntities(serviceProvider, TestStore.Name);
@@ -57,7 +57,7 @@ public class SequenceEndToEndTest : IAsyncLifetime
     public void Can_use_sequence_end_to_end_on_multiple_databases()
     {
         var serviceProvider = new ServiceCollection()
-            .AddEntityFrameworkNpgsql()
+            .AddEntityFrameworkGaussDB()
             .BuildServiceProvider();
 
         var dbOne = TestStore.Name + "1";
@@ -77,7 +77,7 @@ public class SequenceEndToEndTest : IAsyncLifetime
         // Use a different service provider so a different generator is used but with
         // the same server sequence.
         serviceProvider = new ServiceCollection()
-            .AddEntityFrameworkNpgsql()
+            .AddEntityFrameworkGaussDB()
             .BuildServiceProvider();
 
         AddEntitiesToMultipleContexts(serviceProvider, dbOne, dbTwo);
@@ -124,7 +124,7 @@ public class SequenceEndToEndTest : IAsyncLifetime
     public async Task Can_use_sequence_end_to_end_async()
     {
         var serviceProvider = new ServiceCollection()
-            .AddEntityFrameworkNpgsql()
+            .AddEntityFrameworkGaussDB()
             .BuildServiceProvider();
 
         await using (var context = new BronieContext(serviceProvider, TestStore.Name))
@@ -138,7 +138,7 @@ public class SequenceEndToEndTest : IAsyncLifetime
         // Use a different service provider so a different generator is used but with
         // the same server sequence.
         serviceProvider = new ServiceCollection()
-            .AddEntityFrameworkNpgsql()
+            .AddEntityFrameworkGaussDB()
             .BuildServiceProvider();
 
         await AddEntitiesAsync(serviceProvider, TestStore.Name);
@@ -173,7 +173,7 @@ public class SequenceEndToEndTest : IAsyncLifetime
     public async Task Can_use_sequence_end_to_end_from_multiple_contexts_concurrently_async()
     {
         var serviceProvider = new ServiceCollection()
-            .AddEntityFrameworkNpgsql()
+            .AddEntityFrameworkGaussDB()
             .BuildServiceProvider();
 
         await using (var context = new BronieContext(serviceProvider, TestStore.Name))
@@ -213,7 +213,7 @@ public class SequenceEndToEndTest : IAsyncLifetime
     public void Can_use_explicit_values()
     {
         var serviceProvider = new ServiceCollection()
-            .AddEntityFrameworkNpgsql()
+            .AddEntityFrameworkGaussDB()
             .BuildServiceProvider();
 
         using (var context = new BronieContext(serviceProvider, TestStore.Name))
@@ -227,7 +227,7 @@ public class SequenceEndToEndTest : IAsyncLifetime
         // Use a different service provider so a different generator is used but with
         // the same server sequence.
         serviceProvider = new ServiceCollection()
-            .AddEntityFrameworkNpgsql()
+            .AddEntityFrameworkGaussDB()
             .BuildServiceProvider();
 
         AddEntitiesWithIds(serviceProvider, 4, TestStore.Name);
@@ -270,7 +270,7 @@ public class SequenceEndToEndTest : IAsyncLifetime
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
                 .UseInternalServiceProvider(serviceProvider)
-                .UseNpgsql(NpgsqlTestStore.CreateConnectionString(databaseName), b => b.ApplyConfiguration());
+                .UseGaussDB(GaussDBTestStore.CreateConnectionString(databaseName), b => b.ApplyConfiguration());
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
             => modelBuilder.Entity<Pegasus>(
@@ -291,7 +291,7 @@ public class SequenceEndToEndTest : IAsyncLifetime
     public void Can_use_sequence_with_nullable_key_end_to_end()
     {
         var serviceProvider = new ServiceCollection()
-            .AddEntityFrameworkNpgsql()
+            .AddEntityFrameworkGaussDB()
             .BuildServiceProvider();
 
         using (var context = new NullableBronieContext(serviceProvider, TestStore.Name, true))
@@ -319,7 +319,7 @@ public class SequenceEndToEndTest : IAsyncLifetime
     public void Can_use_identity_with_nullable_key_end_to_end()
     {
         var serviceProvider = new ServiceCollection()
-            .AddEntityFrameworkNpgsql()
+            .AddEntityFrameworkGaussDB()
             .BuildServiceProvider();
 
         using (var context = new NullableBronieContext(serviceProvider, TestStore.Name, false))
@@ -365,7 +365,7 @@ public class SequenceEndToEndTest : IAsyncLifetime
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
                 .UseInternalServiceProvider(serviceProvider)
-                .UseNpgsql(NpgsqlTestStore.CreateConnectionString(databaseName), b => b.ApplyConfiguration());
+                .UseGaussDB(GaussDBTestStore.CreateConnectionString(databaseName), b => b.ApplyConfiguration());
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
             => modelBuilder.Entity<Unicon>(
@@ -389,10 +389,10 @@ public class SequenceEndToEndTest : IAsyncLifetime
         public string Name { get; set; } = null!;
     }
 
-    protected NpgsqlTestStore TestStore { get; private set; } = null!;
+    protected GaussDBTestStore TestStore { get; private set; } = null!;
 
     public async Task InitializeAsync()
-        => TestStore = await NpgsqlTestStore.CreateInitializedAsync("SequenceEndToEndTest");
+        => TestStore = await GaussDBTestStore.CreateInitializedAsync("SequenceEndToEndTest");
 
     public async Task DisposeAsync()
         => await TestStore.DisposeAsync();

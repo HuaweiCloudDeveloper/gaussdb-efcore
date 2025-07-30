@@ -1,6 +1,6 @@
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore.Storage.Json;
-using NodaTime.Text;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.NodaTime.Text;
 using HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal.Mapping;
 using static HuaweiCloud.EntityFrameworkCore.GaussDB.NodaTime.Utilties.Util;
 
@@ -13,7 +13,7 @@ namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal;
 ///     any release. You should only use it directly in your code with extreme caution and knowing that
 ///     doing so can result in application failures when updating to a new Entity Framework Core release.
 /// </summary>
-public class DateMapping : NpgsqlTypeMapping
+public class DateMapping : GaussDBTypeMapping
 {
     private static readonly ConstructorInfo Constructor =
         typeof(LocalDate).GetConstructor([typeof(int), typeof(int), typeof(int)])!;
@@ -33,7 +33,7 @@ public class DateMapping : NpgsqlTypeMapping
     ///     doing so can result in application failures when updating to a new Entity Framework Core release.
     /// </summary>
     public DateMapping()
-        : base("date", typeof(LocalDate), NpgsqlDbType.Date, JsonLocalDateReaderWriter.Instance)
+        : base("date", typeof(LocalDate), GaussDBDbType.Date, JsonLocalDateReaderWriter.Instance)
     {
     }
 
@@ -44,7 +44,7 @@ public class DateMapping : NpgsqlTypeMapping
     ///     doing so can result in application failures when updating to a new Entity Framework Core release.
     /// </summary>
     protected DateMapping(RelationalTypeMappingParameters parameters)
-        : base(parameters, NpgsqlDbType.Date)
+        : base(parameters, GaussDBDbType.Date)
     {
     }
 
@@ -86,7 +86,7 @@ public class DateMapping : NpgsqlTypeMapping
 
     private static string FormatLocalDate(LocalDate date)
     {
-        if (!NpgsqlNodaTimeTypeMappingSourcePlugin.DisableDateTimeInfinityConversions)
+        if (!GaussDBNodaTimeTypeMappingSourcePlugin.DisableDateTimeInfinityConversions)
         {
             if (date == LocalDate.MinIsoValue)
             {
@@ -124,7 +124,7 @@ public class DateMapping : NpgsqlTypeMapping
         {
             var s = manager.CurrentReader.GetString()!;
 
-            if (!NpgsqlNodaTimeTypeMappingSourcePlugin.DisableDateTimeInfinityConversions)
+            if (!GaussDBNodaTimeTypeMappingSourcePlugin.DisableDateTimeInfinityConversions)
             {
                 switch (s)
                 {

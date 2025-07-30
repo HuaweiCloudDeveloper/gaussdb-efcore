@@ -6,12 +6,12 @@ using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure;
 namespace Microsoft.EntityFrameworkCore.Query.Translations;
 
 // Note: timestamp range tests are in TimestampQueryTest
-public class RangeTranslationsTest : IClassFixture<RangeTranslationsTest.RangeQueryNpgsqlFixture>
+public class RangeTranslationsTest : IClassFixture<RangeTranslationsTest.RangeQueryGaussDBFixture>
 {
-    private RangeQueryNpgsqlFixture Fixture { get; }
+    private RangeQueryGaussDBFixture Fixture { get; }
 
     // ReSharper disable once UnusedParameter.Local
-    public RangeTranslationsTest(RangeQueryNpgsqlFixture fixture, ITestOutputHelper testOutputHelper)
+    public RangeTranslationsTest(RangeQueryGaussDBFixture fixture, ITestOutputHelper testOutputHelper)
     {
         Fixture = fixture;
         Fixture.TestSqlLoggerFactory.Clear();
@@ -41,7 +41,7 @@ LIMIT 2
     {
         using var context = CreateContext();
 
-        var range = new NpgsqlRange<int>(8, 13);
+        var range = new GaussDBRange<int>(8, 13);
         var result = context.RangeTestEntities.Single(x => x.IntRange.Contains(range));
         Assert.Equal(2, result.Id);
 
@@ -60,7 +60,7 @@ LIMIT 2
     public void ContainedBy()
     {
         using var context = CreateContext();
-        var range = new NpgsqlRange<int>(8, 13);
+        var range = new GaussDBRange<int>(8, 13);
         var result = context.RangeTestEntities.Single(x => range.ContainedBy(x.IntRange));
         Assert.Equal(2, result.Id);
 
@@ -79,7 +79,7 @@ LIMIT 2
     public void Equals_operator()
     {
         using var context = CreateContext();
-        var range = new NpgsqlRange<int>(1, 10);
+        var range = new GaussDBRange<int>(1, 10);
         var result = context.RangeTestEntities.Single(x => x.IntRange == range);
         Assert.Equal(1, result.Id);
 
@@ -98,7 +98,7 @@ LIMIT 2
     public void Equals_method()
     {
         using var context = CreateContext();
-        var range = new NpgsqlRange<int>(1, 10);
+        var range = new GaussDBRange<int>(1, 10);
         var result = context.RangeTestEntities.Single(x => x.IntRange.Equals(range));
         Assert.Equal(1, result.Id);
 
@@ -117,7 +117,7 @@ LIMIT 2
     public void Overlaps_range()
     {
         using var context = CreateContext();
-        var range = new NpgsqlRange<int>(-5, 4);
+        var range = new GaussDBRange<int>(-5, 4);
         var result = context.RangeTestEntities.Single(x => x.IntRange.Overlaps(range));
         Assert.Equal(1, result.Id);
 
@@ -136,7 +136,7 @@ LIMIT 2
     public void IsStrictlyLeftOf_range()
     {
         using var context = CreateContext();
-        var range = new NpgsqlRange<int>(11, 15);
+        var range = new GaussDBRange<int>(11, 15);
         var result = context.RangeTestEntities.Single(x => x.IntRange.IsStrictlyLeftOf(range));
         Assert.Equal(1, result.Id);
 
@@ -155,7 +155,7 @@ LIMIT 2
     public void IsStrictlyRightOf_range()
     {
         using var context = CreateContext();
-        var range = new NpgsqlRange<int>(0, 4);
+        var range = new GaussDBRange<int>(0, 4);
         var result = context.RangeTestEntities.Single(x => x.IntRange.IsStrictlyRightOf(range));
         Assert.Equal(2, result.Id);
 
@@ -174,7 +174,7 @@ LIMIT 2
     public void DoesNotExtendLeftOf()
     {
         using var context = CreateContext();
-        var range = new NpgsqlRange<int>(2, 20);
+        var range = new GaussDBRange<int>(2, 20);
         var result = context.RangeTestEntities.Single(x => range.DoesNotExtendLeftOf(x.IntRange));
         Assert.Equal(1, result.Id);
 
@@ -193,7 +193,7 @@ LIMIT 2
     public void DoesNotExtendRightOf()
     {
         using var context = CreateContext();
-        var range = new NpgsqlRange<int>(1, 13);
+        var range = new GaussDBRange<int>(1, 13);
         var result = context.RangeTestEntities.Single(x => range.DoesNotExtendRightOf(x.IntRange));
         Assert.Equal(2, result.Id);
 
@@ -212,7 +212,7 @@ LIMIT 2
     public void IsAdjacentTo()
     {
         using var context = CreateContext();
-        var range = new NpgsqlRange<int>(2, 4);
+        var range = new GaussDBRange<int>(2, 4);
         var result = context.RangeTestEntities.Single(x => range.IsAdjacentTo(x.IntRange));
         Assert.Equal(2, result.Id);
 
@@ -231,8 +231,8 @@ LIMIT 2
     public void Union()
     {
         using var context = CreateContext();
-        var range = new NpgsqlRange<int>(-2, 7);
-        var result = context.RangeTestEntities.Single(x => x.IntRange.Union(range) == new NpgsqlRange<int>(-2, 10));
+        var range = new GaussDBRange<int>(-2, 7);
+        var result = context.RangeTestEntities.Single(x => x.IntRange.Union(range) == new GaussDBRange<int>(-2, 10));
         Assert.Equal(1, result.Id);
 
         AssertSql(
@@ -277,8 +277,8 @@ LIMIT 2
     public void Intersect()
     {
         using var context = CreateContext();
-        var range = new NpgsqlRange<int>(-2, 3);
-        var result = context.RangeTestEntities.Single(x => x.IntRange.Intersect(range) == new NpgsqlRange<int>(1, 3));
+        var range = new GaussDBRange<int>(-2, 3);
+        var result = context.RangeTestEntities.Single(x => x.IntRange.Intersect(range) == new GaussDBRange<int>(1, 3));
         Assert.Equal(1, result.Id);
 
         AssertSql(
@@ -304,7 +304,7 @@ LIMIT 2
             .Select(g => g.Select(x => x.IntRange).RangeIntersectAgg())
             .Single();
 
-        Assert.Equal(new NpgsqlRange<int>(5, true, 11, false), intersection);
+        Assert.Equal(new GaussDBRange<int>(5, true, 11, false), intersection);
 
         AssertSql(
             """
@@ -323,8 +323,8 @@ LIMIT 2
     public void Except()
     {
         using var context = CreateContext();
-        var range = new NpgsqlRange<int>(1, 2);
-        var result = context.RangeTestEntities.Single(x => x.IntRange.Except(range) == new NpgsqlRange<int>(3, 10));
+        var range = new GaussDBRange<int>(1, 2);
+        var result = context.RangeTestEntities.Single(x => x.IntRange.Except(range) == new GaussDBRange<int>(3, 10));
         Assert.Equal(1, result.Id);
 
         AssertSql(
@@ -378,7 +378,7 @@ LIMIT 2
     public void IsEmpty()
     {
         using var context = CreateContext();
-        var result = context.RangeTestEntities.Single(x => x.IntRange.Intersect(new NpgsqlRange<int>(1, 2)).IsEmpty);
+        var result = context.RangeTestEntities.Single(x => x.IntRange.Intersect(new GaussDBRange<int>(1, 2)).IsEmpty);
         Assert.Equal(2, result.Id);
 
         AssertSql(
@@ -454,7 +454,7 @@ WHERE upper_inf(r."IntRange")
     public void Merge()
     {
         using var context = CreateContext();
-        var result = context.RangeTestEntities.Single(x => x.IntRange.Merge(new NpgsqlRange<int>(12, 13)) == new NpgsqlRange<int>(1, 13));
+        var result = context.RangeTestEntities.Single(x => x.IntRange.Merge(new GaussDBRange<int>(12, 13)) == new GaussDBRange<int>(1, 13));
         Assert.Equal(1, result.Id);
 
         AssertSql(
@@ -606,13 +606,13 @@ LIMIT 2
 
     #region Fixtures
 
-    public class RangeQueryNpgsqlFixture : SharedStoreFixtureBase<RangeContext>
+    public class RangeQueryGaussDBFixture : SharedStoreFixtureBase<RangeContext>
     {
-        static RangeQueryNpgsqlFixture()
+        static RangeQueryGaussDBFixture()
         {
-            // TODO: Switch to using NpgsqlDataSource
+            // TODO: Switch to using GaussDBDataSource
 #pragma warning disable CS0618 // Type or member is obsolete
-            NpgsqlConnection.GlobalTypeMapper.EnableUnmappedTypes();
+            GaussDBConnection.GlobalTypeMapper.EnableUnmappedTypes();
 #pragma warning restore CS0618 // Type or member is obsolete
         }
 
@@ -620,7 +620,7 @@ LIMIT 2
             => "RangeQueryTest";
 
         protected override ITestStoreFactory TestStoreFactory
-            => NpgsqlTestStoreFactory.Instance;
+            => GaussDBTestStoreFactory.Instance;
 
         public TestSqlLoggerFactory TestSqlLoggerFactory
             => (TestSqlLoggerFactory)ListLoggerFactory;
@@ -631,7 +631,7 @@ LIMIT 2
         public override DbContextOptionsBuilder AddOptions(DbContextOptionsBuilder builder)
         {
             var optionsBuilder = base.AddOptions(builder);
-            var npgsqlOptionsBuilder = new NpgsqlDbContextOptionsBuilder(optionsBuilder);
+            var npgsqlOptionsBuilder = new GaussDBDbContextOptionsBuilder(optionsBuilder);
             npgsqlOptionsBuilder.MapRange("doublerange", typeof(double));
             npgsqlOptionsBuilder.MapRange<float>("Schema_Range", "test");
             return optionsBuilder;
@@ -641,16 +641,16 @@ LIMIT 2
     public class RangeTestEntity
     {
         public int Id { get; set; }
-        public NpgsqlRange<int> IntRange { get; set; }
-        public NpgsqlRange<long> LongRange { get; set; }
-        public NpgsqlRange<decimal> DecimalRange { get; set; }
-        public NpgsqlRange<DateOnly> DateOnlyDateRange { get; set; }
+        public GaussDBRange<int> IntRange { get; set; }
+        public GaussDBRange<long> LongRange { get; set; }
+        public GaussDBRange<decimal> DecimalRange { get; set; }
+        public GaussDBRange<DateOnly> DateOnlyDateRange { get; set; }
 
         [Column(TypeName = "tsrange")]
-        public NpgsqlRange<DateTime> DateTimeDateRange { get; set; }
+        public GaussDBRange<DateTime> DateTimeDateRange { get; set; }
 
-        public NpgsqlRange<double> UserDefinedRange { get; set; }
-        public NpgsqlRange<float> UserDefinedRangeWithSchema { get; set; }
+        public GaussDBRange<double> UserDefinedRange { get; set; }
+        public GaussDBRange<float> UserDefinedRangeWithSchema { get; set; }
     }
 
     public class RangeContext(DbContextOptions options) : PoolableDbContext(options)
@@ -667,24 +667,24 @@ LIMIT 2
                 new RangeTestEntity
                 {
                     Id = 1,
-                    IntRange = new NpgsqlRange<int>(1, 10),
-                    LongRange = new NpgsqlRange<long>(1, 10),
-                    DecimalRange = new NpgsqlRange<decimal>(1, 10),
-                    DateOnlyDateRange = new NpgsqlRange<DateOnly>(new DateOnly(2020, 1, 1), new DateOnly(2020, 1, 10)),
-                    DateTimeDateRange = new NpgsqlRange<DateTime>(new DateTime(2020, 1, 1), new DateTime(2020, 1, 10)),
-                    UserDefinedRange = new NpgsqlRange<double>(1, 10),
-                    UserDefinedRangeWithSchema = new NpgsqlRange<float>(1, 10)
+                    IntRange = new GaussDBRange<int>(1, 10),
+                    LongRange = new GaussDBRange<long>(1, 10),
+                    DecimalRange = new GaussDBRange<decimal>(1, 10),
+                    DateOnlyDateRange = new GaussDBRange<DateOnly>(new DateOnly(2020, 1, 1), new DateOnly(2020, 1, 10)),
+                    DateTimeDateRange = new GaussDBRange<DateTime>(new DateTime(2020, 1, 1), new DateTime(2020, 1, 10)),
+                    UserDefinedRange = new GaussDBRange<double>(1, 10),
+                    UserDefinedRangeWithSchema = new GaussDBRange<float>(1, 10)
                 },
                 new RangeTestEntity
                 {
                     Id = 2,
-                    IntRange = new NpgsqlRange<int>(5, 15),
-                    LongRange = new NpgsqlRange<long>(5, 15),
-                    DecimalRange = new NpgsqlRange<decimal>(5, 15),
-                    DateOnlyDateRange = new NpgsqlRange<DateOnly>(new DateOnly(2020, 1, 5), new DateOnly(2020, 1, 15)),
-                    DateTimeDateRange = new NpgsqlRange<DateTime>(new DateTime(2020, 1, 5), new DateTime(2020, 1, 15)),
-                    UserDefinedRange = new NpgsqlRange<double>(5, 15),
-                    UserDefinedRangeWithSchema = new NpgsqlRange<float>(5, 15)
+                    IntRange = new GaussDBRange<int>(5, 15),
+                    LongRange = new GaussDBRange<long>(5, 15),
+                    DecimalRange = new GaussDBRange<decimal>(5, 15),
+                    DateOnlyDateRange = new GaussDBRange<DateOnly>(new DateOnly(2020, 1, 5), new DateOnly(2020, 1, 15)),
+                    DateTimeDateRange = new GaussDBRange<DateTime>(new DateTime(2020, 1, 5), new DateTime(2020, 1, 15)),
+                    UserDefinedRange = new GaussDBRange<double>(5, 15),
+                    UserDefinedRangeWithSchema = new GaussDBRange<float>(5, 15)
                 });
 
             await context.SaveChangesAsync();

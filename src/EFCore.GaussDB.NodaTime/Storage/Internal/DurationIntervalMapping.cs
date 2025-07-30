@@ -11,7 +11,7 @@ namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal;
 ///     any release. You should only use it directly in your code with extreme caution and knowing that
 ///     doing so can result in application failures when updating to a new Entity Framework Core release.
 /// </summary>
-public class DurationIntervalMapping : NpgsqlTypeMapping
+public class DurationIntervalMapping : GaussDBTypeMapping
 {
     private static readonly MethodInfo FromDays = typeof(Duration).GetRuntimeMethod(nameof(Duration.FromDays), [typeof(int)])!;
     private static readonly MethodInfo FromHours = typeof(Duration).GetRuntimeMethod(nameof(Duration.FromHours), [typeof(int)])!;
@@ -42,7 +42,7 @@ public class DurationIntervalMapping : NpgsqlTypeMapping
     ///     doing so can result in application failures when updating to a new Entity Framework Core release.
     /// </summary>
     public DurationIntervalMapping()
-        : base("interval", typeof(Duration), NpgsqlDbType.Interval, JsonDurationReaderWriter.Instance)
+        : base("interval", typeof(Duration), GaussDBDbType.Interval, JsonDurationReaderWriter.Instance)
     {
     }
 
@@ -53,7 +53,7 @@ public class DurationIntervalMapping : NpgsqlTypeMapping
     ///     doing so can result in application failures when updating to a new Entity Framework Core release.
     /// </summary>
     protected DurationIntervalMapping(RelationalTypeMappingParameters parameters)
-        : base(parameters, NpgsqlDbType.Interval)
+        : base(parameters, GaussDBDbType.Interval)
     {
     }
 
@@ -91,7 +91,7 @@ public class DurationIntervalMapping : NpgsqlTypeMapping
     ///     doing so can result in application failures when updating to a new Entity Framework Core release.
     /// </summary>
     protected override string GenerateEmbeddedNonNullSqlLiteral(object value)
-        => NpgsqlIntervalTypeMapping.FormatTimeSpanAsInterval(((Duration)value).ToTimeSpan());
+        => GaussDBIntervalTypeMapping.FormatTimeSpanAsInterval(((Duration)value).ToTimeSpan());
 
     /// <summary>
     ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to
@@ -142,10 +142,10 @@ public class DurationIntervalMapping : NpgsqlTypeMapping
         public static JsonDurationReaderWriter Instance { get; } = new();
 
         public override Duration FromJsonTyped(ref Utf8JsonReaderManager manager, object? existingObject = null)
-            => Duration.FromTimeSpan(NpgsqlIntervalTypeMapping.ParseIntervalAsTimeSpan(manager.CurrentReader.GetString()!));
+            => Duration.FromTimeSpan(GaussDBIntervalTypeMapping.ParseIntervalAsTimeSpan(manager.CurrentReader.GetString()!));
 
         public override void ToJsonTyped(Utf8JsonWriter writer, Duration value)
-            => writer.WriteStringValue(NpgsqlIntervalTypeMapping.FormatTimeSpanAsInterval(value.ToTimeSpan()));
+            => writer.WriteStringValue(GaussDBIntervalTypeMapping.FormatTimeSpanAsInterval(value.ToTimeSpan()));
 
         /// <inheritdoc />
         public override Expression ConstructorExpression => Expression.Property(null, InstanceProperty);

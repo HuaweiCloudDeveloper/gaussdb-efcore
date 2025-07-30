@@ -52,9 +52,9 @@ internal class NodaTimeData : ISetSource
                 Period = DefaultPeriod,
                 Duration = duration,
                 DateInterval = new DateInterval(localDateTime.Date, localDateTime.Date.PlusDays(4)), // inclusive
-                LocalDateRange = new NpgsqlRange<LocalDate>(localDateTime.Date, localDateTime.Date.PlusDays(5)), // exclusive
+                LocalDateRange = new GaussDBRange<LocalDate>(localDateTime.Date, localDateTime.Date.PlusDays(5)), // exclusive
                 Interval = new Interval(instant, instant + Duration.FromDays(5)),
-                InstantRange = new NpgsqlRange<Instant>(instant, true, instant + Duration.FromDays(5), false),
+                InstantRange = new GaussDBRange<Instant>(instant, true, instant + Duration.FromDays(5), false),
                 Long = 1,
                 TimeZoneId = "Europe/Berlin"
             }

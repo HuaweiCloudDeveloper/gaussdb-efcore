@@ -16,17 +16,17 @@ public class ExistingConnectionTest
     private static async Task Can_use_an_existing_closed_connection_test(bool openConnection)
     {
         var serviceProvider = new ServiceCollection()
-            .AddEntityFrameworkNpgsql()
+            .AddEntityFrameworkGaussDB()
             .BuildServiceProvider();
 
-        await using (var store = await NpgsqlTestStore.GetNorthwindStoreAsync())
+        await using (var store = await GaussDBTestStore.GetNorthwindStoreAsync())
         {
             store.CloseConnection();
 
             var openCount = 0;
             var closeCount = 0;
 
-            await using (var connection = new NpgsqlConnection(store.ConnectionString))
+            await using (var connection = new GaussDBConnection(store.ConnectionString))
             {
                 if (openConnection)
                 {
@@ -66,17 +66,17 @@ public class ExistingConnectionTest
         }
     }
 
-    private class NorthwindContext(IServiceProvider serviceProvider, NpgsqlConnection connection) : DbContext
+    private class NorthwindContext(IServiceProvider serviceProvider, GaussDBConnection connection) : DbContext
     {
         private readonly IServiceProvider _serviceProvider = serviceProvider;
-        private readonly NpgsqlConnection _connection = connection;
+        private readonly GaussDBConnection _connection = connection;
 
         // ReSharper disable once UnusedAutoPropertyAccessor.Local
         public DbSet<Customer> Customers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
-                .UseNpgsql(_connection)
+                .UseGaussDB(_connection)
                 .UseInternalServiceProvider(_serviceProvider);
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

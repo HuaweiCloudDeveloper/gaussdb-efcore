@@ -7,11 +7,11 @@ namespace Microsoft.EntityFrameworkCore;
 public class DefaultValuesTest : IDisposable
 {
     private readonly IServiceProvider _serviceProvider = new ServiceCollection()
-        .AddEntityFrameworkNpgsql()
+        .AddEntityFrameworkGaussDB()
         .BuildServiceProvider();
 
     [Fact]
-    public void Can_use_Npgsql_default_values()
+    public void Can_use_GaussDB_default_values()
     {
         using (var context = new ChipsContext(_serviceProvider, "DefaultKettleChips"))
         {
@@ -53,8 +53,8 @@ public class DefaultValuesTest : IDisposable
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
-                .UseNpgsql(
-                    NpgsqlTestStore.CreateConnectionString(_databaseName),
+                .UseGaussDB(
+                    GaussDBTestStore.CreateConnectionString(_databaseName),
                     o => o.SetPostgresVersion(TestEnvironment.PostgresVersion))
                 .UseInternalServiceProvider(_serviceProvider);
 

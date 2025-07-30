@@ -4,7 +4,7 @@ using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure;
 
 namespace Microsoft.EntityFrameworkCore.Query.Translations.NodaTime;
 
-public class NodaTimeQueryNpgsqlFixture : SharedStoreFixtureBase<NodaTimeContext>, IQueryFixtureBase, ITestSqlLoggerFactory
+public class NodaTimeQueryGaussDBFixture : SharedStoreFixtureBase<NodaTimeContext>, IQueryFixtureBase, ITestSqlLoggerFactory
 {
     protected override string StoreName
         => "NodaTimeQueryTest";
@@ -12,10 +12,10 @@ public class NodaTimeQueryNpgsqlFixture : SharedStoreFixtureBase<NodaTimeContext
     // Set the GaussDB TimeZone parameter to something local, to ensure that operations which take TimeZone into account
     // don't depend on the database's time zone, and also that operations which shouldn't take TimeZone into account indeed
     // don't.
-    // We also instruct the test store to pass a connection string to UseNpgsql() instead of a DbConnection - that's required to allow
-    // EF's UseNodaTime() to function properly and instantiate an NpgsqlDataSource internally.
+    // We also instruct the test store to pass a connection string to UseGaussDB() instead of a DbConnection - that's required to allow
+    // EF's UseNodaTime() to function properly and instantiate an GaussDBDataSource internally.
     protected override ITestStoreFactory TestStoreFactory
-        => new NpgsqlTestStoreFactory(connectionStringOptions: "-c TimeZone=Europe/Berlin", useConnectionString: true);
+        => new GaussDBTestStoreFactory(connectionStringOptions: "-c TimeZone=Europe/Berlin", useConnectionString: true);
 
     public TestSqlLoggerFactory TestSqlLoggerFactory
         => (TestSqlLoggerFactory)ListLoggerFactory;
@@ -23,12 +23,12 @@ public class NodaTimeQueryNpgsqlFixture : SharedStoreFixtureBase<NodaTimeContext
     private NodaTimeData? _expectedData;
 
     protected override IServiceCollection AddServices(IServiceCollection serviceCollection)
-        => base.AddServices(serviceCollection).AddEntityFrameworkNpgsqlNodaTime();
+        => base.AddServices(serviceCollection).AddEntityFrameworkGaussDBNodaTime();
 
     public override DbContextOptionsBuilder AddOptions(DbContextOptionsBuilder builder)
     {
         var optionsBuilder = base.AddOptions(builder);
-        new NpgsqlDbContextOptionsBuilder(optionsBuilder).UseNodaTime();
+        new GaussDBDbContextOptionsBuilder(optionsBuilder).UseNodaTime();
 
         return optionsBuilder;
     }

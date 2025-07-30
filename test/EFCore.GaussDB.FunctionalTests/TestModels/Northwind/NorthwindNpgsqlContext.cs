@@ -1,6 +1,6 @@
 namespace Microsoft.EntityFrameworkCore.TestModels.Northwind;
 
-public class NorthwindNpgsqlContext(DbContextOptions options) : NorthwindRelationalContext(options)
+public class NorthwindGaussDBContext(DbContextOptions options) : NorthwindRelationalContext(options)
 {
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

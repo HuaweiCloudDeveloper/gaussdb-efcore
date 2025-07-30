@@ -1,9 +1,9 @@
 namespace Microsoft.EntityFrameworkCore.BulkUpdates;
 
-public class TPCFiltersInheritanceBulkUpdatesNpgsqlTest(
-    TPCFiltersInheritanceBulkUpdatesNpgsqlFixture fixture,
+public class TPCFiltersInheritanceBulkUpdatesGaussDBTest(
+    TPCFiltersInheritanceBulkUpdatesGaussDBFixture fixture,
     ITestOutputHelper testOutputHelper)
-    : TPCFiltersInheritanceBulkUpdatesTestBase<TPCFiltersInheritanceBulkUpdatesNpgsqlFixture>(fixture, testOutputHelper)
+    : TPCFiltersInheritanceBulkUpdatesTestBase<TPCFiltersInheritanceBulkUpdatesGaussDBFixture>(fixture, testOutputHelper)
 {
     public override async Task Delete_where_hierarchy(bool async)
     {

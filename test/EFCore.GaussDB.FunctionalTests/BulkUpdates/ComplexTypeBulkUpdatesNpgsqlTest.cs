@@ -1,9 +1,9 @@
 namespace Microsoft.EntityFrameworkCore.BulkUpdates;
 
-public class ComplexTypeBulkUpdatesNpgsqlTest(
-    ComplexTypeBulkUpdatesNpgsqlTest.ComplexTypeBulkUpdatesNpgsqlFixture fixture,
+public class ComplexTypeBulkUpdatesGaussDBTest(
+    ComplexTypeBulkUpdatesGaussDBTest.ComplexTypeBulkUpdatesGaussDBFixture fixture,
     ITestOutputHelper testOutputHelper)
-    : ComplexTypeBulkUpdatesRelationalTestBase<ComplexTypeBulkUpdatesNpgsqlTest.ComplexTypeBulkUpdatesNpgsqlFixture>(fixture, testOutputHelper)
+    : ComplexTypeBulkUpdatesRelationalTestBase<ComplexTypeBulkUpdatesGaussDBTest.ComplexTypeBulkUpdatesGaussDBFixture>(fixture, testOutputHelper)
 {
     public override async Task Delete_entity_type_with_complex_type(bool async)
     {
@@ -245,9 +245,9 @@ SET "ShippingAddress_Tags" = @p
     protected void ClearLog()
         => Fixture.TestSqlLoggerFactory.Clear();
 
-    public class ComplexTypeBulkUpdatesNpgsqlFixture : ComplexTypeBulkUpdatesRelationalFixtureBase
+    public class ComplexTypeBulkUpdatesGaussDBFixture : ComplexTypeBulkUpdatesRelationalFixtureBase
     {
         protected override ITestStoreFactory TestStoreFactory
-            => NpgsqlTestStoreFactory.Instance;
+            => GaussDBTestStoreFactory.Instance;
     }
 }

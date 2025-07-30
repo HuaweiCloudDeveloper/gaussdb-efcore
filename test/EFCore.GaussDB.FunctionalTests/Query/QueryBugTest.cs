@@ -6,17 +6,17 @@ namespace Microsoft.EntityFrameworkCore.Query;
 
 #nullable disable
 
-public class QueryBugsTest : IClassFixture<NpgsqlFixture>
+public class QueryBugsTest : IClassFixture<GaussDBFixture>
 {
     // ReSharper disable once UnusedParameter.Local
-    public QueryBugsTest(NpgsqlFixture fixture, ITestOutputHelper testOutputHelper)
+    public QueryBugsTest(GaussDBFixture fixture, ITestOutputHelper testOutputHelper)
     {
         Fixture = fixture;
         Fixture.TestSqlLoggerFactory.Clear();
         Fixture.TestSqlLoggerFactory.SetTestOutputHelper(testOutputHelper);
     }
 
-    protected NpgsqlFixture Fixture { get; }
+    protected GaussDBFixture Fixture { get; }
 
     #region Bug920
 
@@ -29,7 +29,7 @@ public class QueryBugsTest : IClassFixture<NpgsqlFixture>
         context.SaveChanges();
     }
 
-    private Task<NpgsqlTestStore> CreateDatabase920Async()
+    private Task<GaussDBTestStore> CreateDatabase920Async()
         => CreateTestStoreAsync(() => new Bug920Context(_options), _ => ClearLog());
 
     public enum Bug920Enum { One, Two }
@@ -51,12 +51,12 @@ public class QueryBugsTest : IClassFixture<NpgsqlFixture>
 
     private DbContextOptions _options;
 
-    private async Task<NpgsqlTestStore> CreateTestStoreAsync<TContext>(
+    private async Task<GaussDBTestStore> CreateTestStoreAsync<TContext>(
         Func<TContext> contextCreator,
         Action<TContext> contextInitializer)
         where TContext : DbContext, IDisposable
     {
-        var testStore = await NpgsqlTestStore.CreateInitializedAsync("QueryBugsTest");
+        var testStore = await GaussDBTestStore.CreateInitializedAsync("QueryBugsTest");
 
         _options = Fixture.CreateOptions(testStore);
 

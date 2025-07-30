@@ -13,7 +13,7 @@ namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal;
 // Should only be used only with EnableLegacyTimestampBehavior.
 // However, when upgrading to 6.0 with existing migrations, model snapshots still contain old mappings (Instant mapped to timestamp),
 // and EF Core's model differ expects type mappings to be found for these. See https://github.com/dotnet/efcore/issues/26168.
-public class LegacyTimestampInstantMapping : NpgsqlTypeMapping
+public class LegacyTimestampInstantMapping : GaussDBTypeMapping
 {
     /// <summary>
     ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to
@@ -30,7 +30,7 @@ public class LegacyTimestampInstantMapping : NpgsqlTypeMapping
     ///     doing so can result in application failures when updating to a new Entity Framework Core release.
     /// </summary>
     public LegacyTimestampInstantMapping()
-        : base("timestamp without time zone", typeof(Instant), NpgsqlDbType.Timestamp)
+        : base("timestamp without time zone", typeof(Instant), GaussDBDbType.Timestamp)
     {
     }
 
@@ -41,7 +41,7 @@ public class LegacyTimestampInstantMapping : NpgsqlTypeMapping
     ///     doing so can result in application failures when updating to a new Entity Framework Core release.
     /// </summary>
     protected LegacyTimestampInstantMapping(RelationalTypeMappingParameters parameters)
-        : base(parameters, NpgsqlDbType.Timestamp)
+        : base(parameters, GaussDBDbType.Timestamp)
     {
     }
 
@@ -96,7 +96,7 @@ public class LegacyTimestampInstantMapping : NpgsqlTypeMapping
     {
         var instant = (Instant)value;
 
-        if (!NpgsqlNodaTimeTypeMappingSourcePlugin.DisableDateTimeInfinityConversions)
+        if (!GaussDBNodaTimeTypeMappingSourcePlugin.DisableDateTimeInfinityConversions)
         {
             if (instant == Instant.MinValue)
             {

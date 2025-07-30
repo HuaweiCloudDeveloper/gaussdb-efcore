@@ -2,10 +2,10 @@ using Microsoft.EntityFrameworkCore.TestModels.InheritanceModel;
 
 namespace Microsoft.EntityFrameworkCore.BulkUpdates;
 
-public class TPHInheritanceBulkUpdatesNpgsqlFixture : TPHInheritanceBulkUpdatesFixture
+public class TPHInheritanceBulkUpdatesGaussDBFixture : TPHInheritanceBulkUpdatesFixture
 {
     protected override ITestStoreFactory TestStoreFactory
-        => NpgsqlTestStoreFactory.Instance;
+        => GaussDBTestStoreFactory.Instance;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder, DbContext context)
     {

@@ -8,12 +8,12 @@ namespace Microsoft.EntityFrameworkCore.Query.Translations;
 /// <remarks>
 ///     See: https://www.postgresql.org/docs/current/pgtrgm.html
 /// </remarks>
-public class TrigramsTranslationsTest : IClassFixture<TrigramsTranslationsTest.TrigramsQueryNpgsqlFixture>
+public class TrigramsTranslationsTest : IClassFixture<TrigramsTranslationsTest.TrigramsQueryGaussDBFixture>
 {
-    private TrigramsQueryNpgsqlFixture Fixture { get; }
+    private TrigramsQueryGaussDBFixture Fixture { get; }
 
     // ReSharper disable once UnusedParameter.Local
-    public TrigramsTranslationsTest(TrigramsQueryNpgsqlFixture fixture, ITestOutputHelper testOutputHelper)
+    public TrigramsTranslationsTest(TrigramsQueryGaussDBFixture fixture, ITestOutputHelper testOutputHelper)
     {
         Fixture = fixture;
         Fixture.TestSqlLoggerFactory.Clear();
@@ -216,13 +216,13 @@ WHERE 1 - (t."Text" <-> 'query') > 8
     /// <summary>
     ///     Represents a fixture suitable for testing trigrams operators.
     /// </summary>
-    public class TrigramsQueryNpgsqlFixture : SharedStoreFixtureBase<TrigramsContext>
+    public class TrigramsQueryGaussDBFixture : SharedStoreFixtureBase<TrigramsContext>
     {
         protected override string StoreName
             => "TrigramsQueryTest";
 
         protected override ITestStoreFactory TestStoreFactory
-            => NpgsqlTestStoreFactory.Instance;
+            => GaussDBTestStoreFactory.Instance;
 
         public TestSqlLoggerFactory TestSqlLoggerFactory
             => (TestSqlLoggerFactory)ListLoggerFactory;

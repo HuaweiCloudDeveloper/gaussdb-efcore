@@ -13,7 +13,7 @@ namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal;
 ///     any release. You should only use it directly in your code with extreme caution and knowing that
 ///     doing so can result in application failures when updating to a new Entity Framework Core release.
 /// </summary>
-public class TimeMapping : NpgsqlTypeMapping
+public class TimeMapping : GaussDBTypeMapping
 {
     private static readonly ConstructorInfo ConstructorWithMinutes =
         typeof(LocalTime).GetConstructor([typeof(int), typeof(int)])!;
@@ -41,7 +41,7 @@ public class TimeMapping : NpgsqlTypeMapping
     ///     doing so can result in application failures when updating to a new Entity Framework Core release.
     /// </summary>
     public TimeMapping()
-        : base("time", typeof(LocalTime), NpgsqlDbType.Time, JsonLocalTimeReaderWriter.Instance)
+        : base("time", typeof(LocalTime), GaussDBDbType.Time, JsonLocalTimeReaderWriter.Instance)
     {
     }
 
@@ -52,7 +52,7 @@ public class TimeMapping : NpgsqlTypeMapping
     ///     doing so can result in application failures when updating to a new Entity Framework Core release.
     /// </summary>
     protected TimeMapping(RelationalTypeMappingParameters parameters)
-        : base(parameters, NpgsqlDbType.Time)
+        : base(parameters, GaussDBDbType.Time)
     {
     }
 

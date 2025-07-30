@@ -86,7 +86,7 @@ jobs:
           curl -o pgsql.zip -L https://get.enterprisedb.com/postgresql/postgresql-${EDB_VERSION}-windows-x64-binaries.zip
           unzip pgsql.zip -x 'pgsql/include/**' 'pgsql/doc/**' 'pgsql/pgAdmin 4/**' 'pgsql/StackBuilder/**'
 
-          # Match Npgsql CI Docker image and stash one level up
+          # Match GaussDB CI Docker image and stash one level up
           cp $GITHUB_WORKSPACE/.build/{server.crt,server.key} pgsql
 
           # Find OSGEO version number

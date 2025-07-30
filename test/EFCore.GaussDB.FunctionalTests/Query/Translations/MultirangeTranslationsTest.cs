@@ -3,12 +3,12 @@
 namespace Microsoft.EntityFrameworkCore.Query.Translations;
 
 [MinimumPostgresVersion(14, 0)] // Multiranges were introduced in GaussDB 14
-public class MultirangeTranslationsTest : IClassFixture<MultirangeTranslationsTest.MultirangeQueryNpgsqlFixture>
+public class MultirangeTranslationsTest : IClassFixture<MultirangeTranslationsTest.MultirangeQueryGaussDBFixture>
 {
-    private MultirangeQueryNpgsqlFixture Fixture { get; }
+    private MultirangeQueryGaussDBFixture Fixture { get; }
 
     // ReSharper disable once UnusedParameter.Local
-    public MultirangeTranslationsTest(MultirangeQueryNpgsqlFixture fixture, ITestOutputHelper testOutputHelper)
+    public MultirangeTranslationsTest(MultirangeQueryGaussDBFixture fixture, ITestOutputHelper testOutputHelper)
     {
         Fixture = fixture;
         Fixture.TestSqlLoggerFactory.Clear();
@@ -44,7 +44,7 @@ LIMIT 2
     {
         using var context = CreateContext();
 
-        var multirange = new NpgsqlRange<int>[] { new(1, 2) };
+        var multirange = new GaussDBRange<int>[] { new(1, 2) };
 
         var id = context.TestEntities
             .Single(x => x.IntMultirange.Contains(multirange))
@@ -67,7 +67,7 @@ LIMIT 2
     {
         using var context = CreateContext();
 
-        var range = new NpgsqlRange<int>(1, 2);
+        var range = new GaussDBRange<int>(1, 2);
 
         var id = context.TestEntities
             .Single(x => x.IntMultirange.Contains(range))
@@ -90,7 +90,7 @@ LIMIT 2
     {
         using var context = CreateContext();
 
-        var multirange = new NpgsqlRange<int>[] { new(1, 2) };
+        var multirange = new GaussDBRange<int>[] { new(1, 2) };
 
         var id = context.TestEntities
             .Single(x => multirange.ContainedBy(x.IntMultirange))
@@ -113,7 +113,7 @@ LIMIT 2
     {
         using var context = CreateContext();
 
-        var multirange = new NpgsqlRange<int>[] { new(0, 5), new(7, 10) };
+        var multirange = new GaussDBRange<int>[] { new(0, 5), new(7, 10) };
 
         var id = context.TestEntities
             .Single(x => x.IntMultirange == multirange)
@@ -136,7 +136,7 @@ LIMIT 2
     {
         using var context = CreateContext();
 
-        var multirange = new NpgsqlRange<int>[] { new(0, 5), new(7, 10) };
+        var multirange = new GaussDBRange<int>[] { new(0, 5), new(7, 10) };
 
         var id = context.TestEntities
             .Single(x => x.IntMultirange.Equals(multirange))
@@ -159,7 +159,7 @@ LIMIT 2
     {
         using var context = CreateContext();
 
-        var multirange = new NpgsqlRange<int>[] { new(-3, 0), new(100, 101) };
+        var multirange = new GaussDBRange<int>[] { new(-3, 0), new(100, 101) };
 
         var id = context.TestEntities
             .Single(x => x.IntMultirange.Overlaps(multirange))
@@ -182,7 +182,7 @@ LIMIT 2
     {
         using var context = CreateContext();
 
-        var range = new NpgsqlRange<int>(-3, 0);
+        var range = new GaussDBRange<int>(-3, 0);
 
         var id = context.TestEntities
             .Single(x => x.IntMultirange.Overlaps(range))
@@ -205,7 +205,7 @@ LIMIT 2
     {
         using var context = CreateContext();
 
-        var multirange = new NpgsqlRange<int>[] { new(11, 13), new(15, 16) };
+        var multirange = new GaussDBRange<int>[] { new(11, 13), new(15, 16) };
 
         var id = context.TestEntities
             .Single(x => x.IntMultirange.IsStrictlyLeftOf(multirange))
@@ -228,7 +228,7 @@ LIMIT 2
     {
         using var context = CreateContext();
 
-        var range = new NpgsqlRange<int>(11, 13);
+        var range = new GaussDBRange<int>(11, 13);
 
         var id = context.TestEntities
             .Single(x => x.IntMultirange.IsStrictlyLeftOf(range))
@@ -251,7 +251,7 @@ LIMIT 2
     {
         using var context = CreateContext();
 
-        var multirange = new NpgsqlRange<int>[] { new(-10, -7), new(-5, 3) };
+        var multirange = new GaussDBRange<int>[] { new(-10, -7), new(-5, 3) };
 
         var id = context.TestEntities
             .Single(x => x.IntMultirange.IsStrictlyRightOf(multirange))
@@ -274,7 +274,7 @@ LIMIT 2
     {
         using var context = CreateContext();
 
-        var range = new NpgsqlRange<int>(-5, 3);
+        var range = new GaussDBRange<int>(-5, 3);
 
         var id = context.TestEntities
             .Single(x => x.IntMultirange.IsStrictlyRightOf(range))
@@ -297,7 +297,7 @@ LIMIT 2
     {
         using var context = CreateContext();
 
-        var multirange = new NpgsqlRange<int>[] { new(2, 7), new(13, 18) };
+        var multirange = new GaussDBRange<int>[] { new(2, 7), new(13, 18) };
 
         var id = context.TestEntities
             .Single(x => x.IntMultirange.DoesNotExtendLeftOf(multirange))
@@ -320,7 +320,7 @@ LIMIT 2
     {
         using var context = CreateContext();
 
-        var range = new NpgsqlRange<int>(2, 7);
+        var range = new GaussDBRange<int>(2, 7);
 
         var id = context.TestEntities
             .Single(x => x.IntMultirange.DoesNotExtendLeftOf(range))
@@ -343,7 +343,7 @@ LIMIT 2
     {
         using var context = CreateContext();
 
-        var multirange = new NpgsqlRange<int>[] { new(-5, -3), new(13, 18) };
+        var multirange = new GaussDBRange<int>[] { new(-5, -3), new(13, 18) };
 
         var id = context.TestEntities
             .Single(x => x.IntMultirange.DoesNotExtendRightOf(multirange))
@@ -366,7 +366,7 @@ LIMIT 2
     {
         using var context = CreateContext();
 
-        var range = new NpgsqlRange<int>(13, 18);
+        var range = new GaussDBRange<int>(13, 18);
 
         var id = context.TestEntities
             .Single(x => x.IntMultirange.DoesNotExtendRightOf(range))
@@ -389,7 +389,7 @@ LIMIT 2
     {
         using var context = CreateContext();
 
-        var multirange = new NpgsqlRange<int>[] { new(-5, -4), new(-2, -1) };
+        var multirange = new GaussDBRange<int>[] { new(-5, -4), new(-2, -1) };
 
         var id = context.TestEntities
             .Single(x => x.IntMultirange.IsAdjacentTo(multirange))
@@ -412,7 +412,7 @@ LIMIT 2
     {
         using var context = CreateContext();
 
-        var range = new NpgsqlRange<int>(-2, -1);
+        var range = new GaussDBRange<int>(-2, -1);
 
         var id = context.TestEntities
             .Single(x => x.IntMultirange.IsAdjacentTo(range))
@@ -435,10 +435,10 @@ LIMIT 2
     {
         using var context = CreateContext();
 
-        var multirange = new NpgsqlRange<int>[] { new(-5, -1) };
+        var multirange = new GaussDBRange<int>[] { new(-5, -1) };
 
         var id = context.TestEntities
-            .Single(x => x.IntMultirange.Union(multirange) == new NpgsqlRange<int>[] { new(-5, 5), new(7, 10) })
+            .Single(x => x.IntMultirange.Union(multirange) == new GaussDBRange<int>[] { new(-5, 5), new(7, 10) })
             .Id;
         Assert.Equal(1, id);
 
@@ -458,10 +458,10 @@ LIMIT 2
     {
         using var context = CreateContext();
 
-        var multirange = new NpgsqlRange<int>[] { new(-5, 1), new(9, 13) };
+        var multirange = new GaussDBRange<int>[] { new(-5, 1), new(9, 13) };
 
         var id = context.TestEntities
-            .Single(x => x.IntMultirange.Intersect(multirange) == new NpgsqlRange<int>[] { new(0, 1), new(9, 10) })
+            .Single(x => x.IntMultirange.Intersect(multirange) == new GaussDBRange<int>[] { new(0, 1), new(9, 10) })
             .Id;
         Assert.Equal(1, id);
 
@@ -507,10 +507,10 @@ LIMIT 2
     {
         using var context = CreateContext();
 
-        var multirange = new NpgsqlRange<int>[] { new(2, 3) };
+        var multirange = new GaussDBRange<int>[] { new(2, 3) };
 
         var id = context.TestEntities
-            .Single(x => x.IntMultirange.Except(multirange) == new NpgsqlRange<int>[] { new(0, 1), new(4, 5), new(7, 10) })
+            .Single(x => x.IntMultirange.Except(multirange) == new GaussDBRange<int>[] { new(0, 1), new(4, 5), new(7, 10) })
             .Id;
         Assert.Equal(1, id);
 
@@ -537,7 +537,7 @@ LIMIT 2
         using var context = CreateContext();
 
         var id = context.TestEntities
-            .Single(x => x.IntMultirange.Intersect(new NpgsqlRange<int>[] { new(18, 19) }).Any())
+            .Single(x => x.IntMultirange.Intersect(new GaussDBRange<int>[] { new(18, 19) }).Any())
             .Id;
         Assert.Equal(2, id);
 
@@ -556,7 +556,7 @@ LIMIT 2
         using var context = CreateContext();
 
         var id = context.TestEntities
-            .Single(x => x.IntMultirange.Merge() == new NpgsqlRange<int>(0, 10))
+            .Single(x => x.IntMultirange.Merge() == new GaussDBRange<int>(0, 10))
             .Id;
         Assert.Equal(1, id);
 
@@ -678,7 +678,7 @@ LIMIT 2
         using var context = CreateContext();
 
         var id = context.TestEntities
-            .Single(x => x.IntMultirange.Contains(new NpgsqlRange<int>(0, 5)))
+            .Single(x => x.IntMultirange.Contains(new GaussDBRange<int>(0, 5)))
             .Id;
         Assert.Equal(1, id);
 
@@ -697,7 +697,7 @@ LIMIT 2
         using var context = CreateContext();
 
         var id = context.TestEntities
-            .Single(x => x.IntMultirange.Skip(1).Contains(new NpgsqlRange<int>(7, 10)))
+            .Single(x => x.IntMultirange.Skip(1).Contains(new GaussDBRange<int>(7, 10)))
             .Id;
         Assert.Equal(1, id);
 
@@ -718,13 +718,13 @@ LIMIT 2
 
     #region Fixtures
 
-    public class MultirangeQueryNpgsqlFixture : SharedStoreFixtureBase<MultirangeContext>
+    public class MultirangeQueryGaussDBFixture : SharedStoreFixtureBase<MultirangeContext>
     {
         protected override string StoreName
             => "MultirangeQueryTest";
 
         protected override ITestStoreFactory TestStoreFactory
-            => NpgsqlTestStoreFactory.Instance;
+            => GaussDBTestStoreFactory.Instance;
 
         public TestSqlLoggerFactory TestSqlLoggerFactory
             => (TestSqlLoggerFactory)ListLoggerFactory;
@@ -736,13 +736,13 @@ LIMIT 2
     public class MultirangeTestEntity
     {
         public int Id { get; set; }
-        public NpgsqlRange<int>[] IntMultirange { get; set; } = null!;
-        public NpgsqlRange<long>[] LongMultirange { get; set; } = null!;
-        public NpgsqlRange<decimal>[] DecimalMultirange { get; set; } = null!;
-        public NpgsqlRange<DateOnly>[] DateOnlyDateMultirange { get; set; } = null!;
+        public GaussDBRange<int>[] IntMultirange { get; set; } = null!;
+        public GaussDBRange<long>[] LongMultirange { get; set; } = null!;
+        public GaussDBRange<decimal>[] DecimalMultirange { get; set; } = null!;
+        public GaussDBRange<DateOnly>[] DateOnlyDateMultirange { get; set; } = null!;
 
         [Column(TypeName = "datemultirange")]
-        public NpgsqlRange<DateTime>[] DateTimeDateMultirange { get; set; } = null!;
+        public GaussDBRange<DateTime>[] DateTimeDateMultirange { get; set; } = null!;
     }
 
     private void AssertSql(params string[] expected)

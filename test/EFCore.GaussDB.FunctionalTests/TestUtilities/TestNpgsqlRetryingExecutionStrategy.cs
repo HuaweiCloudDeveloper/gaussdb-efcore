@@ -2,34 +2,34 @@
 
 namespace Microsoft.EntityFrameworkCore.TestUtilities;
 
-public class TestNpgsqlRetryingExecutionStrategy : NpgsqlRetryingExecutionStrategy
+public class TestGaussDBRetryingExecutionStrategy : GaussDBRetryingExecutionStrategy
 {
     private const bool ErrorNumberDebugMode = false;
 
     private static readonly string[] AdditionalSqlStates = ["XX000"];
 
-    public TestNpgsqlRetryingExecutionStrategy()
+    public TestGaussDBRetryingExecutionStrategy()
         : base(
             new DbContext(
                 new DbContextOptionsBuilder()
                     .EnableServiceProviderCaching(false)
-                    .UseNpgsql(TestEnvironment.DefaultConnection).Options),
+                    .UseGaussDB(TestEnvironment.DefaultConnection).Options),
             DefaultMaxRetryCount, DefaultMaxDelay, AdditionalSqlStates)
     {
     }
 
-    public TestNpgsqlRetryingExecutionStrategy(DbContext context)
+    public TestGaussDBRetryingExecutionStrategy(DbContext context)
         : base(context, DefaultMaxRetryCount, DefaultMaxDelay, AdditionalSqlStates)
     {
     }
 
-    public TestNpgsqlRetryingExecutionStrategy(DbContext context, TimeSpan maxDelay)
+    public TestGaussDBRetryingExecutionStrategy(DbContext context, TimeSpan maxDelay)
         : base(context, DefaultMaxRetryCount, maxDelay, AdditionalSqlStates)
     {
     }
 
     // ReSharper disable once UnusedMember.Global
-    public TestNpgsqlRetryingExecutionStrategy(ExecutionStrategyDependencies dependencies)
+    public TestGaussDBRetryingExecutionStrategy(ExecutionStrategyDependencies dependencies)
         : base(dependencies, DefaultMaxRetryCount, DefaultMaxDelay, AdditionalSqlStates)
     {
     }

@@ -3,15 +3,15 @@ using Microsoft.EntityFrameworkCore.TestModels.BasicTypesModel;
 namespace Microsoft.EntityFrameworkCore.Query.Translations.Temporal;
 
 /// <summary>
-///     Same as <see cref="DateTimeTranslationsNpgsqlTest" />, but the <see cref="DateTime" /> property is mapped to a GaussDB
+///     Same as <see cref="DateTimeTranslationsGaussDBTest" />, but the <see cref="DateTime" /> property is mapped to a GaussDB
 ///     <c>timestamp without time zone</c>, which corresponds to a <see cref="DateTime" /> with <see cref="DateTime.Kind" />
 ///     <see cref="DateTimeKind.Unspecified" />.
 /// </summary>
 public class DateTimeTranslationsWithoutTimeZoneTest
-    : DateTimeTranslationsTestBase<DateTimeTranslationsWithoutTimeZoneTest.BasicTypesQueryNpgsqlTimestampWithoutTimeZoneFixture>
+    : DateTimeTranslationsTestBase<DateTimeTranslationsWithoutTimeZoneTest.BasicTypesQueryGaussDBTimestampWithoutTimeZoneFixture>
 {
     public DateTimeTranslationsWithoutTimeZoneTest(
-        BasicTypesQueryNpgsqlTimestampWithoutTimeZoneFixture fixture,
+        BasicTypesQueryGaussDBTimestampWithoutTimeZoneFixture fixture,
         ITestOutputHelper testOutputHelper)
         : base(fixture)
     {
@@ -263,7 +263,7 @@ WHERE b."DateTime" = @p
     private void AssertSql(params string[] expected)
         => Fixture.TestSqlLoggerFactory.AssertBaseline(expected);
 
-    public class BasicTypesQueryNpgsqlTimestampWithoutTimeZoneFixture : BasicTypesQueryNpgsqlFixture
+    public class BasicTypesQueryGaussDBTimestampWithoutTimeZoneFixture : BasicTypesQueryGaussDBFixture
     {
         private BasicTypesData? _expectedData;
 

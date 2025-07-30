@@ -14,7 +14,7 @@ public class ConnectionSpecificationTest
             .AddDbContext<StringInOnConfiguringContext>()
             .BuildServiceProvider();
 
-        await using var _ = await NpgsqlTestStore.GetNorthwindStoreAsync();
+        await using var _ = await GaussDBTestStore.GetNorthwindStoreAsync();
         await using var context = serviceProvider.GetRequiredService<StringInOnConfiguringContext>();
 
         Assert.True(await context.Customers.AnyAsync());
@@ -23,7 +23,7 @@ public class ConnectionSpecificationTest
     [Fact]
     public async Task Can_specify_connection_string_in_OnConfiguring_with_default_service_provider()
     {
-        await using var _ = await NpgsqlTestStore.GetNorthwindStoreAsync();
+        await using var _ = await GaussDBTestStore.GetNorthwindStoreAsync();
         await using var context = new StringInOnConfiguringContext();
 
         Assert.True(await context.Customers.AnyAsync());
@@ -32,17 +32,17 @@ public class ConnectionSpecificationTest
     private class StringInOnConfiguringContext : NorthwindContextBase
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseNpgsql(NpgsqlTestStore.NorthwindConnectionString, b => b.ApplyConfiguration());
+            => optionsBuilder.UseGaussDB(GaussDBTestStore.NorthwindConnectionString, b => b.ApplyConfiguration());
     }
 
     [Fact]
     public async Task Can_specify_connection_in_OnConfiguring()
     {
         var serviceProvider = new ServiceCollection()
-            .AddScoped(_ => new NpgsqlConnection(NpgsqlTestStore.NorthwindConnectionString))
+            .AddScoped(_ => new GaussDBConnection(GaussDBTestStore.NorthwindConnectionString))
             .AddDbContext<ConnectionInOnConfiguringContext>().BuildServiceProvider();
 
-        await using var _ = await NpgsqlTestStore.GetNorthwindStoreAsync();
+        await using var _ = await GaussDBTestStore.GetNorthwindStoreAsync();
         await using var context = serviceProvider.GetRequiredService<ConnectionInOnConfiguringContext>();
 
         Assert.True(await context.Customers.AnyAsync());
@@ -51,16 +51,16 @@ public class ConnectionSpecificationTest
     [Fact]
     public async Task Can_specify_connection_in_OnConfiguring_with_default_service_provider()
     {
-        await using var _ = await NpgsqlTestStore.GetNorthwindStoreAsync();
-        await using var context = new ConnectionInOnConfiguringContext(new NpgsqlConnection(NpgsqlTestStore.NorthwindConnectionString));
+        await using var _ = await GaussDBTestStore.GetNorthwindStoreAsync();
+        await using var context = new ConnectionInOnConfiguringContext(new GaussDBConnection(GaussDBTestStore.NorthwindConnectionString));
 
         Assert.True(await context.Customers.AnyAsync());
     }
 
-    private class ConnectionInOnConfiguringContext(NpgsqlConnection connection) : NorthwindContextBase
+    private class ConnectionInOnConfiguringContext(GaussDBConnection connection) : NorthwindContextBase
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseNpgsql(connection, b => b.ApplyConfiguration());
+            => optionsBuilder.UseGaussDB(connection, b => b.ApplyConfiguration());
 
         public override void Dispose()
         {
@@ -73,16 +73,16 @@ public class ConnectionSpecificationTest
     private class StringInConfigContext : NorthwindContextBase
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseNpgsql("Database=Crunchie", b => b.ApplyConfiguration());
+            => optionsBuilder.UseGaussDB("Database=Crunchie", b => b.ApplyConfiguration());
     }
 
     [Fact]
-    public void Throws_if_no_connection_found_in_config_without_UseNpgsql()
+    public void Throws_if_no_connection_found_in_config_without_UseGaussDB()
     {
         var serviceProvider = new ServiceCollection()
-            .AddDbContext<NoUseNpgsqlContext>().BuildServiceProvider();
+            .AddDbContext<NoUseGaussDBContext>().BuildServiceProvider();
 
-        using var context = serviceProvider.GetRequiredService<NoUseNpgsqlContext>();
+        using var context = serviceProvider.GetRequiredService<NoUseGaussDBContext>();
 
         Assert.Equal(
             CoreStrings.NoProviderConfigured,
@@ -90,11 +90,11 @@ public class ConnectionSpecificationTest
     }
 
     [Fact]
-    public void Throws_if_no_config_without_UseNpgsql()
+    public void Throws_if_no_config_without_UseGaussDB()
     {
         var serviceProvider = new ServiceCollection()
-            .AddDbContext<NoUseNpgsqlContext>().BuildServiceProvider();
-        using var context = serviceProvider.GetRequiredService<NoUseNpgsqlContext>();
+            .AddDbContext<NoUseGaussDBContext>().BuildServiceProvider();
+        using var context = serviceProvider.GetRequiredService<NoUseGaussDBContext>();
 
         Assert.Equal(
             CoreStrings.NoProviderConfigured,
@@ -102,17 +102,17 @@ public class ConnectionSpecificationTest
     }
 
     // ReSharper disable once ClassNeverInstantiated.Local
-    private class NoUseNpgsqlContext : NorthwindContextBase;
+    private class NoUseGaussDBContext : NorthwindContextBase;
 
     [Fact]
     public async Task Can_depend_on_DbContextOptions()
     {
         var serviceProvider = new ServiceCollection()
-            .AddScoped(_ => new NpgsqlConnection(NpgsqlTestStore.NorthwindConnectionString))
+            .AddScoped(_ => new GaussDBConnection(GaussDBTestStore.NorthwindConnectionString))
             .AddDbContext<OptionsContext>()
             .BuildServiceProvider();
 
-        await using var _ = await NpgsqlTestStore.GetNorthwindStoreAsync();
+        await using var _ = await GaussDBTestStore.GetNorthwindStoreAsync();
         await using var context = serviceProvider.GetRequiredService<OptionsContext>();
 
         Assert.True(await context.Customers.AnyAsync());
@@ -121,22 +121,22 @@ public class ConnectionSpecificationTest
     [Fact]
     public async Task Can_depend_on_DbContextOptions_with_default_service_provider()
     {
-        await using var _ = await NpgsqlTestStore.GetNorthwindStoreAsync();
+        await using var _ = await GaussDBTestStore.GetNorthwindStoreAsync();
         await using var context = new OptionsContext(
             new DbContextOptions<OptionsContext>(),
-            new NpgsqlConnection(NpgsqlTestStore.NorthwindConnectionString));
+            new GaussDBConnection(GaussDBTestStore.NorthwindConnectionString));
 
         Assert.True(await context.Customers.AnyAsync());
     }
 
-    private class OptionsContext(DbContextOptions<OptionsContext> options, NpgsqlConnection connection)
+    private class OptionsContext(DbContextOptions<OptionsContext> options, GaussDBConnection connection)
         : NorthwindContextBase(options)
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             Assert.Same(options, optionsBuilder.Options);
 
-            optionsBuilder.UseNpgsql(connection, b => b.ApplyConfiguration());
+            optionsBuilder.UseGaussDB(connection, b => b.ApplyConfiguration());
 
             Assert.NotSame(options, optionsBuilder.Options);
         }
@@ -155,7 +155,7 @@ public class ConnectionSpecificationTest
             .AddDbContext<NonGenericOptionsContext>()
             .BuildServiceProvider();
 
-        await using var _ = await NpgsqlTestStore.GetNorthwindStoreAsync();
+        await using var _ = await GaussDBTestStore.GetNorthwindStoreAsync();
         await using var context = serviceProvider.GetRequiredService<NonGenericOptionsContext>();
 
         Assert.True(await context.Customers.AnyAsync());
@@ -164,7 +164,7 @@ public class ConnectionSpecificationTest
     [Fact]
     public async Task Can_depend_on_non_generic_options_when_only_one_context_with_default_service_provider()
     {
-        await using var _ = await NpgsqlTestStore.GetNorthwindStoreAsync();
+        await using var _ = await GaussDBTestStore.GetNorthwindStoreAsync();
         await using var context = new NonGenericOptionsContext(new DbContextOptions<DbContext>());
 
         Assert.True(await context.Customers.AnyAsync());
@@ -178,7 +178,7 @@ public class ConnectionSpecificationTest
         {
             Assert.Same(_options, optionsBuilder.Options);
 
-            optionsBuilder.UseNpgsql(NpgsqlTestStore.NorthwindConnectionString, b => b.ApplyConfiguration());
+            optionsBuilder.UseGaussDB(GaussDBTestStore.NorthwindConnectionString, b => b.ApplyConfiguration());
 
             Assert.NotSame(_options, optionsBuilder.Options);
         }
@@ -220,23 +220,23 @@ public class ConnectionSpecificationTest
         public string Fax { get; set; }
     }
 
-    #region Added for Npgsql
+    #region Added for GaussDB
 
     [Fact]
     public async Task Can_create_admin_connection_with_data_source()
     {
-        await using var dataSource = NpgsqlDataSource.Create(NpgsqlTestStore.NorthwindConnectionString);
+        await using var dataSource = GaussDBDataSource.Create(GaussDBTestStore.NorthwindConnectionString);
 
-        await using var _ = await NpgsqlTestStore.GetNorthwindStoreAsync();
+        await using var _ = await GaussDBTestStore.GetNorthwindStoreAsync();
 
         var optionsBuilder = new DbContextOptionsBuilder<GeneralOptionsContext>();
-        optionsBuilder.UseNpgsql(dataSource, b => b.ApplyConfiguration());
+        optionsBuilder.UseGaussDB(dataSource, b => b.ApplyConfiguration());
         await using var context = new GeneralOptionsContext(optionsBuilder.Options);
 
-        var relationalConnection = context.GetService<INpgsqlRelationalConnection>();
+        var relationalConnection = context.GetService<IGaussDBRelationalConnection>();
         await using var adminConnection = relationalConnection.CreateAdminConnection();
 
-        Assert.Equal("postgres", new NpgsqlConnectionStringBuilder(adminConnection.ConnectionString).Database);
+        Assert.Equal("postgres", new GaussDBConnectionStringBuilder(adminConnection.ConnectionString).Database);
 
         await adminConnection.OpenAsync(CancellationToken.None);
     }
@@ -244,16 +244,16 @@ public class ConnectionSpecificationTest
     [Fact]
     public async Task Can_create_admin_connection_with_connection_string()
     {
-        await using var _ = await NpgsqlTestStore.GetNorthwindStoreAsync();
+        await using var _ = await GaussDBTestStore.GetNorthwindStoreAsync();
 
         var optionsBuilder = new DbContextOptionsBuilder<GeneralOptionsContext>();
-        optionsBuilder.UseNpgsql(NpgsqlTestStore.NorthwindConnectionString, b => b.ApplyConfiguration());
+        optionsBuilder.UseGaussDB(GaussDBTestStore.NorthwindConnectionString, b => b.ApplyConfiguration());
         await using var context = new GeneralOptionsContext(optionsBuilder.Options);
 
-        var relationalConnection = context.GetService<INpgsqlRelationalConnection>();
+        var relationalConnection = context.GetService<IGaussDBRelationalConnection>();
         await using var adminConnection = relationalConnection.CreateAdminConnection();
 
-        Assert.Equal("postgres", new NpgsqlConnectionStringBuilder(adminConnection.ConnectionString).Database);
+        Assert.Equal("postgres", new GaussDBConnectionStringBuilder(adminConnection.ConnectionString).Database);
 
         await adminConnection.OpenAsync(CancellationToken.None);
     }
@@ -261,19 +261,19 @@ public class ConnectionSpecificationTest
     [Fact]
     public async Task Can_create_admin_connection_with_connection()
     {
-        await using var connection = new NpgsqlConnection(NpgsqlTestStore.NorthwindConnectionString);
+        await using var connection = new GaussDBConnection(GaussDBTestStore.NorthwindConnectionString);
         connection.Open();
 
-        await using var _ = await NpgsqlTestStore.GetNorthwindStoreAsync();
+        await using var _ = await GaussDBTestStore.GetNorthwindStoreAsync();
 
         var optionsBuilder = new DbContextOptionsBuilder<GeneralOptionsContext>();
-        optionsBuilder.UseNpgsql(connection, b => b.ApplyConfiguration());
+        optionsBuilder.UseGaussDB(connection, b => b.ApplyConfiguration());
         await using var context = new GeneralOptionsContext(optionsBuilder.Options);
 
-        var relationalConnection = context.GetService<INpgsqlRelationalConnection>();
+        var relationalConnection = context.GetService<IGaussDBRelationalConnection>();
         await using var adminConnection = relationalConnection.CreateAdminConnection();
 
-        Assert.Equal("postgres", new NpgsqlConnectionStringBuilder(adminConnection.ConnectionString).Database);
+        Assert.Equal("postgres", new GaussDBConnectionStringBuilder(adminConnection.ConnectionString).Database);
 
         adminConnection.Open();
     }

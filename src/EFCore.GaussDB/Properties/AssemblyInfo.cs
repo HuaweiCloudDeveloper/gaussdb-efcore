@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
 
-[assembly: DesignTimeProviderServices("HuaweiCloud.EntityFrameworkCore.GaussDB.Design.Internal.NpgsqlDesignTimeServices")]
+[assembly: DesignTimeProviderServices("HuaweiCloud.EntityFrameworkCore.GaussDB.Design.Internal.GaussDBDesignTimeServices")]
 
 [assembly:
     InternalsVisibleTo(

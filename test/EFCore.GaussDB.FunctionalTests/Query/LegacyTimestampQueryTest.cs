@@ -100,19 +100,19 @@ WHERE now() AT TIME ZONE 'UTC' <> @myDatetime
                 => "TimestampQueryTest";
 
             protected override ITestStoreFactory TestStoreFactory
-                => NpgsqlTestStoreFactory.Instance;
+                => GaussDBTestStoreFactory.Instance;
 
             public TestSqlLoggerFactory TestSqlLoggerFactory
                 => (TestSqlLoggerFactory)ListLoggerFactory;
 
             public LegacyTimestampQueryFixture()
             {
-                NpgsqlTypeMappingSource.LegacyTimestampBehavior = true;
+                GaussDBTypeMappingSource.LegacyTimestampBehavior = true;
             }
 
             public override Task DisposeAsync()
             {
-                NpgsqlTypeMappingSource.LegacyTimestampBehavior = false;
+                GaussDBTypeMappingSource.LegacyTimestampBehavior = false;
                 return Task.CompletedTask;
             }
 

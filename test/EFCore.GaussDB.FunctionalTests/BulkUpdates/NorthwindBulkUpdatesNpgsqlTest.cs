@@ -4,10 +4,10 @@ namespace Microsoft.EntityFrameworkCore.BulkUpdates;
 
 #nullable disable
 
-public class NorthwindBulkUpdatesNpgsqlTest(
-    NorthwindBulkUpdatesNpgsqlFixture<NoopModelCustomizer> fixture,
+public class NorthwindBulkUpdatesGaussDBTest(
+    NorthwindBulkUpdatesGaussDBFixture<NoopModelCustomizer> fixture,
     ITestOutputHelper testOutputHelper)
-    : NorthwindBulkUpdatesRelationalTestBase<NorthwindBulkUpdatesNpgsqlFixture<NoopModelCustomizer>>(fixture, testOutputHelper)
+    : NorthwindBulkUpdatesRelationalTestBase<NorthwindBulkUpdatesGaussDBFixture<NoopModelCustomizer>>(fixture, testOutputHelper)
 {
     public override async Task Delete_Where_TagWith(bool async)
     {

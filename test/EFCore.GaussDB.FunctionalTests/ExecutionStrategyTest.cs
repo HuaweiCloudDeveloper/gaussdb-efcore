@@ -73,25 +73,25 @@ public class ExecutionStrategyTest : IClassFixture<ExecutionStrategyTest.Executi
                 IsolationLevel.Serializable));
     }
 
-    private void Test_commit_failure(bool realFailure, Action<TestNpgsqlRetryingExecutionStrategy, ExecutionStrategyContext> execute)
+    private void Test_commit_failure(bool realFailure, Action<TestGaussDBRetryingExecutionStrategy, ExecutionStrategyContext> execute)
     {
         CleanContext();
 
         using (var context = CreateContext())
         {
-            var connection = (TestNpgsqlConnection)context.GetService<INpgsqlRelationalConnection>();
+            var connection = (TestPostgisConnection)context.GetService<IGaussDBRelationalConnection>();
 
             connection.CommitFailures.Enqueue([realFailure]);
             Fixture.TestSqlLoggerFactory.Clear();
 
             context.Products.Add(new Product());
-            execute(new TestNpgsqlRetryingExecutionStrategy(context), context);
+            execute(new TestGaussDBRetryingExecutionStrategy(context), context);
             context.ChangeTracker.AcceptAllChanges();
 
             var retryMessage =
                 "A transient exception occurred during execution. The operation will be retried after 0ms."
                 + Environment.NewLine
-                + "Npgsql.PostgresException (0x80004005): XX000";
+                + "GaussDB.PostgresException (0x80004005): XX000";
             if (realFailure)
             {
                 var logEntry = Fixture.TestSqlLoggerFactory.Log.Single(l => l.Id == CoreEventId.ExecutionStrategyRetrying);
@@ -187,25 +187,25 @@ public class ExecutionStrategyTest : IClassFixture<ExecutionStrategyTest.Executi
 
     private async Task Test_commit_failure_async(
         bool realFailure,
-        Func<TestNpgsqlRetryingExecutionStrategy, ExecutionStrategyContext, Task> execute)
+        Func<TestGaussDBRetryingExecutionStrategy, ExecutionStrategyContext, Task> execute)
     {
         CleanContext();
 
         await using (var context = CreateContext())
         {
-            var connection = (TestNpgsqlConnection)context.GetService<INpgsqlRelationalConnection>();
+            var connection = (TestPostgisConnection)context.GetService<IGaussDBRelationalConnection>();
 
             connection.CommitFailures.Enqueue([realFailure]);
             Fixture.TestSqlLoggerFactory.Clear();
 
             context.Products.Add(new Product());
-            await execute(new TestNpgsqlRetryingExecutionStrategy(context), context);
+            await execute(new TestGaussDBRetryingExecutionStrategy(context), context);
             context.ChangeTracker.AcceptAllChanges();
 
             var retryMessage =
                 "A transient exception occurred during execution. The operation will be retried after 0ms."
                 + Environment.NewLine
-                + "Npgsql.PostgresException (0x80004005): XX000";
+                + "GaussDB.PostgresException (0x80004005): XX000";
             if (realFailure)
             {
                 var logEntry = Fixture.TestSqlLoggerFactory.Log.Single(l => l.Id == CoreEventId.ExecutionStrategyRetrying);
@@ -233,7 +233,7 @@ public class ExecutionStrategyTest : IClassFixture<ExecutionStrategyTest.Executi
         CleanContext();
 
         using var context1 = CreateContext();
-        var connection = (TestNpgsqlConnection)context1.GetService<INpgsqlRelationalConnection>();
+        var connection = (TestPostgisConnection)context1.GetService<IGaussDBRelationalConnection>();
 
         using (var context2 = CreateContext())
         {
@@ -242,7 +242,7 @@ public class ExecutionStrategyTest : IClassFixture<ExecutionStrategyTest.Executi
             context1.Products.Add(new Product());
             context2.Products.Add(new Product());
 
-            new TestNpgsqlRetryingExecutionStrategy(context1).ExecuteInTransaction(
+            new TestGaussDBRetryingExecutionStrategy(context1).ExecuteInTransaction(
                 context1,
                 c1 =>
                 {
@@ -275,7 +275,7 @@ public class ExecutionStrategyTest : IClassFixture<ExecutionStrategyTest.Executi
 
         await using (var context = CreateContext())
         {
-            var connection = (TestNpgsqlConnection)context.GetService<INpgsqlRelationalConnection>();
+            var connection = (TestPostgisConnection)context.GetService<IGaussDBRelationalConnection>();
 
             connection.ExecutionFailures.Enqueue([null, realFailure]);
 
@@ -302,7 +302,7 @@ public class ExecutionStrategyTest : IClassFixture<ExecutionStrategyTest.Executi
             {
                 if (externalStrategy)
                 {
-                    await new TestNpgsqlRetryingExecutionStrategy(context).ExecuteInTransactionAsync(
+                    await new TestGaussDBRetryingExecutionStrategy(context).ExecuteInTransactionAsync(
                         context,
                         (c, ct) => c.SaveChangesAsync(false, ct),
                         (_, _) =>
@@ -322,7 +322,7 @@ public class ExecutionStrategyTest : IClassFixture<ExecutionStrategyTest.Executi
             {
                 if (externalStrategy)
                 {
-                    new TestNpgsqlRetryingExecutionStrategy(context).ExecuteInTransaction(
+                    new TestGaussDBRetryingExecutionStrategy(context).ExecuteInTransaction(
                         context,
                         c => c.SaveChanges(false),
                         _ =>
@@ -384,7 +384,7 @@ public class ExecutionStrategyTest : IClassFixture<ExecutionStrategyTest.Executi
 
         await using (var context = CreateContext())
         {
-            var connection = (TestNpgsqlConnection)context.GetService<INpgsqlRelationalConnection>();
+            var connection = (TestPostgisConnection)context.GetService<IGaussDBRelationalConnection>();
 
             connection.ExecutionFailures.Enqueue([true]);
 
@@ -395,7 +395,7 @@ public class ExecutionStrategyTest : IClassFixture<ExecutionStrategyTest.Executi
             {
                 if (externalStrategy)
                 {
-                    list = await new TestNpgsqlRetryingExecutionStrategy(context)
+                    list = await new TestGaussDBRetryingExecutionStrategy(context)
                         .ExecuteAsync(context, (c, ct) => c.Products.ToListAsync(ct), null);
                 }
                 else
@@ -407,7 +407,7 @@ public class ExecutionStrategyTest : IClassFixture<ExecutionStrategyTest.Executi
             {
                 if (externalStrategy)
                 {
-                    list = new TestNpgsqlRetryingExecutionStrategy(context)
+                    list = new TestGaussDBRetryingExecutionStrategy(context)
                         .Execute(context, c => c.Products.ToList(), null);
                 }
                 else
@@ -440,7 +440,7 @@ public class ExecutionStrategyTest : IClassFixture<ExecutionStrategyTest.Executi
 
         await using (var context = CreateContext())
         {
-            var connection = (TestNpgsqlConnection)context.GetService<INpgsqlRelationalConnection>();
+            var connection = (TestPostgisConnection)context.GetService<IGaussDBRelationalConnection>();
 
             connection.ExecutionFailures.Enqueue([true]);
 
@@ -451,7 +451,7 @@ public class ExecutionStrategyTest : IClassFixture<ExecutionStrategyTest.Executi
             {
                 if (externalStrategy)
                 {
-                    list = await new TestNpgsqlRetryingExecutionStrategy(context)
+                    list = await new TestGaussDBRetryingExecutionStrategy(context)
                         .ExecuteAsync(
                             context, (c, ct) => c.Set<Product>().FromSqlRaw(
                                 """
@@ -470,7 +470,7 @@ public class ExecutionStrategyTest : IClassFixture<ExecutionStrategyTest.Executi
             {
                 if (externalStrategy)
                 {
-                    list = new TestNpgsqlRetryingExecutionStrategy(context)
+                    list = new TestGaussDBRetryingExecutionStrategy(context)
                         .Execute(
                             context, c => c.Set<Product>().FromSqlRaw(
                                 """
@@ -500,7 +500,7 @@ public class ExecutionStrategyTest : IClassFixture<ExecutionStrategyTest.Executi
     public async Task Retries_OpenConnection_on_execution_failure(bool externalStrategy, bool async)
     {
         await using var context = CreateContext();
-        var connection = (TestNpgsqlConnection)context.GetService<INpgsqlRelationalConnection>();
+        var connection = (TestPostgisConnection)context.GetService<IGaussDBRelationalConnection>();
 
         connection.OpenFailures.Enqueue([true]);
 
@@ -510,7 +510,7 @@ public class ExecutionStrategyTest : IClassFixture<ExecutionStrategyTest.Executi
         {
             if (externalStrategy)
             {
-                await new TestNpgsqlRetryingExecutionStrategy(context).ExecuteAsync(
+                await new TestGaussDBRetryingExecutionStrategy(context).ExecuteAsync(
                     context,
                     c => c.Database.OpenConnectionAsync());
             }
@@ -523,7 +523,7 @@ public class ExecutionStrategyTest : IClassFixture<ExecutionStrategyTest.Executi
         {
             if (externalStrategy)
             {
-                new TestNpgsqlRetryingExecutionStrategy(context).Execute(
+                new TestGaussDBRetryingExecutionStrategy(context).Execute(
                     context,
                     c => c.Database.OpenConnection());
             }
@@ -553,7 +553,7 @@ public class ExecutionStrategyTest : IClassFixture<ExecutionStrategyTest.Executi
     public async Task Retries_BeginTransaction_on_execution_failure(bool async)
     {
         await using var context = CreateContext();
-        var connection = (TestNpgsqlConnection)context.GetService<INpgsqlRelationalConnection>();
+        var connection = (TestPostgisConnection)context.GetService<IGaussDBRelationalConnection>();
 
         connection.OpenFailures.Enqueue([true]);
 
@@ -561,7 +561,7 @@ public class ExecutionStrategyTest : IClassFixture<ExecutionStrategyTest.Executi
 
         if (async)
         {
-            var transaction = await new TestNpgsqlRetryingExecutionStrategy(context).ExecuteAsync(
+            var transaction = await new TestGaussDBRetryingExecutionStrategy(context).ExecuteAsync(
                 context,
                 _ => context.Database.BeginTransactionAsync());
 
@@ -569,7 +569,7 @@ public class ExecutionStrategyTest : IClassFixture<ExecutionStrategyTest.Executi
         }
         else
         {
-            var transaction = new TestNpgsqlRetryingExecutionStrategy(context).Execute(
+            var transaction = new TestGaussDBRetryingExecutionStrategy(context).Execute(
                 context,
                 _ => context.Database.BeginTransaction());
 
@@ -588,7 +588,7 @@ public class ExecutionStrategyTest : IClassFixture<ExecutionStrategyTest.Executi
 
         using (var context = CreateContext())
         {
-            var connection = (TestNpgsqlConnection)context.GetService<INpgsqlRelationalConnection>();
+            var connection = (TestPostgisConnection)context.GetService<IGaussDBRelationalConnection>();
 
             connection.ExecutionFailures.Enqueue([true, null, true, true]);
             connection.CommitFailures.Enqueue([true, true, true, true]);
@@ -596,7 +596,7 @@ public class ExecutionStrategyTest : IClassFixture<ExecutionStrategyTest.Executi
             context.Products.Add(new Product());
             Assert.Throws<RetryLimitExceededException>(
                 () =>
-                    new TestNpgsqlRetryingExecutionStrategy(context, TimeSpan.FromMilliseconds(100))
+                    new TestGaussDBRetryingExecutionStrategy(context, TimeSpan.FromMilliseconds(100))
                         .ExecuteInTransaction(
                             context,
                             c => c.SaveChanges(false),
@@ -651,23 +651,23 @@ public class ExecutionStrategyTest : IClassFixture<ExecutionStrategyTest.Executi
             => (TestSqlLoggerFactory)ListLoggerFactory;
 
         protected override ITestStoreFactory TestStoreFactory
-            => NpgsqlTestStoreFactory.Instance;
+            => GaussDBTestStoreFactory.Instance;
 
         protected override Type ContextType { get; } = typeof(ExecutionStrategyContext);
 
         protected override IServiceCollection AddServices(IServiceCollection serviceCollection)
             => base.AddServices(serviceCollection)
                 .AddSingleton<IRelationalTransactionFactory, TestRelationalTransactionFactory>()
-                .AddScoped<INpgsqlRelationalConnection, TestNpgsqlConnection>()
+                .AddScoped<IGaussDBRelationalConnection, TestPostgisConnection>()
                 .AddSingleton<IRelationalCommandBuilderFactory, TestRelationalCommandBuilderFactory>();
 
         public override DbContextOptionsBuilder AddOptions(DbContextOptionsBuilder builder)
         {
             var options = base.AddOptions(builder);
 
-            new NpgsqlDbContextOptionsBuilder(options)
+            new GaussDBDbContextOptionsBuilder(options)
                 .MaxBatchSize(1)
-                .ExecutionStrategy(d => new TestNpgsqlRetryingExecutionStrategy(d));
+                .ExecutionStrategy(d => new TestGaussDBRetryingExecutionStrategy(d));
 
             return options;
         }

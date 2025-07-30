@@ -1,37 +1,37 @@
 namespace Microsoft.EntityFrameworkCore.ModelBuilding;
 
-public class NpgsqlModelBuilderTestBase : RelationalModelBuilderTest
+public class GaussDBModelBuilderTestBase : RelationalModelBuilderTest
 {
-    public abstract class NpgsqlNonRelationship(NpgsqlModelBuilderFixture fixture)
-        : RelationalNonRelationshipTestBase(fixture), IClassFixture<NpgsqlModelBuilderFixture>;
+    public abstract class GaussDBNonRelationship(GaussDBModelBuilderFixture fixture)
+        : RelationalNonRelationshipTestBase(fixture), IClassFixture<GaussDBModelBuilderFixture>;
 
-    public abstract class NpgsqlComplexType(NpgsqlModelBuilderFixture fixture)
-        : RelationalComplexTypeTestBase(fixture), IClassFixture<NpgsqlModelBuilderFixture>;
+    public abstract class GaussDBComplexType(GaussDBModelBuilderFixture fixture)
+        : RelationalComplexTypeTestBase(fixture), IClassFixture<GaussDBModelBuilderFixture>;
 
-    public abstract class NpgsqlComplexCollection(NpgsqlModelBuilderFixture fixture)
-        : RelationalComplexCollectionTestBase(fixture), IClassFixture<NpgsqlModelBuilderFixture>;
+    public abstract class GaussDBComplexCollection(GaussDBModelBuilderFixture fixture)
+        : RelationalComplexCollectionTestBase(fixture), IClassFixture<GaussDBModelBuilderFixture>;
 
-    public abstract class NpgsqlInheritance(NpgsqlModelBuilderFixture fixture)
-        : RelationalInheritanceTestBase(fixture), IClassFixture<NpgsqlModelBuilderFixture>;
+    public abstract class GaussDBInheritance(GaussDBModelBuilderFixture fixture)
+        : RelationalInheritanceTestBase(fixture), IClassFixture<GaussDBModelBuilderFixture>;
 
-    public abstract class NpgsqlOneToMany(NpgsqlModelBuilderFixture fixture)
-        : RelationalOneToManyTestBase(fixture), IClassFixture<NpgsqlModelBuilderFixture>;
+    public abstract class GaussDBOneToMany(GaussDBModelBuilderFixture fixture)
+        : RelationalOneToManyTestBase(fixture), IClassFixture<GaussDBModelBuilderFixture>;
 
-    public abstract class NpgsqlManyToOne(NpgsqlModelBuilderFixture fixture)
-        : RelationalManyToOneTestBase(fixture), IClassFixture<NpgsqlModelBuilderFixture>;
+    public abstract class GaussDBManyToOne(GaussDBModelBuilderFixture fixture)
+        : RelationalManyToOneTestBase(fixture), IClassFixture<GaussDBModelBuilderFixture>;
 
-    public abstract class NpgsqlOneToOne(NpgsqlModelBuilderFixture fixture)
-        : RelationalOneToOneTestBase(fixture), IClassFixture<NpgsqlModelBuilderFixture>;
+    public abstract class GaussDBOneToOne(GaussDBModelBuilderFixture fixture)
+        : RelationalOneToOneTestBase(fixture), IClassFixture<GaussDBModelBuilderFixture>;
 
-    public abstract class NpgsqlManyToMany(NpgsqlModelBuilderFixture fixture)
-        : RelationalManyToManyTestBase(fixture), IClassFixture<NpgsqlModelBuilderFixture>;
+    public abstract class GaussDBManyToMany(GaussDBModelBuilderFixture fixture)
+        : RelationalManyToManyTestBase(fixture), IClassFixture<GaussDBModelBuilderFixture>;
 
-    public abstract class NpgsqlOwnedTypes(NpgsqlModelBuilderFixture fixture)
-        : RelationalOwnedTypesTestBase(fixture), IClassFixture<NpgsqlModelBuilderFixture>;
+    public abstract class GaussDBOwnedTypes(GaussDBModelBuilderFixture fixture)
+        : RelationalOwnedTypesTestBase(fixture), IClassFixture<GaussDBModelBuilderFixture>;
 
-    public class NpgsqlModelBuilderFixture : RelationalModelBuilderFixture
+    public class GaussDBModelBuilderFixture : RelationalModelBuilderFixture
     {
         public override TestHelpers TestHelpers
-            => NpgsqlTestHelpers.Instance;
+            => GaussDBTestHelpers.Instance;
     }
 }
