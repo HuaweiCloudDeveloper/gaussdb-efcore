@@ -52,21 +52,21 @@ jobs:
         if: startsWith(matrix.os, 'ubuntu')
         run: |
           # First uninstall any GaussDB installed on the image
-          dpkg-query -W --showformat='${Package}\n' 'postgresql-*' | xargs sudo dpkg -P postgresql
+          dpkg-query -W --showformat='${Package}\n' 'opengauss-*' | xargs sudo dpkg -P opengauss
 
           # Automated repository configuration
-          sudo apt install -y postgresql-common
-          sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -v ${{ matrix.pg_major }} -y
+          sudo apt install -y opengauss-common
+          sudo /usr/share/opengauss-common/pgdg/apt.opengauss.org.sh -v ${{ matrix.pg_major }} -y
           sudo apt-get update -qq
-          sudo apt-get install -qq postgresql-${{ matrix.pg_major  }}
+          sudo apt-get install -qq opengauss-${{ matrix.pg_major  }}
 
           # To disable PostGIS for prereleases (because it usually isn't available until late), surround with the following:
           #if [ -z "${{ matrix.pg_prerelease }}" ]; then
-            sudo apt-get install -qq postgresql-${{ matrix.pg_major }}-postgis-${{ env.postgis_version }}
+            sudo apt-get install -qq opengauss-${{ matrix.pg_major }}-postgis-${{ env.postgis_version }}
           #fi
 
-          sudo sed -i 's/max_connections = 100/max_connections = 200/g' /etc/postgresql/${{ matrix.pg_major }}/main/postgresql.conf
-          sudo systemctl restart postgresql
+          sudo sed -i 's/max_connections = 100/max_connections = 200/g' /etc/opengauss/${{ matrix.pg_major }}/main/opengauss.conf
+          sudo systemctl restart opengauss
           sudo -u postgres psql -c "CREATE USER npgsql_tests SUPERUSER PASSWORD 'npgsql_tests'"
 
       - name: Start GaussDB ${{ matrix.pg_major }} (Windows)
@@ -75,15 +75,15 @@ jobs:
           # Find EnterpriseDB version number
           EDB_VERSION=$(pwsh -c "
               \$global:progressPreference='silentlyContinue';
-              Invoke-WebRequest -URI https://www.postgresql.org/applications-v2.xml |
+              Invoke-WebRequest -URI https://www.opengauss.org/applications-v2.xml |
                   Select-Object -ExpandProperty Content |
-                  Select-Xml -XPath '/applications/application[id=\"postgresql_${{ matrix.pg_major }}\" and platform=\"windows-x64\"]/version/text()' |
+                  Select-Xml -XPath '/applications/application[id=\"opengauss_${{ matrix.pg_major }}\" and platform=\"windows-x64\"]/version/text()' |
                   Select-Object -First 1 -ExpandProperty Node |
                   Select-Object -ExpandProperty Value")
 
           # Install GaussDB
           echo "Installing GaussDB (version: ${EDB_VERSION})"
-          curl -o pgsql.zip -L https://get.enterprisedb.com/postgresql/postgresql-${EDB_VERSION}-windows-x64-binaries.zip
+          curl -o pgsql.zip -L https://get.enterprisedb.com/opengauss/opengauss-${EDB_VERSION}-windows-x64-binaries.zip
           unzip pgsql.zip -x 'pgsql/include/**' 'pgsql/doc/**' 'pgsql/pgAdmin 4/**' 'pgsql/StackBuilder/**'
 
           # Match GaussDB CI Docker image and stash one level up
