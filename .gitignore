@@ -16,3 +16,4 @@ artifacts/
 *.ide/
 TestResult.xml
 .dotnet
+example/GetStarted/GetStarted/.env

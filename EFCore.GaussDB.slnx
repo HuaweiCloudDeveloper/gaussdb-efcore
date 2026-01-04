@@ -8,6 +8,9 @@
     <File Path="NuGet.config" />
     <File Path="README.md" />
   </Folder>
+  <Folder Name="/example/">
+    <Project Path="example/GetStarted/GetStarted/GetStarted.csproj" Id="4a953120-fcc5-4b5d-90a5-9d1251a86725" />
+  </Folder>
   <Folder Name="/Github/">
     <File Path=".github/dependabot.yml" />
     <File Path=".github/workflows/build.yml" />
