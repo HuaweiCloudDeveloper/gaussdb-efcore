@@ -9,9 +9,9 @@ public class ArithmeticOperatorTranslationsGaussDBTest : ArithmeticOperatorTrans
         Fixture.TestSqlLoggerFactory.SetTestOutputHelper(testOutputHelper);
     }
 
-    public override async Task Add()
+    public override async Task Add(bool async)
     {
-        await base.Add();
+        await base.Add(async);
 
         AssertSql(
             """
@@ -21,9 +21,9 @@ WHERE b."Int" + 2 = 10
 """);
     }
 
-    public override async Task Subtract()
+    public override async Task Subtract(bool async)
     {
-        await base.Subtract();
+        await base.Subtract(async);
 
         AssertSql(
             """
@@ -33,9 +33,9 @@ WHERE b."Int" - 3 = 5
 """);
     }
 
-    public override async Task Multiply()
+    public override async Task Multiply(bool async)
     {
-        await base.Multiply();
+        await base.Multiply(async);
 
         AssertSql(
             """
@@ -45,9 +45,9 @@ WHERE b."Int" * 2 = 16
 """);
     }
 
-    public override async Task Modulo()
+    public override async Task Modulo(bool async)
     {
-        await base.Modulo();
+        await base.Modulo(async);
 
         AssertSql(
             """
@@ -57,9 +57,9 @@ WHERE b."Int" % 3 = 2
 """);
     }
 
-    public override async Task Minus()
+    public override async Task Minus(bool async)
     {
-        await base.Minus();
+        await base.Minus(async);
 
         AssertSql(
             """

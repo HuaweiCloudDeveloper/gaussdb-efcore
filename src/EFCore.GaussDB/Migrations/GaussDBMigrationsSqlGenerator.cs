@@ -1138,7 +1138,7 @@ public class GaussDBMigrationsSqlGenerator : MigrationsSqlGenerator
                 .Append(DelimitIdentifier(extension.Version));
         }
 
-        builder.AppendLine(" CASCADE;");
+        builder.AppendLine(";");
     }
 
     #region Collation management

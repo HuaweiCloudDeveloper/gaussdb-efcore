@@ -15,6 +15,22 @@ public class NorthwindAggregateOperatorsQueryGaussDBTest : NorthwindAggregateOpe
         Fixture.TestSqlLoggerFactory.SetTestOutputHelper(testOutputHelper);
     }
 
+    // https://github.com/dotnet/efcore/issues/36311
+    public override Task Contains_with_parameter_list_value_type_id(bool async)
+        => Assert.ThrowsAsync<UnreachableException>(() => base.Contains_with_parameter_list_value_type_id(async));
+
+    // https://github.com/dotnet/efcore/issues/36311
+    public override Task IReadOnlySet_Contains_with_parameter(bool async)
+        => Assert.ThrowsAsync<UnreachableException>(() => base.IReadOnlySet_Contains_with_parameter(async));
+
+    // https://github.com/dotnet/efcore/issues/36311
+    public override Task List_Contains_with_parameter_list(bool async)
+        => Assert.ThrowsAsync<UnreachableException>(() => base.List_Contains_with_parameter_list(async));
+
+    // https://github.com/dotnet/efcore/issues/36311
+    public override Task IImmutableSet_Contains_with_parameter(bool async)
+        => Assert.ThrowsAsync<UnreachableException>(() => base.IImmutableSet_Contains_with_parameter(async));
+
     // Overriding to add equality tolerance because of floating point precision
     public override async Task Average_over_max_subquery(bool async)
     {
@@ -51,8 +67,7 @@ FROM (
         // Note: GaussDB doesn't support uint, but value converters make this into bigint
         AssertSql(
             """
-@ids={ '0'
-'1' } (DbType = Object)
+@ids={ '0', '1' } (DbType = Object)
 
 SELECT e."EmployeeID", e."City", e."Country", e."FirstName", e."ReportsTo", e."Title"
 FROM "Employees" AS e
@@ -76,8 +91,7 @@ WHERE e."EmployeeID" = ANY (@ids)
 
         AssertSql(
             """
-@ids={ '0'
-'1' } (DbType = Object)
+@ids={ '0', '1' } (DbType = Object)
 
 SELECT e."EmployeeID", e."City", e."Country", e."FirstName", e."ReportsTo", e."Title"
 FROM "Employees" AS e
@@ -116,8 +130,7 @@ WHERE e."EmployeeID" = ANY (@ids)
 
         AssertSql(
             """
-@p={ 'ABCDE'
-'ALFKI' } (DbType = Object)
+@p={ 'ABCDE', 'ALFKI' } (DbType = Object)
 
 SELECT c."CustomerID", c."Address", c."City", c."CompanyName", c."ContactName", c."ContactTitle", c."Country", c."Fax", c."Phone", c."PostalCode", c."Region"
 FROM "Customers" AS c
@@ -125,8 +138,7 @@ WHERE c."CustomerID" = ANY (array_remove(@p, NULL))
 """,
             //
             """
-@p={ 'ABCDE'
-'ANATR' } (DbType = Object)
+@p={ 'ABCDE', 'ANATR' } (DbType = Object)
 
 SELECT c."CustomerID", c."Address", c."City", c."CompanyName", c."ContactName", c."ContactTitle", c."Country", c."Fax", c."Phone", c."PostalCode", c."Region"
 FROM "Customers" AS c
@@ -140,8 +152,7 @@ WHERE c."CustomerID" = ANY (array_remove(@p, NULL))
 
         AssertSql(
             """
-@Select={ 'ABCDE'
-'ALFKI' } (DbType = Object)
+@Select={ 'ABCDE', 'ALFKI' } (DbType = Object)
 
 SELECT c."CustomerID", c."Address", c."City", c."CompanyName", c."ContactName", c."ContactTitle", c."Country", c."Fax", c."Phone", c."PostalCode", c."Region"
 FROM "Customers" AS c
@@ -155,8 +166,7 @@ WHERE c."CustomerID" = ANY (@Select)
 
         AssertSql(
             """
-@Select={ 'ABCDE'
-'ALFKI' } (DbType = Object)
+@Select={ 'ABCDE', 'ALFKI' } (DbType = Object)
 
 SELECT c."CustomerID", c."Address", c."City", c."CompanyName", c."ContactName", c."ContactTitle", c."Country", c."Fax", c."Phone", c."PostalCode", c."Region"
 FROM "Customers" AS c
@@ -164,8 +174,7 @@ WHERE c."CustomerID" = ANY (@Select)
 """,
             //
             """
-@Select={ 'ABCDE'
-'ANATR' } (DbType = Object)
+@Select={ 'ABCDE', 'ANATR' } (DbType = Object)
 
 SELECT c."CustomerID", c."Address", c."City", c."CompanyName", c."ContactName", c."ContactTitle", c."Country", c."Fax", c."Phone", c."PostalCode", c."Region"
 FROM "Customers" AS c

@@ -13,9 +13,9 @@ public class StringTranslationsGaussDBTest : StringTranslationsRelationalTestBas
 
     #region Equals
 
-    public override async Task Equals()
+    public override async Task Equals(bool async)
     {
-        await base.Equals();
+        await base.Equals(async);
 
         AssertSql(
             """
@@ -25,23 +25,23 @@ WHERE b."String" = 'Seattle'
 """);
     }
 
-    public override async Task Equals_with_OrdinalIgnoreCase()
+    public override async Task Equals_with_OrdinalIgnoreCase(bool async)
     {
-        await base.Equals_with_OrdinalIgnoreCase();
+        await base.Equals_with_OrdinalIgnoreCase(async);
 
         AssertSql();
     }
 
-    public override async Task Equals_with_Ordinal()
+    public override async Task Equals_with_Ordinal(bool async)
     {
-        await base.Equals_with_Ordinal();
+        await base.Equals_with_Ordinal(async);
 
         AssertSql();
     }
 
-    public override async Task Static_Equals()
+    public override async Task Static_Equals(bool async)
     {
-        await base.Static_Equals();
+        await base.Static_Equals(async);
 
         AssertSql(
             """
@@ -51,16 +51,16 @@ WHERE b."String" = 'Seattle'
 """);
     }
 
-    public override async Task Static_Equals_with_OrdinalIgnoreCase()
+    public override async Task Static_Equals_with_OrdinalIgnoreCase(bool async)
     {
-        await base.Static_Equals_with_OrdinalIgnoreCase();
+        await base.Static_Equals_with_OrdinalIgnoreCase(async);
 
         AssertSql();
     }
 
-    public override async Task Static_Equals_with_Ordinal()
+    public override async Task Static_Equals_with_Ordinal(bool async)
     {
-        await base.Static_Equals_with_Ordinal();
+        await base.Static_Equals_with_Ordinal(async);
 
         AssertSql();
     }
@@ -69,9 +69,9 @@ WHERE b."String" = 'Seattle'
 
     #region Miscellaneous
 
-    public override async Task Length()
+    public override async Task Length(bool async)
     {
-        await base.Length();
+        await base.Length(async);
 
         AssertSql(
             """
@@ -81,9 +81,9 @@ WHERE length(b."String")::int = 7
 """);
     }
 
-    public override async Task ToUpper()
+    public override async Task ToUpper(bool async)
     {
-        await base.ToUpper();
+        await base.ToUpper(async);
 
         AssertSql(
             """
@@ -98,9 +98,9 @@ FROM "BasicTypesEntities" AS b
 """);
     }
 
-    public override async Task ToLower()
+    public override async Task ToLower(bool async)
     {
-        await base.ToLower();
+        await base.ToLower(async);
 
         AssertSql(
             """
@@ -119,9 +119,9 @@ FROM "BasicTypesEntities" AS b
 
     #region IndexOf
 
-    public override async Task IndexOf()
+    public override async Task IndexOf(bool async)
     {
-        await base.IndexOf();
+        await base.IndexOf(async);
 
         AssertSql(
             """
@@ -132,12 +132,12 @@ WHERE strpos(b."String", 'eattl') - 1 <> -1
     }
 
     // TODO: #3547
-    public override Task IndexOf_Char()
-        => Assert.ThrowsAsync<InvalidCastException>(() => base.IndexOf_Char());
+    public override Task IndexOf_Char(bool async)
+        => Assert.ThrowsAsync<InvalidCastException>(() => base.IndexOf_Char(async));
 
-    public override async Task IndexOf_with_empty_string()
+    public override async Task IndexOf_with_empty_string(bool async)
     {
-        await base.IndexOf_with_empty_string();
+        await base.IndexOf_with_empty_string(async);
 
         AssertSql(
             """
@@ -147,9 +147,9 @@ WHERE strpos(b."String", '') - 1 = 0
 """);
     }
 
-    public override async Task IndexOf_with_one_parameter_arg()
+    public override async Task IndexOf_with_one_parameter_arg(bool async)
     {
-        await base.IndexOf_with_one_parameter_arg();
+        await base.IndexOf_with_one_parameter_arg(async);
 
         AssertSql(
             """
@@ -161,9 +161,9 @@ WHERE strpos(b."String", @pattern) - 1 = 1
 """);
     }
 
-    public override async Task IndexOf_with_one_parameter_arg_char()
+    public override async Task IndexOf_with_one_parameter_arg_char(bool async)
     {
-        await base.IndexOf_with_one_parameter_arg_char();
+        await base.IndexOf_with_one_parameter_arg_char(async);
 
         AssertSql(
             """
@@ -191,9 +191,9 @@ WHERE strpos(b."String", @pattern) - 1 = 1
     public override Task IndexOf_with_parameter_starting_position_char(bool async)
         => AssertTranslationFailed(() => base.IndexOf_with_parameter_starting_position_char(async));
 
-    public override async Task IndexOf_after_ToString()
+    public override async Task IndexOf_after_ToString(bool async)
     {
-        await base.IndexOf_after_ToString();
+        await base.IndexOf_after_ToString(async);
 
         AssertSql(
             """
@@ -203,9 +203,9 @@ WHERE strpos(b."Int"::text, '55') - 1 = 1
 """);
     }
 
-    public override async Task IndexOf_over_ToString()
+    public override async Task IndexOf_over_ToString(bool async)
     {
-        await base.IndexOf_over_ToString();
+        await base.IndexOf_over_ToString(async);
 
         AssertSql(
             """
@@ -219,9 +219,9 @@ WHERE strpos('12559', b."Int"::text) - 1 = 1
 
     #region Replace
 
-    public override async Task Replace()
+    public override async Task Replace(bool async)
     {
-        await base.Replace();
+        await base.Replace(async);
 
         AssertSql(
             """
@@ -232,12 +232,12 @@ WHERE replace(b."String", 'Sea', 'Rea') = 'Reattle'
     }
 
     // TODO: #3547
-    public override Task Replace_Char()
-        => AssertTranslationFailed(() => base.Replace_Char());
+    public override Task Replace_Char(bool async)
+        => AssertTranslationFailed(() => base.Replace_Char(async));
 
-    public override async Task Replace_with_empty_string()
+    public override async Task Replace_with_empty_string(bool async)
     {
-        await base.Replace_with_empty_string();
+        await base.Replace_with_empty_string(async);
 
         AssertSql(
             """
@@ -247,9 +247,9 @@ WHERE b."String" <> '' AND replace(b."String", b."String", '') = ''
 """);
     }
 
-    public override async Task Replace_using_property_arguments()
+    public override async Task Replace_using_property_arguments(bool async)
     {
-        await base.Replace_using_property_arguments();
+        await base.Replace_using_property_arguments(async);
 
         AssertSql(
             """
@@ -263,9 +263,9 @@ WHERE b."String" <> '' AND replace(b."String", b."String", b."Int"::text) = b."I
 
     #region Substring
 
-    public override async Task Substring()
+    public override async Task Substring(bool async)
     {
-        await base.Substring();
+        await base.Substring(async);
 
         AssertSql(
             """
@@ -275,9 +275,9 @@ WHERE length(b."String")::int >= 3 AND substring(b."String", 2, 2) = 'ea'
 """);
     }
 
-    public override async Task Substring_with_one_arg_with_zero_startIndex()
+    public override async Task Substring_with_one_arg_with_zero_startIndex(bool async)
     {
-        await base.Substring_with_one_arg_with_zero_startIndex();
+        await base.Substring_with_one_arg_with_zero_startIndex(async);
 
         AssertSql(
             """
@@ -287,9 +287,9 @@ WHERE substring(b."String", 1) = 'Seattle'
 """);
     }
 
-    public override async Task Substring_with_one_arg_with_constant()
+    public override async Task Substring_with_one_arg_with_constant(bool async)
     {
-        await base.Substring_with_one_arg_with_constant();
+        await base.Substring_with_one_arg_with_constant(async);
 
         AssertSql(
             """
@@ -299,9 +299,9 @@ WHERE length(b."String")::int >= 1 AND substring(b."String", 2) = 'eattle'
 """);
     }
 
-    public override async Task Substring_with_one_arg_with_parameter()
+    public override async Task Substring_with_one_arg_with_parameter(bool async)
     {
-        await base.Substring_with_one_arg_with_parameter();
+        await base.Substring_with_one_arg_with_parameter(async);
 
         AssertSql(
             """
@@ -313,9 +313,9 @@ WHERE length(b."String")::int >= 2 AND substring(b."String", @start + 1) = 'attl
 """);
     }
 
-    public override async Task Substring_with_two_args_with_zero_startIndex()
+    public override async Task Substring_with_two_args_with_zero_startIndex(bool async)
     {
-        await base.Substring_with_two_args_with_zero_startIndex();
+        await base.Substring_with_two_args_with_zero_startIndex(async);
 
         AssertSql(
             """
@@ -325,9 +325,9 @@ WHERE length(b."String")::int >= 3 AND substring(b."String", 1, 3) = 'Sea'
 """);
     }
 
-    public override async Task Substring_with_two_args_with_zero_length()
+    public override async Task Substring_with_two_args_with_zero_length(bool async)
     {
-        await base.Substring_with_two_args_with_zero_length();
+        await base.Substring_with_two_args_with_zero_length(async);
 
         AssertSql(
             """
@@ -337,9 +337,9 @@ WHERE length(b."String")::int >= 2 AND substring(b."String", 3, 0) = ''
 """);
     }
 
-    public override async Task Substring_with_two_args_with_parameter()
+    public override async Task Substring_with_two_args_with_parameter(bool async)
     {
-        await base.Substring_with_two_args_with_parameter();
+        await base.Substring_with_two_args_with_parameter(async);
 
         AssertSql(
             """
@@ -351,9 +351,9 @@ WHERE length(b."String")::int >= 5 AND substring(b."String", @start + 1, 3) = 'a
 """);
     }
 
-    public override async Task Substring_with_two_args_with_IndexOf()
+    public override async Task Substring_with_two_args_with_IndexOf(bool async)
     {
-        await base.Substring_with_two_args_with_IndexOf();
+        await base.Substring_with_two_args_with_IndexOf(async);
 
         AssertSql(
             """
@@ -367,9 +367,9 @@ WHERE b."String" LIKE '%a%' AND substring(b."String", (strpos(b."String", 'a') -
 
     #region IsNullOrEmpty/Whitespace
 
-    public override async Task IsNullOrEmpty()
+    public override async Task IsNullOrEmpty(bool async)
     {
-        await base.IsNullOrEmpty();
+        await base.IsNullOrEmpty(async);
 
         AssertSql(
             """
@@ -384,9 +384,9 @@ FROM "NullableBasicTypesEntities" AS n
 """);
     }
 
-    public override async Task IsNullOrEmpty_negated()
+    public override async Task IsNullOrEmpty_negated(bool async)
     {
-        await base.IsNullOrEmpty_negated();
+        await base.IsNullOrEmpty_negated(async);
 
         AssertSql(
             """
@@ -401,9 +401,9 @@ FROM "NullableBasicTypesEntities" AS n
 """);
     }
 
-    public override async Task IsNullOrWhiteSpace()
+    public override async Task IsNullOrWhiteSpace(bool async)
     {
-        await base.IsNullOrWhiteSpace();
+        await base.IsNullOrWhiteSpace(async);
 
         AssertSql(
             """
@@ -417,9 +417,9 @@ WHERE btrim(b."String", E' \t\n\r') = ''
 
     #region StartsWith
 
-    public override async Task StartsWith_Literal()
+    public override async Task StartsWith_Literal(bool async)
     {
-        await base.StartsWith_Literal();
+        await base.StartsWith_Literal(async);
 
         AssertSql(
             """
@@ -430,12 +430,12 @@ WHERE b."String" LIKE 'Se%'
     }
 
     // TODO: #3547
-    public override Task StartsWith_Literal_Char()
-        => AssertTranslationFailed(() => base.StartsWith_Literal_Char());
+    public override Task StartsWith_Literal_Char(bool async)
+        => AssertTranslationFailed(() => base.StartsWith_Literal_Char(async));
 
-    public override async Task StartsWith_Parameter()
+    public override async Task StartsWith_Parameter(bool async)
     {
-        await base.StartsWith_Parameter();
+        await base.StartsWith_Parameter(async);
 
         AssertSql(
             """
@@ -447,12 +447,12 @@ WHERE b."String" LIKE @pattern_startswith
 """);
     }
 
-    public override Task StartsWith_Parameter_Char()
-        => AssertTranslationFailed(() => base.StartsWith_Parameter_Char());
+    public override Task StartsWith_Parameter_Char(bool async)
+        => AssertTranslationFailed(() => base.StartsWith_Parameter_Char(async));
 
-    public override async Task StartsWith_Column()
+    public override async Task StartsWith_Column(bool async)
     {
-        await base.StartsWith_Column();
+        await base.StartsWith_Column(async);
 
         AssertSql(
             """
@@ -462,23 +462,23 @@ WHERE left(b."String", length(b."String")) = b."String"
 """);
     }
 
-    public override async Task StartsWith_with_StringComparison_Ordinal()
+    public override async Task StartsWith_with_StringComparison_Ordinal(bool async)
     {
-        await base.StartsWith_with_StringComparison_Ordinal();
+        await base.StartsWith_with_StringComparison_Ordinal(async);
 
         AssertSql();
     }
 
-    public override async Task StartsWith_with_StringComparison_OrdinalIgnoreCase()
+    public override async Task StartsWith_with_StringComparison_OrdinalIgnoreCase(bool async)
     {
-        await base.StartsWith_with_StringComparison_OrdinalIgnoreCase();
+        await base.StartsWith_with_StringComparison_OrdinalIgnoreCase(async);
 
         AssertSql();
     }
 
-    public override async Task StartsWith_with_StringComparison_unsupported()
+    public override async Task StartsWith_with_StringComparison_unsupported(bool async)
     {
-        await base.StartsWith_with_StringComparison_unsupported();
+        await base.StartsWith_with_StringComparison_unsupported(async);
 
         AssertSql();
     }
@@ -487,9 +487,9 @@ WHERE left(b."String", length(b."String")) = b."String"
 
     #region EndsWith
 
-    public override async Task EndsWith_Literal()
+    public override async Task EndsWith_Literal(bool async)
     {
-        await base.EndsWith_Literal();
+        await base.EndsWith_Literal(async);
 
         AssertSql(
             """
@@ -500,12 +500,12 @@ WHERE b."String" LIKE '%le'
     }
 
     // TODO: #3547
-    public override Task EndsWith_Literal_Char()
-        => AssertTranslationFailed(() => base.EndsWith_Literal_Char());
+    public override Task EndsWith_Literal_Char(bool async)
+        => AssertTranslationFailed(() => base.EndsWith_Literal_Char(async));
 
-    public override async Task EndsWith_Parameter()
+    public override async Task EndsWith_Parameter(bool async)
     {
-        await base.EndsWith_Parameter();
+        await base.EndsWith_Parameter(async);
 
         AssertSql(
             """
@@ -518,14 +518,15 @@ WHERE b."String" LIKE @pattern_endswith
     }
 
     // TODO: #3547
-    public override Task EndsWith_Parameter_Char()
-        => AssertTranslationFailed(() => base.EndsWith_Parameter_Char());
+    public override Task EndsWith_Parameter_Char(bool async)
+        => AssertTranslationFailed(() => base.EndsWith_Parameter_Char(async));
 
-    public override async Task EndsWith_Column()
+    public override async Task EndsWith_Column(bool async)
     {
         // SQL Server trims trailing whitespace for length calculations, making our EndsWith() column translation not work reliably in that
         // case
         await AssertQuery(
+            async,
             ss => ss.Set<BasicTypesEntity>().Where(b => b.String == "Seattle" && b.String.EndsWith(b.String)));
 
         AssertSql(
@@ -536,23 +537,23 @@ WHERE b."String" = 'Seattle' AND right(b."String", length(b."String")) = b."Stri
 """);
     }
 
-    public override async Task EndsWith_with_StringComparison_Ordinal()
+    public override async Task EndsWith_with_StringComparison_Ordinal(bool async)
     {
-        await base.EndsWith_with_StringComparison_Ordinal();
+        await base.EndsWith_with_StringComparison_Ordinal(async);
 
         AssertSql();
     }
 
-    public override async Task EndsWith_with_StringComparison_OrdinalIgnoreCase()
+    public override async Task EndsWith_with_StringComparison_OrdinalIgnoreCase(bool async)
     {
-        await base.EndsWith_with_StringComparison_OrdinalIgnoreCase();
+        await base.EndsWith_with_StringComparison_OrdinalIgnoreCase(async);
 
         AssertSql();
     }
 
-    public override async Task EndsWith_with_StringComparison_unsupported()
+    public override async Task EndsWith_with_StringComparison_unsupported(bool async)
     {
-        await base.EndsWith_with_StringComparison_unsupported();
+        await base.EndsWith_with_StringComparison_unsupported(async);
 
         AssertSql();
     }
@@ -561,9 +562,10 @@ WHERE b."String" = 'Seattle' AND right(b."String", length(b."String")) = b."Stri
 
     #region Contains
 
-    public override async Task Contains_Literal()
+    public override async Task Contains_Literal(bool async)
     {
         await AssertQuery(
+            async,
             ss => ss.Set<BasicTypesEntity>().Where(c => c.String.Contains("eattl")), // SQL Server is case-insensitive by default
             ss => ss.Set<BasicTypesEntity>().Where(c => c.String.Contains("eattl", StringComparison.OrdinalIgnoreCase)));
 
@@ -576,12 +578,12 @@ WHERE b."String" LIKE '%eattl%'
     }
 
     // TODO: #3547
-    public override Task Contains_Literal_Char()
-        => AssertTranslationFailed(() => base.Contains_Literal_Char());
+    public override Task Contains_Literal_Char(bool async)
+        => AssertTranslationFailed(() => base.Contains_Literal_Char(async));
 
-    public override async Task Contains_Column()
+    public override async Task Contains_Column(bool async)
     {
-        await base.Contains_Column();
+        await base.Contains_Column(async);
 
         AssertSql(
             """
@@ -596,9 +598,9 @@ FROM "BasicTypesEntities" AS b
 """);
     }
 
-    public override async Task Contains_negated()
+    public override async Task Contains_negated(bool async)
     {
-        await base.Contains_negated();
+        await base.Contains_negated(async);
 
         AssertSql(
             """
@@ -613,30 +615,30 @@ FROM "BasicTypesEntities" AS b
 """);
     }
 
-    public override async Task Contains_with_StringComparison_Ordinal()
+    public override async Task Contains_with_StringComparison_Ordinal(bool async)
     {
-        await base.Contains_with_StringComparison_Ordinal();
+        await base.Contains_with_StringComparison_Ordinal(async);
 
         AssertSql();
     }
 
-    public override async Task Contains_with_StringComparison_OrdinalIgnoreCase()
+    public override async Task Contains_with_StringComparison_OrdinalIgnoreCase(bool async)
     {
-        await base.Contains_with_StringComparison_OrdinalIgnoreCase();
+        await base.Contains_with_StringComparison_OrdinalIgnoreCase(async);
 
         AssertSql();
     }
 
-    public override async Task Contains_with_StringComparison_unsupported()
+    public override async Task Contains_with_StringComparison_unsupported(bool async)
     {
-        await base.Contains_with_StringComparison_unsupported();
+        await base.Contains_with_StringComparison_unsupported(async);
 
         AssertSql();
     }
 
-    public override async Task Contains_constant_with_whitespace()
+    public override async Task Contains_constant_with_whitespace(bool async)
     {
-        await base.Contains_constant_with_whitespace();
+        await base.Contains_constant_with_whitespace(async);
 
         AssertSql(
             """
@@ -646,9 +648,9 @@ WHERE b."String" LIKE '%     %'
 """);
     }
 
-    public override async Task Contains_parameter_with_whitespace()
+    public override async Task Contains_parameter_with_whitespace(bool async)
     {
-        await base.Contains_parameter_with_whitespace();
+        await base.Contains_parameter_with_whitespace(async);
 
         AssertSql(
             """
@@ -664,9 +666,9 @@ WHERE b."String" LIKE @pattern_contains
 
     #region TrimStart
 
-    public override async Task TrimStart_without_arguments()
+    public override async Task TrimStart_without_arguments(bool async)
     {
-        await base.TrimStart_without_arguments();
+        await base.TrimStart_without_arguments(async);
 
         AssertSql(
             """
@@ -676,9 +678,9 @@ WHERE ltrim(b."String", E' \t\n\r') = 'Boston  '
 """);
     }
 
-    public override async Task TrimStart_with_char_argument()
+    public override async Task TrimStart_with_char_argument(bool async)
     {
-        await base.TrimStart_with_char_argument();
+        await base.TrimStart_with_char_argument(async);
 
         AssertSql(
             """
@@ -688,9 +690,9 @@ WHERE ltrim(b."String", 'S') = 'eattle'
 """);
     }
 
-    public override async Task TrimStart_with_char_array_argument()
+    public override async Task TrimStart_with_char_array_argument(bool async)
     {
-        await base.TrimStart_with_char_array_argument();
+        await base.TrimStart_with_char_array_argument(async);
 
         AssertSql(
             """
@@ -704,9 +706,9 @@ WHERE ltrim(b."String", 'Se') = 'attle'
 
     #region TrimEnd
 
-    public override async Task TrimEnd_without_arguments()
+    public override async Task TrimEnd_without_arguments(bool async)
     {
-        await base.TrimEnd_without_arguments();
+        await base.TrimEnd_without_arguments(async);
 
         AssertSql(
             """
@@ -716,9 +718,9 @@ WHERE rtrim(b."String", E' \t\n\r') = '  Boston'
 """);
     }
 
-    public override async Task TrimEnd_with_char_argument()
+    public override async Task TrimEnd_with_char_argument(bool async)
     {
-        await base.TrimEnd_with_char_argument();
+        await base.TrimEnd_with_char_argument(async);
 
         AssertSql(
             """
@@ -728,9 +730,9 @@ WHERE rtrim(b."String", 'e') = 'Seattl'
 """);
     }
 
-    public override async Task TrimEnd_with_char_array_argument()
+    public override async Task TrimEnd_with_char_array_argument(bool async)
     {
-        await base.TrimEnd_with_char_array_argument();
+        await base.TrimEnd_with_char_array_argument(async);
 
         AssertSql(
             """
@@ -744,9 +746,9 @@ WHERE rtrim(b."String", 'le') = 'Seatt'
 
     #region Trim
 
-    public override async Task Trim_without_argument_in_predicate()
+    public override async Task Trim_without_argument_in_predicate(bool async)
     {
-        await base.Trim_without_argument_in_predicate();
+        await base.Trim_without_argument_in_predicate(async);
 
         AssertSql(
             """
@@ -756,9 +758,9 @@ WHERE btrim(b."String", E' \t\n\r') = 'Boston'
 """);
     }
 
-    public override async Task Trim_with_char_argument_in_predicate()
+    public override async Task Trim_with_char_argument_in_predicate(bool async)
     {
-        await base.Trim_with_char_argument_in_predicate();
+        await base.Trim_with_char_argument_in_predicate(async);
 
         AssertSql(
             """
@@ -768,9 +770,9 @@ WHERE btrim(b."String", 'S') = 'eattle'
 """);
     }
 
-    public override async Task Trim_with_char_array_argument_in_predicate()
+    public override async Task Trim_with_char_array_argument_in_predicate(bool async)
     {
-        await base.Trim_with_char_array_argument_in_predicate();
+        await base.Trim_with_char_array_argument_in_predicate(async);
 
         AssertSql(
             """
@@ -784,9 +786,9 @@ WHERE btrim(b."String", 'Se') = 'attl'
 
     #region Compare
 
-    public override async Task Compare_simple_zero()
+    public override async Task Compare_simple_zero(bool async)
     {
-        await base.Compare_simple_zero();
+        await base.Compare_simple_zero(async);
 
         AssertSql(
             """
@@ -826,9 +828,9 @@ WHERE b."String" <= 'Seattle'
 """);
     }
 
-    public override async Task Compare_simple_one()
+    public override async Task Compare_simple_one(bool async)
     {
-        await base.Compare_simple_one();
+        await base.Compare_simple_one(async);
 
         AssertSql(
             """
@@ -868,9 +870,9 @@ WHERE b."String" >= 'Seattle'
 """);
     }
 
-    public override async Task Compare_with_parameter()
+    public override async Task Compare_with_parameter(bool async)
     {
-        await base.Compare_with_parameter();
+        await base.Compare_with_parameter(async);
 
         AssertSql(
             """
@@ -922,9 +924,9 @@ WHERE b."String" >= @basicTypeEntity_String
 """);
     }
 
-    public override async Task Compare_simple_more_than_one()
+    public override async Task Compare_simple_more_than_one(bool async)
     {
-        await base.Compare_simple_more_than_one();
+        await base.Compare_simple_more_than_one(async);
 
         AssertSql(
             """
@@ -958,9 +960,9 @@ END
 """);
     }
 
-    public override async Task Compare_nested()
+    public override async Task Compare_nested(bool async)
     {
-        await base.Compare_nested();
+        await base.Compare_nested(async);
 
         AssertSql(
             """
@@ -1000,9 +1002,9 @@ WHERE b."String" < replace('Seattle', 'Sea', b."String")
 """);
     }
 
-    public override async Task Compare_multi_predicate()
+    public override async Task Compare_multi_predicate(bool async)
     {
-        await base.Compare_multi_predicate();
+        await base.Compare_multi_predicate(async);
 
         AssertSql(
             """
@@ -1012,9 +1014,9 @@ WHERE b."String" >= 'Seattle' AND b."String" < 'Toronto'
 """);
     }
 
-    public override async Task CompareTo_simple_zero()
+    public override async Task CompareTo_simple_zero(bool async)
     {
-        await base.CompareTo_simple_zero();
+        await base.CompareTo_simple_zero(async);
 
         AssertSql(
             """
@@ -1054,9 +1056,9 @@ WHERE b."String" <= 'Seattle'
 """);
     }
 
-    public override async Task CompareTo_simple_one()
+    public override async Task CompareTo_simple_one(bool async)
     {
-        await base.CompareTo_simple_one();
+        await base.CompareTo_simple_one(async);
 
         AssertSql(
             """
@@ -1096,9 +1098,9 @@ WHERE b."String" >= 'Seattle'
 """);
     }
 
-    public override async Task CompareTo_with_parameter()
+    public override async Task CompareTo_with_parameter(bool async)
     {
-        await base.CompareTo_with_parameter();
+        await base.CompareTo_with_parameter(async);
 
         AssertSql(
             """
@@ -1150,9 +1152,9 @@ WHERE b."String" >= @basicTypesEntity_String
 """);
     }
 
-    public override async Task CompareTo_simple_more_than_one()
+    public override async Task CompareTo_simple_more_than_one(bool async)
     {
-        await base.CompareTo_simple_more_than_one();
+        await base.CompareTo_simple_more_than_one(async);
 
         AssertSql(
             """
@@ -1186,9 +1188,9 @@ END
 """);
     }
 
-    public override async Task CompareTo_nested()
+    public override async Task CompareTo_nested(bool async)
     {
-        await base.CompareTo_nested();
+        await base.CompareTo_nested(async);
 
         AssertSql(
             """
@@ -1228,9 +1230,9 @@ WHERE b."String" < replace('Seattle', 'Sea', b."String")
 """);
     }
 
-    public override async Task Compare_to_multi_predicate()
+    public override async Task Compare_to_multi_predicate(bool async)
     {
-        await base.Compare_to_multi_predicate();
+        await base.Compare_to_multi_predicate(async);
 
         AssertSql(
             """
@@ -1244,9 +1246,9 @@ WHERE b."String" >= 'Seattle' AND b."String" < 'Toronto'
 
     #region Join
 
-    public override async Task Join_over_non_nullable_column()
+    public override async Task Join_over_non_nullable_column(bool async)
     {
-        await base.Join_over_non_nullable_column();
+        await base.Join_over_non_nullable_column(async);
 
         AssertSql(
             """
@@ -1256,9 +1258,9 @@ GROUP BY b."Int"
 """);
     }
 
-    public override async Task Join_over_nullable_column()
+    public override async Task Join_over_nullable_column(bool async)
     {
-        await base.Join_over_nullable_column();
+        await base.Join_over_nullable_column(async);
 
         AssertSql(
             """
@@ -1271,9 +1273,9 @@ GROUP BY n0."Key"
 """);
     }
 
-    public override async Task Join_with_predicate()
+    public override async Task Join_with_predicate(bool async)
     {
-        await base.Join_with_predicate();
+        await base.Join_with_predicate(async);
 
         AssertSql(
             """
@@ -1283,9 +1285,9 @@ GROUP BY b."Int"
 """);
     }
 
-    public override async Task Join_with_ordering()
+    public override async Task Join_with_ordering(bool async)
     {
-        await base.Join_with_ordering();
+        await base.Join_with_ordering(async);
 
         AssertSql(
             """
@@ -1295,9 +1297,9 @@ GROUP BY b."Int"
 """);
     }
 
-    public override async Task Join_non_aggregate()
+    public override async Task Join_non_aggregate(bool async)
     {
-        await base.Join_non_aggregate();
+        await base.Join_non_aggregate(async);
 
         AssertSql(
             """
@@ -1313,9 +1315,9 @@ WHERE concat_ws('|', b."String", @foo, '', 'bar') = 'Seattle|foo||bar'
 
     #region Concatenation
 
-    public override async Task Concat_operator()
+    public override async Task Concat_operator(bool async)
     {
-        await base.Concat_operator();
+        await base.Concat_operator(async);
 
         AssertSql(
             """
@@ -1325,9 +1327,9 @@ WHERE b."String" || 'Boston' = 'SeattleBoston'
 """);
     }
 
-    public override async Task Concat_aggregate()
+    public override async Task Concat_aggregate(bool async)
     {
-        await base.Concat_aggregate();
+        await base.Concat_aggregate(async);
 
         AssertSql(
             """
@@ -1337,9 +1339,9 @@ GROUP BY b."Int"
 """);
     }
 
-    public override async Task Concat_string_int_comparison1()
+    public override async Task Concat_string_int_comparison1(bool async)
     {
-        await base.Concat_string_int_comparison1();
+        await base.Concat_string_int_comparison1(async);
 
         AssertSql(
             """
@@ -1351,9 +1353,9 @@ WHERE b."String" || @i::text = 'Seattle10'
 """);
     }
 
-    public override async Task Concat_string_int_comparison2()
+    public override async Task Concat_string_int_comparison2(bool async)
     {
-        await base.Concat_string_int_comparison2();
+        await base.Concat_string_int_comparison2(async);
 
         AssertSql(
             """
@@ -1365,9 +1367,9 @@ WHERE @i::text || b."String" = '10Seattle'
 """);
     }
 
-    public override async Task Concat_string_int_comparison3()
+    public override async Task Concat_string_int_comparison3(bool async)
     {
-        await base.Concat_string_int_comparison3();
+        await base.Concat_string_int_comparison3(async);
 
         AssertSql(
             """
@@ -1380,9 +1382,9 @@ WHERE @p::text || b."String" || @j::text || 42::text = '30Seattle2142'
 """);
     }
 
-    public override async Task Concat_string_int_comparison4()
+    public override async Task Concat_string_int_comparison4(bool async)
     {
-        await base.Concat_string_int_comparison4();
+        await base.Concat_string_int_comparison4(async);
 
         AssertSql(
             """
@@ -1392,9 +1394,9 @@ WHERE b."Int"::text || b."String" = '8Seattle'
 """);
     }
 
-    public override async Task Concat_string_string_comparison()
+    public override async Task Concat_string_string_comparison(bool async)
     {
-        await base.Concat_string_string_comparison();
+        await base.Concat_string_string_comparison(async);
 
         AssertSql(
             """
@@ -1406,9 +1408,9 @@ WHERE @i || b."String" = 'ASeattle'
 """);
     }
 
-    public override async Task Concat_method_comparison()
+    public override async Task Concat_method_comparison(bool async)
     {
-        await base.Concat_method_comparison();
+        await base.Concat_method_comparison(async);
 
         AssertSql(
             """
@@ -1420,9 +1422,9 @@ WHERE @i || b."String" = 'ASeattle'
 """);
     }
 
-    public override async Task Concat_method_comparison_2()
+    public override async Task Concat_method_comparison_2(bool async)
     {
-        await base.Concat_method_comparison_2();
+        await base.Concat_method_comparison_2(async);
 
         AssertSql(
             """
@@ -1435,9 +1437,9 @@ WHERE @i || @j || b."String" = 'ABSeattle'
 """);
     }
 
-    public override async Task Concat_method_comparison_3()
+    public override async Task Concat_method_comparison_3(bool async)
     {
-        await base.Concat_method_comparison_3();
+        await base.Concat_method_comparison_3(async);
 
         AssertSql(
             """
@@ -1455,9 +1457,9 @@ WHERE @i || @j || @k || b."String" = 'ABCSeattle'
 
     #region LINQ Operators
 
-    public override async Task FirstOrDefault()
+    public override async Task FirstOrDefault(bool async)
     {
-        await base.FirstOrDefault();
+        await base.FirstOrDefault(async);
         AssertSql(
             """
 SELECT b."Id", b."Bool", b."Byte", b."ByteArray", b."DateOnly", b."DateTime", b."DateTimeOffset", b."Decimal", b."Double", b."Enum", b."FlagsEnum", b."Float", b."Guid", b."Int", b."Long", b."Short", b."String", b."TimeOnly", b."TimeSpan"
@@ -1466,9 +1468,9 @@ WHERE substr(b."String", 1, 1) = 'S'
 """);
     }
 
-    public override async Task LastOrDefault()
+    public override async Task LastOrDefault(bool async)
     {
-        await base.LastOrDefault();
+        await base.LastOrDefault(async);
         AssertSql(
             """
 SELECT b."Id", b."Bool", b."Byte", b."ByteArray", b."DateOnly", b."DateTime", b."DateTimeOffset", b."Decimal", b."Double", b."Enum", b."FlagsEnum", b."Float", b."Guid", b."Int", b."Long", b."Short", b."String", b."TimeOnly", b."TimeSpan"
@@ -1481,9 +1483,9 @@ WHERE substr(b."String", length(b."String"), 1) = 'e'
 
     #region Like
 
-    public override async Task Where_Like_and_comparison()
+    public override async Task Where_Like_and_comparison(bool async)
     {
-        await base.Where_Like_and_comparison();
+        await base.Where_Like_and_comparison(async);
 
         AssertSql(
             """
@@ -1493,9 +1495,9 @@ WHERE b."String" LIKE 'S%' AND b."Int" = 8
 """);
     }
 
-    public override async Task Where_Like_or_comparison()
+    public override async Task Where_Like_or_comparison(bool async)
     {
-        await base.Where_Like_or_comparison();
+        await base.Where_Like_or_comparison(async);
 
         AssertSql(
             """
@@ -1505,9 +1507,9 @@ WHERE b."String" LIKE 'S%' OR b."Int" = 2147483647
 """);
     }
 
-    public override async Task Like_with_non_string_column_using_ToString()
+    public override async Task Like_with_non_string_column_using_ToString(bool async)
     {
-        await base.Like_with_non_string_column_using_ToString();
+        await base.Like_with_non_string_column_using_ToString(async);
 
         AssertSql(
             """
@@ -1517,9 +1519,9 @@ WHERE b."Int"::text LIKE '%5%'
 """);
     }
 
-    public override async Task Like_with_non_string_column_using_double_cast()
+    public override async Task Like_with_non_string_column_using_double_cast(bool async)
     {
-        await base.Like_with_non_string_column_using_double_cast();
+        await base.Like_with_non_string_column_using_double_cast(async);
 
         AssertSql(
             """
@@ -1533,9 +1535,9 @@ WHERE b."Int"::text LIKE '%5%'
 
     #region Regex
 
-    public override async Task Regex_IsMatch()
+    public override async Task Regex_IsMatch(bool async)
     {
-        await base.Regex_IsMatch();
+        await base.Regex_IsMatch(async);
 
         AssertSql(
             """
@@ -1545,9 +1547,9 @@ WHERE b."String" ~ '(?p)^S'
 """);
     }
 
-    public override async Task Regex_IsMatch_constant_input()
+    public override async Task Regex_IsMatch_constant_input(bool async)
     {
-        await base.Regex_IsMatch_constant_input();
+        await base.Regex_IsMatch_constant_input(async);
 
         AssertSql(
             """

@@ -160,23 +160,6 @@ public class GaussDBQuerySqlGenerator : QuerySqlGenerator
     }
 
     /// <summary>
-    ///     Generates SQL for a constant.
-    /// </summary>
-    /// <param name="sqlConstantExpression">The <see cref="SqlConstantExpression" /> for which to generate SQL.</param>
-    protected override Expression VisitSqlConstant(SqlConstantExpression sqlConstantExpression)
-    {
-        // Certain JSON functions (e.g. jsonb_set()) accept a JSONPATH argument - this is (currently) flown here as a
-        // SqlConstantExpression over IReadOnlyList<PathSegment>. Render that to a string here.
-        if (sqlConstantExpression is { Value: IReadOnlyList<PathSegment> path })
-        {
-            GenerateJsonPath(ConvertJsonPathSegments(path));
-            return sqlConstantExpression;
-        }
-
-        return base.VisitSqlConstant(sqlConstantExpression);
-    }
-
-    /// <summary>
     ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to
     ///     the same compatibility standards as public APIs. It may be changed or removed without notice in
     ///     any release. You should only use it directly in your code with extreme caution and knowing that
@@ -543,11 +526,6 @@ public class GaussDBQuerySqlGenerator : QuerySqlGenerator
                         when binaryExpression.Right.TypeMapping.StoreType == "ltxtquery" => "?@",
 
                     GaussDBExpressionType.Distance => "<->",
-
-                    PgExpressionType.CubeNthCoordinate => "->",
-                    PgExpressionType.CubeNthCoordinateKnn => "~>",
-                    PgExpressionType.CubeDistanceTaxicab => "<#>",
-                    PgExpressionType.CubeDistanceChebyshev => "<=>",
 
                     _ => throw new ArgumentOutOfRangeException($"Unhandled operator type: {binaryExpression.OperatorType}")
                 })
@@ -1080,14 +1058,12 @@ public class GaussDBQuerySqlGenerator : QuerySqlGenerator
     protected override Expression VisitJsonScalar(JsonScalarExpression jsonScalarExpression)
     {
         // TODO: Stop producing empty JsonScalarExpressions, #30768
-        var segmentsPath = jsonScalarExpression.Path;
-        if (segmentsPath.Count == 0)
+        var path = jsonScalarExpression.Path;
+        if (path.Count == 0)
         {
             Visit(jsonScalarExpression.Json);
             return jsonScalarExpression;
         }
-
-        var path = ConvertJsonPathSegments(segmentsPath);
 
         switch (jsonScalarExpression.TypeMapping)
         {
@@ -1099,14 +1075,14 @@ public class GaussDBQuerySqlGenerator : QuerySqlGenerator
 
             // No need to cast the output when we expect a string anyway
             case StringTypeMapping:
-                GenerateJsonPath(jsonScalarExpression.Json, returnsText: true, path);
+                GenerateJsonPath(returnsText: true);
                 break;
 
             // bytea requires special handling, since we encode the binary data as base64 inside the JSON, but that requires a special
             // conversion function to be extracted out to a PG bytea.
             case GaussDBByteArrayTypeMapping:
                 Sql.Append("decode(");
-                GenerateJsonPath(jsonScalarExpression.Json, returnsText: true, path);
+                GenerateJsonPath(returnsText: true);
                 Sql.Append(", 'base64')");
                 break;
 
@@ -1122,7 +1098,7 @@ public class GaussDBQuerySqlGenerator : QuerySqlGenerator
 
             default:
                 Sql.Append("CAST(");
-                GenerateJsonPath(jsonScalarExpression.Json, returnsText: true, path);
+                GenerateJsonPath(returnsText: true);
                 Sql.Append(" AS ");
                 Sql.Append(jsonScalarExpression.TypeMapping!.StoreType);
                 Sql.Append(")");
@@ -1130,6 +1106,19 @@ public class GaussDBQuerySqlGenerator : QuerySqlGenerator
         }
 
         return jsonScalarExpression;
+
+        void GenerateJsonPath(bool returnsText)
+            => this.GenerateJsonPath(
+                jsonScalarExpression.Json,
+                returnsText: returnsText,
+                jsonScalarExpression.Path.Select(
+                    s => s switch
+                    {
+                        { PropertyName: string propertyName }
+                            => new SqlConstantExpression(propertyName, _textTypeMapping ??= _typeMappingSource.FindMapping(typeof(string))),
+                        { ArrayIndex: SqlExpression arrayIndex } => arrayIndex,
+                        _ => throw new UnreachableException()
+                    }).ToList());
     }
 
     /// <summary>
@@ -1159,11 +1148,6 @@ public class GaussDBQuerySqlGenerator : QuerySqlGenerator
         // Multiple path components
         Sql.Append(returnsText ? " #>> " : " #> ");
 
-        GenerateJsonPath(path);
-    }
-
-    private void GenerateJsonPath(IReadOnlyList<SqlExpression> path)
-    {
         // Use simplified array literal syntax if all path components are constants for cleaner SQL
         if (path.All(p => p is SqlConstantExpression { Value: var pathSegment }
                 && (pathSegment is not string s || s.All(char.IsAsciiLetterOrDigit))))
@@ -1188,23 +1172,6 @@ public class GaussDBQuerySqlGenerator : QuerySqlGenerator
             Sql.Append("]::text[]");
         }
     }
-
-    /// <summary>
-    ///     Converts the standard EF <see cref="IReadOnlyList{PathSegment}" /> to an <see cref="IReadOnlyList{SqlExpression}" />
-    ///     (the EF built-in <see cref="JsonScalarExpression" /> and <see cref="JsonQueryExpression" /> don't support non-constant
-    ///     property names, but we do via the Npgsql-specific JSON DOM support).
-    /// </summary>
-    private IReadOnlyList<SqlExpression> ConvertJsonPathSegments(IReadOnlyList<PathSegment> path)
-        => path
-            .Select(
-                s => s switch
-                {
-                    { PropertyName: string propertyName }
-                        => new SqlConstantExpression(propertyName, _textTypeMapping ??= _typeMappingSource.FindMapping(typeof(string))),
-                    { ArrayIndex: SqlExpression arrayIndex } => arrayIndex,
-                    _ => throw new UnreachableException()
-                })
-            .ToList();
 
     /// <summary>
     ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to

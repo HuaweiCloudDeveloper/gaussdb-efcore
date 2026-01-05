@@ -810,13 +810,11 @@ public class GaussDBExpressionFactory : SqlExpressionFactory
 
             case GaussDBExpressionType.Distance:
             {
-                inferredTypeMapping = ExpressionExtensions.InferTypeMapping(left, right);
+                inferredTypeMapping = typeMapping ?? ExpressionExtensions.InferTypeMapping(left, right);
 
                 resultType = inferredTypeMapping?.StoreTypeNameBase switch
                 {
                     "geometry" or "geography" => typeof(double),
-
-                    "cube" => typeof(double),
 
                     "date" => typeof(int),
 

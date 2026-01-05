@@ -9,9 +9,9 @@ public class LogicalOperatorTranslationsGaussDBlTest : LogicalOperatorTranslatio
         Fixture.TestSqlLoggerFactory.SetTestOutputHelper(testOutputHelper);
     }
 
-        public override async Task And()
+        public override async Task And(bool async)
     {
-        await base.And();
+        await base.And(async);
 
         AssertSql(
             """
@@ -21,9 +21,9 @@ WHERE b."Int" = 8 AND b."String" = 'Seattle'
 """);
     }
 
-    public override async Task And_with_bool_property()
+    public override async Task And_with_bool_property(bool async)
     {
-        await base.And_with_bool_property();
+        await base.And_with_bool_property(async);
 
         AssertSql(
             """
@@ -33,9 +33,9 @@ WHERE b."Bool" AND b."String" = 'Seattle'
 """);
     }
 
-    public override async Task Or()
+    public override async Task Or(bool async)
     {
-        await base.Or();
+        await base.Or(async);
 
         AssertSql(
             """
@@ -45,9 +45,9 @@ WHERE b."Int" = 999 OR b."String" = 'Seattle'
 """);
     }
 
-    public override async Task Or_with_bool_property()
+    public override async Task Or_with_bool_property(bool async)
     {
-        await base.Or_with_bool_property();
+        await base.Or_with_bool_property(async);
 
         AssertSql(
             """
@@ -57,9 +57,9 @@ WHERE b."Bool" OR b."String" = 'Seattle'
 """);
     }
 
-    public override async Task Not()
+    public override async Task Not(bool async)
     {
-        await base.Not();
+        await base.Not(async);
 
         AssertSql(
             """
@@ -69,9 +69,9 @@ WHERE b."Int" <> 999
 """);
     }
 
-    public override async Task Not_with_bool_property()
+    public override async Task Not_with_bool_property(bool async)
     {
-        await base.Not_with_bool_property();
+        await base.Not_with_bool_property(async);
 
         AssertSql(
             """

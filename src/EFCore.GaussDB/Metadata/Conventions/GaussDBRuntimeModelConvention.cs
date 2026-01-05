@@ -103,14 +103,6 @@ public class GaussDBRuntimeModelConvention : RelationalRuntimeModelConvention
 
         if (!runtime)
         {
-<<<<<<< HEAD:src/EFCore.PG/Metadata/Conventions/NpgsqlRuntimeModelConvention.cs
-            annotations.Remove(NpgsqlAnnotationNames.IndexOperators);
-            annotations.Remove(NpgsqlAnnotationNames.IndexSortOrder);
-            annotations.Remove(NpgsqlAnnotationNames.IndexNullSortOrder);
-            annotations.Remove(NpgsqlAnnotationNames.IndexInclude);
-            annotations.Remove(NpgsqlAnnotationNames.CreatedConcurrently);
-            annotations.Remove(NpgsqlAnnotationNames.NullsDistinct);
-=======
             annotations.Remove(GaussDBAnnotationNames.IndexMethod);
             annotations.Remove(GaussDBAnnotationNames.IndexOperators);
             annotations.Remove(GaussDBAnnotationNames.IndexSortOrder);
@@ -118,7 +110,6 @@ public class GaussDBRuntimeModelConvention : RelationalRuntimeModelConvention
             annotations.Remove(GaussDBAnnotationNames.IndexInclude);
             annotations.Remove(GaussDBAnnotationNames.CreatedConcurrently);
             annotations.Remove(GaussDBAnnotationNames.NullsDistinct);
->>>>>>> develop:src/EFCore.GaussDB/Metadata/Conventions/GaussDBRuntimeModelConvention.cs
 
             foreach (var annotationName in annotations.Keys.Where(
                          k => k.StartsWith(GaussDBAnnotationNames.StorageParameterPrefix, StringComparison.Ordinal)))

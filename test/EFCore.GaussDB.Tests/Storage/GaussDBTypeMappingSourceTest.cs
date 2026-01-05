@@ -1,5 +1,3 @@
-using System.Net;
-using System.Net.NetworkInformation;
 using Microsoft.EntityFrameworkCore.Storage.Json;
 using NetTopologySuite.Geometries;
 using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure;
@@ -49,7 +47,6 @@ public class GaussDBTypeMappingSourceTest
     [InlineData("xid", typeof(uint), null, null, null, false)]
     [InlineData("xid8", typeof(ulong), null, null, null, false)]
     [InlineData("jsonpath", typeof(string), null, null, null, false)]
-    [InlineData("cidr", typeof(IPNetwork), null, null, null, false)]
     public void By_StoreType(string typeName, Type type, int? size, int? precision, int? scale, bool fixedLength)
     {
         var mapping = CreateTypeMappingSource().FindMapping(typeName);
@@ -127,12 +124,6 @@ public class GaussDBTypeMappingSourceTest
     [InlineData(typeof(List<GaussDBRange<int>>), "int4multirange")]
     [InlineData(typeof(Geometry), "geometry")]
     [InlineData(typeof(Point), "geometry")]
-    [InlineData(typeof(IPAddress), "inet")]
-    [InlineData(typeof(IPNetwork), "cidr")]
-#pragma warning disable CS0618 // NpgsqlCidr is obsolete, replaced by .NET IPNetwork
-    [InlineData(typeof(NpgsqlCidr), "cidr")] // legacy
-#pragma warning restore CS0618
-    [InlineData(typeof(PhysicalAddress), "macaddr")]
     public void By_ClrType(Type clrType, string expectedStoreType)
     {
         var mapping = CreateTypeMappingSource().FindMapping(clrType);
@@ -240,17 +231,6 @@ public class GaussDBTypeMappingSourceTest
         Assert.Equal(GaussDBDbType.Char, parameter.GaussDBDbType);
     }
 
-    #region Array
-
-    [Fact]
-    public void Primitive_collection()
-    {
-        var mapping = CreateTypeMappingSource().FindMapping(typeof(int[]));
-        Assert.IsType<NpgsqlArrayTypeMapping>(mapping, exactMatch: false);
-        Assert.Equal("integer[]", mapping.StoreType);
-        Assert.Same(typeof(int[]), mapping.ClrType);
-    }
-
     [Fact]
     public void Array_over_type_mapping_with_value_converter_by_clr_type_array()
         => Array_over_type_mapping_with_value_converter(CreateTypeMappingSource().FindMapping(typeof(LTree[])), typeof(LTree[]));
@@ -288,35 +268,6 @@ public class GaussDBTypeMappingSourceTest
             s => Assert.Equal("bar", s));
     }
 
-    #endregion Array
-
-    #region JSON
-
-    [Fact]
-    public void Json_structural()
-    {
-        var mapping = CreateTypeMappingSource().FindMapping(typeof(JsonTypePlaceholder));
-        Assert.Equal("jsonb", mapping.StoreType);
-        Assert.Same(typeof(JsonTypePlaceholder), mapping.ClrType);
-    }
-
-    [Fact]
-    public void Json_primitive_collection()
-    {
-        var mapping = CreateTypeMappingSource().FindMapping(typeof(int[]), "jsonb");
-        Assert.Equal("jsonb", mapping.StoreType);
-        Assert.Same(typeof(IEnumerable<int>), mapping.ClrType);
-
-        var elementMapping = (RelationalTypeMapping)mapping.ElementTypeMapping;
-        Assert.NotNull(elementMapping);
-        Assert.Equal("integer", elementMapping.StoreType);
-        Assert.Same(typeof(int), elementMapping.ClrType);
-    }
-
-    #endregion JSON
-
-    #region Multirange
-
     [Fact]
     public void Multirange_by_clr_type_across_pg_versions()
     {
@@ -352,8 +303,6 @@ public class GaussDBTypeMappingSourceTest
         // Once 14 is made the default version, this stuff can be removed.
         Assert.Same(typeof(List<GaussDBRange<int>>), mappingDefault.ClrType);
     }
-
-    #endregion Multirange
 
 #nullable enable
     [Theory]

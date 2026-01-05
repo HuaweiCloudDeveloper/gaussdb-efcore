@@ -2688,7 +2688,7 @@ SELECT setval(
                 Assert.Equal("public", citext.Schema);
             });
 
-        AssertSql("CREATE EXTENSION IF NOT EXISTS citext CASCADE;");
+        AssertSql("CREATE EXTENSION IF NOT EXISTS citext;");
     }
 
     [Fact]
@@ -2714,7 +2714,7 @@ SELECT setval(
                 END $EF$;
                 """,
             //
-            @"CREATE EXTENSION IF NOT EXISTS citext SCHEMA some_schema CASCADE;");
+            @"CREATE EXTENSION IF NOT EXISTS citext SCHEMA some_schema;");
     }
 
     #endregion
@@ -3125,9 +3125,6 @@ CREATE TABLE "Contacts" (
     "MyComplex_Prop" text,
     "MyComplex_MyNestedComplex_Bar" timestamp with time zone,
     "MyComplex_MyNestedComplex_Foo" integer,
-    "MyComplex_Nested_Bar" timestamp with time zone,
-    "MyComplex_Nested_Foo" integer,
-    "NestedCollection" jsonb,
     CONSTRAINT "PK_Contacts" PRIMARY KEY ("Id")
 );
 """);

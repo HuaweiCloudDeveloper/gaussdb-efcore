@@ -55,7 +55,7 @@ public class GaussDBTableValuedFunctionExpression : TableValuedFunctionExpressio
         string alias,
         string name,
         IReadOnlyList<SqlExpression> arguments,
-        IReadOnlyList<ColumnInfo>? columnInfos = null,
+        IReadOnlyList<ColumnInfo>? columnInfos,
         bool withOrdinality = true)
         : base(alias, name, schema: null, builtIn: true, arguments)
     {

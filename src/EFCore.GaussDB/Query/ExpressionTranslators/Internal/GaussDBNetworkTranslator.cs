@@ -74,7 +74,6 @@ public class GaussDBNetworkTranslator : IMethodCallTranslator
             {
                 return TranslateCidrExtensionMethod(method, arguments);
             }
-#pragma warning restore CS0618
 
             if (paramType == typeof(PhysicalAddress))
             {

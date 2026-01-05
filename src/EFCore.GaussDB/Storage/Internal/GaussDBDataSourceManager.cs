@@ -71,14 +71,8 @@ public class GaussDBDataSourceManager : IDisposable, IAsyncDisposable
             { ConnectionString: null } when applicationServiceProvider?.GetService<GaussDBDataSource>() is DbDataSource dataSource
                 => dataSource,
 
-            // If the user hasn't configured anything in UseNpgsql (no data source, no data source builder action, no connection,
-            // no connection string), check the application service provider to see if a data source is registered there, and return that.
-            // Otherwise if there's no connection string, abort: either a connection string or DataSourceBuilderAction is required
-            // to create a data source in any case.
-            { ConnectionString: null } or null
-                => applicationServiceProvider?.GetService<NpgsqlDataSource>() is DbDataSource dataSource
-                    ? dataSource
-                    : null,
+            // Otherwise if there's no connection string, abort: a connection string is required to create a data source in any case.
+            { ConnectionString: null } or null => null,
 
             // The following are features which require an GaussDBDataSource, since they require configuration on GaussDBDataSourceBuilder.
             { DataSourceBuilderAction: not null } => GetSingletonDataSource(npgsqlOptionsExtension),
@@ -94,12 +88,7 @@ public class GaussDBDataSourceManager : IDisposable, IAsyncDisposable
     private DbDataSource GetSingletonDataSource(GaussDBOptionsExtension npgsqlOptionsExtension)
     {
         var connectionString = npgsqlOptionsExtension.ConnectionString;
-
-        // It should be possible to use ConfigureDataSource() without supplying a connection string, providing the connection
-        // information via the connection string builder on the NpgsqlDataSourceBuilder. In order to support this, we
-        // coalesce null connection strings to empty strings (since dictionaries don't allow null keys).
-        // This is in line with general ADO.NET practice of coalescing null connection strings to empty strings.
-        connectionString ??= string.Empty;
+        Check.DebugAssert(connectionString is not null, "Connection string can't be null");
 
         if (_dataSources.TryGetValue(connectionString, out var dataSource))
         {

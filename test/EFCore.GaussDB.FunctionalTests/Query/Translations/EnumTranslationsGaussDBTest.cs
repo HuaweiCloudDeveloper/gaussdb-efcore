@@ -11,9 +11,9 @@ public class EnumTranslationsGaussDBTest : EnumTranslationsTestBase<BasicTypesQu
 
     #region Equality
 
-    public override async Task Equality_to_constant()
+    public override async Task Equality_to_constant(bool async)
     {
-        await base.Equality_to_constant();
+        await base.Equality_to_constant(async);
 
         AssertSql(
             """
@@ -23,9 +23,9 @@ WHERE b."Enum" = 0
 """);
     }
 
-    public override async Task Equality_to_parameter()
+    public override async Task Equality_to_parameter(bool async)
     {
-        await base.Equality_to_parameter();
+        await base.Equality_to_parameter(async);
 
         AssertSql(
             """
@@ -37,9 +37,9 @@ WHERE b."Enum" = @basicEnum
 """);
     }
 
-    public override async Task Equality_nullable_enum_to_constant()
+    public override async Task Equality_nullable_enum_to_constant(bool async)
     {
-        await base.Equality_nullable_enum_to_constant();
+        await base.Equality_nullable_enum_to_constant(async);
 
         AssertSql(
             """
@@ -49,9 +49,9 @@ WHERE n."Enum" = 0
 """);
     }
 
-    public override async Task Equality_nullable_enum_to_parameter()
+    public override async Task Equality_nullable_enum_to_parameter(bool async)
     {
-        await base.Equality_nullable_enum_to_parameter();
+        await base.Equality_nullable_enum_to_parameter(async);
 
         AssertSql(
             """
@@ -63,9 +63,9 @@ WHERE n."Enum" = @basicEnum
 """);
     }
 
-    public override async Task Equality_nullable_enum_to_null_constant()
+    public override async Task Equality_nullable_enum_to_null_constant(bool async)
     {
-        await base.Equality_nullable_enum_to_null_constant();
+        await base.Equality_nullable_enum_to_null_constant(async);
 
         AssertSql(
             """
@@ -75,9 +75,9 @@ WHERE n."Enum" IS NULL
 """);
     }
 
-    public override async Task Equality_nullable_enum_to_null_parameter()
+    public override async Task Equality_nullable_enum_to_null_parameter(bool async)
     {
-        await base.Equality_nullable_enum_to_null_parameter();
+        await base.Equality_nullable_enum_to_null_parameter(async);
 
         AssertSql(
             """
@@ -87,9 +87,9 @@ WHERE n."Enum" IS NULL
 """);
     }
 
-    public override async Task Equality_nullable_enum_to_nullable_parameter()
+    public override async Task Equality_nullable_enum_to_nullable_parameter(bool async)
     {
-        await base.Equality_nullable_enum_to_nullable_parameter();
+        await base.Equality_nullable_enum_to_nullable_parameter(async);
 
         AssertSql(
             """
@@ -103,9 +103,9 @@ WHERE n."Enum" = @basicEnum
 
     #endregion Equality
 
-    public override async Task Bitwise_and_enum_constant()
+    public override async Task Bitwise_and_enum_constant(bool async)
     {
-        await base.Bitwise_and_enum_constant();
+        await base.Bitwise_and_enum_constant(async);
 
         AssertSql(
             """
@@ -121,9 +121,9 @@ WHERE b."FlagsEnum" & 1 = 1
 """);
     }
 
-    public override async Task Bitwise_and_integral_constant()
+    public override async Task Bitwise_and_integral_constant(bool async)
     {
-        await base.Bitwise_and_integral_constant();
+        await base.Bitwise_and_integral_constant(async);
 
         AssertSql(
             """
@@ -145,9 +145,9 @@ WHERE b."FlagsEnum"::smallint & 8 = 8
 """);
     }
 
-    public override async Task Bitwise_and_nullable_enum_with_constant()
+    public override async Task Bitwise_and_nullable_enum_with_constant(bool async)
     {
-        await base.Bitwise_and_nullable_enum_with_constant();
+        await base.Bitwise_and_nullable_enum_with_constant(async);
 
         AssertSql(
             """
@@ -157,9 +157,9 @@ WHERE n."FlagsEnum" & 8 > 0
 """);
     }
 
-    public override async Task Where_bitwise_and_nullable_enum_with_null_constant()
+    public override async Task Where_bitwise_and_nullable_enum_with_null_constant(bool async)
     {
-        await base.Where_bitwise_and_nullable_enum_with_null_constant();
+        await base.Where_bitwise_and_nullable_enum_with_null_constant(async);
 
         AssertSql(
             """
@@ -169,9 +169,9 @@ WHERE n."FlagsEnum" & NULL > 0
 """);
     }
 
-    public override async Task Where_bitwise_and_nullable_enum_with_non_nullable_parameter()
+    public override async Task Where_bitwise_and_nullable_enum_with_non_nullable_parameter(bool async)
     {
-        await base.Where_bitwise_and_nullable_enum_with_non_nullable_parameter();
+        await base.Where_bitwise_and_nullable_enum_with_non_nullable_parameter(async);
 
         AssertSql(
             """
@@ -183,9 +183,9 @@ WHERE n."FlagsEnum" & @flagsEnum > 0
 """);
     }
 
-    public override async Task Where_bitwise_and_nullable_enum_with_nullable_parameter()
+    public override async Task Where_bitwise_and_nullable_enum_with_nullable_parameter(bool async)
     {
-        await base.Where_bitwise_and_nullable_enum_with_nullable_parameter();
+        await base.Where_bitwise_and_nullable_enum_with_nullable_parameter(async);
 
         AssertSql(
             """
@@ -203,9 +203,9 @@ WHERE n."FlagsEnum" & NULL > 0
 """);
     }
 
-    public override async Task Bitwise_or()
+    public override async Task Bitwise_or(bool async)
     {
-        await base.Bitwise_or();
+        await base.Bitwise_or(async);
 
         AssertSql(
             """
@@ -215,9 +215,9 @@ WHERE b."FlagsEnum" | 8 > 0
 """);
     }
 
-    public override async Task Bitwise_projects_values_in_select()
+    public override async Task Bitwise_projects_values_in_select(bool async)
     {
-        await base.Bitwise_projects_values_in_select();
+        await base.Bitwise_projects_values_in_select(async);
 
         AssertSql(
             """
@@ -228,9 +228,9 @@ LIMIT 1
 """);
     }
 
-    public override async Task HasFlag()
+    public override async Task HasFlag(bool async)
     {
-        await base.HasFlag();
+        await base.HasFlag(async);
 
 AssertSql(
     """
@@ -271,9 +271,9 @@ LIMIT 1
 """);
     }
 
-    public override async Task HasFlag_with_non_nullable_parameter()
+    public override async Task HasFlag_with_non_nullable_parameter(bool async)
     {
-        await base.HasFlag_with_non_nullable_parameter();
+        await base.HasFlag_with_non_nullable_parameter(async);
 
         AssertSql(
             """
@@ -285,9 +285,9 @@ WHERE b."FlagsEnum" & @flagsEnum = @flagsEnum
 """);
     }
 
-    public override async Task HasFlag_with_nullable_parameter()
+    public override async Task HasFlag_with_nullable_parameter(bool async)
     {
-        await base.HasFlag_with_nullable_parameter();
+        await base.HasFlag_with_nullable_parameter(async);
 
         AssertSql(
             """

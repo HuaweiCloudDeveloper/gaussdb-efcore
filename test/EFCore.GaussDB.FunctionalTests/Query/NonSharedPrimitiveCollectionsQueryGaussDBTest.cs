@@ -5,7 +5,7 @@ namespace Microsoft.EntityFrameworkCore.Query;
 public class NonSharedPrimitiveCollectionsQueryGaussDBTest(NonSharedFixture fixture)
     : NonSharedPrimitiveCollectionsQueryRelationalTestBase(fixture)
 {
-    protected override DbContextOptionsBuilder SetParameterizedCollectionMode(DbContextOptionsBuilder optionsBuilder, ParameterTranslationMode parameterizedCollectionMode)
+    protected override DbContextOptionsBuilder SetParameterizedCollectionMode(DbContextOptionsBuilder optionsBuilder, ParameterizedCollectionMode parameterizedCollectionMode)
     {
         new GaussDBDbContextOptionsBuilder(optionsBuilder).UseParameterizedCollectionMode(parameterizedCollectionMode);
 
@@ -90,79 +90,17 @@ public class NonSharedPrimitiveCollectionsQueryGaussDBTest(NonSharedFixture fixt
             """
 SELECT t."Id", t."Owned"
 FROM "TestOwner" AS t
-WHERE jsonb_array_length(t."Owned" -> 'Strings') = 2
+WHERE cardinality((ARRAY(SELECT CAST(element AS text) FROM jsonb_array_elements_text(t."Owned" -> 'Strings') WITH ORDINALITY AS t(element) ORDER BY ordinality))) = 2
 LIMIT 2
 """,
             //
             """
 SELECT t."Id", t."Owned"
 FROM "TestOwner" AS t
-WHERE (t."Owned" #>> '{Strings,1}') = 'bar'
+WHERE ((ARRAY(SELECT CAST(element AS text) FROM jsonb_array_elements_text(t."Owned" -> 'Strings') WITH ORDINALITY AS t(element) ORDER BY ordinality)))[2] = 'bar'
 LIMIT 2
 """);
     }
-
-    #region Contains with various index methods
-
-    // For Contains over column collections that have a (modeled) GIN index, we translate to the containment operator (@>).
-    // Otherwise we translate to the ANY construct.
-    [ConditionalFact]
-    public virtual async Task Column_collection_Contains_with_GIN_index_uses_containment()
-    {
-        var contextFactory = await InitializeAsync<TestContext>(
-            onModelCreating: mb => mb.Entity<TestEntity>()
-                .HasIndex(e => e.Ints)
-                .HasMethod("GIN"),
-            seed: context =>
-            {
-                context.AddRange(
-                    new TestEntity { Id = 1, Ints = [1, 2, 3] },
-                    new TestEntity { Id = 2, Ints = [1, 2, 4] });
-                return context.SaveChangesAsync();
-            });
-
-        await using var context = contextFactory.CreateContext();
-
-        var result = await context.Set<TestEntity>().Where(c => c.Ints!.Contains(4)).SingleAsync();
-        Assert.Equal(2, result.Id);
-
-        AssertSql(
-            """
-SELECT t."Id", t."Ints"
-FROM "TestEntity" AS t
-WHERE t."Ints" @> ARRAY[4]::integer[]
-LIMIT 2
-""");
-    }
-
-    [ConditionalFact]
-    public virtual async Task Column_collection_Contains_with_btree_index_does_not_use_containment()
-    {
-        var contextFactory = await InitializeAsync<TestContext>(
-            onModelCreating: mb => mb.Entity<TestEntity>().HasIndex(e => e.Ints),
-            seed: context =>
-            {
-                context.AddRange(
-                    new TestEntity { Id = 1, Ints = [1, 2, 3] },
-                    new TestEntity { Id = 2, Ints = [1, 2, 4] });
-                return context.SaveChangesAsync();
-            });
-
-        await using var context = contextFactory.CreateContext();
-
-        var result = await context.Set<TestEntity>().Where(c => c.Ints!.Contains(4)).SingleAsync();
-        Assert.Equal(2, result.Id);
-
-        AssertSql(
-            """
-SELECT t."Id", t."Ints"
-FROM "TestEntity" AS t
-WHERE 4 = ANY (t."Ints")
-LIMIT 2
-""");
-    }
-
-    #endregion Contains with various index methods
 
     protected override ITestStoreFactory TestStoreFactory
         => GaussDBTestStoreFactory.Instance;

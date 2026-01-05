@@ -17,7 +17,7 @@ namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Metadata.Conventions;
 /// </remarks>
 public class GaussDBConventionSetBuilder : RelationalConventionSetBuilder
 {
-    private readonly NpgsqlTypeMappingSource _typeMappingSource;
+    private readonly IRelationalTypeMappingSource _typeMappingSource;
     private readonly Version _postgresVersion;
     private readonly IReadOnlyList<EnumDefinition> _enumDefinitions;
 
@@ -35,7 +35,7 @@ public class GaussDBConventionSetBuilder : RelationalConventionSetBuilder
         IGaussDBSingletonOptions npgsqlSingletonOptions)
         : base(dependencies, relationalDependencies)
     {
-        _typeMappingSource = (NpgsqlTypeMappingSource)typeMappingSource;
+        _typeMappingSource = typeMappingSource;
         _postgresVersion = npgsqlSingletonOptions.PostgresVersion;
         _enumDefinitions = npgsqlSingletonOptions.EnumDefinitions;
     }

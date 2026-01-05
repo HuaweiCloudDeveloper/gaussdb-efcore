@@ -387,7 +387,6 @@ public static class GaussDBNetworkDbFunctionsExtensions
     [Obsolete]
     public static string Abbreviate(this DbFunctions _, GaussDBCidr cidr)
         => throw new InvalidOperationException(CoreStrings.FunctionOnClient(nameof(Abbreviate)));
-#pragma warning restore CS0618
 
     /// <summary>
     ///     Returns the broadcast address for a network.
@@ -518,7 +517,6 @@ public static class GaussDBNetworkDbFunctionsExtensions
     [Obsolete]
     public static GaussDBCidr SetMaskLength(this DbFunctions _, GaussDBCidr cidr, int length)
         => throw new InvalidOperationException(CoreStrings.FunctionOnClient(nameof(SetMaskLength)));
-#pragma warning restore CS0618
 
     /// <summary>
     ///     Extracts the IP address and subnet mask as text.

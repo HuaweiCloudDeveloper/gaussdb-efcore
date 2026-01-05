@@ -176,8 +176,7 @@ WHERE l."LTree" ~ CAST('*.Astrophysics.' || l."Id"::text AS lquery)
 
         AssertSql(
             """
-@lqueries={ '*.Astrophysics'
-'*.Geology' } (DbType = Object)
+@lqueries={ '*.Astrophysics', '*.Geology' } (DbType = Object)
 
 SELECT l."Id", l."LTree", l."LTreeAsString", l."LTrees", l."SomeString"
 FROM "LTreeEntities" AS l
@@ -227,8 +226,7 @@ LIMIT 2
         Assert.Equal(4, count);
         AssertSql(
             """
-@ltrees={ 'Top.Science'
-'Top.Art' } (DbType = Object)
+@ltrees={ 'Top.Science', 'Top.Art' } (DbType = Object)
 
 SELECT count(*)::int
 FROM "LTreeEntities" AS l
@@ -246,8 +244,7 @@ WHERE @ltrees @> l."LTree"
         Assert.Equal(3, count);
         AssertSql(
             """
-@ltrees={ 'Top.Science.Astronomy'
-'Top.Art' } (DbType = Object)
+@ltrees={ 'Top.Science.Astronomy', 'Top.Art' } (DbType = Object)
 
 SELECT count(*)::int
 FROM "LTreeEntities" AS l
@@ -265,8 +262,7 @@ WHERE @ltrees <@ l."LTree"
 
         AssertSql(
             """
-@ltrees={ 'Top.Science.Astronomy.Astrophysics'
-'Top.Science.Astronomy.Cosmology' } (DbType = Object)
+@ltrees={ 'Top.Science.Astronomy.Astrophysics', 'Top.Science.Astronomy.Cosmology' } (DbType = Object)
 
 SELECT count(*)::int
 FROM "LTreeEntities" AS l
@@ -285,8 +281,7 @@ WHERE @ltrees ~ '*.Astrophysics'
 
         AssertSql(
             """
-@lqueries={ '*.Astrophysics'
-'*.Geology' } (DbType = Object)
+@lqueries={ '*.Astrophysics', '*.Geology' } (DbType = Object)
 
 SELECT count(*)::int
 FROM "LTreeEntities" AS l
@@ -320,8 +315,7 @@ WHERE l."LTrees" @ 'Astro*'
         Assert.Equal(4, count);
         AssertSql(
             """
-@ltrees={ 'Top.Science'
-'Top.Hobbies' } (DbType = Object)
+@ltrees={ 'Top.Science', 'Top.Hobbies' } (DbType = Object)
 
 SELECT count(*)::int
 FROM "LTreeEntities" AS l
@@ -340,8 +334,7 @@ WHERE @ltrees ?@> l."LTree" = 'Top.Science'
         Assert.Equal(3, count);
         AssertSql(
             """
-@ltrees={ 'Top.Science.Astronomy'
-'Top.Hobbies.Amateurs_Astronomy' } (DbType = Object)
+@ltrees={ 'Top.Science.Astronomy', 'Top.Hobbies.Amateurs_Astronomy' } (DbType = Object)
 
 SELECT count(*)::int
 FROM "LTreeEntities" AS l
@@ -360,8 +353,7 @@ WHERE @ltrees ?<@ l."LTree" = 'Top.Science.Astronomy'
 
         AssertSql(
             """
-@ltrees={ 'Top.Science.Astronomy.Astrophysics'
-'Top.Science.Astronomy.Cosmology' } (DbType = Object)
+@ltrees={ 'Top.Science.Astronomy.Astrophysics', 'Top.Science.Astronomy.Cosmology' } (DbType = Object)
 
 SELECT count(*)::int
 FROM "LTreeEntities" AS l
@@ -379,8 +371,7 @@ WHERE @ltrees ?~ '*.Astrophysics' = 'Top.Science.Astronomy.Astrophysics'
 
         AssertSql(
             """
-@ltrees={ 'Top.Science.Astronomy.Astrophysics'
-'Top.Science.Astronomy.Cosmology' } (DbType = Object)
+@ltrees={ 'Top.Science.Astronomy.Astrophysics', 'Top.Science.Astronomy.Cosmology' } (DbType = Object)
 
 SELECT count(*)::int
 FROM "LTreeEntities" AS l

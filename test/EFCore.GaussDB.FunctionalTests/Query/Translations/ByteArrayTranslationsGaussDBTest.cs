@@ -10,9 +10,9 @@ public class ByteArrayTranslationsGaussDBTest : ByteArrayTranslationsTestBase<Ba
         Fixture.TestSqlLoggerFactory.SetTestOutputHelper(testOutputHelper);
     }
 
-    public override async Task Length()
+    public override async Task Length(bool async)
     {
-        await base.Length();
+        await base.Length(async);
 
         AssertSql(
             """
@@ -22,9 +22,9 @@ WHERE length(b."ByteArray") = 4
 """);
     }
 
-    public override async Task Index()
+    public override async Task Index(bool async)
     {
-        await base.Index();
+        await base.Index(async);
 
         AssertSql(
             """
@@ -34,9 +34,9 @@ WHERE length(b."ByteArray") >= 3 AND get_byte(b."ByteArray", 2) = 190
 """);
     }
 
-    public override async Task First()
+    public override async Task First(bool async)
     {
-        await base.First();
+        await base.First(async);
 
         AssertSql(
             """
@@ -46,9 +46,9 @@ WHERE length(b."ByteArray") >= 1 AND get_byte(b."ByteArray", 0)::smallint = 222
 """);
     }
 
-    public override async Task Contains_with_constant()
+    public override async Task Contains_with_constant(bool async)
     {
-        await base.Contains_with_constant();
+        await base.Contains_with_constant(async);
 
         AssertSql(
             """
@@ -58,13 +58,13 @@ WHERE position(BYTEA E'\\x01' IN b."ByteArray") > 0
 """);
     }
 
-    public override async Task Contains_with_parameter()
+    public override async Task Contains_with_parameter(bool async)
     {
-        await base.Contains_with_parameter();
+        await base.Contains_with_parameter(async);
 
         AssertSql(
             """
-@someByte='1'
+@someByte='1' (DbType = Int16)
 
 SELECT b."Id", b."Bool", b."Byte", b."ByteArray", b."DateOnly", b."DateTime", b."DateTimeOffset", b."Decimal", b."Double", b."Enum", b."FlagsEnum", b."Float", b."Guid", b."Int", b."Long", b."Short", b."String", b."TimeOnly", b."TimeSpan"
 FROM "BasicTypesEntities" AS b
@@ -72,9 +72,9 @@ WHERE position(set_byte(BYTEA E'\\x00', 0, @someByte) IN b."ByteArray") > 0
 """);
     }
 
-    public override async Task Contains_with_column()
+    public override async Task Contains_with_column(bool async)
     {
-        await base.Contains_with_column();
+        await base.Contains_with_column(async);
 
         AssertSql(
             """
@@ -84,9 +84,9 @@ WHERE position(set_byte(BYTEA E'\\x00', 0, b."Byte") IN b."ByteArray") > 0
 """);
     }
 
-    public override async Task SequenceEqual()
+    public override async Task SequenceEqual(bool async)
     {
-        await base.SequenceEqual();
+        await base.SequenceEqual(async);
 
         AssertSql(
             """

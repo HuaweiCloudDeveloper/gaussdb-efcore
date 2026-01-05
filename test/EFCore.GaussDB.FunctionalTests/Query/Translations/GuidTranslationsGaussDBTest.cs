@@ -12,9 +12,9 @@ public class GuidTranslationsGaussDBTest : GuidTranslationsTestBase<BasicTypesQu
         Fixture.TestSqlLoggerFactory.SetTestOutputHelper(testOutputHelper);
     }
 
-    public override async Task New_with_constant()
+    public override async Task New_with_constant(bool async)
     {
-        await base.New_with_constant();
+        await base.New_with_constant(async);
 
         AssertSql(
             """
@@ -24,9 +24,9 @@ WHERE b."Guid" = 'df36f493-463f-4123-83f9-6b135deeb7ba'
 """);
     }
 
-    public override async Task New_with_parameter()
+    public override async Task New_with_parameter(bool async)
     {
-        await base.New_with_parameter();
+        await base.New_with_parameter(async);
 
         AssertSql(
             """
@@ -38,9 +38,9 @@ WHERE b."Guid" = @p
 """);
     }
 
-    public override async Task ToString_projection()
+    public override async Task ToString_projection(bool async)
     {
-        await base.ToString_projection();
+        await base.ToString_projection(async);
 
         AssertSql(
             """
@@ -49,9 +49,9 @@ FROM "BasicTypesEntities" AS b
 """);
     }
 
-    public override async Task NewGuid()
+    public override async Task NewGuid(bool async)
     {
-        await base.NewGuid();
+        await base.NewGuid(async);
 
         if (TestEnvironment.PostgresVersion >= new Version(13, 0))
         {
@@ -73,10 +73,12 @@ WHERE uuid_generate_v4() <> '00000000-0000-0000-0000-000000000000'
         }
     }
 
-    [ConditionalFact]
-    public virtual async Task CreateVersion7()
+    [ConditionalTheory]
+    [MemberData(nameof(IsAsyncData))]
+    public virtual async Task CreateVersion7(bool async)
     {
         await AssertQuery(
+            async,
             ss => ss.Set<BasicTypesEntity>()
                 .Where(od => Guid.CreateVersion7() != default));
 

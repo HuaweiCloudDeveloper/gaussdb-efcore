@@ -9,9 +9,9 @@ public class DateOnlyTranslationsGaussDBTest : DateOnlyTranslationsTestBase<Basi
         Fixture.TestSqlLoggerFactory.SetTestOutputHelper(testOutputHelper);
     }
 
-    public override async Task Year()
+    public override async Task Year(bool async)
     {
-        await base.Year();
+        await base.Year(async);
 
         AssertSql(
             """
@@ -21,9 +21,9 @@ WHERE date_part('year', b."DateOnly")::int = 1990
 """);
     }
 
-    public override async Task Month()
+    public override async Task Month(bool async)
     {
-        await base.Month();
+        await base.Month(async);
 
         AssertSql(
             """
@@ -33,9 +33,9 @@ WHERE date_part('month', b."DateOnly")::int = 11
 """);
     }
 
-    public override async Task Day()
+    public override async Task Day(bool async)
     {
-        await base.Day();
+        await base.Day(async);
 
         AssertSql(
             """
@@ -45,9 +45,9 @@ WHERE date_part('day', b."DateOnly")::int = 10
 """);
     }
 
-    public override async Task DayOfYear()
+    public override async Task DayOfYear(bool async)
     {
-        await base.DayOfYear();
+        await base.DayOfYear(async);
 
         AssertSql(
             """
@@ -57,9 +57,9 @@ WHERE date_part('doy', b."DateOnly")::int = 314
 """);
     }
 
-    public override async Task DayOfWeek()
+    public override async Task DayOfWeek(bool async)
     {
-        await base.DayOfWeek();
+        await base.DayOfWeek(async);
 
         AssertSql(
             """
@@ -69,9 +69,9 @@ WHERE floor(date_part('dow', b."DateOnly"))::int = 6
 """);
     }
 
-    public override async Task DayNumber()
+    public override async Task DayNumber(bool async)
     {
-        await base.DayNumber();
+        await base.DayNumber(async);
 
         AssertSql(
             """
@@ -81,9 +81,9 @@ WHERE b."DateOnly" - DATE '0001-01-01' = 726780
 """);
     }
 
-    public override async Task AddYears()
+    public override async Task AddYears(bool async)
     {
-        await base.AddYears();
+        await base.AddYears(async);
 
         AssertSql(
             """
@@ -93,9 +93,9 @@ WHERE CAST(b."DateOnly" + INTERVAL '3 years' AS date) = DATE '1993-11-10'
 """);
     }
 
-    public override async Task AddMonths()
+    public override async Task AddMonths(bool async)
     {
-        await base.AddMonths();
+        await base.AddMonths(async);
 
         AssertSql(
             """
@@ -105,9 +105,9 @@ WHERE CAST(b."DateOnly" + INTERVAL '3 months' AS date) = DATE '1991-02-10'
 """);
     }
 
-    public override async Task AddDays()
+    public override async Task AddDays(bool async)
     {
-        await base.AddDays();
+        await base.AddDays(async);
 
         AssertSql(
             """
@@ -117,9 +117,9 @@ WHERE b."DateOnly" + 3 = DATE '1990-11-13'
 """);
     }
 
-    public override async Task DayNumber_subtraction()
+    public override async Task DayNumber_subtraction(bool async)
     {
-        await base.DayNumber_subtraction();
+        await base.DayNumber_subtraction(async);
 
         AssertSql(
             """
@@ -131,9 +131,9 @@ WHERE (b."DateOnly" - DATE '0001-01-01') - @DayNumber = 5
 """);
     }
 
-    public override async Task FromDateTime()
+    public override async Task FromDateTime(bool async)
     {
-        await base.FromDateTime();
+        await base.FromDateTime(async);
 
         AssertSql(
             """
@@ -143,9 +143,9 @@ WHERE CAST(b."DateTime" AT TIME ZONE 'UTC' AS date) = DATE '1998-05-04'
 """);
     }
 
-    public override async Task FromDateTime_compared_to_property()
+    public override async Task FromDateTime_compared_to_property(bool async)
     {
-        await base.FromDateTime_compared_to_property();
+        await base.FromDateTime_compared_to_property(async);
 
         AssertSql(
             """
@@ -155,9 +155,9 @@ WHERE CAST(b."DateTime" AT TIME ZONE 'UTC' AS date) = b."DateOnly"
 """);
     }
 
-    public override async Task FromDateTime_compared_to_constant_and_parameter()
+    public override async Task FromDateTime_compared_to_constant_and_parameter(bool async)
     {
-        await base.FromDateTime_compared_to_constant_and_parameter();
+        await base.FromDateTime_compared_to_constant_and_parameter(async);
 
         AssertSql(
             """
@@ -169,9 +169,9 @@ WHERE CAST(b."DateTime" AT TIME ZONE 'UTC' AS date) IN (@dateOnly, DATE '1998-05
 """);
     }
 
-    public override async Task ToDateTime_property_with_constant_TimeOnly()
+    public override async Task ToDateTime_property_with_constant_TimeOnly(bool async)
     {
-        await base.ToDateTime_property_with_constant_TimeOnly();
+        await base.ToDateTime_property_with_constant_TimeOnly(async);
 
         AssertSql(
             """
@@ -181,9 +181,9 @@ WHERE b."DateOnly" + TIME '21:05:19.9405' = TIMESTAMP '2020-01-01T21:05:19.9405'
 """);
     }
 
-    public override async Task ToDateTime_property_with_property_TimeOnly()
+    public override async Task ToDateTime_property_with_property_TimeOnly(bool async)
     {
-        await base.ToDateTime_property_with_property_TimeOnly();
+        await base.ToDateTime_property_with_property_TimeOnly(async);
 
         AssertSql(
             """
@@ -193,9 +193,9 @@ WHERE b."DateOnly" + b."TimeOnly" = TIMESTAMP '2020-01-01T15:30:10'
 """);
     }
 
-    public override async Task ToDateTime_constant_DateTime_with_property_TimeOnly()
+    public override async Task ToDateTime_constant_DateTime_with_property_TimeOnly(bool async)
     {
-        await base.ToDateTime_constant_DateTime_with_property_TimeOnly();
+        await base.ToDateTime_constant_DateTime_with_property_TimeOnly(async);
 
         AssertSql(
             """
@@ -205,9 +205,9 @@ WHERE DATE '1990-11-10' + b."TimeOnly" = TIMESTAMP '1990-11-10T15:30:10'
 """);
     }
 
-    public override async Task ToDateTime_with_complex_DateTime()
+    public override async Task ToDateTime_with_complex_DateTime(bool async)
     {
-        await base.ToDateTime_with_complex_DateTime();
+        await base.ToDateTime_with_complex_DateTime(async);
 
         AssertSql(
             """
@@ -217,9 +217,9 @@ WHERE CAST(b."DateOnly" + INTERVAL '1 years' AS date) + b."TimeOnly" = TIMESTAMP
 """);
     }
 
-    public override async Task ToDateTime_with_complex_TimeOnly()
+    public override async Task ToDateTime_with_complex_TimeOnly(bool async)
     {
-        await base.ToDateTime_with_complex_TimeOnly();
+        await base.ToDateTime_with_complex_TimeOnly(async);
 
         AssertSql(
             """

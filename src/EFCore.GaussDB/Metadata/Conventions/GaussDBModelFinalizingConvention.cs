@@ -34,7 +34,7 @@ public class GaussDBModelFinalizingConvention : IModelFinalizingConvention
             foreach (var property in entityType.GetDeclaredProperties())
             {
                 var typeMapping = (RelationalTypeMapping?)property.FindTypeMapping()
-                    ?? typeMappingSource.FindMapping((IProperty)property);
+                    ?? _typeMappingSource.FindMapping((IProperty)property);
 
                 if (typeMapping is not null)
                 {
@@ -52,7 +52,7 @@ public class GaussDBModelFinalizingConvention : IModelFinalizingConvention
     /// </summary>
     protected virtual void SetupEnums(IConventionModelBuilder modelBuilder)
     {
-        foreach (var enumDefinition in enumDefinitions)
+        foreach (var enumDefinition in _enumDefinitions)
         {
             modelBuilder.HasPostgresEnum(
                 enumDefinition.StoreTypeSchema,
@@ -82,9 +82,6 @@ public class GaussDBModelFinalizingConvention : IModelFinalizingConvention
             case "lquery":
             case "ltxtquery":
                 modelBuilder.HasPostgresExtension("ltree");
-                break;
-            case "cube":
-                modelBuilder.HasPostgresExtension("cube");
                 break;
         }
     }

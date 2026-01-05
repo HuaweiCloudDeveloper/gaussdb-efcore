@@ -9,9 +9,9 @@ public class MiscellaneousOperatorTranslationsGaussDBTest : MiscellaneousOperato
         Fixture.TestSqlLoggerFactory.SetTestOutputHelper(testOutputHelper);
     }
 
-    public override async Task Conditional()
+    public override async Task Conditional(bool async)
     {
-        await base.Conditional();
+        await base.Conditional(async);
 
         AssertSql(
             """
@@ -24,9 +24,9 @@ END = 'Seattle'
 """);
     }
 
-    public override async Task Coalesce()
+    public override async Task Coalesce(bool async)
     {
-        await base.Coalesce();
+        await base.Coalesce(async);
 
         AssertSql(
             """
