@@ -60,48 +60,70 @@ jobs:
         run: dotnet build --configuration Debug
         shell: bash
 
-      - name: Start PostgreSQL ${{ matrix.pg_major }} (Linux)
+      - name: Start GaussDB ${{ matrix.pg_major }} (Linux)
         if: startsWith(matrix.os, 'ubuntu')
         run: |
-          # First uninstall any PostgreSQL installed on the image
-          dpkg-query -W --showformat='${Package}\n' 'postgresql-*' | xargs sudo dpkg -P postgresql
+          # First uninstall any GaussDB installed on the image
+          dpkg-query -W --showformat='${Package}\n' 'opengauss-*' | xargs sudo dpkg -P opengauss
 
           # Automated repository configuration
-          sudo apt install -y postgresql-common
-          sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -v ${{ matrix.pg_major }} -y
+          sudo apt install -y opengauss-common
+          sudo /usr/share/opengauss-common/pgdg/apt.opengauss.org.sh -v ${{ matrix.pg_major }} -y
           sudo apt-get update -qq
-          sudo apt-get install -qq postgresql-${{ matrix.pg_major  }}
+          sudo apt-get install -qq opengauss-${{ matrix.pg_major  }}
 
           # To disable PostGIS for prereleases (because it usually isn't available until late), surround with the following:
           #if [ -z "${{ matrix.pg_prerelease }}" ]; then
-            sudo apt-get install -qq postgresql-${{ matrix.pg_major }}-postgis-${{ env.postgis_version }}
+            sudo apt-get install -qq opengauss-${{ matrix.pg_major }}-postgis-${{ env.postgis_version }}
           #fi
 
-          sudo sed -i 's/max_connections = 100/max_connections = 200/g' /etc/postgresql/${{ matrix.pg_major }}/main/postgresql.conf
-          sudo systemctl restart postgresql
+          sudo sed -i 's/max_connections = 100/max_connections = 200/g' /etc/opengauss/${{ matrix.pg_major }}/main/opengauss.conf
+          sudo systemctl restart opengauss
           sudo -u postgres psql -c "CREATE USER npgsql_tests SUPERUSER PASSWORD 'npgsql_tests'"
 
-      - name: Start PostgreSQL ${{ matrix.pg_major }} (Windows)
+      - name: Start GaussDB ${{ matrix.pg_major }} (Windows)
         if: startsWith(matrix.os, 'windows')
         run: |
           # Find EnterpriseDB version number
           EDB_VERSION=$(pwsh -c "
               \$global:progressPreference='silentlyContinue';
-              Invoke-WebRequest -URI https://www.postgresql.org/applications-v2.xml |
+              Invoke-WebRequest -URI https://www.opengauss.org/applications-v2.xml |
                   Select-Object -ExpandProperty Content |
-                  Select-Xml -XPath '/applications/application[id=\"postgresql_${{ matrix.pg_major }}\" and platform=\"windows-x64\"]/version/text()' |
+                  Select-Xml -XPath '/applications/application[id=\"opengauss_${{ matrix.pg_major }}\" and platform=\"windows-x64\"]/version/text()' |
                   Select-Object -First 1 -ExpandProperty Node |
                   Select-Object -ExpandProperty Value")
 
-          # Install PostgreSQL
-          echo "Installing PostgreSQL (version: ${EDB_VERSION})"
-          curl -o pgsql.zip -L https://get.enterprisedb.com/postgresql/postgresql-${EDB_VERSION}-windows-x64-binaries.zip
+          # Install GaussDB
+          echo "Installing GaussDB (version: ${EDB_VERSION})"
+          curl -o pgsql.zip -L https://get.enterprisedb.com/opengauss/opengauss-${EDB_VERSION}-windows-x64-binaries.zip
           unzip pgsql.zip -x 'pgsql/include/**' 'pgsql/doc/**' 'pgsql/pgAdmin 4/**' 'pgsql/StackBuilder/**'
 
-          # Match Npgsql CI Docker image and stash one level up
+          # Match GaussDB CI Docker image and stash one level up
           cp $GITHUB_WORKSPACE/.build/{server.crt,server.key} pgsql
 
-          # Start PostgreSQL
+          # Find OSGEO version number
+          OSGEO_VERSION=$(\
+            curl -Ls https://download.osgeo.org/postgis/windows/pg${{ matrix.pg_major }} |
+            sed -n 's/.*>postgis-bundle-pg${{ matrix.pg_major }}-\(${{ env.postgis_version }}.[0-9]*.[0-9]*\)x64.zip<.*/\1/p' |
+            tail -n 1)
+          if [ -z "$OSGEO_VERSION" ]; then
+              OSGEO_VERSION=$(\
+                curl -Ls https://download.osgeo.org/postgis/windows/pg${{ matrix.pg_major }}/archive |
+                sed -n 's/.*>postgis-bundle-pg${{ matrix.pg_major }}-\(${{ env.postgis_version }}.[0-9]*.[0-9]*\)x64.zip<.*/\1/p' |
+                tail -n 1)
+              POSTGIS_PATH="archive/"
+          else
+              POSTGIS_PATH=""
+          fi
+
+          # Install PostGIS
+          echo "Installing PostGIS (version: ${OSGEO_VERSION})"
+          POSTGIS_FILE="postgis-bundle-pg${{ matrix.pg_major }}-${OSGEO_VERSION}x64"
+          curl -o postgis.zip -L https://download.osgeo.org/postgis/windows/pg${{ matrix.pg_major }}/${POSTGIS_FILE}.zip
+          unzip postgis.zip -d postgis
+          cp -a postgis/$POSTGIS_FILE/. pgsql/
+
+          # Start GaussDB
           pgsql/bin/initdb -D pgsql/PGDATA -E UTF8 -U postgres
           pgsql/bin/pg_ctl -D pgsql/PGDATA -l logfile -o '-c max_connections=200 -c max_prepared_transactions=10 -c ssl=true -c ssl_cert_file=../server.crt -c ssl_key_file=../server.key' start
 
@@ -146,7 +168,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v6
         with:
-          name: EFCore.PG.CI
+          name: EFCore.GaussDB.CI
           path: nupkgs
 
       - name: Publish packages to MyGet (vnext)
@@ -178,7 +200,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v6
         with:
-          name: EFCore.PG.Release
+          name: EFCore.GaussDB.Release
           path: nupkgs
 
       # TODO: Create a release

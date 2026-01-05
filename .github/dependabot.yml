@@ -7,7 +7,7 @@ updates:
       # and because it submits 3 different PRs
       - dependency-name: "Microsoft.EntityFrameworkCore.*"
       - dependency-name: "Microsoft.Extensions.*"
-      - dependency-name: "Npgsql"
+      - dependency-name: "HuaweiCloud.Driver.GaussDB"
     schedule:
       interval: daily
 

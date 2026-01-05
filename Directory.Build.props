@@ -1,28 +1,28 @@
 <Project>
   <PropertyGroup>
-    <VersionPrefix>11.0.0-preview.1</VersionPrefix>
-    <TargetFramework>net10.0</TargetFramework>
+    <VersionPrefix>0.0.1</VersionPrefix>
+    <TargetFrameworks>net10.0</TargetFrameworks>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AnalysisLevel>latest</AnalysisLevel>
     <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
-    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)Npgsql.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)GaussDB.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     <ImplicitUsings>true</ImplicitUsings>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
 
-    <Copyright>Copyright 2025 © The Npgsql Development Team</Copyright>
-    <Company>Npgsql</Company>
+    <Copyright>Copyright 2026 © The GaussDB Development Team</Copyright>
+    <Company>GaussDB</Company>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <PackageLicenseExpression>PostgreSQL</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/npgsql/efcore.pg</PackageProjectUrl>
-    <PackageIcon>postgresql.png</PackageIcon>
+    <PackageProjectUrl>https://github.com/HuaweiCloudDeveloper/gaussdb-efcore</PackageProjectUrl>
+    <PackageIcon>gaussdb.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)postgresql.png" Pack="true" PackagePath="" />
+    <None Include="$(MSBuildThisFileDirectory)gaussdb.png" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <ItemGroup>
@@ -51,8 +51,8 @@
     <Using Include="Microsoft.EntityFrameworkCore.Utilities" />
     <Using Include="Microsoft.Extensions.Logging" />
     <Using Include="Microsoft.Extensions.DependencyInjection" />
-    <Using Include="Npgsql" />
-    <Using Include="NpgsqlTypes" />
+    <Using Include="HuaweiCloud.GaussDB" />
+    <Using Include="HuaweiCloud.GaussDBTypes" />
   </ItemGroup>
 
 </Project>

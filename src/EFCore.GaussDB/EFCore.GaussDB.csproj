@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>HuaweiCloud.EntityFrameworkCore.GaussDB</AssemblyName>
+    <RootNamespace>HuaweiCloud.EntityFrameworkCore.GaussDB</RootNamespace>
+
+    <Authors>Conan Yao</Authors>
+    <Description>GaussDB provider for Entity Framework Core.</Description>
+    <PackageTags>gaussdb;opengauss;Entity Framework Core;entity-framework-core;ef;efcore;orm;sql</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <NoWarn>EF9100</NoWarn>
+    <PackageProjectUrl>https://github.com/HuaweiCloudDeveloper/gaussdb-efcore</PackageProjectUrl>
+    <Copyright>Copyright 2026 © The HuaweiCloud Development Team</Copyright> <!-- Precompiled query is experimental -->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- PrivateAssets="none" is set to flow the EF Core analyzer to users referencing this package https://github.com/aspnet/EntityFrameworkCore/pull/11350 -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore" PrivateAssets="none" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" PrivateAssets="none" />
+    <PackageReference Include="HuaweiCloud.Driver.GaussDB" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Shared\*.cs" />
+
+    <None Update="Properties\SqlServerStrings.Designer.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

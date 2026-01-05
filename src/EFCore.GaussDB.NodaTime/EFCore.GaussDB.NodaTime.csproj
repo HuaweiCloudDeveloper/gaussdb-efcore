@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>HuaweiCloud.EntityFrameworkCore.GaussDB.NodaTime</AssemblyName>
+    <RootNamespace>HuaweiCloud.EntityFrameworkCore.GaussDB.NodaTime</RootNamespace>
+
+    <Authors>Conan Yao</Authors>
+    <Description>NodaTime support plugin for GaussDB Entity Framework Core provider.</Description>
+    <PackageTags>gauss;gaussdb;Entity Framework Core;entity-framework-core;ef;efcore;orm;sql;nodatime;date;time</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EFCore.GaussDB\EFCore.GaussDB.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="HuaweiCloud.Driver.GaussDB.NodaTime" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="NodaTime" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Shared\*.cs" />
+    <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="build\**\*">
+      <Pack>True</Pack>
+      <PackagePath>build</PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>
