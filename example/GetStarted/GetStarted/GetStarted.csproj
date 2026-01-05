@@ -10,7 +10,10 @@
 
   <ItemGroup>
     <PackageReference Include="dotenv.net" />
-    <PackageReference Include="HuaweiCloud.EntityFrameworkCore.GaussDB" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\EFCore.GaussDB\EFCore.GaussDB.csproj" />
   </ItemGroup>
 
   <ItemGroup>

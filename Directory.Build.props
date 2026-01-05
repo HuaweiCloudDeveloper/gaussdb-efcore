@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <VersionPrefix>0.0.1-preview.1</VersionPrefix>
+    <VersionPrefix>0.0.1</VersionPrefix>
     <TargetFrameworks>net10.0</TargetFrameworks>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
@@ -14,7 +14,7 @@
     <ImplicitUsings>true</ImplicitUsings>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
 
-    <Copyright>Copyright 2025 © The GaussDB Development Team</Copyright>
+    <Copyright>Copyright 2026 © The GaussDB Development Team</Copyright>
     <Company>GaussDB</Company>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <PackageLicenseExpression>PostgreSQL</PackageLicenseExpression>

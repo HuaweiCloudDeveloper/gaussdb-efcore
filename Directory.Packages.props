@@ -1,13 +1,12 @@
 <Project>
   <PropertyGroup>
-    <EFCoreVersion>10.0.0-preview.7.25352.2</EFCoreVersion>
-    <MicrosoftExtensionsVersion>10.0.0-preview.7.25351.105</MicrosoftExtensionsVersion>
-    <GaussDBVersion>9.0.3</GaussDBVersion>
+    <EFCoreVersion>10.0.0</EFCoreVersion>
+    <MicrosoftExtensionsVersion>10.0.0</MicrosoftExtensionsVersion>
     <DriverVersion>0.1.0</DriverVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="dotenv.net" Version="4.0.0" />
-    <PackageVersion Include="HuaweiCloud.EntityFrameworkCore.GaussDB" Version="0.0.1-preview.1" />
+    <PackageVersion Include="HuaweiCloud.EntityFrameworkCore.GaussDB" Version="0.0.1-preview.260105" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="$(EFCoreVersion)" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" Version="$(EFCoreVersion)" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Abstractions" Version="$(EFCoreVersion)" />
@@ -17,15 +16,15 @@
     <PackageVersion Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="$(MicrosoftExtensionsVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Logging" Version="$(MicrosoftExtensionsVersion)" />
     <PackageVersion Include="HuaweiCloud.Driver.GaussDB" Version="$(DriverVersion)" />
-    <PackageVersion Include="HuaweiCloud.GaussDB.NodaTime" Version="$(GaussDBVersion)" />
-    <PackageVersion Include="HuaweiCloud.GaussDB.NetTopologySuite" Version="$(GaussDBVersion)" />
-    <PackageVersion Include="HuaweiCloud.GaussDB.DependencyInjection" Version="$(GaussDBVersion)" />
+    <PackageVersion Include="HuaweiCloud.Driver.GaussDB.NodaTime" Version="$(DriverVersion)" />
+    <PackageVersion Include="HuaweiCloud.Driver.GaussDB.DependencyInjection" Version="$(DriverVersion)" />
+    <PackageVersion Include="HuaweiCloud.Driver.GaussDB.NetTopologySuite" Version="$(DriverVersion)" />
     <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
-    <PackageVersion Include="xunit" Version="2.9.2" />
-    <PackageVersion Include="xunit.assert" Version="2.9.2" />
-    <PackageVersion Include="xunit.core" Version="2.9.2" />
-    <PackageVersion Include="xunit.runner.visualstudio" Version="3.0.2" />
-    <PackageVersion Include="GitHubActionsTestLogger" Version="2.3.3" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
+    <PackageVersion Include="xunit" Version="2.9.3" />
+    <PackageVersion Include="xunit.assert" Version="2.9.3" />
+    <PackageVersion Include="xunit.core" Version="2.9.3" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.5" />
+    <PackageVersion Include="GitHubActionsTestLogger" Version="2.4.1" />
   </ItemGroup>
 </Project>

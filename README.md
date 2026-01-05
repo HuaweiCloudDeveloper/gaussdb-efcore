@@ -36,7 +36,7 @@ public class Blog
 }
 ```
 
-Aside from providing general EF Core support for GaussDB, the provider also exposes some GaussDB-specific capabilities, allowing you to query JSON, array or range columns, as well as many other advanced features. For more information, see the [the GaussDB site](http://www.npgsql.org/efcore/index.html). For information about EF Core in general, see the [EF Core website](https://docs.microsoft.com/ef/core/).
+Aside from providing general EF Core support for GaussDB, the provider also exposes some GaussDB-specific capabilities, allowing you to query JSON, array or range columns, as well as many other advanced features. For more information, see the [the GaussDB site](https://doc.hcs.huawei.com/db/zh-cn/index.html). For information about EF Core in general, see the [EF Core website](https://docs.microsoft.com/ef/core/).
 
 ## Related packages
 

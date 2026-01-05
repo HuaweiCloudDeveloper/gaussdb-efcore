@@ -1,12 +1,14 @@
-﻿using dotenv.net;
+﻿using System;
+using dotenv.net;
 
 namespace GetStarted
 {
     /// <summary>
     /// EF Core 上下文类，用于配置和操作 GaussDB 数据库
     /// </summary>
-    public class GaussDBDbContext : DbContext
+    public class GaussDBDbContext(DbContextOptions<GaussDBDbContext> options) : DbContext(options)
     {
+
         /// <summary>
         /// 员工表，EF Core 会自动根据模型类进行映射
         /// </summary>

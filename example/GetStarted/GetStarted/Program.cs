@@ -1,11 +1,6 @@
 ﻿using System.Data;
 using dotenv.net;
 using GetStarted;
-using Microsoft.EntityFrameworkCore.Query.Internal;
-using Microsoft.EntityFrameworkCore.Query;
-using Microsoft.EntityFrameworkCore.Storage;
-using System.Linq;
-using System.Reflection;
 
 DotEnv.Load(); // 加载 .env 文件中的环境变量
 
@@ -21,7 +16,14 @@ if (conn.State is ConnectionState.Closed)
 
 Console.WriteLine($@"Connection state: {conn.State}");
 
-using var ctx = new GaussDBDbContext();
+
+// 配置DbContext
+var optionsBuilder = new DbContextOptionsBuilder<GaussDBDbContext>();
+optionsBuilder.UseGaussDB(connString)
+              .LogTo(Console.WriteLine) // 开启日志，便于排查详细错误
+              .EnableSensitiveDataLogging(); // 开发环境临时开启，生产环境关闭
+
+await using var ctx = new GaussDBDbContext(optionsBuilder.Options);
 
 // ⚠️开发时建议使用：清空旧表并重新建表
 try
@@ -54,9 +56,9 @@ if (!CreateSuccess)
 
 // 插入初始数据
 ctx.Employees?.AddRange(
-    new Employee { Id = 1, Name = "John", Age = 30 },
-    new Employee { Id = 2, Name = "Alice", Age = 16 },
-    new Employee { Id = 3, Name = "Mike", Age = 24 }
+    new Employee { Name = "John", Age = 30 },
+    new Employee { Name = "Alice", Age = 16 },
+    new Employee { Name = "Mike", Age = 24 }
 );
 await ctx.SaveChangesAsync(); // 提交更改
 Console.WriteLine("✅ 初始数据已插入");
@@ -100,7 +102,7 @@ static async Task QueryTest(GaussDBDbContext ctx, Expression<Func<Employee, bool
     if (query == null)
         return;
 
-    var results = await query.ToListAsync();
+    var results = await query.OrderBy(s => s.Age).ToListAsync();
     foreach (var e in results)
     {
         Console.WriteLine($"👤 ID: {e.Id}, Name: {e.Name}, Age: {e.Age}");
@@ -121,36 +123,3 @@ async Task CreateTable(GaussDBDbContext ctx)
     Console.WriteLine("✅ 创建表 employees 完成");
 }
 
-/// <summary>
-///
-/// </summary>
-public static class QueryableExtensions
-{
-    private static readonly TypeInfo QueryCompilerTypeInfo = typeof(QueryCompiler).GetTypeInfo();
-
-    private static readonly FieldInfo QueryCompilerField = typeof(EntityQueryProvider).GetTypeInfo().DeclaredFields.First(x => x.Name == "_queryCompiler");
-    private static readonly FieldInfo QueryModelGeneratorField = typeof(QueryCompiler).GetTypeInfo().DeclaredFields.First(x => x.Name == "_queryModelGenerator");
-    private static readonly FieldInfo DataBaseField = QueryCompilerTypeInfo.DeclaredFields.Single(x => x.Name == "_database");
-    private static readonly PropertyInfo DatabaseDependenciesField = typeof(Database).GetTypeInfo().DeclaredProperties.Single(x => x.Name == "Dependencies");
-
-    ///// <summary>
-    ///// 获取本次查询SQL语句
-    ///// </summary>
-    ///// <typeparam name="TEntity"></typeparam>
-    ///// <param name="query"></param>
-    ///// <returns></returns>
-    //public static string ToSql<TEntity>(this IQueryable<TEntity> query)
-    //{
-    //    var queryCompiler = (QueryCompiler)QueryCompilerField.GetValue(query.Provider);
-    //    var queryModelGenerator = (QueryModelGenerator)QueryModelGeneratorField.GetValue(queryCompiler);
-    //    var queryModel = queryModelGenerator.ParseQuery(query.Expression);
-    //    var database = DataBaseField.GetValue(queryCompiler);
-    //    var databaseDependencies = (DatabaseDependencies)DatabaseDependenciesField.GetValue(database);
-    //    var queryCompilationContext = databaseDependencies.QueryCompilationContextFactory.Create(false);
-    //    var modelVisitor = (RelationalQueryModelVisitor)queryCompilationContext.CreateQueryModelVisitor();
-    //    modelVisitor.CreateQueryExecutor<TEntity>(queryModel);
-    //    var sql = modelVisitor.Queries.First().ToString();
-
-    //    return sql;
-    //}
-}

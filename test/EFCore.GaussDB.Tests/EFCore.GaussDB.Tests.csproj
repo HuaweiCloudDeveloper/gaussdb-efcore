@@ -18,7 +18,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational.Specification.Tests" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" />
     <PackageReference Include="Microsoft.Extensions.Logging" />
-    <PackageReference Include="GaussDB.DependencyInjection" />
+    <PackageReference Include="HuaweiCloud.Driver.GaussDB.DependencyInjection" />
 
     <!-- Needed to override xunit dependencies from EFCore projects on versions which aren't available on nuget.org -->
     <PackageReference Include="xunit.assert" />

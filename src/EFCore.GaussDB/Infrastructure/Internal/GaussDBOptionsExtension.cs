@@ -2,7 +2,6 @@ using System.Data.Common;
 using System.Globalization;
 using System.Net.Security;
 using System.Text;
-using HuaweiCloud.GaussDB;
 
 namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure.Internal;
 
@@ -12,7 +11,7 @@ namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure.Internal;
 public class GaussDBOptionsExtension : RelationalOptionsExtension
 {
     private DbContextOptionsExtensionInfo? _info;
-    private ParameterizedCollectionMode? _parameterizedCollectionMode;
+    //private ParameterizedCollectionMode? _parameterizedCollectionMode;
 
     private readonly List<UserRangeDefinition> _userRangeDefinitions;
     private readonly List<EnumDefinition> _enumDefinitions;
@@ -22,14 +21,14 @@ public class GaussDBOptionsExtension : RelationalOptionsExtension
     // which is the EF relational default. In GaussDB using native array parameters is better, and the
     // query plan problem can be mitigated by telling GaussDB to use a custom plan (see #3269).
 
-    /// <summary>
-    ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to
-    ///     the same compatibility standards as public APIs. It may be changed or removed without notice in
-    ///     any release. You should only use it directly in your code with extreme caution and knowing that
-    ///     doing so can result in application failures when updating to a new Entity Framework Core release.
-    /// </summary>
-    public override ParameterizedCollectionMode ParameterizedCollectionMode
-        => _parameterizedCollectionMode ?? ParameterizedCollectionMode.Parameter;
+    ///// <summary>
+    /////     This is an internal API that supports the Entity Framework Core infrastructure and not subject to
+    /////     the same compatibility standards as public APIs. It may be changed or removed without notice in
+    /////     any release. You should only use it directly in your code with extreme caution and knowing that
+    /////     doing so can result in application failures when updating to a new Entity Framework Core release.
+    ///// </summary>
+    //public override ParameterizedCollectionMode ParameterizedCollectionMode
+    //    => _parameterizedCollectionMode ?? ParameterizedCollectionMode.Parameter;
 
     /// <summary>
     ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to
@@ -148,15 +147,15 @@ public class GaussDBOptionsExtension : RelationalOptionsExtension
         => base.MinBatchSize ?? 2;
 
     // We need to override WithUseParameterizedCollectionMode since we override ParameterizedCollectionMode above
-    /// <inheritdoc />
-    public override RelationalOptionsExtension WithUseParameterizedCollectionMode(ParameterizedCollectionMode parameterizedCollectionMode)
-    {
-        var clone = (GaussDBOptionsExtension)Clone();
+    ///// <inheritdoc />
+    //public override RelationalOptionsExtension WithUseParameterizedCollectionMode(ParameterizedCollectionMode parameterizedCollectionMode)
+    //{
+    //    var clone = (GaussDBOptionsExtension)Clone();
 
-        clone._parameterizedCollectionMode = parameterizedCollectionMode;
+    //    clone._parameterizedCollectionMode = parameterizedCollectionMode;
 
-        return clone;
-    }
+    //    return clone;
+    //}
 
     /// <summary>
     ///     Creates a new instance with all options the same as for this instance, but with the given option changed.

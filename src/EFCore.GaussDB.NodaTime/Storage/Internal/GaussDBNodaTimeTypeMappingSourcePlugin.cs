@@ -61,12 +61,12 @@ public class GaussDBNodaTimeTypeMappingSourcePlugin : IRelationalTypeMappingSour
     private readonly DateTimeZoneMapping _timeZone = new("text");
 
     // Built-in ranges
-    private readonly GaussDBCidrTypeMapping _timestampLocalDateTimeRange;
-    private readonly GaussDBCidrTypeMapping _legacyTimestampInstantRange;
-    private readonly GaussDBCidrTypeMapping _timestamptzInstantRange;
-    private readonly GaussDBCidrTypeMapping _timestamptzZonedDateTimeRange;
-    private readonly GaussDBCidrTypeMapping _timestamptzOffsetDateTimeRange;
-    private readonly GaussDBCidrTypeMapping _dateRange;
+    private readonly GaussDBRangeTypeMapping _timestampLocalDateTimeRange;
+    private readonly GaussDBRangeTypeMapping _legacyTimestampInstantRange;
+    private readonly GaussDBRangeTypeMapping _timestamptzInstantRange;
+    private readonly GaussDBRangeTypeMapping _timestamptzZonedDateTimeRange;
+    private readonly GaussDBRangeTypeMapping _timestamptzOffsetDateTimeRange;
+    private readonly GaussDBRangeTypeMapping _dateRange;
     private readonly DateIntervalRangeMapping _dateIntervalRange = new();
     private readonly IntervalRangeMapping _intervalRange = new();
 
@@ -77,17 +77,17 @@ public class GaussDBNodaTimeTypeMappingSourcePlugin : IRelationalTypeMappingSour
     /// </summary>
     public GaussDBNodaTimeTypeMappingSourcePlugin(ISqlGenerationHelper sqlGenerationHelper)
     {
-        _timestampLocalDateTimeRange = GaussDBCidrTypeMapping.CreatBuiltInRangeMapping(
+        _timestampLocalDateTimeRange = GaussDBRangeTypeMapping.CreatBuiltInRangeMapping(
             "tsrange", typeof(GaussDBRange<LocalDateTime>), GaussDBDbType.TimestampRange, _timestampLocalDateTime);
-        _legacyTimestampInstantRange = GaussDBCidrTypeMapping.CreatBuiltInRangeMapping(
+        _legacyTimestampInstantRange = GaussDBRangeTypeMapping.CreatBuiltInRangeMapping(
             "tsrange", typeof(GaussDBRange<Instant>), GaussDBDbType.TimestampRange, _legacyTimestampInstant);
-        _timestamptzInstantRange = GaussDBCidrTypeMapping.CreatBuiltInRangeMapping(
+        _timestamptzInstantRange = GaussDBRangeTypeMapping.CreatBuiltInRangeMapping(
             "tstzrange", typeof(GaussDBRange<Instant>), GaussDBDbType.TimestampTzRange, _timestamptzInstant);
-        _timestamptzZonedDateTimeRange = GaussDBCidrTypeMapping.CreatBuiltInRangeMapping(
+        _timestamptzZonedDateTimeRange = GaussDBRangeTypeMapping.CreatBuiltInRangeMapping(
             "tstzrange", typeof(GaussDBRange<ZonedDateTime>), GaussDBDbType.TimestampTzRange, _timestamptzZonedDateTime);
-        _timestamptzOffsetDateTimeRange = GaussDBCidrTypeMapping.CreatBuiltInRangeMapping(
+        _timestamptzOffsetDateTimeRange = GaussDBRangeTypeMapping.CreatBuiltInRangeMapping(
             "tstzrange", typeof(GaussDBRange<OffsetDateTime>), GaussDBDbType.TimestampTzRange, _timestamptzOffsetDateTime);
-        _dateRange = GaussDBCidrTypeMapping.CreatBuiltInRangeMapping(
+        _dateRange = GaussDBRangeTypeMapping.CreatBuiltInRangeMapping(
             "daterange", typeof(GaussDBRange<LocalDate>), GaussDBDbType.DateRange, _date);
 
         var storeTypeMappings = new Dictionary<string, RelationalTypeMapping[]>(StringComparer.OrdinalIgnoreCase)

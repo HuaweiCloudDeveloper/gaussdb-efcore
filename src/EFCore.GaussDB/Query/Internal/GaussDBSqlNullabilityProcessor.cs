@@ -502,17 +502,17 @@ public class GaussDBSqlNullabilityProcessor : SqlNullabilityProcessor
 
         nullable = false;
 
-        // The null semantics behavior we implement for LIKE is that it only returns true when both sides are non-null and match; any other
-        // input returns false:
-        // foo LIKE f% -> true
-        // foo LIKE null -> false
-        // null LIKE f% -> false
-        // null LIKE null -> false
+        //// The null semantics behavior we implement for LIKE is that it only returns true when both sides are non-null and match; any other
+        //// input returns false:
+        //// foo LIKE f% -> true
+        //// foo LIKE null -> false
+        //// null LIKE f% -> false
+        //// null LIKE null -> false
 
-        if (IsNull(match) || IsNull(pattern) || IsNull(escapeChar))
-        {
-            return _sqlExpressionFactory.Constant(false, iLikeExpression.TypeMapping);
-        }
+        //if (IsNull(match) || IsNull(pattern) || IsNull(escapeChar))
+        //{
+        //    return _sqlExpressionFactory.Constant(false, iLikeExpression.TypeMapping);
+        //}
 
         // A constant match-all pattern (%) returns true for all cases, except where the match string is null:
         // nullable_foo LIKE % -> foo IS NOT NULL
@@ -734,8 +734,8 @@ public class GaussDBSqlNullabilityProcessor : SqlNullabilityProcessor
         return true;
     }
 
-    // Note that we can check parameter values for null since we cache by the parameter nullability; but we cannot do the same for bool.
-    private bool IsNull(SqlExpression? expression)
-        => expression is SqlConstantExpression { Value: null }
-            || expression is SqlParameterExpression { Name: string parameterName } && ParametersFacade.IsParameterNull(parameterName);
+    //// Note that we can check parameter values for null since we cache by the parameter nullability; but we cannot do the same for bool.
+    //private bool IsNull(SqlExpression? expression)
+    //    => expression is SqlConstantExpression { Value: null }
+    //        || expression is SqlParameterExpression { Name: string parameterName } && ParametersFacade.IsParameterNull(parameterName);
 }

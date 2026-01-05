@@ -1,8 +1,8 @@
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore.Storage.Json;
-using HuaweiCloud.EntityFrameworkCore.GaussDB.NodaTime.Text;
 using HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal.Mapping;
 using static HuaweiCloud.EntityFrameworkCore.GaussDB.NodaTime.Utilties.Util;
+using NodaTime.Text;
 
 // ReSharper disable once CheckNamespace
 namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal;

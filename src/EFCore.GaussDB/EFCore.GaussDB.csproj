@@ -10,7 +10,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <NoWarn>EF9100</NoWarn>
     <PackageProjectUrl>https://github.com/HuaweiCloudDeveloper/gaussdb-efcore</PackageProjectUrl>
-    <Copyright>Copyright 2025 © The HuaweiCloud Development Team</Copyright> <!-- Precompiled query is experimental -->
+    <Copyright>Copyright 2026 © The HuaweiCloud Development Team</Copyright> <!-- Precompiled query is experimental -->
   </PropertyGroup>
 
   <ItemGroup>
