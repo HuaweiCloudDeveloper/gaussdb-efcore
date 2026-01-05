@@ -1,0 +1,28 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="GaussDB.snk" />
+    <File Path="global.json" />
+    <File Path="NuGet.config" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/example/">
+    <Project Path="example/GetStarted/GetStarted/GetStarted.csproj" Id="4a953120-fcc5-4b5d-90a5-9d1251a86725" />
+  </Folder>
+  <Folder Name="/Github/">
+    <File Path=".github/dependabot.yml" />
+    <File Path=".github/workflows/build.yml" />
+    <File Path=".github/workflows/codeql-analysis.yml" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/EFCore.GaussDB.NodaTime/EFCore.GaussDB.NodaTime.csproj" />
+    <Project Path="src/EFCore.GaussDB.NTS/EFCore.GaussDB.NTS.csproj" />
+    <Project Path="src/EFCore.GaussDB/EFCore.GaussDB.csproj" />
+  </Folder>
+  <Folder Name="/test/">
+    <Project Path="test/EFCore.GaussDB.FunctionalTests/EFCore.GaussDB.FunctionalTests.csproj" />
+    <Project Path="test/EFCore.GaussDB.Tests/EFCore.GaussDB.Tests.csproj" />
+  </Folder>
+</Solution>
