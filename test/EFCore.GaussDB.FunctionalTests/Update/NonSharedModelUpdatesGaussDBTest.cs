@@ -1,6 +1,6 @@
 namespace Microsoft.EntityFrameworkCore.Update;
 
-public class NonSharedModelUpdatesGaussDBTest(NonSharedFixture fixture) : NonSharedModelUpdatesTestBase(fixture)
+public class NonSharedModelUpdatesGaussDBTest : NonSharedModelUpdatesTestBase
 {
     protected override ITestStoreFactory TestStoreFactory
         => GaussDBTestStoreFactory.Instance;

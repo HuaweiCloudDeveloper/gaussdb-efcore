@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore.Storage.Json;
 using NetTopologySuite.Geometries;
 using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure;
@@ -130,6 +131,18 @@ public class GaussDBTypeMappingSourceTest
         Assert.Equal(expectedStoreType, mapping.StoreType);
         Assert.Same(clrType, mapping.ClrType);
     }
+
+#if !NET10_0_OR_GREATER
+    [Fact]
+    public void JsonElement_default_mapping_uses_owned_json_mapping_for_EF9_structural_json_container_columns()
+    {
+        // EF9 uses JsonElement as the placeholder key when building ToJson() container columns.
+        var mapping = CreateTypeMappingSource().FindMapping(typeof(JsonElement));
+
+        var ownedMapping = Assert.IsType<GaussDBOwnedJsonTypeMapping>(mapping);
+        Assert.Equal("jsonb", ownedMapping.StoreType);
+    }
+#endif
 
     [Theory]
     [InlineData(typeof(decimal), "numeric(5)")]

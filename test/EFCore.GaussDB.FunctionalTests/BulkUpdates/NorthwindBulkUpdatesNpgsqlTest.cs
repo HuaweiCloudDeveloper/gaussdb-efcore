@@ -252,6 +252,15 @@ public class NorthwindBulkUpdatesGaussDBTest(
 
     [ConditionalTheory(Skip = ComplexBulkMutationSkip)]
     [MemberData(nameof(IsAsyncData))]
+    public override Task Delete_with_left_join(bool async)
+    {
+        _ = async;
+        return Task.CompletedTask;
+    }
+
+#if NET10_0_OR_GREATER
+    [ConditionalTheory(Skip = ComplexBulkMutationSkip)]
+    [MemberData(nameof(IsAsyncData))]
     public override Task Delete_with_LeftJoin(bool async)
     {
         _ = async;
@@ -265,6 +274,7 @@ public class NorthwindBulkUpdatesGaussDBTest(
         _ = async;
         return Task.CompletedTask;
     }
+#endif
 
     [ConditionalTheory(Skip = ComplexBulkMutationSkip)]
     [MemberData(nameof(IsAsyncData))]
@@ -318,6 +328,7 @@ WHERE EXISTS (
 """);
     }
 
+#if NET10_0_OR_GREATER
     [ConditionalTheory(Skip = ComplexBulkMutationSkip)]
     [MemberData(nameof(IsAsyncData))]
     public override Task Delete_with_RightJoin(bool async)
@@ -325,19 +336,18 @@ WHERE EXISTS (
         _ = async;
         return Task.CompletedTask;
     }
+#endif
 
     public override async Task Update_Where_set_constant_TagWith(bool async)
     {
         await base.Update_Where_set_constant_TagWith(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='Updated'
-
+"""
 -- MyUpdate
 
 UPDATE "Customers" AS c
-SET "ContactName" = @p
+SET "ContactName" = 'Updated'
 WHERE c."CustomerID" LIKE 'F%'
 """);
     }
@@ -347,15 +357,14 @@ WHERE c."CustomerID" LIKE 'F%'
         await base.Update_Where_set_constant(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='Updated'
-
+"""
 UPDATE "Customers" AS c
-SET "ContactName" = @p
+SET "ContactName" = 'Updated'
 WHERE c."CustomerID" LIKE 'F%'
 """);
     }
 
+#if NET10_0_OR_GREATER
     public override async Task Update_Where_set_constant_via_lambda(bool async)
     {
         await base.Update_Where_set_constant_via_lambda(async);
@@ -367,40 +376,38 @@ SET "ContactName" = 'Updated'
 WHERE c."CustomerID" LIKE 'F%'
 """);
     }
+#endif
 
     public override async Task Update_Where_parameter_set_constant(bool async)
     {
         await base.Update_Where_parameter_set_constant(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='Updated'
-@customer='ALFKI'
+"""
+@__customer_0='ALFKI'
 
 UPDATE "Customers" AS c
-SET "ContactName" = @p
-WHERE c."CustomerID" = @customer
+SET "ContactName" = 'Updated'
+WHERE c."CustomerID" = @__customer_0
 """,
-            //
-            """
-@customer='ALFKI'
+                //
+                """
+@__customer_0='ALFKI'
 
 SELECT c."CustomerID", c."Address", c."City", c."CompanyName", c."ContactName", c."ContactTitle", c."Country", c."Fax", c."Phone", c."PostalCode", c."Region"
 FROM "Customers" AS c
-WHERE c."CustomerID" = @customer
+WHERE c."CustomerID" = @__customer_0
 """,
-            //
-            """
+                //
+                """
 SELECT c."CustomerID", c."Address", c."City", c."CompanyName", c."ContactName", c."ContactTitle", c."Country", c."Fax", c."Phone", c."PostalCode", c."Region"
 FROM "Customers" AS c
 WHERE FALSE
 """,
-            //
-            """
-@p='Updated'
-
+                //
+                """
 UPDATE "Customers" AS c
-SET "ContactName" = @p
+SET "ContactName" = 'Updated'
 WHERE FALSE
 """);
     }
@@ -410,11 +417,11 @@ WHERE FALSE
         await base.Update_Where_set_parameter(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='Abc'
+"""
+@__value_0='Abc'
 
 UPDATE "Customers" AS c
-SET "ContactName" = @p
+SET "ContactName" = @__value_0
 WHERE c."CustomerID" LIKE 'F%'
 """);
     }
@@ -424,11 +431,11 @@ WHERE c."CustomerID" LIKE 'F%'
         await base.Update_Where_set_parameter_from_closure_array(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='Abc'
+"""
+@__p_0='Abc'
 
 UPDATE "Customers" AS c
-SET "ContactName" = @p
+SET "ContactName" = @__p_0
 WHERE c."CustomerID" LIKE 'F%'
 """);
     }
@@ -438,11 +445,9 @@ WHERE c."CustomerID" LIKE 'F%'
         await base.Update_Where_set_parameter_from_inline_list(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='Abc'
-
+"""
 UPDATE "Customers" AS c
-SET "ContactName" = @p
+SET "ContactName" = 'Abc'
 WHERE c."CustomerID" LIKE 'F%'
 """);
     }
@@ -452,11 +457,11 @@ WHERE c."CustomerID" LIKE 'F%'
         await base.Update_Where_set_parameter_from_multilevel_property_access(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='Abc'
+"""
+@__container_Containee_Property_0='Abc'
 
 UPDATE "Customers" AS c
-SET "ContactName" = @p
+SET "ContactName" = @__container_Containee_Property_0
 WHERE c."CustomerID" LIKE 'F%'
 """);
     }
@@ -478,11 +483,9 @@ WHERE c."CustomerID" LIKE 'F%'
         await base.Update_Where_OrderBy_set_constant(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='Updated'
-
+"""
 UPDATE "Customers" AS c0
-SET "ContactName" = @p
+SET "ContactName" = 'Updated'
 FROM (
     SELECT c."CustomerID"
     FROM "Customers" AS c
@@ -497,18 +500,17 @@ WHERE c0."CustomerID" = c1."CustomerID"
         await base.Update_Where_OrderBy_Skip_set_constant(async);
 
         AssertExecuteUpdateSql(
-            """
-@p0='Updated'
-@p='4'
+"""
+@__p_0='4'
 
 UPDATE "Customers" AS c0
-SET "ContactName" = @p0
+SET "ContactName" = 'Updated'
 FROM (
     SELECT c."CustomerID"
     FROM "Customers" AS c
     WHERE c."CustomerID" LIKE 'F%'
     ORDER BY c."City" NULLS FIRST
-    OFFSET @p
+    OFFSET @__p_0
 ) AS c1
 WHERE c0."CustomerID" = c1."CustomerID"
 """);
@@ -519,18 +521,17 @@ WHERE c0."CustomerID" = c1."CustomerID"
         await base.Update_Where_OrderBy_Take_set_constant(async);
 
         AssertExecuteUpdateSql(
-            """
-@p0='Updated'
-@p='4'
+"""
+@__p_0='4'
 
 UPDATE "Customers" AS c0
-SET "ContactName" = @p0
+SET "ContactName" = 'Updated'
 FROM (
     SELECT c."CustomerID"
     FROM "Customers" AS c
     WHERE c."CustomerID" LIKE 'F%'
     ORDER BY c."City" NULLS FIRST
-    LIMIT @p
+    LIMIT @__p_0
 ) AS c1
 WHERE c0."CustomerID" = c1."CustomerID"
 """);
@@ -541,19 +542,18 @@ WHERE c0."CustomerID" = c1."CustomerID"
         await base.Update_Where_OrderBy_Skip_Take_set_constant(async);
 
         AssertExecuteUpdateSql(
-            """
-@p1='Updated'
-@p0='4'
-@p='2'
+"""
+@__p_1='4'
+@__p_0='2'
 
 UPDATE "Customers" AS c0
-SET "ContactName" = @p1
+SET "ContactName" = 'Updated'
 FROM (
     SELECT c."CustomerID"
     FROM "Customers" AS c
     WHERE c."CustomerID" LIKE 'F%'
     ORDER BY c."City" NULLS FIRST
-    LIMIT @p0 OFFSET @p
+    LIMIT @__p_1 OFFSET @__p_0
 ) AS c1
 WHERE c0."CustomerID" = c1."CustomerID"
 """);
@@ -564,13 +564,12 @@ WHERE c0."CustomerID" = c1."CustomerID"
         await base.Update_Where_OrderBy_Skip_Take_Skip_Take_set_constant(async);
 
         AssertExecuteUpdateSql(
-            """
-@p3='Updated'
-@p0='6'
-@p='2'
+"""
+@__p_1='6'
+@__p_0='2'
 
 UPDATE "Customers" AS c1
-SET "ContactName" = @p3
+SET "ContactName" = 'Updated'
 FROM (
     SELECT c0."CustomerID"
     FROM (
@@ -578,10 +577,10 @@ FROM (
         FROM "Customers" AS c
         WHERE c."CustomerID" LIKE 'F%'
         ORDER BY c."City" NULLS FIRST
-        LIMIT @p0 OFFSET @p
+        LIMIT @__p_1 OFFSET @__p_0
     ) AS c0
     ORDER BY c0."City" NULLS FIRST
-    LIMIT @p OFFSET @p
+    LIMIT @__p_0 OFFSET @__p_0
 ) AS c2
 WHERE c1."CustomerID" = c2."CustomerID"
 """);
@@ -592,11 +591,9 @@ WHERE c1."CustomerID" = c2."CustomerID"
         await base.Update_Where_GroupBy_aggregate_set_constant(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='Updated'
-
+"""
 UPDATE "Customers" AS c
-SET "ContactName" = @p
+SET "ContactName" = 'Updated'
 WHERE c."CustomerID" = (
     SELECT o."CustomerID"
     FROM "Orders" AS o
@@ -611,11 +608,9 @@ WHERE c."CustomerID" = (
         await base.Update_Where_GroupBy_First_set_constant(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='Updated'
-
+"""
 UPDATE "Customers" AS c
-SET "ContactName" = @p
+SET "ContactName" = 'Updated'
 WHERE c."CustomerID" = (
     SELECT (
         SELECT o0."CustomerID"
@@ -641,11 +636,9 @@ WHERE c."CustomerID" = (
         await base.Update_Where_GroupBy_First_set_constant_3(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='Updated'
-
+"""
 UPDATE "Customers" AS c
-SET "ContactName" = @p
+SET "ContactName" = 'Updated'
 WHERE c."CustomerID" IN (
     SELECT (
         SELECT c0."CustomerID"
@@ -665,11 +658,9 @@ WHERE c."CustomerID" IN (
         await base.Update_Where_Distinct_set_constant(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='Updated'
-
+"""
 UPDATE "Customers" AS c0
-SET "ContactName" = @p
+SET "ContactName" = 'Updated'
 FROM (
     SELECT DISTINCT c."CustomerID", c."Address", c."City", c."CompanyName", c."ContactName", c."ContactTitle", c."Country", c."Fax", c."Phone", c."PostalCode", c."Region"
     FROM "Customers" AS c
@@ -702,11 +693,9 @@ WHERE o0."OrderID" = s."OrderID"
         await base.Update_Where_using_navigation_2_set_constant(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='1'
-
+"""
 UPDATE "Order Details" AS o
-SET "Quantity" = @p::smallint
+SET "Quantity" = 1::smallint
 FROM "Orders" AS o0
 LEFT JOIN "Customers" AS c ON o0."CustomerID" = c."CustomerID"
 WHERE o."OrderID" = o0."OrderID" AND c."City" = 'Seattle'
@@ -743,11 +732,11 @@ WHERE c."CustomerID" LIKE 'F%'
         await base.Update_Where_set_property_plus_parameter(async);
 
         AssertExecuteUpdateSql(
-            """
-@value='Abc'
+"""
+@__value_0='Abc'
 
 UPDATE "Customers" AS c
-SET "ContactName" = COALESCE(c."ContactName", '') || @value
+SET "ContactName" = COALESCE(c."ContactName", '') || @__value_0
 WHERE c."CustomerID" LIKE 'F%'
 """);
     }
@@ -769,11 +758,9 @@ WHERE c."CustomerID" LIKE 'F%'
         await base.Update_Where_set_constant_using_ef_property(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='Updated'
-
+"""
 UPDATE "Customers" AS c
-SET "ContactName" = @p
+SET "ContactName" = 'Updated'
 WHERE c."CustomerID" LIKE 'F%'
 """);
     }
@@ -797,18 +784,24 @@ WHERE c."CustomerID" LIKE 'F%'
         AssertExecuteUpdateSql();
     }
 
+    public override async Task Update_with_invalid_lambda_throws(bool async)
+    {
+        await base.Update_with_invalid_lambda_throws(async);
+
+        AssertExecuteUpdateSql();
+    }
+
     public override async Task Update_Where_multiple_set(bool async)
     {
         await base.Update_Where_multiple_set(async);
 
         AssertExecuteUpdateSql(
-            """
-@value='Abc'
-@p='Seattle'
+"""
+@__value_0='Abc'
 
 UPDATE "Customers" AS c
-SET "ContactName" = @value,
-    "City" = @p
+SET "City" = 'Seattle',
+    "ContactName" = @__value_0
 WHERE c."CustomerID" LIKE 'F%'
 """);
     }
@@ -839,11 +832,9 @@ WHERE c."CustomerID" LIKE 'F%'
         await base.Update_Union_set_constant(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='Updated'
-
+"""
 UPDATE "Customers" AS c1
-SET "ContactName" = @p
+SET "ContactName" = 'Updated'
 FROM (
     SELECT c."CustomerID", c."Address", c."City", c."CompanyName", c."ContactName", c."ContactTitle", c."Country", c."Fax", c."Phone", c."PostalCode", c."Region"
     FROM "Customers" AS c
@@ -862,11 +853,9 @@ WHERE c1."CustomerID" = u."CustomerID"
         await base.Update_Concat_set_constant(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='Updated'
-
+"""
 UPDATE "Customers" AS c1
-SET "ContactName" = @p
+SET "ContactName" = 'Updated'
 FROM (
     SELECT c."CustomerID"
     FROM "Customers" AS c
@@ -878,7 +867,6 @@ FROM (
 ) AS u
 WHERE c1."CustomerID" = u."CustomerID"
 """);
-
     }
 
     public override async Task Update_Except_set_constant(bool async)
@@ -886,11 +874,9 @@ WHERE c1."CustomerID" = u."CustomerID"
         await base.Update_Except_set_constant(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='Updated'
-
+"""
 UPDATE "Customers" AS c1
-SET "ContactName" = @p
+SET "ContactName" = 'Updated'
 FROM (
     SELECT c."CustomerID", c."Address", c."City", c."CompanyName", c."ContactName", c."ContactTitle", c."Country", c."Fax", c."Phone", c."PostalCode", c."Region"
     FROM "Customers" AS c
@@ -909,11 +895,9 @@ WHERE c1."CustomerID" = e."CustomerID"
         await base.Update_Intersect_set_constant(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='Updated'
-
+"""
 UPDATE "Customers" AS c1
-SET "ContactName" = @p
+SET "ContactName" = 'Updated'
 FROM (
     SELECT c."CustomerID", c."Address", c."City", c."CompanyName", c."ContactName", c."ContactTitle", c."Country", c."Fax", c."Phone", c."PostalCode", c."Region"
     FROM "Customers" AS c
@@ -932,11 +916,9 @@ WHERE c1."CustomerID" = i."CustomerID"
         await base.Update_with_join_set_constant(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='Updated'
-
+"""
 UPDATE "Customers" AS c
-SET "ContactName" = @p
+SET "ContactName" = 'Updated'
 FROM (
     SELECT o."CustomerID"
     FROM "Orders" AS o
@@ -946,6 +928,29 @@ WHERE c."CustomerID" = o0."CustomerID" AND c."CustomerID" LIKE 'F%'
 """);
     }
 
+    public override async Task Update_with_left_join_set_constant(bool async)
+    {
+        await base.Update_with_left_join_set_constant(async);
+
+        AssertExecuteUpdateSql(
+            """
+UPDATE "Customers" AS c0
+SET "ContactName" = 'Updated'
+FROM (
+    SELECT c."CustomerID"
+    FROM "Customers" AS c
+    LEFT JOIN (
+        SELECT o."CustomerID"
+        FROM "Orders" AS o
+        WHERE o."OrderID" < 10300
+    ) AS o0 ON c."CustomerID" = o0."CustomerID"
+    WHERE c."CustomerID" LIKE 'F%'
+) AS s
+WHERE c0."CustomerID" = s."CustomerID"
+""");
+    }
+
+#if NET10_0_OR_GREATER
     public override async Task Update_with_LeftJoin(bool async)
     {
         await base.Update_with_LeftJoin(async);
@@ -1028,17 +1033,16 @@ FROM (
 WHERE o0."OrderID" = s."OrderID"
 """);
     }
+#endif
 
     public override async Task Update_with_cross_join_set_constant(bool async)
     {
         await base.Update_with_cross_join_set_constant(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='Updated'
-
+"""
 UPDATE "Customers" AS c
-SET "ContactName" = @p
+SET "ContactName" = 'Updated'
 FROM (
     SELECT 1
     FROM "Orders" AS o
@@ -1104,11 +1108,9 @@ WHERE c0."CustomerID" = s."CustomerID"
         await base.Update_with_cross_join_left_join_set_constant(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='Updated'
-
+"""
 UPDATE "Customers" AS c2
-SET "ContactName" = @p
+SET "ContactName" = 'Updated'
 FROM (
     SELECT c."CustomerID"
     FROM "Customers" AS c
@@ -1265,11 +1267,9 @@ WHERE c."CustomerID" LIKE 'F%'
             (b, a) => Assert.All(a, od => Assert.Equal(1, od.Quantity)));
 
         AssertExecuteUpdateSql(
-            """
-@p='1'
-
+"""
 UPDATE "Order Details" AS o
-SET "Quantity" = @p::smallint
+SET "Quantity" = 1::smallint
 FROM "Products" AS p,
     "Orders" AS o0
 WHERE o."OrderID" = o0."OrderID" AND o."ProductID" = p."ProductID" AND p."Discontinued" AND o0."OrderDate" > TIMESTAMP '1990-01-01T00:00:00'

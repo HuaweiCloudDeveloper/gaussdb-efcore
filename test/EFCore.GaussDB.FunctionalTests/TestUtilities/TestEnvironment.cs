@@ -31,6 +31,11 @@ public static class TestEnvironment
     public static string DefaultConnection
         => Config["DefaultConnection"] ?? DefaultConnectionString;
 
+    public static bool EnableExtensionSessionParameter
+        => Config["EnableExtensionSessionParameter"] is not { } value
+            || !bool.TryParse(value, out var enabled)
+            || enabled;
+
     private static Version? _postgresVersion;
 
     public static Version PostgresVersion

@@ -262,7 +262,9 @@ public class GaussDBQueryableMethodTranslatingExpressionVisitor : RelationalQuer
         var columnInfos = new List<GaussDBTableValuedFunctionExpression.ColumnInfo>();
 
         // We're only interested in properties which actually exist in the JSON, filter out uninteresting shadow keys
-        foreach (var property in jsonQueryExpression.StructuralType.GetPropertiesInHierarchy())
+        var entityType = jsonQueryExpression.EntityType;
+
+        foreach (var property in entityType.GetPropertiesInHierarchy())
         {
             if (property.GetJsonPropertyName() is string jsonPropertyName)
             {
@@ -275,37 +277,16 @@ public class GaussDBQueryableMethodTranslatingExpressionVisitor : RelationalQuer
             }
         }
 
-        switch (jsonQueryExpression.StructuralType)
+        foreach (var navigation in entityType.GetNavigationsInHierarchy()
+            .Where(n => n.ForeignKey.IsOwnership
+                && n.TargetEntityType.IsMappedToJson()
+                && n.ForeignKey.PrincipalToDependent == n))
         {
-            case IEntityType entityType:
-                foreach (var navigation in entityType.GetNavigationsInHierarchy()
-                    .Where(n => n.ForeignKey.IsOwnership
-                        && n.TargetEntityType.IsMappedToJson()
-                        && n.ForeignKey.PrincipalToDependent == n))
-                {
-                    var jsonNavigationName = navigation.TargetEntityType.GetJsonPropertyName();
-                    Check.DebugAssert(jsonNavigationName is not null, $"No JSON property name for navigation {navigation.Name}");
+            var jsonNavigationName = navigation.TargetEntityType.GetJsonPropertyName();
+            Check.DebugAssert(jsonNavigationName is not null, $"No JSON property name for navigation {navigation.Name}");
 
-                    columnInfos.Add(
-                        new GaussDBTableValuedFunctionExpression.ColumnInfo { Name = jsonNavigationName, TypeMapping = jsonTypeMapping });
-                }
-
-                break;
-
-            case IComplexType complexType:
-                foreach (var complexProperty in complexType.GetComplexProperties())
-                {
-                    var jsonPropertyName = complexProperty.ComplexType.GetJsonPropertyName();
-                    Check.DebugAssert(jsonPropertyName is not null, $"No JSON property name for complex property {complexProperty.Name}");
-
-                    columnInfos.Add(
-                        new GaussDBTableValuedFunctionExpression.ColumnInfo { Name = jsonPropertyName, TypeMapping = jsonTypeMapping });
-                }
-
-                break;
-
-            default:
-                throw new UnreachableException();
+            columnInfos.Add(
+                new GaussDBTableValuedFunctionExpression.ColumnInfo { Name = jsonNavigationName, TypeMapping = jsonTypeMapping });
         }
 
         // json_to_recordset requires the nested JSON document - it does not accept a path within a containing JSON document (like SQL
@@ -330,7 +311,7 @@ public class GaussDBQueryableMethodTranslatingExpressionVisitor : RelationalQuer
         return new ShapedQueryExpression(
             selectExpression,
             new RelationalStructuralTypeShaperExpression(
-                jsonQueryExpression.StructuralType,
+                entityType,
                 new ProjectionBindingExpression(
                     selectExpression,
                     new ProjectionMember(),
@@ -641,6 +622,7 @@ public class GaussDBQueryableMethodTranslatingExpressionVisitor : RelationalQuer
         return true;
     }
 
+#if NET10_0_OR_GREATER
 #pragma warning disable EF9002 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
     /// <summary>
     ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to
@@ -775,6 +757,8 @@ public class GaussDBQueryableMethodTranslatingExpressionVisitor : RelationalQuer
         }
     }
 
+#endif
+
     #endregion ExecuteUpdate
 
     /// <summary>
@@ -783,10 +767,19 @@ public class GaussDBQueryableMethodTranslatingExpressionVisitor : RelationalQuer
     ///     any release. You should only use it directly in your code with extreme caution and knowing that
     ///     doing so can result in application failures when updating to a new Entity Framework Core release.
     /// </summary>
-    protected override bool IsValidSelectExpressionForExecuteDelete(SelectExpression selectExpression)
+    protected override bool IsValidSelectExpressionForExecuteDelete(
+        SelectExpression selectExpression,
+        StructuralTypeShaperExpression shaper,
+        [NotNullWhen(true)] out TableExpression? tableExpression)
+    {
+        if (!base.IsValidSelectExpressionForExecuteDelete(selectExpression, shaper, out tableExpression))
+        {
+            return false;
+        }
+
         // The default relational behavior is to allow only single-table expressions, and the only permitted feature is a predicate.
         // Here we extend this to also inner joins to tables, which we generate via the PostgreSQL-specific USING construct.
-        => selectExpression is
+        return selectExpression is
         {
             Orderings: [],
             Offset: null,
@@ -795,6 +788,7 @@ public class GaussDBQueryableMethodTranslatingExpressionVisitor : RelationalQuer
             Having: null
         }
         && selectExpression.Tables[0] is TableExpression && selectExpression.Tables.Skip(1).All(t => t is InnerJoinExpression);
+    }
 
     // PostgreSQL unnest is guaranteed to return output rows in the same order as its input array,
     // https://www.postgresql.org/docs/current/functions-array.html.

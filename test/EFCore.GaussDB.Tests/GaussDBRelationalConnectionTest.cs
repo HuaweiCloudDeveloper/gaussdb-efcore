@@ -406,9 +406,7 @@ public class GaussDBRelationalConnectionTest
                             TestServiceFactory.Instance.Create<RelationalTypeMappingSourceDependencies>(),
                             new GaussDBSqlGenerationHelper(new RelationalSqlGenerationHelperDependencies()),
                             new GaussDBSingletonOptions()),
-                        new ExceptionDetector(),
-                        new LoggingOptions())),
-                new ExceptionDetector()),
+                        new ExceptionDetector()))),
             new GaussDBDataSourceManager([]),
             dbContextOptions);
     }

@@ -52,6 +52,9 @@ public class TestRelationalCommandBuilderFactory(RelationalCommandBuilderDepende
             return this;
         }
 
+        public IRelationalCommandBuilder Append(string value)
+            => Append(value, redact: false);
+
         public IRelationalCommandBuilder Append(FormattableString value, bool redact = false)
         {
             Instance.Append(value);
@@ -91,13 +94,13 @@ public class TestRelationalCommandBuilderFactory(RelationalCommandBuilderDepende
         IReadOnlyList<IRelationalParameter> parameters)
         : IRelationalCommand
     {
-        private readonly RelationalCommand _realRelationalCommand = new(dependencies, commandText, logCommandText, parameters);
+        private readonly RelationalCommand _realRelationalCommand = new(dependencies, commandText, parameters);
 
         public string CommandText
             => _realRelationalCommand.CommandText;
 
         public string LogCommandText
-            => _realRelationalCommand.LogCommandText;
+            => logCommandText;
 
         public IReadOnlyList<IRelationalParameter> Parameters
             => _realRelationalCommand.Parameters;

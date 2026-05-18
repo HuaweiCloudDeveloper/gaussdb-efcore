@@ -135,15 +135,15 @@ internal static class Check
 
     [DoesNotReturn]
     private static void ThrowNotEmpty(string parameterName)
-        => throw new ArgumentException(AbstractionsStrings.CollectionArgumentIsEmpty, parameterName);
+        => throw new ArgumentException(AbstractionsStrings.CollectionArgumentIsEmpty(parameterName), parameterName);
 
     [DoesNotReturn]
     private static void ThrowStringArgumentEmpty(string parameterName)
-        => throw new ArgumentException(AbstractionsStrings.ArgumentIsEmpty, parameterName);
+        => throw new ArgumentException(AbstractionsStrings.ArgumentIsEmpty(parameterName), parameterName);
 
     [DoesNotReturn]
     private static void ThrowCollectionHasEmptyElements(string parameterName)
-        => throw new ArgumentException(AbstractionsStrings.CollectionArgumentHasEmptyElements, parameterName);
+        => throw new ArgumentException(AbstractionsStrings.CollectionArgumentHasEmptyElements(parameterName), parameterName);
 
     [DoesNotReturn]
     private static void ThrowArgumentException(string message, string parameterName)

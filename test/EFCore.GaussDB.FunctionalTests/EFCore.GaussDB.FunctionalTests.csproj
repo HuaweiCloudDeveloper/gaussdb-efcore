@@ -29,4 +29,55 @@
     <None Update="config.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- EF9 test control: start from Npgsql/EFCore.PG 9 test shape, then keep GaussDB-specific exclusions. -->
+    <Compile Remove="Query\AdHoc*.cs" />
+    <Compile Remove="Query\Associations\**\*.cs" />
+    <Compile Remove="Query\ArrayArrayQueryTest.cs" />
+    <Compile Remove="Query\ArrayListQueryTest.cs" />
+    <Compile Remove="Query\ComplexTypeQueryGaussDBTest.cs" />
+    <Compile Remove="Query\EntitySplittingQueryGaussDBTest.cs" />
+    <Compile Remove="Query\FullTextSearchDbFunctionsGaussDBTest.cs" />
+    <Compile Remove="Query\GearsOfWarQueryGaussDBTest.cs" />
+    <Compile Remove="Query\JsonDomQueryTest.cs" />
+    <Compile Remove="Query\JsonPocoQueryTest.cs" />
+    <Compile Remove="Query\JsonQueryGaussDBTest.cs" />
+    <Compile Remove="Query\JsonStringQueryTest.cs" />
+    <Compile Remove="Query\LegacyTimestampQueryTest.cs" />
+    <Compile Remove="Query\NonSharedPrimitiveCollectionsQueryGaussDBTest.cs" />
+    <Compile Remove="Query\NorthwindAggregateOperatorsQueryGaussDBTest.cs" />
+    <Compile Remove="Query\NorthwindFunctionsQueryGaussDBTest.cs" />
+    <Compile Remove="Query\NorthwindGroupByQueryGaussDBTest.cs" />
+    <Compile Remove="Query\NorthwindJoinQueryGaussDBTest.cs" />
+    <Compile Remove="Query\NorthwindMiscellaneousQueryGaussDBTest.cs" />
+    <Compile Remove="Query\NorthwindSelectQueryGaussDBTest.cs" />
+    <Compile Remove="Query\NorthwindWhereQueryGaussDBTest.cs" />
+    <Compile Remove="Query\OperatorsQueryGaussDBTest.cs" />
+    <Compile Remove="Query\OptionalDependentQueryGaussDBTest.cs" />
+    <Compile Remove="Query\OwnedEntityQueryGaussDBTest.cs" />
+    <Compile Remove="Query\PrecompiledQueryGaussDBTest.cs" />
+    <Compile Remove="Query\PrecompiledSqlPregenerationQueryGaussDBTest.cs" />
+    <Compile Remove="Query\PrimitiveCollectionsQueryGaussDBTest.cs" />
+    <Compile Remove="Query\SharedTypeQueryGaussDBTest.cs" />
+    <Compile Remove="Query\SqlQueryGaussDBTest.cs" />
+    <Compile Remove="Query\ToSqlQueryGaussDBTest.cs" />
+    <Compile Remove="Query\TPCGearsOfWarQueryGaussDBTest.cs" />
+    <Compile Remove="Query\TPCManyToManyNoTrackingQueryGaussDBTest.cs" />
+    <Compile Remove="Query\TPCManyToManyQueryGaussDBTest.cs" />
+    <Compile Remove="Query\TPTGearsOfWarQueryGaussDBTest.cs" />
+    <Compile Remove="Query\TPTManyToManyNoTrackingQueryGaussDBTest.cs" />
+    <Compile Remove="Query\TPTManyToManyQueryGaussDBTest.cs" />
+    <Compile Remove="Query\UdfDbFunctionGaussDBTests.cs" />
+    <Compile Remove="Query\Translations\**\*.cs" />
+    <Compile Remove="ComplexTypesTrackingGaussDBTest.cs" />
+    <Compile Remove="EntitySplittingGaussDBTest.cs" />
+    <Compile Remove="LazyLoadProxyGaussDBTest.cs" />
+    <Compile Remove="PropertyValuesGaussDBTest.cs" />
+    <Compile Remove="TableSplittingGaussDBTest.cs" />
+    <Compile Remove="TPTTableSplittingGaussDBTest.cs" />
+    <Compile Remove="ModelBuilding\NpgsqlModelBuilderGenericTest.cs" />
+    <Compile Remove="ModelBuilding\NpgsqlModelBuilderTestBase.cs" />
+    <Compile Remove="TestModels\NodaTime\*.cs" />
+  </ItemGroup>
+
 </Project>

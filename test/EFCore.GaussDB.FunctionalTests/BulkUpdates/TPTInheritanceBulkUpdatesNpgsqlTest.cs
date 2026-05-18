@@ -60,11 +60,9 @@ public class TPTInheritanceBulkUpdatesGaussDBTest(
 
         // TODO: This over-complex SQL would get pruned after https://github.com/dotnet/efcore/issues/31083
         AssertExecuteUpdateSql(
-            """
-@p='Animal'
-
+"""
 UPDATE "Animals" AS a0
-SET "Name" = @p
+SET "Name" = 'Animal'
 FROM (
     SELECT a."Id"
     FROM "Animals" AS a
@@ -80,11 +78,9 @@ WHERE a0."Id" = s."Id"
 
         // TODO: This over-complex SQL would get pruned after https://github.com/dotnet/efcore/issues/31083
         AssertExecuteUpdateSql(
-            """
-@p='NewBird'
-
+"""
 UPDATE "Animals" AS a0
-SET "Name" = @p
+SET "Name" = 'NewBird'
 FROM "Birds" AS b,
     "Kiwi" AS k0,
     (
@@ -123,11 +119,9 @@ WHERE a0."Id" = s."Id" AND a0."Id" = k0."Id" AND a0."Id" = b."Id"
         await base.Update_base_property_on_derived_type(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='SomeOtherKiwi'
-
+"""
 UPDATE "Animals" AS a
-SET "Name" = @p
+SET "Name" = 'SomeOtherKiwi'
 FROM "Birds" AS b,
     "Kiwi" AS k
 WHERE a."Id" = k."Id" AND a."Id" = b."Id"
@@ -139,11 +133,9 @@ WHERE a."Id" = k."Id" AND a."Id" = b."Id"
         await base.Update_derived_property_on_derived_type(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='0' (DbType = Int16)
-
+"""
 UPDATE "Kiwi" AS k
-SET "FoundOn" = @p
+SET "FoundOn" = 0
 FROM "Animals" AS a
 INNER JOIN "Birds" AS b ON a."Id" = b."Id"
 WHERE a."Id" = k."Id"
@@ -162,11 +154,9 @@ WHERE a."Id" = k."Id"
         await base.Update_where_using_hierarchy(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='Monovia'
-
+"""
 UPDATE "Countries" AS c
-SET "Name" = @p
+SET "Name" = 'Monovia'
 WHERE (
     SELECT count(*)::int
     FROM "Animals" AS a
@@ -179,11 +169,9 @@ WHERE (
         await base.Update_where_using_hierarchy_derived(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='Monovia'
-
+"""
 UPDATE "Countries" AS c
-SET "Name" = @p
+SET "Name" = 'Monovia'
 WHERE (
     SELECT count(*)::int
     FROM "Animals" AS a
@@ -204,11 +192,9 @@ WHERE (
         await base.Update_with_interface_in_property_expression(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='0'
-
+"""
 UPDATE "Coke" AS c
-SET "SugarGrams" = @p
+SET "SugarGrams" = 0
 FROM "Drinks" AS d
 WHERE d."Id" = c."Id"
 """);
@@ -219,11 +205,9 @@ WHERE d."Id" = c."Id"
         await base.Update_with_interface_in_EF_Property_in_property_expression(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='0'
-
+"""
 UPDATE "Coke" AS c
-SET "SugarGrams" = @p
+SET "SugarGrams" = 0
 FROM "Drinks" AS d
 WHERE d."Id" = c."Id"
 """);

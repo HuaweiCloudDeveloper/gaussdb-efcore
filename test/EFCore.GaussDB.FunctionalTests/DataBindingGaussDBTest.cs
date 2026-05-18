@@ -237,6 +237,7 @@ public class DataBindingGaussDBTest(F1BytesGaussDBFixture fixture) : DataBinding
         _ = toObservableCollection;
     }
 
+#if NET10_0_OR_GREATER
     [ConditionalTheory(Skip = F1ModificationReadSkip)]
     [InlineData(false)]
     [InlineData(true)]
@@ -244,6 +245,7 @@ public class DataBindingGaussDBTest(F1BytesGaussDBFixture fixture) : DataBinding
     {
         _ = toObservableCollection;
     }
+#endif
 
     [ConditionalFact(Skip = F1ModificationReadSkip)]
     public override void Sets_containing_instances_of_subtypes_can_still_be_sorted()

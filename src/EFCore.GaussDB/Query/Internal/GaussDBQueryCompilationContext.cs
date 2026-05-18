@@ -18,7 +18,7 @@ public class GaussDBQueryCompilationContext : RelationalQueryCompilationContext
         QueryCompilationContextDependencies dependencies,
         RelationalQueryCompilationContextDependencies relationalDependencies,
         bool async)
-        : this(dependencies, relationalDependencies, async, precompiling: false)
+        : this(dependencies, relationalDependencies, async, precompiling: false, nonNullableReferenceTypeParameters: null)
     {
     }
 
@@ -32,8 +32,9 @@ public class GaussDBQueryCompilationContext : RelationalQueryCompilationContext
         QueryCompilationContextDependencies dependencies,
         RelationalQueryCompilationContextDependencies relationalDependencies,
         bool async,
-        bool precompiling)
-        : base(dependencies, relationalDependencies, async, precompiling)
+        bool precompiling,
+        IReadOnlySet<string>? nonNullableReferenceTypeParameters)
+        : base(dependencies, relationalDependencies, async, precompiling, nonNullableReferenceTypeParameters)
     {
     }
 

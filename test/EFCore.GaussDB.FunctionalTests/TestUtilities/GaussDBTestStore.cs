@@ -537,15 +537,34 @@ WHERE schemaname NOT IN ({InternalSchemas})
         return command;
     }
 
-    public static string CreateConnectionString(string name, string? options = null)
+    public static string CreateConnectionString(
+        string name,
+        string? options = null,
+        bool? enableExtensionSessionParameter = null)
     {
         var builder = new GaussDBConnectionStringBuilder(TestEnvironment.DefaultConnection) { Database = name };
-        builder.Options = options is null
-            ? "-c enable_extension=on"
-            : $"-c enable_extension=on {options}";
+        var connectionStringOptions = CreateConnectionStringOptions(
+            options,
+            enableExtensionSessionParameter ?? TestEnvironment.EnableExtensionSessionParameter);
+
+        if (connectionStringOptions is null)
+        {
+            builder.Remove(nameof(GaussDBConnectionStringBuilder.Options));
+        }
+        else
+        {
+            builder.Options = connectionStringOptions;
+        }
 
         return builder.ConnectionString;
     }
+
+    private static string? CreateConnectionStringOptions(string? options, bool enableExtensionSessionParameter)
+        => enableExtensionSessionParameter
+            ? options is null
+                ? "-c enable_extension=on"
+                : $"-c enable_extension=on {options}"
+            : options;
 
     private static string CreateAdminConnectionString()
         => CreateConnectionString("postgres");

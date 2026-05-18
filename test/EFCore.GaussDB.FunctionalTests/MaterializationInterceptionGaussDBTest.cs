@@ -1,7 +1,7 @@
 namespace Microsoft.EntityFrameworkCore;
 
-public class MaterializationInterceptionGaussDBTest(NonSharedFixture fixture) :
-    MaterializationInterceptionTestBase<MaterializationInterceptionGaussDBTest.GaussDBLibraryContext>(fixture)
+public class MaterializationInterceptionGaussDBTest :
+    MaterializationInterceptionTestBase<MaterializationInterceptionGaussDBTest.GaussDBLibraryContext>
 {
     public class GaussDBLibraryContext(DbContextOptions options) : LibraryContext(options)
     {
