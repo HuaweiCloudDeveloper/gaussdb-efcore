@@ -945,7 +945,7 @@ WHERE schemaname NOT IN ({InternalSchemas})
         var builder = new GaussDBConnectionStringBuilder(TestEnvironment.DefaultConnection) { Database = name };
         var connectionStringOptions = CreateConnectionStringOptions(
             options,
-            enableExtensionSessionParameter ?? TestEnvironment.EnableExtensionSessionParameter);
+            enableExtensionSessionParameter ?? TestEnvironment.EnableExtensionConnectionOption);
 
         if (connectionStringOptions is null)
         {

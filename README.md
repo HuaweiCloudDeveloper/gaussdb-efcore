@@ -38,6 +38,10 @@ public class Blog
 
 Aside from providing general EF Core support for GaussDB, the provider also exposes some GaussDB-specific capabilities, allowing you to query JSON, array or range columns, as well as many other advanced features. For more information, see the [the GaussDB site](https://doc.hcs.huawei.com/db/zh-cn/index.html). For information about EF Core in general, see the [EF Core website](https://docs.microsoft.com/ef/core/).
 
+## Testing
+
+To run the full database-backed test suite against a remote GaussDB instance, see [Standard Full Test Guide](FULL_TEST_GUIDE.md).
+
 ## Related packages
 
 * Spatial plugin to work with GaussDB PostGIS: [HuaweiCloud.EntityFrameworkCore.GaussDB.NetTopologySuite](https://www.nuget.org/packages/HuaweiCloud.EntityFrameworkCore.GaussDB.NetTopologySuite)
