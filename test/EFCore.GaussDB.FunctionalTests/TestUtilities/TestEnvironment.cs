@@ -36,6 +36,11 @@ public static class TestEnvironment
             || !bool.TryParse(value, out var enabled)
             || enabled;
 
+    public static bool IsDistributed
+        => Config["IsDistributed"] is { } value
+            && bool.TryParse(value, out var isDistributed)
+            && isDistributed;
+
     private static Version? _postgresVersion;
 
     public static Version PostgresVersion

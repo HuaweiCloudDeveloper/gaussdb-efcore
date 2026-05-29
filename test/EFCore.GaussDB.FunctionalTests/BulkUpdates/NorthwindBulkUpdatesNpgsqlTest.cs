@@ -588,6 +588,26 @@ WHERE c1."CustomerID" = c2."CustomerID"
 
     public override async Task Update_Where_GroupBy_aggregate_set_constant(bool async)
     {
+        if (TestEnvironment.IsDistributed)
+        {
+            await AssertUpdate(
+                async,
+                ss => ss.Set<Customer>()
+                    .Where(
+                        c => c.CustomerID == ss.Set<Order>()
+                            .GroupBy(e => e.CustomerID)
+                            .Where(g => g.Count() > 11)
+                            .OrderBy(g => g.Key)
+                            .Select(e => e.Key)
+                            .FirstOrDefault()),
+                e => e,
+                s => s.SetProperty(c => c.ContactName, "Updated"),
+                rowsAffectedCount: 1,
+                (b, a) => Assert.All(a, c => Assert.Equal("Updated", c.ContactName)));
+
+            return;
+        }
+
         await base.Update_Where_GroupBy_aggregate_set_constant(async);
 
         AssertExecuteUpdateSql(
@@ -605,6 +625,26 @@ WHERE c."CustomerID" = (
 
     public override async Task Update_Where_GroupBy_First_set_constant(bool async)
     {
+        if (TestEnvironment.IsDistributed)
+        {
+            await AssertUpdate(
+                async,
+                ss => ss.Set<Customer>()
+                    .Where(
+                        c => c.CustomerID == ss.Set<Order>()
+                            .GroupBy(e => e.CustomerID)
+                            .Where(g => g.Count() > 11)
+                            .Select(e => e.OrderBy(o => o.OrderID).First().CustomerID)
+                            .OrderBy(customerId => customerId)
+                            .FirstOrDefault()),
+                e => e,
+                s => s.SetProperty(c => c.ContactName, "Updated"),
+                rowsAffectedCount: 1,
+                (b, a) => Assert.All(a, c => Assert.Equal("Updated", c.ContactName)));
+
+            return;
+        }
+
         await base.Update_Where_GroupBy_First_set_constant(async);
 
         AssertExecuteUpdateSql(

@@ -92,6 +92,20 @@ public class NullSemanticsQueryGaussDBTest : NullSemanticsQueryTestBase<NullSema
         await Task.CompletedTask;
     }
 
+    public override Task CaseOpWhen_predicate(bool async)
+        => TestEnvironment.IsDistributed
+            ? AssertQuery(
+                async,
+                ss => ss.Set<NullSemanticsEntity1>()
+                    .Where(
+                        x => NullSemanticsQueryFixtureBase.BoolSwitch(
+                                x.StringA == "Foo", 3, 2
+                            )
+                            == 2)
+                    .OrderBy(x => x.Id),
+                assertOrder: true)
+            : base.CaseOpWhen_predicate(async);
+
     private void AssertSql(params string[] expected)
         => Fixture.TestSqlLoggerFactory.AssertBaseline(expected);
 

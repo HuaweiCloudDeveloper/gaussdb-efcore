@@ -16,6 +16,10 @@ public class GaussDBTestStore : RelationalTestStore
     private readonly string? _additionalSql;
 
     private const string Northwind = "Northwind";
+    private static readonly Regex ScriptBatchSeparator =
+        new("^GO", RegexOptions.IgnoreCase | RegexOptions.Multiline, TimeSpan.FromMilliseconds(1000.0));
+    private static readonly HashSet<string> NonHashDistributableKeyColumnTypes =
+        new(StringComparer.OrdinalIgnoreCase) { "bytea" };
 
     public const int CommandTimeout = 600;
 
@@ -93,8 +97,15 @@ public class GaussDBTestStore : RelationalTestStore
             else
             {
                 await using var context = createContext();
-                await context.Database.EnsureCreatedResilientlyAsync();
-                await EnsureUserTablesCreatedAsync(context);
+                if (TestEnvironment.IsDistributed)
+                {
+                    await EnsureUserTablesCreatedAsync(context);
+                }
+                else
+                {
+                    await context.Database.EnsureCreatedResilientlyAsync();
+                    await EnsureUserTablesCreatedAsync(context);
+                }
 
                 if (_additionalSql is not null)
                 {
@@ -124,12 +135,24 @@ public class GaussDBTestStore : RelationalTestStore
 
     public static void EnsureCreatedWithUserTables(DbContext context)
     {
+        if (TestEnvironment.IsDistributed)
+        {
+            EnsureCreatedWithUserTablesWithoutForeignKeys(context);
+            return;
+        }
+
         context.Database.EnsureCreatedResiliently();
         EnsureUserTablesCreated(context);
     }
 
     public static async Task EnsureCreatedWithUserTablesAsync(DbContext context)
     {
+        if (TestEnvironment.IsDistributed)
+        {
+            await EnsureCreatedWithUserTablesWithoutForeignKeysAsync(context);
+            return;
+        }
+
         await context.Database.EnsureCreatedResilientlyAsync();
         await EnsureUserTablesCreatedAsync(context);
     }
@@ -172,6 +195,12 @@ public class GaussDBTestStore : RelationalTestStore
             return;
         }
 
+        if (TestEnvironment.IsDistributed)
+        {
+            await CreateTablesWithoutForeignKeysAsync(context);
+            return;
+        }
+
         var creator = context.GetService<IRelationalDatabaseCreator>();
         await creator.CreateTablesAsync();
     }
@@ -183,9 +212,291 @@ public class GaussDBTestStore : RelationalTestStore
             return;
         }
 
+        if (TestEnvironment.IsDistributed)
+        {
+            CreateTablesWithoutForeignKeys(context);
+            return;
+        }
+
         var creator = context.GetService<IRelationalDatabaseCreator>();
         creator.CreateTables();
     }
+
+    private static async Task EnsureCreatedWithUserTablesWithoutForeignKeysAsync(DbContext context)
+    {
+        var creator = context.GetService<IRelationalDatabaseCreator>();
+
+        if (!await creator.ExistsAsync())
+        {
+            await creator.CreateAsync();
+        }
+
+        if (!await HasUserTablesAsync(context.Database.GetDbConnection()))
+        {
+            await CreateTablesWithoutForeignKeysAsync(context);
+        }
+    }
+
+    private static void EnsureCreatedWithUserTablesWithoutForeignKeys(DbContext context)
+    {
+        var creator = context.GetService<IRelationalDatabaseCreator>();
+
+        if (!creator.Exists())
+        {
+            creator.Create();
+        }
+
+        if (!HasUserTables(context.Database.GetDbConnection()))
+        {
+            CreateTablesWithoutForeignKeys(context);
+        }
+    }
+
+    private static IReadOnlyList<MigrationOperation> CreateTableOperations(
+        DbContext context,
+        IModel designTimeModel,
+        bool omitForeignKeys)
+    {
+        var operations = context.GetService<IMigrationsModelDiffer>()
+            .GetDifferences(null, designTimeModel.GetRelationalModel())
+            .ToList();
+
+        if (omitForeignKeys)
+        {
+            RemoveForeignKeys(operations);
+        }
+
+        return operations;
+    }
+
+    private static void RemoveForeignKeys(List<MigrationOperation> operations)
+    {
+        var foreignKeyIndexKeys = new HashSet<string>(StringComparer.Ordinal);
+
+        foreach (var createTableOperation in operations.OfType<CreateTableOperation>())
+        {
+            foreach (var foreignKey in createTableOperation.ForeignKeys)
+            {
+                foreignKeyIndexKeys.Add(CreateIndexKey(createTableOperation.Schema, createTableOperation.Name, foreignKey.Columns));
+            }
+
+            createTableOperation.ForeignKeys.Clear();
+        }
+
+        foreach (var foreignKey in operations.OfType<AddForeignKeyOperation>())
+        {
+            foreignKeyIndexKeys.Add(CreateIndexKey(foreignKey.Schema, foreignKey.Table, foreignKey.Columns));
+        }
+
+        operations.RemoveAll(o => o is AddForeignKeyOperation);
+        operations.RemoveAll(o => o is CreateIndexOperation index && foreignKeyIndexKeys.Contains(
+            CreateIndexKey(index.Schema, index.Table, index.Columns)));
+    }
+
+    private static string CreateIndexKey(string? schema, string table, IReadOnlyList<string> columns)
+        => $"{schema ?? ""}.{table}:{string.Join(",", columns)}";
+
+    private static void CreateTablesWithoutForeignKeys(DbContext context)
+    {
+        var designTimeModel = context.GetService<IDesignTimeModel>().Model;
+        var operations = CreateTableOperations(context, designTimeModel, omitForeignKeys: true);
+        var commands = context.GetService<IMigrationsSqlGenerator>().Generate(operations, designTimeModel);
+        var replicatedTables = GetReplicationDistributedTables(context, operations);
+
+        try
+        {
+            if (replicatedTables.Count == 0)
+            {
+                context.GetService<IMigrationCommandExecutor>()
+                    .ExecuteNonQuery(commands, context.GetService<IRelationalConnection>());
+            }
+            else
+            {
+                ExecuteDistributedMigrationCommands(context, commands, replicatedTables);
+            }
+        }
+        catch (PostgresException e) when (e is { SqlState: "23505", ConstraintName: "pg_type_typname_nsp_index" })
+        {
+            // This occurs when two connections are trying to create the same database concurrently.
+        }
+
+        ReloadTypesIfNeeded(context, operations);
+    }
+
+    private static async Task CreateTablesWithoutForeignKeysAsync(DbContext context)
+    {
+        var designTimeModel = context.GetService<IDesignTimeModel>().Model;
+        var operations = CreateTableOperations(context, designTimeModel, omitForeignKeys: true);
+        var commands = context.GetService<IMigrationsSqlGenerator>().Generate(operations, designTimeModel);
+        var replicatedTables = GetReplicationDistributedTables(context, operations);
+
+        try
+        {
+            if (replicatedTables.Count == 0)
+            {
+                await context.GetService<IMigrationCommandExecutor>()
+                    .ExecuteNonQueryAsync(commands, context.GetService<IRelationalConnection>());
+            }
+            else
+            {
+                await ExecuteDistributedMigrationCommandsAsync(context, commands, replicatedTables);
+            }
+        }
+        catch (PostgresException e) when (e is { SqlState: "23505", ConstraintName: "pg_type_typname_nsp_index" })
+        {
+            // This occurs when two connections are trying to create the same database concurrently.
+        }
+
+        await ReloadTypesIfNeededAsync(context, operations);
+    }
+
+    private static ISet<string> GetReplicationDistributedTables(
+        DbContext context,
+        IEnumerable<MigrationOperation> operations)
+    {
+        var sqlGenerationHelper = context.GetService<ISqlGenerationHelper>();
+
+        // Keep distributed setup from failing on table/index DDL that is unrelated to the behavior under test.
+        return operations.OfType<CreateTableOperation>()
+            .Where(RequiresReplicationDistribution)
+            .Select(o => sqlGenerationHelper.DelimitIdentifier(o.Name, o.Schema))
+            .Concat(operations.OfType<CreateIndexOperation>()
+                .Where(o => o.IsUnique)
+                .Select(o => sqlGenerationHelper.DelimitIdentifier(o.Table, o.Schema)))
+            .ToHashSet(StringComparer.Ordinal);
+    }
+
+    private static bool RequiresReplicationDistribution(CreateTableOperation operation)
+        => operation.UniqueConstraints.Count > 0
+            || operation.PrimaryKey?.Columns.Any(columnName =>
+            {
+                var column = operation.Columns.FirstOrDefault(c => c.Name == columnName);
+
+                return column is not null
+                    && IsNonHashDistributableKeyColumnType(column.ColumnType);
+            }) == true;
+
+    private static bool IsNonHashDistributableKeyColumnType(string? storeType)
+    {
+        if (string.IsNullOrWhiteSpace(storeType))
+        {
+            return false;
+        }
+
+        var normalizedStoreType = storeType.Trim();
+        var parenthesisIndex = normalizedStoreType.IndexOf('(');
+        if (parenthesisIndex >= 0)
+        {
+            normalizedStoreType = normalizedStoreType[..parenthesisIndex].TrimEnd();
+        }
+
+        return NonHashDistributableKeyColumnTypes.Contains(normalizedStoreType);
+    }
+
+    private static void ExecuteDistributedMigrationCommands(
+        DbContext context,
+        IReadOnlyList<MigrationCommand> commands,
+        ISet<string> replicatedTables)
+    {
+        foreach (var command in commands)
+        {
+            ExecuteNonQuery(
+                context.Database.GetDbConnection(),
+                AddReplicationDistribution(command.CommandText, replicatedTables));
+        }
+    }
+
+    private static async Task ExecuteDistributedMigrationCommandsAsync(
+        DbContext context,
+        IReadOnlyList<MigrationCommand> commands,
+        ISet<string> replicatedTables)
+    {
+        foreach (var command in commands)
+        {
+            await ExecuteNonQueryAsync(
+                context.Database.GetDbConnection(),
+                AddReplicationDistribution(command.CommandText, replicatedTables));
+        }
+    }
+
+    private static string AddReplicationDistribution(string commandText, ISet<string> replicatedTables)
+    {
+        if (!TryGetCreateTableTerminator(commandText, replicatedTables, out var terminatorIndex))
+        {
+            return commandText;
+        }
+
+        var createTableSql = commandText[..terminatorIndex].TrimEnd();
+        if (createTableSql.Contains("DISTRIBUTE BY", StringComparison.OrdinalIgnoreCase))
+        {
+            return commandText;
+        }
+
+        return createTableSql + Environment.NewLine + "DISTRIBUTE BY REPLICATION" + commandText[terminatorIndex..];
+    }
+
+    private static bool TryGetCreateTableTerminator(
+        string commandText,
+        ISet<string> replicatedTables,
+        out int terminatorIndex)
+    {
+        terminatorIndex = -1;
+        var trimmedCommandText = commandText.TrimStart();
+
+        foreach (var table in replicatedTables)
+        {
+            if (trimmedCommandText.StartsWith("CREATE TABLE " + table, StringComparison.OrdinalIgnoreCase)
+                || trimmedCommandText.StartsWith("CREATE UNLOGGED TABLE " + table, StringComparison.OrdinalIgnoreCase))
+            {
+                terminatorIndex = commandText.IndexOf(';');
+                return terminatorIndex >= 0;
+            }
+        }
+
+        return false;
+    }
+
+    private static void ReloadTypesIfNeeded(DbContext context, IReadOnlyList<MigrationOperation> operations)
+    {
+        if (!RequiresTypeReload(operations)
+            || context.Database.GetDbConnection() is not GaussDBConnection connection)
+        {
+            return;
+        }
+
+        connection.Open();
+        try
+        {
+            connection.ReloadTypes();
+        }
+        finally
+        {
+            connection.Close();
+        }
+    }
+
+    private static async Task ReloadTypesIfNeededAsync(DbContext context, IReadOnlyList<MigrationOperation> operations)
+    {
+        if (!RequiresTypeReload(operations)
+            || context.Database.GetDbConnection() is not GaussDBConnection connection)
+        {
+            return;
+        }
+
+        await connection.OpenAsync();
+        try
+        {
+            await connection.ReloadTypesAsync();
+        }
+        finally
+        {
+            await connection.CloseAsync();
+        }
+    }
+
+    private static bool RequiresTypeReload(IEnumerable<MigrationOperation> operations)
+        => operations.OfType<AlterDatabaseOperation>()
+            .Any(o => o.GetPostgresExtensions().Any() || o.GetPostgresEnums().Any() || o.GetPostgresRanges().Any());
 
     private async Task<bool> ScriptDatabaseIsInitializedAsync()
     {
@@ -274,9 +585,7 @@ WHERE schemaname NOT IN ({InternalSchemas})
         Execute(
             Connection, command =>
             {
-                foreach (var batch in
-                         new Regex("^GO", RegexOptions.IgnoreCase | RegexOptions.Multiline, TimeSpan.FromMilliseconds(1000.0))
-                             .Split(script).Where(b => !string.IsNullOrEmpty(b)))
+                foreach (var batch in CreateScriptBatches(script, TestEnvironment.IsDistributed))
                 {
                     command.CommandText = batch;
                     command.ExecuteNonQuery();
@@ -284,6 +593,97 @@ WHERE schemaname NOT IN ({InternalSchemas})
 
                 return 0;
             }, "");
+    }
+
+    private static IEnumerable<string> CreateScriptBatches(string script, bool omitForeignKeys)
+        => ScriptBatchSeparator.Split(script)
+            .Select(batch => omitForeignKeys ? OmitForeignKeysFromScriptBatch(batch) : batch)
+            .Where(batch => !string.IsNullOrWhiteSpace(batch));
+
+    private static string OmitForeignKeysFromScriptBatch(string batch)
+    {
+        var trimmedBatch = batch.TrimStart();
+        if (trimmedBatch.StartsWith("ALTER TABLE", StringComparison.OrdinalIgnoreCase)
+            && batch.Contains("ADD CONSTRAINT", StringComparison.OrdinalIgnoreCase)
+            && batch.Contains("FOREIGN KEY", StringComparison.OrdinalIgnoreCase)
+            && batch.Contains("REFERENCES", StringComparison.OrdinalIgnoreCase))
+        {
+            return "";
+        }
+
+        if (!batch.Contains("CREATE TABLE", StringComparison.OrdinalIgnoreCase)
+            || !batch.Contains("FOREIGN KEY", StringComparison.OrdinalIgnoreCase))
+        {
+            return batch;
+        }
+
+        return OmitInlineForeignKeysFromCreateTable(batch);
+    }
+
+    private static string OmitInlineForeignKeysFromCreateTable(string batch)
+    {
+        var lines = batch.Replace("\r\n", "\n").Split('\n').ToList();
+        var keptLines = new List<string>(lines.Count);
+        var skippingForeignKey = false;
+        var seenReferences = false;
+
+        foreach (var line in lines)
+        {
+            if (!skippingForeignKey
+                && line.Contains("CONSTRAINT", StringComparison.OrdinalIgnoreCase)
+                && line.Contains("FOREIGN KEY", StringComparison.OrdinalIgnoreCase))
+            {
+                skippingForeignKey = true;
+                seenReferences = line.Contains("REFERENCES", StringComparison.OrdinalIgnoreCase);
+                continue;
+            }
+
+            if (skippingForeignKey)
+            {
+                seenReferences = seenReferences || line.Contains("REFERENCES", StringComparison.OrdinalIgnoreCase);
+                if (seenReferences
+                    && Regex.IsMatch(line.Trim(), @"^\),?$", RegexOptions.None, TimeSpan.FromMilliseconds(1000.0)))
+                {
+                    skippingForeignKey = false;
+                    seenReferences = false;
+                }
+
+                continue;
+            }
+
+            keptLines.Add(line);
+        }
+
+        RemoveDanglingCommasBeforeClosingParentheses(keptLines);
+
+        return string.Join(Environment.NewLine, keptLines);
+    }
+
+    private static void RemoveDanglingCommasBeforeClosingParentheses(List<string> lines)
+    {
+        for (var i = 0; i < lines.Count; i++)
+        {
+            if (lines[i].Trim() != ")")
+            {
+                continue;
+            }
+
+            for (var j = i - 1; j >= 0; j--)
+            {
+                if (string.IsNullOrWhiteSpace(lines[j]))
+                {
+                    continue;
+                }
+
+                if (lines[j].TrimEnd().EndsWith(",", StringComparison.Ordinal))
+                {
+                    var commaIndex = lines[j].LastIndexOf(',');
+                    lines[j] = lines[j].Remove(commaIndex, 1);
+                }
+
+                break;
+            }
+        }
     }
 
     private static string GetCreateDatabaseStatement(string name)
