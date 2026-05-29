@@ -772,22 +772,41 @@ public class GaussDBQueryableMethodTranslatingExpressionVisitor : RelationalQuer
         StructuralTypeShaperExpression shaper,
         [NotNullWhen(true)] out TableExpression? tableExpression)
     {
-        if (!base.IsValidSelectExpressionForExecuteDelete(selectExpression, shaper, out tableExpression))
+        // The default relational behavior only allows single-table deletes. GaussDB also supports
+        // inner joins via DELETE ... USING, so resolve the delete target here instead of letting
+        // the base guard reject joined select expressions first.
+        if (selectExpression is
+            {
+                Orderings: [],
+                Offset: null,
+                Limit: null,
+                GroupBy: [],
+                Having: null
+            })
         {
-            return false;
+            TableExpressionBase? table = null;
+            if (selectExpression.Tables.Count == 1)
+            {
+                table = selectExpression.Tables[0];
+            }
+            else if (selectExpression.Tables.All(t => t is TableExpression or InnerJoinExpression))
+            {
+                var projectionBindingExpression = (ProjectionBindingExpression)shaper.ValueBufferExpression;
+                var entityProjectionExpression =
+                    (StructuralTypeProjectionExpression)selectExpression.GetProjection(projectionBindingExpression);
+                var column = entityProjectionExpression.BindProperty(shaper.StructuralType.GetProperties().First());
+                table = selectExpression.Tables.Select(t => t.UnwrapJoin()).Single(t => t.Alias == column.TableAlias);
+            }
+
+            if (table is TableExpression te)
+            {
+                tableExpression = te;
+                return true;
+            }
         }
 
-        // The default relational behavior is to allow only single-table expressions, and the only permitted feature is a predicate.
-        // Here we extend this to also inner joins to tables, which we generate via the PostgreSQL-specific USING construct.
-        return selectExpression is
-        {
-            Orderings: [],
-            Offset: null,
-            Limit: null,
-            GroupBy: [],
-            Having: null
-        }
-        && selectExpression.Tables[0] is TableExpression && selectExpression.Tables.Skip(1).All(t => t is InnerJoinExpression);
+        tableExpression = null;
+        return false;
     }
 
     // PostgreSQL unnest is guaranteed to return output rows in the same order as its input array,

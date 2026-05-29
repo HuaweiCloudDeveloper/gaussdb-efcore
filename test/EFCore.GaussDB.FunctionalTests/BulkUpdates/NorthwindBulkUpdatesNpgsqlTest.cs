@@ -242,12 +242,25 @@ public class NorthwindBulkUpdatesGaussDBTest(
         return Task.CompletedTask;
     }
 
-    [ConditionalTheory(Skip = ComplexBulkMutationSkip)]
-    [MemberData(nameof(IsAsyncData))]
-    public override Task Delete_with_join(bool async)
+    public override async Task Delete_with_join(bool async)
     {
-        _ = async;
-        return Task.CompletedTask;
+        await base.Delete_with_join(async);
+
+        AssertSql(
+            """
+@__p_1='100'
+@__p_0='0'
+
+DELETE FROM "Order Details" AS o
+USING (
+    SELECT o0."OrderID"
+    FROM "Orders" AS o0
+    WHERE o0."OrderID" < 10300
+    ORDER BY o0."OrderID" NULLS FIRST
+    LIMIT @__p_1 OFFSET @__p_0
+) AS o1
+WHERE o."OrderID" = o1."OrderID"
+""");
     }
 
     [ConditionalTheory(Skip = ComplexBulkMutationSkip)]
