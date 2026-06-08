@@ -5,6 +5,9 @@ namespace Microsoft.EntityFrameworkCore.Query.Translations;
 
 public class BasicTypesQueryGaussDBFixture : BasicTypesQueryFixtureBase, ITestSqlLoggerFactory
 {
+    protected const string RequiredStringSentinel = "__gaussdb_required_string__";
+    protected static readonly byte[] RequiredByteArraySentinel = [0];
+
     private BasicTypesData? _expectedData;
 
     protected override ITestStoreFactory TestStoreFactory
@@ -17,10 +20,27 @@ public class BasicTypesQueryGaussDBFixture : BasicTypesQueryFixtureBase, ITestSq
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder, DbContext context)
-        => modelBuilder.HasPostgresExtension("uuid-ossp");
+    {
+        modelBuilder.Entity<BasicTypesEntity>().Property(e => e.DateOnly).HasColumnType("date");
+        modelBuilder.Entity<NullableBasicTypesEntity>().Property(e => e.DateOnly).HasColumnType("date");
+
+        if (TestEnvironment.IsExtensionAvailable("uuid-ossp"))
+        {
+            modelBuilder.HasPostgresExtension("uuid-ossp");
+        }
+    }
 
     protected override Task SeedAsync(BasicTypesContext context)
     {
+        context.Database.ExecuteSqlRaw(
+            """
+ALTER TABLE "BasicTypesEntities" ALTER COLUMN "DateOnly" TYPE date USING "DateOnly"::date
+""");
+        context.Database.ExecuteSqlRaw(
+            """
+ALTER TABLE "NullableBasicTypesEntities" ALTER COLUMN "DateOnly" TYPE date USING "DateOnly"::date
+""");
+
         _expectedData ??= LoadAndTweakData();
         context.AddRange(_expectedData.BasicTypesEntities);
         context.AddRange(_expectedData.NullableBasicTypesEntities);
@@ -36,6 +56,18 @@ public class BasicTypesQueryGaussDBFixture : BasicTypesQueryFixtureBase, ITestSq
 
         foreach (var item in data.BasicTypesEntities)
         {
+            // This test environment runs with sql_compatibility = A, where empty strings are treated as NULL.
+            // Use a stable non-empty sentinel so required string columns can still be seeded.
+            if (string.IsNullOrEmpty(item.String))
+            {
+                item.String = RequiredStringSentinel;
+            }
+
+            if (item.ByteArray is null || item.ByteArray.Length == 0)
+            {
+                item.ByteArray = RequiredByteArraySentinel;
+            }
+
             // For all relevant temporal types, chop sub-microsecond precision which GaussDB does not support.
             // Temporal types which aren't set (default) get mapped to -infinity on GaussDB; this value causes many tests to fail.
 

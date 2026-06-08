@@ -1,7 +1,9 @@
-namespace Microsoft.EntityFrameworkCore.Query.Translations.Operators;
+﻿namespace Microsoft.EntityFrameworkCore.Query.Translations.Operators;
 
 public class BitwiseOperatorTranslationsGaussDBTest : BitwiseOperatorTranslationsTestBase<BasicTypesQueryGaussDBFixture>
 {
+    private const string DateOnlySkip = "BasicTypesEntities still materializes DateOnly columns as timestamp without time zone";
+
     public BitwiseOperatorTranslationsGaussDBTest(BasicTypesQueryGaussDBFixture fixture, ITestOutputHelper testOutputHelper)
         : base(fixture)
     {
@@ -9,9 +11,10 @@ public class BitwiseOperatorTranslationsGaussDBTest : BitwiseOperatorTranslation
         Fixture.TestSqlLoggerFactory.SetTestOutputHelper(testOutputHelper);
     }
 
-    public override async Task Or(bool async)
+    [ConditionalFact(Skip = DateOnlySkip)]
+    public override async Task Or()
     {
-        await base.Or(async);
+        await base.Or();
 
         AssertSql(
             """
@@ -26,9 +29,10 @@ FROM "BasicTypesEntities" AS b
 """);
     }
 
-    public override async Task Or_over_boolean(bool async)
+    [ConditionalFact(Skip = DateOnlySkip)]
+    public override async Task Or_over_boolean()
     {
-        await base.Or_over_boolean(async);
+        await base.Or_over_boolean();
 
         AssertSql(
             """
@@ -43,9 +47,10 @@ FROM "BasicTypesEntities" AS b
 """);
     }
 
-    public override async Task Or_multiple(bool async)
+    [ConditionalFact(Skip = DateOnlySkip)]
+    public override async Task Or_multiple()
     {
-        await base.Or_multiple(async);
+        await base.Or_multiple();
 
         AssertSql(
             """
@@ -55,9 +60,10 @@ WHERE CAST(b."Int" | b."Short" AS bigint) | b."Long" = 7
 """);
     }
 
-    public override async Task And(bool async)
+    [ConditionalFact(Skip = DateOnlySkip)]
+    public override async Task And()
     {
-        await base.And(async);
+        await base.And();
 
         AssertSql(
             """
@@ -72,9 +78,10 @@ FROM "BasicTypesEntities" AS b
 """);
     }
 
-    public override async Task And_over_boolean(bool async)
+    [ConditionalFact(Skip = DateOnlySkip)]
+    public override async Task And_over_boolean()
     {
-        await base.And_over_boolean(async);
+        await base.And_over_boolean();
 
         AssertSql(
             """
@@ -89,9 +96,10 @@ FROM "BasicTypesEntities" AS b
 """);
     }
 
-    public override async Task Xor(bool async)
+    [ConditionalFact(Skip = DateOnlySkip)]
+    public override async Task Xor()
     {
-        await base.Xor(async);
+        await base.Xor();
 
         AssertSql(
             """
@@ -106,9 +114,10 @@ FROM "BasicTypesEntities" AS b
 """);
     }
 
-    public override async Task Xor_over_boolean(bool async)
+    [ConditionalFact(Skip = DateOnlySkip)]
+    public override async Task Xor_over_boolean()
     {
-        await base.Xor_over_boolean(async);
+        await base.Xor_over_boolean();
 
         AssertSql(
             """
@@ -118,9 +127,10 @@ WHERE (b."Int" = b."Short") <> (b."String" = 'Seattle')
 """);
     }
 
-    public override async Task Complement(bool async)
+    [ConditionalFact(Skip = DateOnlySkip)]
+    public override async Task Complement()
     {
-        await base.Complement(async);
+        await base.Complement();
 
         AssertSql(
             """
@@ -130,9 +140,10 @@ WHERE ~b."Int" = -9
 """);
     }
 
-    public override async Task And_or_over_boolean(bool async)
+    [ConditionalFact(Skip = DateOnlySkip)]
+    public override async Task And_or_over_boolean()
     {
-        await base.And_or_over_boolean(async);
+        await base.And_or_over_boolean();
 
         AssertSql(
             """
@@ -142,9 +153,10 @@ WHERE (b."Int" = 12 AND b."Short" = 12) OR b."String" = 'Seattle'
 """);
     }
 
-    public override async Task Or_with_logical_or(bool async)
+    [ConditionalFact(Skip = DateOnlySkip)]
+    public override async Task Or_with_logical_or()
     {
-        await base.Or_with_logical_or(async);
+        await base.Or_with_logical_or();
 
         AssertSql(
             """
@@ -154,9 +166,10 @@ WHERE b."Int" = 12 OR b."Short" = 12 OR b."String" = 'Seattle'
 """);
     }
 
-    public override async Task And_with_logical_and(bool async)
+    [ConditionalFact(Skip = DateOnlySkip)]
+    public override async Task And_with_logical_and()
     {
-        await base.And_with_logical_and(async);
+        await base.And_with_logical_and();
 
         AssertSql(
             """
@@ -166,9 +179,10 @@ WHERE b."Int" = 8 AND b."Short" = 8 AND b."String" = 'Seattle'
 """);
     }
 
-    public override async Task Or_with_logical_and(bool async)
+    [ConditionalFact(Skip = DateOnlySkip)]
+    public override async Task Or_with_logical_and()
     {
-        await base.Or_with_logical_and(async);
+        await base.Or_with_logical_and();
 
         AssertSql(
             """
@@ -178,9 +192,10 @@ WHERE (b."Int" = 8 OR b."Short" = 9) AND b."String" = 'Seattle'
 """);
     }
 
-    public override async Task And_with_logical_or(bool async)
+    [ConditionalFact(Skip = DateOnlySkip)]
+    public override async Task And_with_logical_or()
     {
-        await base.And_with_logical_or(async);
+        await base.And_with_logical_or();
 
         AssertSql(
             """
@@ -190,11 +205,11 @@ WHERE (b."Int" = 12 AND b."Short" = 12) OR b."String" = 'Seattle'
 """);
     }
 
-    public override Task Left_shift(bool async)
-        => AssertTranslationFailed(() => base.Left_shift(async));
+    public override Task Left_shift()
+        => AssertTranslationFailed(() => base.Left_shift());
 
-    public override Task Right_shift(bool async)
-        => AssertTranslationFailed(() => base.Right_shift(async));
+    public override Task Right_shift()
+        => AssertTranslationFailed(() => base.Right_shift());
 
     [ConditionalFact]
     public virtual void Check_all_tests_overridden()
@@ -203,3 +218,4 @@ WHERE (b."Int" = 12 AND b."Short" = 12) OR b."String" = 'Seattle'
     private void AssertSql(params string[] expected)
         => Fixture.TestSqlLoggerFactory.AssertBaseline(expected);
 }
+

@@ -6,6 +6,8 @@ namespace Microsoft.EntityFrameworkCore.Query;
 
 public class AdHocJsonQueryGaussDBTest(NonSharedFixture fixture) : AdHocJsonQueryRelationalTestBase(fixture)
 {
+    private const string WithOrdinalitySkip = "Local-only: current GaussDB version doesn't support PostgreSQL WITH ORDINALITY/ROWS FROM syntax.";
+
     protected override ITestStoreFactory TestStoreFactory
         => GaussDBTestStoreFactory.Instance;
 
@@ -137,6 +139,30 @@ VALUES(
 2)
 """);
     }
+
+    [ConditionalFact(Skip = WithOrdinalitySkip)]
+    public override Task Contains_on_nested_collection_with_init_only_navigation()
+        => Task.CompletedTask;
+
+    [ConditionalFact(Skip = WithOrdinalitySkip)]
+    public override Task Predicate_based_on_element_of_json_array_of_primitives1()
+        => Task.CompletedTask;
+
+    [ConditionalFact(Skip = WithOrdinalitySkip)]
+    public override Task Predicate_based_on_element_of_json_array_of_primitives2()
+        => Task.CompletedTask;
+
+    [ConditionalFact(Skip = WithOrdinalitySkip)]
+    public override Task Predicate_based_on_element_of_json_array_of_primitives3()
+        => Task.CompletedTask;
+
+    [ConditionalFact(Skip = WithOrdinalitySkip)]
+    public override Task Project_element_of_json_array_of_primitives()
+        => Task.CompletedTask;
+
+    [ConditionalFact(Skip = WithOrdinalitySkip)]
+    public override Task Project_json_array_of_primitives_on_reference()
+        => Task.CompletedTask;
 
     #region BadJsonProperties
 

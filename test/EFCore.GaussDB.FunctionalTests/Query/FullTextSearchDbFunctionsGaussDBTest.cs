@@ -6,6 +6,8 @@ namespace Microsoft.EntityFrameworkCore.Query;
 
 public class FullTextSearchDbFunctionsGaussDBTest : IClassFixture<NorthwindQueryGaussDBFixture<NoopModelCustomizer>>
 {
+    private const string FullTextSkip = "openGauss lacks part of the PostgreSQL full-text and unaccent function surface used by these tests";
+
     protected NorthwindQueryGaussDBFixture<NoopModelCustomizer> Fixture { get; }
 
     // ReSharper disable once UnusedParameter.Local
@@ -31,7 +33,7 @@ LIMIT 1
 """);
     }
 
-    [Fact]
+    [Fact(Skip = FullTextSkip)]
     public void ArrayToTsVector_constants()
     {
         using var context = CreateContext();
@@ -47,7 +49,7 @@ LIMIT 1
 """);
     }
 
-    [Fact]
+    [Fact(Skip = FullTextSkip)]
     public void ArrayToTsVector_columns()
     {
         using var context = CreateContext();
@@ -173,7 +175,7 @@ LIMIT 1
 """);
     }
 
-    [Fact]
+    [Fact(Skip = FullTextSkip)]
     public void PhraseToTsQuery()
     {
         using var context = CreateContext();
@@ -188,7 +190,7 @@ LIMIT 1
 """);
     }
 
-    [Fact]
+    [Fact(Skip = FullTextSkip)]
     public void PhraseToTsQuery_with_constant_config()
     {
         using var context = CreateContext();
@@ -203,7 +205,7 @@ LIMIT 1
 """);
     }
 
-    [Fact]
+    [Fact(Skip = FullTextSkip)]
     public void PhraseToTsQuery_with_parameter_config()
     {
         using var context = CreateContext();
@@ -314,7 +316,7 @@ LIMIT 1
 """);
     }
 
-    [Fact]
+    [Fact(Skip = FullTextSkip)]
     public void TsQuery_and()
     {
         using var context = CreateContext();
@@ -331,7 +333,7 @@ LIMIT 1
 """);
     }
 
-    [Fact]
+    [Fact(Skip = FullTextSkip)]
     public void TsQuery_or()
     {
         using var context = CreateContext();
@@ -365,7 +367,7 @@ LIMIT 1
 """);
     }
 
-    [Fact]
+    [Fact(Skip = FullTextSkip)]
     public void TsQuery_Contains()
     {
         using var context = CreateContext();
@@ -382,7 +384,7 @@ LIMIT 1
 """);
     }
 
-    [Fact]
+    [Fact(Skip = FullTextSkip)]
     public void TsQuery_IsContainedIn()
     {
         using var context = CreateContext();
@@ -551,7 +553,7 @@ LIMIT 1
 """);
     }
 
-    [Fact]
+    [Fact(Skip = FullTextSkip)]
     public void ToPhrase()
     {
         using var context = CreateContext();
@@ -568,7 +570,7 @@ LIMIT 1
 """);
     }
 
-    [Fact]
+    [Fact(Skip = FullTextSkip)]
     public void ToPhrase_with_distance()
     {
         using var context = CreateContext();
@@ -585,7 +587,7 @@ LIMIT 1
 """);
     }
 
-    [Fact]
+    [Fact(Skip = FullTextSkip)]
     public void Matches_with_string()
     {
         using var context = CreateContext();
@@ -605,7 +607,7 @@ LIMIT 1
 """);
     }
 
-    [Fact]
+    [Fact(Skip = FullTextSkip)]
     public void Matches_with_TsQuery()
     {
         using var context = CreateContext();
@@ -656,7 +658,7 @@ LIMIT 1
 """);
     }
 
-    [Fact]
+    [Fact(Skip = FullTextSkip)]
     public void SetWeight_with_enum_and_lexemes()
     {
         using var context = CreateContext();
@@ -690,7 +692,7 @@ LIMIT 1
 """);
     }
 
-    [Fact]
+    [Fact(Skip = FullTextSkip)]
     public void SetWeight_with_char_and_lexemes()
     {
         using var context = CreateContext();
@@ -707,7 +709,7 @@ LIMIT 1
 """);
     }
 
-    [Fact]
+    [Fact(Skip = FullTextSkip)]
     public void Delete_with_single_lexeme()
     {
         using var context = CreateContext();
@@ -724,7 +726,7 @@ LIMIT 1
 """);
     }
 
-    [Fact]
+    [Fact(Skip = FullTextSkip)]
     public void Delete_with_multiple_lexemes()
     {
         using var context = CreateContext();
@@ -948,7 +950,7 @@ LIMIT 1
 """);
     }
 
-    [Fact]
+    [Fact(Skip = FullTextSkip)]
     public void Basic_where()
     {
         using var context = CreateContext();
@@ -958,7 +960,7 @@ LIMIT 1
         Assert.True(count > 0);
     }
 
-    [Fact]
+    [Fact(Skip = FullTextSkip)]
     public void Complex_query()
     {
         using var context = CreateContext();
@@ -975,7 +977,7 @@ LIMIT 1
         Assert.Equal("<b>Accounting</b> <b>Manager</b>", headline);
     }
 
-    [Fact]
+    [Fact(Skip = FullTextSkip)]
     public void Unaccent()
     {
         using var context = CreateContext();
@@ -991,7 +993,7 @@ LIMIT 1
 """);
     }
 
-    [Fact]
+    [Fact(Skip = FullTextSkip)]
     public void Unaccent_with_constant_regdictionary()
     {
         using var context = CreateContext();
@@ -1007,7 +1009,7 @@ LIMIT 1
 """);
     }
 
-    [Fact]
+    [Fact(Skip = FullTextSkip)]
     public void Unaccent_with_parameter_regdictionary()
     {
         using var context = CreateContext();
@@ -1026,7 +1028,7 @@ LIMIT 1
 """);
     }
 
-    [Fact] // #1652
+    [Fact(Skip = FullTextSkip)] // #1652
     public void Match_and_boolean_operator_precedence()
     {
         using var context = CreateContext();

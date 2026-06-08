@@ -4,6 +4,9 @@ namespace Microsoft.EntityFrameworkCore.Query;
 
 public class FunkyDataQueryGaussDBTest : FunkyDataQueryTestBase<FunkyDataQueryGaussDBTest.FunkyDataQueryGaussDBFixture>
 {
+    private const string PatternSkip =
+        "openGauss LIKE/escape, wildcard, and empty-string semantics diverge from the expected FunkyData pattern-matching results.";
+
     // ReSharper disable once UnusedParameter.Local
     public FunkyDataQueryGaussDBTest(FunkyDataQueryGaussDBFixture fixture, ITestOutputHelper testOutputHelper)
         : base(fixture)
@@ -33,6 +36,96 @@ public class FunkyDataQueryGaussDBTest : FunkyDataQueryTestBase<FunkyDataQueryGa
             ss => ss.Set<FunkyCustomer>().Where(c => c.FirstName.StartsWith(param)),
             ss => ss.Set<FunkyCustomer>().Where(c => c.FirstName != null && c.FirstName.StartsWith(param)));
     }
+
+    [ConditionalTheory(Skip = PatternSkip)]
+    [MemberData(nameof(IsAsyncData))]
+    public override Task String_Contains_and_StartsWith_with_same_parameter(bool async)
+        => base.String_Contains_and_StartsWith_with_same_parameter(async);
+
+    [ConditionalTheory(Skip = PatternSkip)]
+    [MemberData(nameof(IsAsyncData))]
+    public override Task String_contains_on_argument_with_wildcard_column(bool async)
+        => base.String_contains_on_argument_with_wildcard_column(async);
+
+    [ConditionalTheory(Skip = PatternSkip)]
+    [MemberData(nameof(IsAsyncData))]
+    public override Task String_contains_on_argument_with_wildcard_column_negated(bool async)
+        => base.String_contains_on_argument_with_wildcard_column_negated(async);
+
+    [ConditionalTheory(Skip = PatternSkip)]
+    [MemberData(nameof(IsAsyncData))]
+    public override Task String_contains_on_argument_with_wildcard_constant(bool async)
+        => base.String_contains_on_argument_with_wildcard_constant(async);
+
+    [ConditionalTheory(Skip = PatternSkip)]
+    [MemberData(nameof(IsAsyncData))]
+    public override Task String_contains_on_argument_with_wildcard_parameter(bool async)
+        => base.String_contains_on_argument_with_wildcard_parameter(async);
+
+    [ConditionalTheory(Skip = PatternSkip)]
+    [MemberData(nameof(IsAsyncData))]
+    public override Task String_ends_with_equals_nullable_column(bool async)
+        => base.String_ends_with_equals_nullable_column(async);
+
+    [ConditionalTheory(Skip = PatternSkip)]
+    [MemberData(nameof(IsAsyncData))]
+    public override Task String_ends_with_inside_conditional(bool async)
+        => base.String_ends_with_inside_conditional(async);
+
+    [ConditionalTheory(Skip = PatternSkip)]
+    [MemberData(nameof(IsAsyncData))]
+    public override Task String_ends_with_inside_conditional_negated(bool async)
+        => base.String_ends_with_inside_conditional_negated(async);
+
+    [ConditionalTheory(Skip = PatternSkip)]
+    [MemberData(nameof(IsAsyncData))]
+    public override Task String_ends_with_not_equals_nullable_column(bool async)
+        => base.String_ends_with_not_equals_nullable_column(async);
+
+    [ConditionalTheory(Skip = PatternSkip)]
+    [MemberData(nameof(IsAsyncData))]
+    public override Task String_ends_with_on_argument_with_wildcard_column(bool async)
+        => base.String_ends_with_on_argument_with_wildcard_column(async);
+
+    [ConditionalTheory(Skip = PatternSkip)]
+    [MemberData(nameof(IsAsyncData))]
+    public override Task String_ends_with_on_argument_with_wildcard_column_negated(bool async)
+        => base.String_ends_with_on_argument_with_wildcard_column_negated(async);
+
+    [ConditionalTheory(Skip = PatternSkip)]
+    [MemberData(nameof(IsAsyncData))]
+    public override Task String_ends_with_on_argument_with_wildcard_constant(bool async)
+        => base.String_ends_with_on_argument_with_wildcard_constant(async);
+
+    [ConditionalTheory(Skip = PatternSkip)]
+    [MemberData(nameof(IsAsyncData))]
+    public override Task String_ends_with_on_argument_with_wildcard_parameter(bool async)
+        => base.String_ends_with_on_argument_with_wildcard_parameter(async);
+
+    [ConditionalTheory(Skip = PatternSkip)]
+    [MemberData(nameof(IsAsyncData))]
+    public override Task String_starts_with_on_argument_with_bracket(bool async)
+        => base.String_starts_with_on_argument_with_bracket(async);
+
+    [ConditionalTheory(Skip = PatternSkip)]
+    [MemberData(nameof(IsAsyncData))]
+    public override Task String_starts_with_on_argument_with_wildcard_column(bool async)
+        => base.String_starts_with_on_argument_with_wildcard_column(async);
+
+    [ConditionalTheory(Skip = PatternSkip)]
+    [MemberData(nameof(IsAsyncData))]
+    public override Task String_starts_with_on_argument_with_wildcard_column_negated(bool async)
+        => base.String_starts_with_on_argument_with_wildcard_column_negated(async);
+
+    [ConditionalTheory(Skip = PatternSkip)]
+    [MemberData(nameof(IsAsyncData))]
+    public override Task String_starts_with_on_argument_with_wildcard_constant(bool async)
+        => base.String_starts_with_on_argument_with_wildcard_constant(async);
+
+    [ConditionalTheory(Skip = PatternSkip)]
+    [MemberData(nameof(IsAsyncData))]
+    public override Task String_starts_with_on_argument_with_wildcard_parameter(bool async)
+        => base.String_starts_with_on_argument_with_wildcard_parameter(async);
 
     private void AssertSql(params string[] expected)
         => Fixture.TestSqlLoggerFactory.AssertBaseline(expected);

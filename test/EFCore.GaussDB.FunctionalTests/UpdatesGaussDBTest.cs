@@ -63,10 +63,8 @@ public class UpdatesGaussDBTest : UpdatesRelationalTestBase<UpdatesGaussDBTest.U
         {
             base.OnModelCreating(modelBuilder, context);
 
-            modelBuilder.HasPostgresExtension("uuid-ossp");
-
             modelBuilder.Entity<ProductBase>()
-                .Property(p => p.Id).HasDefaultValueSql("uuid_generate_v4()");
+                .Property(p => p.Id).HasDefaultValueSql("uuid()::uuid");
 
             modelBuilder.Entity<Product>().HasIndex(p => new { p.Name, p.Price }).IsUnique().HasFilter("""
                 "Name" IS NOT NULL

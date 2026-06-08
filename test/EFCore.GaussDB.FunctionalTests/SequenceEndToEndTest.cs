@@ -13,7 +13,7 @@ public class SequenceEndToEndTest : IAsyncLifetime
 
         using (var context = new BronieContext(serviceProvider, TestStore.Name))
         {
-            context.Database.EnsureCreatedResiliently();
+            GaussDBTestStore.EnsureCreatedWithUserTables(context);
         }
 
         AddEntities(serviceProvider, TestStore.Name);
@@ -68,7 +68,7 @@ public class SequenceEndToEndTest : IAsyncLifetime
             using var context = new BronieContext(serviceProvider, dbName);
             context.Database.EnsureDeleted();
             Thread.Sleep(100);
-            context.Database.EnsureCreatedResiliently();
+            GaussDBTestStore.EnsureCreatedWithUserTables(context);
         }
 
         AddEntitiesToMultipleContexts(serviceProvider, dbOne, dbTwo);
@@ -129,7 +129,7 @@ public class SequenceEndToEndTest : IAsyncLifetime
 
         await using (var context = new BronieContext(serviceProvider, TestStore.Name))
         {
-            context.Database.EnsureCreatedResiliently();
+            await GaussDBTestStore.EnsureCreatedWithUserTablesAsync(context);
         }
 
         await AddEntitiesAsync(serviceProvider, TestStore.Name);
@@ -178,7 +178,7 @@ public class SequenceEndToEndTest : IAsyncLifetime
 
         await using (var context = new BronieContext(serviceProvider, TestStore.Name))
         {
-            context.Database.EnsureCreatedResiliently();
+            await GaussDBTestStore.EnsureCreatedWithUserTablesAsync(context);
         }
 
         const int threadCount = 50;
@@ -218,7 +218,7 @@ public class SequenceEndToEndTest : IAsyncLifetime
 
         using (var context = new BronieContext(serviceProvider, TestStore.Name))
         {
-            context.Database.EnsureCreatedResiliently();
+            GaussDBTestStore.EnsureCreatedWithUserTables(context);
         }
 
         AddEntitiesWithIds(serviceProvider, 0, TestStore.Name);
@@ -296,7 +296,7 @@ public class SequenceEndToEndTest : IAsyncLifetime
 
         using (var context = new NullableBronieContext(serviceProvider, TestStore.Name, true))
         {
-            context.Database.EnsureCreatedResiliently();
+            GaussDBTestStore.EnsureCreatedWithUserTables(context);
         }
 
         AddEntitiesNullable(serviceProvider, TestStore.Name, true);
@@ -324,7 +324,7 @@ public class SequenceEndToEndTest : IAsyncLifetime
 
         using (var context = new NullableBronieContext(serviceProvider, TestStore.Name, false))
         {
-            context.Database.EnsureCreatedResiliently();
+            GaussDBTestStore.EnsureCreatedWithUserTables(context);
         }
 
         AddEntitiesNullable(serviceProvider, TestStore.Name, false);

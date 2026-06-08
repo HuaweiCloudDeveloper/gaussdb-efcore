@@ -61,7 +61,7 @@ public class QueryBugsTest : IClassFixture<GaussDBFixture>
         _options = Fixture.CreateOptions(testStore);
 
         await using var context = contextCreator();
-        await context.Database.EnsureCreatedResilientlyAsync();
+        await GaussDBTestStore.EnsureCreatedWithUserTablesAsync(context);
         contextInitializer?.Invoke(context);
         return testStore;
     }

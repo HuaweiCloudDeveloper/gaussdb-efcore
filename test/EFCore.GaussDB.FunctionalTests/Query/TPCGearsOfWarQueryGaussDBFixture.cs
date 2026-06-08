@@ -19,7 +19,10 @@ public class TPCGearsOfWarQueryGaussDBFixture : TPCGearsOfWarQueryRelationalFixt
     {
         base.OnModelCreating(modelBuilder, context);
 
-        modelBuilder.HasPostgresExtension("uuid-ossp");
+        if (TestEnvironment.IsExtensionAvailable("uuid-ossp"))
+        {
+            modelBuilder.HasPostgresExtension("uuid-ossp");
+        }
 
         modelBuilder.Entity<CogTag>().Property(c => c.IssueDate).HasColumnType("timestamp without time zone");
         modelBuilder.Entity<City>().Property(g => g.Location).HasColumnType("varchar(100)");

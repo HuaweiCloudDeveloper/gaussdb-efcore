@@ -10,6 +10,9 @@ namespace Microsoft.EntityFrameworkCore.Query.Translations;
 /// </remarks>
 public class TrigramsTranslationsTest : IClassFixture<TrigramsTranslationsTest.TrigramsQueryGaussDBFixture>
 {
+    private const string TrigramsSkip =
+        "Local-only: these translations depend on pg_trgm module/operator support, and the current openGauss environment should not force extension setup or teardown for non-extension coverage.";
+
     private TrigramsQueryGaussDBFixture Fixture { get; }
 
     // ReSharper disable once UnusedParameter.Local
@@ -20,7 +23,7 @@ public class TrigramsTranslationsTest : IClassFixture<TrigramsTranslationsTest.T
         Fixture.TestSqlLoggerFactory.SetTestOutputHelper(testOutputHelper);
     }
 
-    [Fact]
+    [Fact(Skip = TrigramsSkip)]
     public void TrigramsShow()
     {
         using var context = CreateContext();
@@ -31,7 +34,7 @@ public class TrigramsTranslationsTest : IClassFixture<TrigramsTranslationsTest.T
         AssertContainsSql("""show_trgm(t."Text")""");
     }
 
-    [Fact]
+    [Fact(Skip = TrigramsSkip)]
     public void TrigramsSimilarity()
     {
         using var context = CreateContext();
@@ -42,7 +45,7 @@ public class TrigramsTranslationsTest : IClassFixture<TrigramsTranslationsTest.T
         AssertContainsSql("""similarity(t."Text", 'target')""");
     }
 
-    [Fact]
+    [Fact(Skip = TrigramsSkip)]
     public void TrigramsWordSimilarity()
     {
         using var context = CreateContext();
@@ -53,7 +56,7 @@ public class TrigramsTranslationsTest : IClassFixture<TrigramsTranslationsTest.T
         AssertContainsSql("""word_similarity(t."Text", 'target')""");
     }
 
-    [ConditionalFact]
+    [ConditionalFact(Skip = TrigramsSkip)]
     [MinimumPostgresVersion(11, 0)]
     public void TrigramsStrictWordSimilarity()
     {
@@ -65,7 +68,7 @@ public class TrigramsTranslationsTest : IClassFixture<TrigramsTranslationsTest.T
         AssertContainsSql("""strict_word_similarity(t."Text", 'target')""");
     }
 
-    [Fact]
+    [Fact(Skip = TrigramsSkip)]
     public void TrigramsAreSimilar()
     {
         using var context = CreateContext();
@@ -76,7 +79,7 @@ public class TrigramsTranslationsTest : IClassFixture<TrigramsTranslationsTest.T
         AssertContainsSql("""t."Text" % 'target'""");
     }
 
-    [Fact]
+    [Fact(Skip = TrigramsSkip)]
     public void TrigramsAreWordSimilar()
     {
         using var context = CreateContext();
@@ -87,7 +90,7 @@ public class TrigramsTranslationsTest : IClassFixture<TrigramsTranslationsTest.T
         AssertContainsSql("""t."Text" <% 'target'""");
     }
 
-    [Fact]
+    [Fact(Skip = TrigramsSkip)]
     public void TrigramsAreNotWordSimilar()
     {
         using var context = CreateContext();
@@ -98,7 +101,7 @@ public class TrigramsTranslationsTest : IClassFixture<TrigramsTranslationsTest.T
         AssertContainsSql("""t."Text" %> 'target'""");
     }
 
-    [ConditionalFact]
+    [ConditionalFact(Skip = TrigramsSkip)]
     [MinimumPostgresVersion(11, 0)]
     public void TrigramsAreStrictWordSimilar()
     {
@@ -110,7 +113,7 @@ public class TrigramsTranslationsTest : IClassFixture<TrigramsTranslationsTest.T
         AssertContainsSql("""t."Text" <<% 'target'""");
     }
 
-    [ConditionalFact]
+    [ConditionalFact(Skip = TrigramsSkip)]
     [MinimumPostgresVersion(11, 0)]
     public void TrigramsAreNotStrictWordSimilar()
     {
@@ -122,7 +125,7 @@ public class TrigramsTranslationsTest : IClassFixture<TrigramsTranslationsTest.T
         AssertContainsSql("""t."Text" %>> 'target'""");
     }
 
-    [Fact]
+    [Fact(Skip = TrigramsSkip)]
     public void TrigramsSimilarityDistance()
     {
         using var context = CreateContext();
@@ -133,7 +136,7 @@ public class TrigramsTranslationsTest : IClassFixture<TrigramsTranslationsTest.T
         AssertContainsSql("""t."Text" <-> 'target'""");
     }
 
-    [Fact]
+    [Fact(Skip = TrigramsSkip)]
     public void TrigramsWordSimilarityDistance()
     {
         using var context = CreateContext();
@@ -144,7 +147,7 @@ public class TrigramsTranslationsTest : IClassFixture<TrigramsTranslationsTest.T
         AssertContainsSql("""t."Text" <<-> 'target'""");
     }
 
-    [Fact]
+    [Fact(Skip = TrigramsSkip)]
     public void TrigramsWordSimilarityDistanceInverted()
     {
         using var context = CreateContext();
@@ -155,7 +158,7 @@ public class TrigramsTranslationsTest : IClassFixture<TrigramsTranslationsTest.T
         AssertContainsSql("""t."Text" <->> 'target'""");
     }
 
-    [ConditionalFact]
+    [ConditionalFact(Skip = TrigramsSkip)]
     [MinimumPostgresVersion(11, 0)]
     public void TrigramsStrictWordSimilarityDistance()
     {
@@ -167,7 +170,7 @@ public class TrigramsTranslationsTest : IClassFixture<TrigramsTranslationsTest.T
         AssertContainsSql("""t."Text" <<<-> 'target'""");
     }
 
-    [ConditionalFact]
+    [ConditionalFact(Skip = TrigramsSkip)]
     [MinimumPostgresVersion(11, 0)]
     public void TrigramsStrictWordSimilarityDistanceInverted()
     {
@@ -179,7 +182,7 @@ public class TrigramsTranslationsTest : IClassFixture<TrigramsTranslationsTest.T
         AssertContainsSql("""t."Text" <->>> 'target'""");
     }
 
-    [Fact] // #1659
+    [Fact(Skip = TrigramsSkip)] // #1659
     public void Concatenation_operator_precedence()
     {
         using var context = CreateContext();
@@ -195,7 +198,7 @@ WHERE (t."Text" || ' ' || t."Text") % 'query'
 """);
     }
 
-    [Fact] // #3072
+    [Fact(Skip = TrigramsSkip)] // #3072
     public void PgUnknownBinary_operator_precedence()
     {
         using var context = CreateContext();

@@ -572,7 +572,9 @@ public class JsonTypesGaussDBTest(NonSharedFixture fixture) : JsonTypesRelationa
     {
         // Note that the enum doesn't actually need to be created in the database, since Can_read_and_write_JSON_value doesn't access
         // the database. We just need the mapping to be picked up by EFCore.GaussDB from the ADO.NET layer.
-        new GaussDBDbContextOptionsBuilder(builder)
+        var gaussDBOptionsBuilder = new GaussDBDbContextOptionsBuilder(builder);
+        TestEnvironment.ConfigureDataSourceCompatibility(gaussDBOptionsBuilder);
+        gaussDBOptionsBuilder
             .MapEnum<Mood>("mapped_enum", "test")
             .UseNetTopologySuite();
         return builder;

@@ -18,3 +18,5 @@ TestResult.xml
 .dotnet
 .vscode/
 example/GetStarted/GetStarted/.env
+.github/
+openspec/

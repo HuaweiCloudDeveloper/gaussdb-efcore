@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore.Storage.Json;
 
 namespace HuaweiCloud.EntityFrameworkCore.GaussDB.Storage.Internal.Mapping;
 
+#pragma warning disable CS0618, CS0612 // GaussDBCidr is obsolete, replaced by .NET IPNetwork
+
 /// <summary>
 ///     The type mapping for the PostgreSQL cidr type.
 /// </summary>
@@ -53,34 +55,32 @@ public class GaussDBCidrTypeMapping : GaussDBTypeMapping
     protected override RelationalTypeMapping Clone(RelationalTypeMappingParameters parameters)
         => new GaussDBCidrTypeMapping(parameters);
 
-    // <summary>
-    //     This is an internal API that supports the Entity Framework Core infrastructure and not subject to
-    //     the same compatibility standards as public APIs. It may be changed or removed without notice in
-    //     any release. You should only use it directly in your code with extreme caution and knowing that
-    //     doing so can result in application failures when updating to a new Entity Framework Core release.
-    // </summary>
-    //[Obsolete]
-    //protected override string GenerateNonNullSqlLiteral(object value)
-    //{
-    //    var cidr = (GaussDBCidr)value;
-    //    return $"CIDR '{cidr.Address}/{cidr.Netmask}'";
-    //}
+    /// <summary>
+    ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to
+    ///     the same compatibility standards as public APIs. It may be changed or removed without notice in
+    ///     any release. You should only use it directly in your code with extreme caution and knowing that
+    ///     doing so can result in application failures when updating to a new Entity Framework Core release.
+    /// </summary>
+    protected override string GenerateNonNullSqlLiteral(object value)
+    {
+        var cidr = (GaussDBCidr)value;
+        return $"CIDR '{cidr.Address}/{cidr.Netmask}'";
+    }
 
-    // <summary>
-    //     This is an internal API that supports the Entity Framework Core infrastructure and not subject to
-    //     the same compatibility standards as public APIs. It may be changed or removed without notice in
-    //     any release. You should only use it directly in your code with extreme caution and knowing that
-    //     doing so can result in application failures when updating to a new Entity Framework Core release.
-    // </summary>
-    //[Obsolete]
-    //public override Expression GenerateCodeLiteral(object value)
-    //{
-    //    var cidr = (GaussDBCidr)value;
-    //    return Expression.New(
-    //        GaussDBCidrConstructor,
-    //        Expression.Call(ParseMethod, Expression.Constant(cidr.Address.ToString())),
-    //        Expression.Constant(cidr.Netmask));
-    //}
+    /// <summary>
+    ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to
+    ///     the same compatibility standards as public APIs. It may be changed or removed without notice in
+    ///     any release. You should only use it directly in your code with extreme caution and knowing that
+    ///     doing so can result in application failures when updating to a new Entity Framework Core release.
+    /// </summary>
+    public override Expression GenerateCodeLiteral(object value)
+    {
+        var cidr = (GaussDBCidr)value;
+        return Expression.New(
+            GaussDBCidrConstructor,
+            Expression.Call(ParseMethod, Expression.Constant(cidr.Address.ToString())),
+            Expression.Constant(cidr.Netmask));
+    }
 
     private static readonly MethodInfo ParseMethod = typeof(IPAddress).GetMethod("Parse", [typeof(string)])!;
     [Obsolete]
@@ -128,3 +128,5 @@ public class GaussDBCidrTypeMapping : GaussDBTypeMapping
         public override Expression ConstructorExpression => Expression.Property(null, InstanceProperty);
     }
 }
+
+#pragma warning restore CS0618, CS0612
