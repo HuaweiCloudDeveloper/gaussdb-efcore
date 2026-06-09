@@ -305,6 +305,8 @@ SELECT
   CASE
     WHEN atthasdef THEN (SELECT pg_get_expr(adbin, cls.oid) FROM pg_attrdef WHERE adrelid = cls.oid AND adnum = attr.attnum)
   END AS default,
+  seqdep.seqnspname,
+  seqdep.seqrelname,
 
   -- Sequence options for identity columns
   {(connection.PostgreSqlVersion >= new Version(10, 0) ?
@@ -320,9 +322,20 @@ LEFT JOIN pg_type AS elemtyp ON (elemtyp.oid = typ.typelem)
 LEFT JOIN pg_type AS basetyp ON (basetyp.oid = typ.typbasetype)
 LEFT JOIN pg_description AS des ON des.objoid = cls.oid AND des.objsubid = attnum
 {(connection.PostgreSqlVersion >= new Version(9, 1) ? "LEFT JOIN pg_collation as coll ON coll.oid = attr.attcollation" : "")}
--- Bring in identity sequences the depend on this column
-LEFT JOIN pg_depend AS dep ON dep.refobjid = cls.oid AND dep.refobjsubid = attr.attnum AND dep.deptype = 'i'
-{(connection.PostgreSqlVersion >= new Version(10, 0) ? "LEFT JOIN pg_sequence AS seq ON seq.seqrelid = dep.objid" : "")}
+-- Bring in identity/serial sequences that depend on this column
+LEFT JOIN (
+    SELECT
+      dep.refobjid,
+      dep.refobjsubid,
+      seqcls.oid AS seqrelid,
+      seqns.nspname AS seqnspname,
+      seqcls.relname AS seqrelname
+    FROM pg_depend AS dep
+    JOIN pg_class AS seqcls ON seqcls.oid = dep.objid AND seqcls.relkind = 'S'
+    JOIN pg_namespace AS seqns ON seqns.oid = seqcls.relnamespace
+    WHERE dep.deptype IN ('i', 'a')
+) AS seqdep ON seqdep.refobjid = cls.oid AND seqdep.refobjsubid = attr.attnum
+{(connection.PostgreSqlVersion >= new Version(10, 0) ? "LEFT JOIN pg_sequence AS seq ON seq.seqrelid = seqdep.seqrelid" : "")}
 WHERE
   cls.relkind IN ('r', 'v', 'm', 'f') AND
   nspname NOT IN ({internalSchemas}) AND
@@ -435,7 +448,12 @@ ORDER BY attnum
                         if (SerialTypes.Contains(systemTypeName))
                         {
                             var seqName = $"{column.Table.Name}_{column.Name}_seq";
-                            if (column.Table.Schema == "public"
+                            var dependentSequenceName = record.GetValueOrDefault<string>("seqrelname");
+                            var dependentSequenceSchema = record.GetValueOrDefault<string>("seqnspname");
+                            if (dependentSequenceName is not null
+                                && dependentSequenceSchema is not null
+                                && IsSerialDefaultValue(column.DefaultValueSql, dependentSequenceSchema, dependentSequenceName)
+                                || column.Table.Schema == "public"
                                 && (column.DefaultValueSql == $"nextval('{seqName}'::regclass)"
                                     || column.DefaultValueSql == $"nextval('\"{seqName}\"'::regclass)")
                                 || // non-public schema
@@ -547,6 +565,15 @@ ORDER BY attnum
             _ => null
         };
     }
+
+    private static bool IsSerialDefaultValue(string? defaultValueSql, string sequenceSchema, string sequenceName)
+        => sequenceSchema == "public"
+            && (defaultValueSql == $"nextval('{sequenceName}'::regclass)"
+                || defaultValueSql == $"nextval('\"{sequenceName}\"'::regclass)")
+            || defaultValueSql == $"nextval('{sequenceSchema}.{sequenceName}'::regclass)"
+            || defaultValueSql == $"nextval('{sequenceSchema}.\"{sequenceName}\"'::regclass)"
+            || defaultValueSql == $"nextval('\"{sequenceSchema}\".{sequenceName}'::regclass)"
+            || defaultValueSql == $"nextval('\"{sequenceSchema}\".\"{sequenceName}\"'::regclass)";
 
     /// <summary>
     ///     Queries the database for defined indexes and registers them with the model.

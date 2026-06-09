@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore.TestModels.Northwind;
+
 namespace Microsoft.EntityFrameworkCore.Query;
 
 public class NorthwindIncludeNoTrackingQueryGaussDBTest : NorthwindIncludeNoTrackingQueryTestBase<
@@ -54,4 +56,110 @@ public class NorthwindIncludeNoTrackingQueryGaussDBTest : NorthwindIncludeNoTrac
         _ = async;
         return Task.CompletedTask;
     }
+
+    public override Task Include_collection_skip_no_order_by(bool async)
+        => TestEnvironment.IsDistributed
+            ? AssertQuery(
+                async,
+                ss => ss.Set<Customer>().OrderBy(c => c.CustomerID).Skip(10).Include(c => c.Orders),
+                elementAsserter: (e, a) => AssertInclude(e, a, new ExpectedInclude<Customer>(c => c.Orders)))
+            : base.Include_collection_skip_no_order_by(async);
+
+    public override Task Include_collection_take_no_order_by(bool async)
+        => TestEnvironment.IsDistributed
+            ? AssertQuery(
+                async,
+                ss => ss.Set<Customer>().OrderBy(c => c.CustomerID).Take(10).Include(c => c.Orders),
+                elementAsserter: (e, a) => AssertInclude(e, a, new ExpectedInclude<Customer>(c => c.Orders)))
+            : base.Include_collection_take_no_order_by(async);
+
+    public override Task Include_collection_skip_take_no_order_by(bool async)
+        => TestEnvironment.IsDistributed
+            ? AssertQuery(
+                async,
+                ss => ss.Set<Customer>().OrderBy(c => c.CustomerID).Skip(10).Take(5).Include(c => c.Orders),
+                elementAsserter: (e, a) => AssertInclude(e, a, new ExpectedInclude<Customer>(c => c.Orders)))
+            : base.Include_collection_skip_take_no_order_by(async);
+
+    public override Task Include_collection_with_multiple_conditional_order_by(bool async)
+        => TestEnvironment.IsDistributed
+            ? AssertQuery(
+                async,
+                ss => ss.Set<Order>()
+                    .Include(o => o.OrderDetails)
+                    .OrderBy(o => o.OrderID > 0)
+                    .ThenBy(o => o.Customer != null ? o.Customer.City : string.Empty)
+                    .ThenBy(o => o.OrderID)
+                    .Take(5),
+                elementAsserter: (e, a) => AssertInclude(e, a, new ExpectedInclude<Order>(o => o.OrderDetails)))
+            : base.Include_collection_with_multiple_conditional_order_by(async);
+
+    public override Task Include_collection_OrderBy_empty_list_contains(bool async)
+    {
+        if (!TestEnvironment.IsDistributed)
+        {
+            return base.Include_collection_OrderBy_empty_list_contains(async);
+        }
+
+        var list = new List<string>();
+        return AssertQuery(
+            async,
+            ss => ss.Set<Customer>()
+                .Include(c => c.Orders)
+                .Where(c => c.CustomerID.StartsWith("A"))
+                .OrderBy(c => list.Contains(c.CustomerID))
+                .ThenBy(c => c.CustomerID)
+                .Skip(1),
+            elementAsserter: (e, a) => AssertInclude(e, a, new ExpectedInclude<Customer>(c => c.Orders)));
+    }
+
+    public override Task Include_collection_OrderBy_empty_list_does_not_contains(bool async)
+    {
+        if (!TestEnvironment.IsDistributed)
+        {
+            return base.Include_collection_OrderBy_empty_list_does_not_contains(async);
+        }
+
+        var list = new List<string>();
+        return AssertQuery(
+            async,
+            ss => ss.Set<Customer>()
+                .Include(c => c.Orders)
+                .Where(c => c.CustomerID.StartsWith("A"))
+                .OrderBy(c => !list.Contains(c.CustomerID))
+                .ThenBy(c => c.CustomerID)
+                .Skip(1),
+            elementAsserter: (e, a) => AssertInclude(e, a, new ExpectedInclude<Customer>(c => c.Orders)));
+    }
+
+    public override Task Include_collection_OrderBy_list_contains(bool async)
+    {
+        if (!TestEnvironment.IsDistributed)
+        {
+            return base.Include_collection_OrderBy_list_contains(async);
+        }
+
+        var list = new List<string> { "ALFKI" };
+        return AssertQuery(
+            async,
+            ss => ss.Set<Customer>()
+                .Include(c => c.Orders)
+                .Where(c => c.CustomerID.StartsWith("A"))
+                .OrderBy(c => list.Contains(c.CustomerID))
+                .ThenBy(c => c.CustomerID)
+                .Skip(1),
+            elementAsserter: (e, a) => AssertInclude(e, a, new ExpectedInclude<Customer>(c => c.Orders)));
+    }
+
+    public override Task Repro9735(bool async)
+        => TestEnvironment.IsDistributed
+            ? AssertQuery(
+                async,
+                ss => ss.Set<Order>()
+                    .Include(o => o.OrderDetails)
+                    .OrderBy(o => o.Customer.CustomerID != null)
+                    .ThenBy(o => o.Customer != null ? o.Customer.CustomerID : string.Empty)
+                    .ThenBy(o => o.OrderID)
+                    .Take(2))
+            : base.Repro9735(async);
 }

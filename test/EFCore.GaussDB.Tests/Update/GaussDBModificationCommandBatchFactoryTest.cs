@@ -28,8 +28,7 @@ public class GaussDBModificationCommandBatchFactoryTest
                 new RelationalCommandBuilderFactory(
                     new RelationalCommandBuilderDependencies(
                         typeMapper,
-                        new ExceptionDetector(),
-                        new LoggingOptions())),
+                        new ExceptionDetector())),
                 new GaussDBSqlGenerationHelper(
                     new RelationalSqlGenerationHelperDependencies()),
                 new GaussDBUpdateSqlGenerator(
@@ -65,8 +64,7 @@ public class GaussDBModificationCommandBatchFactoryTest
                 new RelationalCommandBuilderFactory(
                     new RelationalCommandBuilderDependencies(
                         typeMapper,
-                        new ExceptionDetector(),
-                        new LoggingOptions())),
+                        new ExceptionDetector())),
                 new GaussDBSqlGenerationHelper(
                     new RelationalSqlGenerationHelperDependencies()),
                 new GaussDBUpdateSqlGenerator(

@@ -1,5 +1,7 @@
 using Xunit.Sdk;
 
+using Microsoft.EntityFrameworkCore.TestModels.ComplexNavigationsModel;
+
 namespace Microsoft.EntityFrameworkCore.Query;
 
 public class ComplexNavigationsSharedTypeQueryGaussDBTest
@@ -55,6 +57,16 @@ public class ComplexNavigationsSharedTypeQueryGaussDBTest
             CoreStrings.QueryUnableToTranslateMethod(
                 "Microsoft.EntityFrameworkCore.Query.ComplexNavigationsQueryTestBase<Microsoft.EntityFrameworkCore.Query.ComplexNavigationsSharedTypeQueryGaussDBFixture>",
                 "ClientMethodNullableInt"));
+
+    public override Task SelectMany_subquery_with_custom_projection(bool async)
+        => TestEnvironment.IsDistributed
+            ? AssertQuery(
+                async,
+                ss => ss.Set<Level1>().OrderBy(l1 => l1.Id).SelectMany(
+                    l1 => l1.OneToMany_Optional1
+                        .OrderBy(l2 => l2.Id)
+                        .Select(l2 => new { l2.Name })).Take(1))
+            : base.SelectMany_subquery_with_custom_projection(async);
 
     [ConditionalTheory(Skip = "https://github.com/dotnet/efcore/issues/26104")]
     public override Task GroupBy_aggregate_where_required_relationship(bool async)

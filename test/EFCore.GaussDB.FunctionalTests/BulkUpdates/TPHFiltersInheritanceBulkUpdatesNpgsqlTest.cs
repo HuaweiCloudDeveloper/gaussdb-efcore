@@ -75,11 +75,9 @@ public class TPHFiltersInheritanceBulkUpdatesGaussDBTest(
         await base.Update_base_type(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='Animal'
-
+"""
 UPDATE "Animals" AS a
-SET "Name" = @p
+SET "Name" = 'Animal'
 WHERE a."CountryId" = 1 AND a."Name" = 'Great spotted kiwi'
 """);
     }
@@ -89,11 +87,9 @@ WHERE a."CountryId" = 1 AND a."Name" = 'Great spotted kiwi'
         await base.Update_base_type_with_OfType(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='NewBird'
-
+"""
 UPDATE "Animals" AS a
-SET "Name" = @p
+SET "Name" = 'NewBird'
 WHERE a."CountryId" = 1 AND a."Discriminator" = 'Kiwi'
 """);
     }
@@ -118,11 +114,9 @@ WHERE a."CountryId" = 1 AND a."Discriminator" = 'Kiwi'
         await base.Update_base_property_on_derived_type(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='SomeOtherKiwi'
-
+"""
 UPDATE "Animals" AS a
-SET "Name" = @p
+SET "Name" = 'SomeOtherKiwi'
 WHERE a."Discriminator" = 'Kiwi' AND a."CountryId" = 1
 """);
     }
@@ -132,11 +126,9 @@ WHERE a."Discriminator" = 'Kiwi' AND a."CountryId" = 1
         await base.Update_derived_property_on_derived_type(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='0' (DbType = Int16)
-
+"""
 UPDATE "Animals" AS a
-SET "FoundOn" = @p
+SET "FoundOn" = 0
 WHERE a."Discriminator" = 'Kiwi' AND a."CountryId" = 1
 """);
     }
@@ -146,13 +138,10 @@ WHERE a."Discriminator" = 'Kiwi' AND a."CountryId" = 1
         await base.Update_base_and_derived_types(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='Kiwi'
-@p0='0' (DbType = Int16)
-
+"""
 UPDATE "Animals" AS a
-SET "Name" = @p,
-    "FoundOn" = @p0
+SET "FoundOn" = 0,
+    "Name" = 'Kiwi'
 WHERE a."Discriminator" = 'Kiwi' AND a."CountryId" = 1
 """);
     }
@@ -162,11 +151,9 @@ WHERE a."Discriminator" = 'Kiwi' AND a."CountryId" = 1
         await base.Update_where_using_hierarchy(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='Monovia'
-
+"""
 UPDATE "Countries" AS c
-SET "Name" = @p
+SET "Name" = 'Monovia'
 WHERE (
     SELECT count(*)::int
     FROM "Animals" AS a
@@ -179,11 +166,9 @@ WHERE (
         await base.Update_where_using_hierarchy_derived(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='Monovia'
-
+"""
 UPDATE "Countries" AS c
-SET "Name" = @p
+SET "Name" = 'Monovia'
 WHERE (
     SELECT count(*)::int
     FROM "Animals" AS a

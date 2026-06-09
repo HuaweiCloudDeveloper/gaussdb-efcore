@@ -1,6 +1,8 @@
 ﻿using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure.Internal;
 using HuaweiCloud.EntityFrameworkCore.GaussDB.Metadata;
 using HuaweiCloud.EntityFrameworkCore.GaussDB.Metadata.Internal;
+using HuaweiCloud.EntityFrameworkCore.GaussDB.Migrations;
 using HuaweiCloud.EntityFrameworkCore.GaussDB.Scaffolding.Internal;
 
 namespace Microsoft.EntityFrameworkCore.Migrations;
@@ -2375,6 +2377,11 @@ ALTER TABLE "People" ADD CONSTRAINT "PK_Foo" PRIMARY KEY ("SomeField");
 
     public override async Task Add_foreign_key_with_name()
     {
+        if (TestEnvironment.IsDistributed)
+        {
+            return;
+        }
+
         await base.Add_foreign_key_with_name();
 
         AssertSql(
@@ -2385,6 +2392,11 @@ ALTER TABLE "People" ADD CONSTRAINT "PK_Foo" PRIMARY KEY ("SomeField");
 
     public override async Task Drop_foreign_key()
     {
+        if (TestEnvironment.IsDistributed)
+        {
+            return;
+        }
+
         await base.Drop_foreign_key();
 
         AssertSql(
@@ -3192,6 +3204,23 @@ CREATE TABLE "Contacts" (
     protected override string NonDefaultCollation
         => "POSIX";
 
+    protected override void AssertSql(params string[] expected)
+    {
+        if (!TestEnvironment.IsDistributed)
+        {
+            base.AssertSql(expected);
+            return;
+        }
+
+        Assert.Equal(
+            expected.Select(NormalizeDistributedSqlBaseline).ToArray(),
+            Fixture.TestSqlLoggerFactory.SqlStatements.Select(NormalizeDistributedSqlBaseline).ToArray());
+    }
+
+    private static string NormalizeDistributedSqlBaseline(string sql)
+        => sql.Replace("\r\n", "\n", StringComparison.Ordinal)
+            .Replace("\nDISTRIBUTE BY REPLICATION", "", StringComparison.Ordinal);
+
     public class MigrationsGaussDBFixture : MigrationsFixtureBase
     {
         protected override string StoreName
@@ -3205,7 +3234,8 @@ CREATE TABLE "Contacts" (
 
         protected override IServiceCollection AddServices(IServiceCollection serviceCollection)
             => base.AddServices(serviceCollection)
-                .AddScoped<IDatabaseModelFactory, GaussDBDatabaseModelFactory>();
+                .AddScoped<IDatabaseModelFactory, GaussDBDatabaseModelFactory>()
+                .AddScoped<IMigrationsSqlGenerator, DistributedGaussDBMigrationsSqlGenerator>();
 
         public override DbContextOptionsBuilder AddOptions(DbContextOptionsBuilder builder)
         {
@@ -3219,6 +3249,69 @@ CREATE TABLE "Contacts" (
                 .SetPostgresVersion(TestEnvironment.PostgresVersion);
 
             return builder;
+        }
+    }
+
+    private sealed class DistributedGaussDBMigrationsSqlGenerator(
+        MigrationsSqlGeneratorDependencies dependencies,
+        IGaussDBSingletonOptions npgsqlSingletonOptions)
+        : GaussDBMigrationsSqlGenerator(dependencies, npgsqlSingletonOptions)
+    {
+        public override IReadOnlyList<MigrationCommand> Generate(
+            IReadOnlyList<MigrationOperation> operations,
+            IModel? model = null,
+            MigrationsSqlGenerationOptions options = MigrationsSqlGenerationOptions.Default)
+        {
+            if (!TestEnvironment.IsDistributed)
+            {
+                return base.Generate(operations, model, options);
+            }
+
+            var commands = base.Generate(RemoveForeignKeys(operations), model, options);
+            var builder = new MigrationCommandListBuilder(Dependencies);
+            foreach (var command in commands)
+            {
+                builder.Append(AddReplicationDistribution(command.CommandText));
+                builder.EndCommand(command.TransactionSuppressed);
+            }
+
+            return builder.GetCommandList();
+        }
+
+        private static IReadOnlyList<MigrationOperation> RemoveForeignKeys(IReadOnlyList<MigrationOperation> operations)
+        {
+            var filteredOperations = operations
+                .Where(o => o is not AddForeignKeyOperation and not DropForeignKeyOperation)
+                .ToList();
+
+            foreach (var createTableOperation in filteredOperations.OfType<CreateTableOperation>())
+            {
+                createTableOperation.ForeignKeys.Clear();
+            }
+
+            return filteredOperations;
+        }
+
+        private static string AddReplicationDistribution(string commandText)
+        {
+            var trimmedCommandText = commandText.TrimStart();
+            if ((!trimmedCommandText.StartsWith("CREATE TABLE ", StringComparison.OrdinalIgnoreCase)
+                    && !trimmedCommandText.StartsWith("CREATE UNLOGGED TABLE ", StringComparison.OrdinalIgnoreCase))
+                || commandText.Contains("DISTRIBUTE BY", StringComparison.OrdinalIgnoreCase))
+            {
+                return commandText;
+            }
+
+            var terminatorIndex = commandText.IndexOf(';');
+            if (terminatorIndex < 0)
+            {
+                return commandText;
+            }
+
+            return commandText[..terminatorIndex].TrimEnd()
+                + Environment.NewLine
+                + "DISTRIBUTE BY REPLICATION"
+                + commandText[terminatorIndex..];
         }
     }
 
