@@ -3,7 +3,7 @@ using HuaweiCloud.EntityFrameworkCore.GaussDB.Internal;
 namespace Microsoft.EntityFrameworkCore.Update;
 
 [MinimumPostgresVersion(14, 0)]
-public class StoredProcedureUpdateGaussDBTest(NonSharedFixture fixture) : StoredProcedureUpdateTestBase(fixture)
+public class StoredProcedureUpdateGaussDBTest : StoredProcedureUpdateTestBase
 {
     public override async Task Insert_with_output_parameter(bool async)
     {

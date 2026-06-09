@@ -1,4 +1,4 @@
-﻿using System.Collections.Immutable;
+using System.Collections.Immutable;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Net.NetworkInformation;
 
@@ -59,12 +59,12 @@ WHERE m."TimeSpanAsTime" = TIME '00:01:02'
         Assert.Empty(results);
 
         AssertSql(
-            """
-@timeSpan='02:01:00' (Nullable = true)
+"""
+@__timeSpan_0='02:01:00' (Nullable = true)
 
 SELECT m."Int"
 FROM "MappedNullableDataTypes" AS m
-WHERE m."TimeSpanAsTime" = @timeSpan
+WHERE m."TimeSpanAsTime" = @__timeSpan_0
 """);
     }
 

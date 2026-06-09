@@ -8,7 +8,7 @@ using Xunit.Sdk;
 
 namespace Microsoft.EntityFrameworkCore;
 
-public class JsonTypesGaussDBTest(NonSharedFixture fixture) : JsonTypesRelationalTestBase(fixture)
+public class JsonTypesGaussDBTest : JsonTypesRelationalTestBase
 {
     #region Nested collections (unsupported)
 

@@ -2019,9 +2019,11 @@ LIMIT 2
     public override Task Edit_single_property_timeonly()
         => base.Edit_single_property_timeonly();
 
+#if NET10_0_OR_GREATER
     [ConditionalFact(Skip = JsonPartialUpdateSkip)]
     public override Task Edit_single_property_with_non_ascii_characters()
         => base.Edit_single_property_with_non_ascii_characters();
+#endif
 
     // https://github.com/dotnet/efcore/pull/31831/files#r1393411950
     [ConditionalTheory(Skip = JsonPartialUpdateSkip)]
@@ -2059,6 +2061,14 @@ LIMIT 2
         => Assert.ThrowsAsync<EqualException>(() => base.Edit_single_property_relational_collection_of_datetimeoffset());
 
     [ConditionalFact(Skip = JsonPartialUpdateSkip)]
+    public override Task Edit_single_property_relational_collection_of_datetime()
+        => Assert.ThrowsAsync<EqualException>(() => base.Edit_single_property_relational_collection_of_datetime());
+
+    [ConditionalFact(Skip = JsonPartialUpdateSkip)]
+    public override Task Edit_single_property_relational_collection_of_decimal()
+        => Assert.ThrowsAsync<EqualException>(() => base.Edit_single_property_relational_collection_of_decimal());
+
+    [ConditionalFact(Skip = JsonPartialUpdateSkip)]
     public override Task Edit_single_property_relational_collection_of_double()
         => Assert.ThrowsAsync<EqualException>(() => base.Edit_single_property_relational_collection_of_double());
 
@@ -2069,6 +2079,14 @@ LIMIT 2
     [ConditionalFact(Skip = JsonPartialUpdateSkip)]
     public override Task Edit_single_property_relational_collection_of_int16()
         => Assert.ThrowsAsync<EqualException>(() => base.Edit_single_property_relational_collection_of_int16());
+
+    [ConditionalFact(Skip = JsonPartialUpdateSkip)]
+    public override Task Edit_single_property_relational_collection_of_int32()
+        => Assert.ThrowsAsync<EqualException>(() => base.Edit_single_property_relational_collection_of_int32());
+
+    [ConditionalFact(Skip = JsonPartialUpdateSkip)]
+    public override Task Edit_single_property_relational_collection_of_int64()
+        => Assert.ThrowsAsync<EqualException>(() => base.Edit_single_property_relational_collection_of_int64());
 
     [ConditionalFact(Skip = JsonPartialUpdateSkip)]
     public override Task Edit_single_property_relational_collection_of_guid()
@@ -2092,6 +2110,11 @@ LIMIT 2
             () => base.Edit_single_property_relational_collection_of_nullable_enum_with_int_converter_set_to_null());
 
     [ConditionalFact(Skip = JsonPartialUpdateSkip)]
+    public override Task Edit_single_property_relational_collection_of_nullable_enum_with_converter_that_handles_nulls_set_to_null()
+        => Assert.ThrowsAsync<NullException>(
+            () => base.Edit_single_property_relational_collection_of_nullable_enum_with_converter_that_handles_nulls_set_to_null());
+
+    [ConditionalFact(Skip = JsonPartialUpdateSkip)]
     public override Task Edit_single_property_relational_collection_of_nullable_int32()
         => Assert.ThrowsAsync<EqualException>(() => base.Edit_single_property_relational_collection_of_nullable_int32());
 
@@ -2104,8 +2127,28 @@ LIMIT 2
         => Assert.ThrowsAsync<EqualException>(() => base.Edit_single_property_relational_collection_of_uint16());
 
     [ConditionalFact(Skip = JsonPartialUpdateSkip)]
+    public override Task Edit_single_property_relational_collection_of_uint32()
+        => Assert.ThrowsAsync<EqualException>(() => base.Edit_single_property_relational_collection_of_uint32());
+
+    [ConditionalFact(Skip = JsonPartialUpdateSkip)]
     public override Task Edit_single_property_relational_collection_of_uint64()
         => Assert.ThrowsAsync<EqualException>(() => base.Edit_single_property_relational_collection_of_uint64());
+
+    [ConditionalFact(Skip = JsonPartialUpdateSkip)]
+    public override Task Edit_single_property_relational_collection_of_signed_byte()
+        => Assert.ThrowsAsync<EqualException>(() => base.Edit_single_property_relational_collection_of_signed_byte());
+
+    [ConditionalFact(Skip = JsonPartialUpdateSkip)]
+    public override Task Edit_single_property_relational_collection_of_single()
+        => Assert.ThrowsAsync<EqualException>(() => base.Edit_single_property_relational_collection_of_single());
+
+    [ConditionalFact(Skip = JsonPartialUpdateSkip)]
+    public override Task Edit_single_property_relational_collection_of_timespan()
+        => Assert.ThrowsAsync<EqualException>(() => base.Edit_single_property_relational_collection_of_timespan());
+
+    [ConditionalFact(Skip = JsonPartialUpdateSkip)]
+    public override Task Edit_single_property_relational_collection_of_enum_with_int_converter()
+        => Assert.ThrowsAsync<EqualException>(() => base.Edit_single_property_relational_collection_of_enum_with_int_converter());
 
     [ConditionalFact(Skip = JsonPartialUpdateSkip)]
     public override Task Edit_single_property_collection_of_nullable_enum_with_converter_that_handles_nulls()

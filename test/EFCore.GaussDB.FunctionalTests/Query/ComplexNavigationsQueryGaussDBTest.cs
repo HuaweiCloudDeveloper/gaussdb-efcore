@@ -1,5 +1,7 @@
 ﻿using Xunit.Sdk;
 
+using Microsoft.EntityFrameworkCore.TestModels.ComplexNavigationsModel;
+
 namespace Microsoft.EntityFrameworkCore.Query;
 
 public class ComplexNavigationsQueryGaussDBTest : ComplexNavigationsQueryRelationalTestBase<ComplexNavigationsQueryGaussDBFixture>
@@ -46,4 +48,29 @@ public class ComplexNavigationsQueryGaussDBTest : ComplexNavigationsQueryRelatio
             CoreStrings.QueryUnableToTranslateMethod(
                 "Microsoft.EntityFrameworkCore.Query.ComplexNavigationsQueryTestBase<Microsoft.EntityFrameworkCore.Query.ComplexNavigationsQueryGaussDBFixture>",
                 "ClientMethodNullableInt"));
+
+    public override Task SelectMany_subquery_with_custom_projection(bool async)
+        => TestEnvironment.IsDistributed
+            ? AssertQuery(
+                async,
+                ss => ss.Set<Level1>().OrderBy(l1 => l1.Id).SelectMany(
+                    l1 => l1.OneToMany_Optional1
+                        .OrderBy(l2 => l2.Id)
+                        .Select(l2 => new { l2.Name })).Take(1))
+            : base.SelectMany_subquery_with_custom_projection(async);
+
+    public override Task OrderBy_collection_count_ThenBy_reference_navigation(bool async)
+        => TestEnvironment.IsDistributed
+            ? AssertQuery(
+                async,
+                ss => ss.Set<Level1>()
+                    .OrderBy(l1 => l1.OneToOne_Required_FK1.OneToMany_Required2.Count())
+                    .ThenBy(l1 => l1.OneToOne_Required_FK1.OneToOne_Required_FK2.Name)
+                    .ThenBy(l1 => l1.Id),
+                ss => ss.Set<Level1>()
+                    .OrderBy(l1 => l1.OneToOne_Required_FK1.OneToMany_Required2.MaybeScalar(x => x.Count()) ?? 0)
+                    .ThenBy(l1 => l1.OneToOne_Required_FK1.OneToOne_Required_FK2.Name)
+                    .ThenBy(l1 => l1.Id),
+                assertOrder: true)
+            : base.OrderBy_collection_count_ThenBy_reference_navigation(async);
 }

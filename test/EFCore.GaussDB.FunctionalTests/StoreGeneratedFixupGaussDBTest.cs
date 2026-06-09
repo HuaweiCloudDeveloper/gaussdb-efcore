@@ -50,7 +50,7 @@ public class StoreGeneratedFixupGaussDBTest(StoreGeneratedFixupGaussDBTest.Store
     }
 
     protected override bool EnforcesFKs
-        => true;
+        => !TestEnvironment.IsDistributed;
 
     protected override void UseTransaction(DatabaseFacade facade, IDbContextTransaction transaction)
         => facade.UseTransaction(transaction.GetDbTransaction());

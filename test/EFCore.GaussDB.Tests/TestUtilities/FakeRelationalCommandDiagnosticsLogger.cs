@@ -45,7 +45,27 @@ public class FakeRelationalCommandDiagnosticsLogger
     public InterceptionResult<DbDataReader> CommandReaderExecuting(
         IRelationalConnection connection,
         DbCommand command,
+        DbContext? context,
+        Guid commandId,
+        Guid connectionId,
+        DateTimeOffset startTime,
+        CommandSource commandSource)
+        => default;
+
+    public InterceptionResult<DbDataReader> CommandReaderExecuting(
+        IRelationalConnection connection,
+        DbCommand command,
         string logCommandText,
+        DbContext? context,
+        Guid commandId,
+        Guid connectionId,
+        DateTimeOffset startTime,
+        CommandSource commandSource)
+        => default;
+
+    public InterceptionResult<object> CommandScalarExecuting(
+        IRelationalConnection connection,
+        DbCommand command,
         DbContext? context,
         Guid commandId,
         Guid connectionId,
@@ -67,6 +87,16 @@ public class FakeRelationalCommandDiagnosticsLogger
     public InterceptionResult<int> CommandNonQueryExecuting(
         IRelationalConnection connection,
         DbCommand command,
+        DbContext? context,
+        Guid commandId,
+        Guid connectionId,
+        DateTimeOffset startTime,
+        CommandSource commandSource)
+        => default;
+
+    public InterceptionResult<int> CommandNonQueryExecuting(
+        IRelationalConnection connection,
+        DbCommand command,
         string logCommandText,
         DbContext? context,
         Guid commandId,
@@ -78,7 +108,29 @@ public class FakeRelationalCommandDiagnosticsLogger
     public ValueTask<InterceptionResult<DbDataReader>> CommandReaderExecutingAsync(
         IRelationalConnection connection,
         DbCommand command,
+        DbContext? context,
+        Guid commandId,
+        Guid connectionId,
+        DateTimeOffset startTime,
+        CommandSource commandSource,
+        CancellationToken cancellationToken = default)
+        => default;
+
+    public ValueTask<InterceptionResult<DbDataReader>> CommandReaderExecutingAsync(
+        IRelationalConnection connection,
+        DbCommand command,
         string logCommandText,
+        DbContext? context,
+        Guid commandId,
+        Guid connectionId,
+        DateTimeOffset startTime,
+        CommandSource commandSource,
+        CancellationToken cancellationToken = default)
+        => default;
+
+    public ValueTask<InterceptionResult<object>> CommandScalarExecutingAsync(
+        IRelationalConnection connection,
+        DbCommand command,
         DbContext? context,
         Guid commandId,
         Guid connectionId,
@@ -102,6 +154,17 @@ public class FakeRelationalCommandDiagnosticsLogger
     public ValueTask<InterceptionResult<int>> CommandNonQueryExecutingAsync(
         IRelationalConnection connection,
         DbCommand command,
+        DbContext? context,
+        Guid commandId,
+        Guid connectionId,
+        DateTimeOffset startTime,
+        CommandSource commandSource,
+        CancellationToken cancellationToken = default)
+        => default;
+
+    public ValueTask<InterceptionResult<int>> CommandNonQueryExecutingAsync(
+        IRelationalConnection connection,
+        DbCommand command,
         string logCommandText,
         DbContext? context,
         Guid commandId,
@@ -114,11 +177,35 @@ public class FakeRelationalCommandDiagnosticsLogger
     public DbDataReader CommandReaderExecuted(
         IRelationalConnection connection,
         DbCommand command,
+        DbContext? context,
+        Guid commandId,
+        Guid connectionId,
+        DbDataReader methodResult,
+        DateTimeOffset startTime,
+        TimeSpan duration,
+        CommandSource commandSource)
+        => methodResult;
+
+    public DbDataReader CommandReaderExecuted(
+        IRelationalConnection connection,
+        DbCommand command,
         string logCommandText,
         DbContext? context,
         Guid commandId,
         Guid connectionId,
         DbDataReader methodResult,
+        DateTimeOffset startTime,
+        TimeSpan duration,
+        CommandSource commandSource)
+        => methodResult;
+
+    public object? CommandScalarExecuted(
+        IRelationalConnection connection,
+        DbCommand command,
+        DbContext? context,
+        Guid commandId,
+        Guid connectionId,
+        object? methodResult,
         DateTimeOffset startTime,
         TimeSpan duration,
         CommandSource commandSource)
@@ -140,6 +227,18 @@ public class FakeRelationalCommandDiagnosticsLogger
     public int CommandNonQueryExecuted(
         IRelationalConnection connection,
         DbCommand command,
+        DbContext? context,
+        Guid commandId,
+        Guid connectionId,
+        int methodResult,
+        DateTimeOffset startTime,
+        TimeSpan duration,
+        CommandSource commandSource)
+        => methodResult;
+
+    public int CommandNonQueryExecuted(
+        IRelationalConnection connection,
+        DbCommand command,
         string logCommandText,
         DbContext? context,
         Guid commandId,
@@ -149,6 +248,19 @@ public class FakeRelationalCommandDiagnosticsLogger
         TimeSpan duration,
         CommandSource commandSource)
         => methodResult;
+
+    public ValueTask<DbDataReader> CommandReaderExecutedAsync(
+        IRelationalConnection connection,
+        DbCommand command,
+        DbContext? context,
+        Guid commandId,
+        Guid connectionId,
+        DbDataReader methodResult,
+        DateTimeOffset startTime,
+        TimeSpan duration,
+        CommandSource commandSource,
+        CancellationToken cancellationToken = default)
+        => new(methodResult);
 
     public ValueTask<DbDataReader> CommandReaderExecutedAsync(
         IRelationalConnection connection,
@@ -167,11 +279,37 @@ public class FakeRelationalCommandDiagnosticsLogger
     public ValueTask<object?> CommandScalarExecutedAsync(
         IRelationalConnection connection,
         DbCommand command,
+        DbContext? context,
+        Guid commandId,
+        Guid connectionId,
+        object? methodResult,
+        DateTimeOffset startTime,
+        TimeSpan duration,
+        CommandSource commandSource,
+        CancellationToken cancellationToken = default)
+        => new(methodResult);
+
+    public ValueTask<object?> CommandScalarExecutedAsync(
+        IRelationalConnection connection,
+        DbCommand command,
         string logCommandText,
         DbContext? context,
         Guid commandId,
         Guid connectionId,
         object? methodResult,
+        DateTimeOffset startTime,
+        TimeSpan duration,
+        CommandSource commandSource,
+        CancellationToken cancellationToken = default)
+        => new(methodResult);
+
+    public ValueTask<int> CommandNonQueryExecutedAsync(
+        IRelationalConnection connection,
+        DbCommand command,
+        DbContext? context,
+        Guid commandId,
+        Guid connectionId,
+        int methodResult,
         DateTimeOffset startTime,
         TimeSpan duration,
         CommandSource commandSource,
@@ -223,6 +361,20 @@ public class FakeRelationalCommandDiagnosticsLogger
     public void CommandError(
         IRelationalConnection connection,
         DbCommand command,
+        DbContext? context,
+        DbCommandMethod executeMethod,
+        Guid commandId,
+        Guid connectionId,
+        Exception exception,
+        DateTimeOffset startTime,
+        TimeSpan duration,
+        CommandSource commandSource)
+    {
+    }
+
+    public void CommandError(
+        IRelationalConnection connection,
+        DbCommand command,
         string logCommandText,
         DbContext? context,
         DbCommandMethod executeMethod,
@@ -234,6 +386,20 @@ public class FakeRelationalCommandDiagnosticsLogger
         CommandSource commandSource)
     {
     }
+
+    public Task CommandErrorAsync(
+        IRelationalConnection connection,
+        DbCommand command,
+        DbContext? context,
+        DbCommandMethod executeMethod,
+        Guid commandId,
+        Guid connectionId,
+        Exception exception,
+        DateTimeOffset startTime,
+        TimeSpan duration,
+        CommandSource commandSource,
+        CancellationToken cancellationToken = default)
+        => Task.CompletedTask;
 
     public Task CommandErrorAsync(
         IRelationalConnection connection,
@@ -253,6 +419,19 @@ public class FakeRelationalCommandDiagnosticsLogger
     public void CommandCanceled(
         IRelationalConnection connection,
         DbCommand command,
+        DbContext? context,
+        DbCommandMethod executeMethod,
+        Guid commandId,
+        Guid connectionId,
+        DateTimeOffset startTime,
+        TimeSpan duration,
+        CommandSource commandSource)
+    {
+    }
+
+    public void CommandCanceled(
+        IRelationalConnection connection,
+        DbCommand command,
         string logCommandText,
         DbContext? context,
         DbCommandMethod executeMethod,
@@ -263,6 +442,19 @@ public class FakeRelationalCommandDiagnosticsLogger
         CommandSource commandSource)
     {
     }
+
+    public Task CommandCanceledAsync(
+        IRelationalConnection connection,
+        DbCommand command,
+        DbContext? context,
+        DbCommandMethod executeMethod,
+        Guid commandId,
+        Guid connectionId,
+        DateTimeOffset startTime,
+        TimeSpan duration,
+        CommandSource commandSource,
+        CancellationToken cancellationToken = default)
+        => Task.CompletedTask;
 
     public Task CommandCanceledAsync(
         IRelationalConnection connection,

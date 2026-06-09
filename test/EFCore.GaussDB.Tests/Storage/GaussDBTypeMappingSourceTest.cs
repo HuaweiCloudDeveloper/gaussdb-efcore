@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore.Storage.Json;
 using NetTopologySuite.Geometries;
 using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure;

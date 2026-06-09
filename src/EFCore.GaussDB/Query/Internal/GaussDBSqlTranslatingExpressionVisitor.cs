@@ -611,7 +611,7 @@ public class GaussDBSqlTranslatingExpressionVisitor : RelationalSqlTranslatingEx
         QueryContext queryContext,
         string baseParameterName,
         StartsEndsWithContains methodType)
-        => queryContext.Parameters[baseParameterName] switch
+        => queryContext.ParameterValues[baseParameterName] switch
         {
             null => null,
 

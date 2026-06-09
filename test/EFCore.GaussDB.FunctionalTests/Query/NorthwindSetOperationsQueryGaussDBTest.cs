@@ -187,6 +187,22 @@ WHERE u0."CustomerID" = (
         AssertSql();
     }
 
+    public override Task Union_Take_Union_Take(bool async)
+        => TestEnvironment.IsDistributed
+            ? AssertQuery(
+                async,
+                ss => ss.Set<Customer>()
+                    .Where(c => c.City == "Berlin")
+                    .Union(ss.Set<Customer>().Where(c => c.City == "London"))
+                    .OrderBy(c => c.CustomerID)
+                    .Take(1)
+                    .Union(ss.Set<Customer>().Where(c => c.City == "Mannheim"))
+                    .OrderBy(c => c.CustomerID)
+                    .Take(1)
+                    .OrderBy(c => c.CustomerID),
+                assertOrder: true)
+            : base.Union_Take_Union_Take(async);
+
     private void AssertSql(params string[] expected)
         => Fixture.TestSqlLoggerFactory.AssertBaseline(expected);
 

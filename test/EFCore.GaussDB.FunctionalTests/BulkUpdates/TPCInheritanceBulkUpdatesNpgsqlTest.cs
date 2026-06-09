@@ -100,11 +100,9 @@ public class TPCInheritanceBulkUpdatesGaussDBTest(
         await base.Update_base_property_on_derived_type(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='SomeOtherKiwi'
-
+"""
 UPDATE "Kiwi" AS k
-SET "Name" = @p
+SET "Name" = 'SomeOtherKiwi'
 """);
     }
 
@@ -113,11 +111,9 @@ SET "Name" = @p
         await base.Update_derived_property_on_derived_type(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='0' (DbType = Int16)
-
+"""
 UPDATE "Kiwi" AS k
-SET "FoundOn" = @p
+SET "FoundOn" = 0
 """);
     }
 
@@ -126,11 +122,9 @@ SET "FoundOn" = @p
         await base.Update_where_using_hierarchy(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='Monovia'
-
+"""
 UPDATE "Countries" AS c
-SET "Name" = @p
+SET "Name" = 'Monovia'
 WHERE (
     SELECT count(*)::int
     FROM (
@@ -149,13 +143,10 @@ WHERE (
         await base.Update_base_and_derived_types(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='Kiwi'
-@p0='0' (DbType = Int16)
-
+"""
 UPDATE "Kiwi" AS k
-SET "Name" = @p,
-    "FoundOn" = @p0
+SET "FoundOn" = 0,
+    "Name" = 'Kiwi'
 """);
     }
 
@@ -164,11 +155,9 @@ SET "Name" = @p,
         await base.Update_where_using_hierarchy_derived(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='Monovia'
-
+"""
 UPDATE "Countries" AS c
-SET "Name" = @p
+SET "Name" = 'Monovia'
 WHERE (
     SELECT count(*)::int
     FROM (
@@ -191,11 +180,9 @@ WHERE (
         await base.Update_with_interface_in_property_expression(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='0'
-
+"""
 UPDATE "Coke" AS c
-SET "SugarGrams" = @p
+SET "SugarGrams" = 0
 """);
     }
 
@@ -204,11 +191,9 @@ SET "SugarGrams" = @p
         await base.Update_with_interface_in_EF_Property_in_property_expression(async);
 
         AssertExecuteUpdateSql(
-            """
-@p='0'
-
+"""
 UPDATE "Coke" AS c
-SET "SugarGrams" = @p
+SET "SugarGrams" = 0
 """);
     }
 

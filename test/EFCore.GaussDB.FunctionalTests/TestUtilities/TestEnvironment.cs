@@ -32,7 +32,28 @@ public static class TestEnvironment
         => Config["DefaultConnection"] ?? DefaultConnectionString;
 
     public static bool EnableExtensionConnectionOption
-        => !string.Equals(Config["EnableExtensionConnectionOption"], "false", StringComparison.OrdinalIgnoreCase);
+    {
+        get
+        {
+            if (Config["EnableExtensionConnectionOption"] is { } connectionOption)
+            {
+                return !bool.TryParse(connectionOption, out var enabled)
+                    || enabled;
+            }
+
+            return Config["EnableExtensionSessionParameter"] is not { } sessionParameter
+                || !bool.TryParse(sessionParameter, out var sessionParameterEnabled)
+                || sessionParameterEnabled;
+        }
+    }
+
+    public static bool EnableExtensionSessionParameter
+        => EnableExtensionConnectionOption;
+
+    public static bool IsDistributed
+        => Config["IsDistributed"] is { } value
+            && bool.TryParse(value, out var isDistributed)
+            && isDistributed;
 
     private static Version? _postgresVersion;
 

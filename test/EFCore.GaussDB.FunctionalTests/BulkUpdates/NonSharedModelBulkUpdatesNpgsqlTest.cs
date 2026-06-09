@@ -1,6 +1,6 @@
 namespace Microsoft.EntityFrameworkCore.BulkUpdates;
 
-public class NonSharedModelBulkUpdatesGaussDBTest(NonSharedFixture fixture) : NonSharedModelBulkUpdatesRelationalTestBase(fixture)
+public class NonSharedModelBulkUpdatesGaussDBTest : NonSharedModelBulkUpdatesRelationalTestBase
 {
     private const string ComplexBulkMutationSkip =
         "Local-only: current GaussDB bulk mutation SQL generation still fails for these owned/navigation-heavy ExecuteDelete/ExecuteUpdate shapes and needs provider work rather than local SQL-baseline edits.";
@@ -42,10 +42,8 @@ public class NonSharedModelBulkUpdatesGaussDBTest(NonSharedFixture fixture) : No
 
         AssertSql(
             """
-@p='SomeValue'
-
 UPDATE "OwnedCollection" AS o0
-SET "Value" = @p
+SET "Value" = 'SomeValue'
 FROM "Owner" AS o
 WHERE o."Id" = o0."OwnerId"
 """);
@@ -64,10 +62,8 @@ WHERE o."Id" = o0."OwnerId"
 
         AssertSql(
             """
-@p='SomeValue'
-
 UPDATE "Owner" AS o
-SET "Title" = @p
+SET "Title" = 'SomeValue'
 """);
     }
 
@@ -96,10 +92,8 @@ SET "Title" = COALESCE(o."Title", '') || '_Suffix'
 
         AssertSql(
             """
-@p='NewValue'
-
 UPDATE "Owner" AS o
-SET "Title" = @p
+SET "Title" = 'NewValue'
 FROM "Owner" AS o0
 WHERE o."Id" = o0."Id"
 """);
@@ -112,8 +106,8 @@ WHERE o."Id" = o0."Id"
         AssertSql(
             """
 UPDATE "Owner" AS o
-SET "Title" = COALESCE(o."OwnedReference_Number"::text, ''),
-    "OwnedReference_Number" = length(o."Title")::int
+SET "OwnedReference_Number" = length(o."Title")::int,
+    "Title" = COALESCE(o."OwnedReference_Number"::text, '')
 """);
     }
 
@@ -156,8 +150,8 @@ SET "CreationTimestamp" = TIMESTAMPTZ '2020-01-01T00:00:00Z'
         AssertSql(
             """
 UPDATE "BlogsPart1" AS b0
-SET "Title" = b0."Rating"::text,
-    "Rating" = length(b0."Title")::int
+SET "Rating" = length(b0."Title")::int,
+    "Title" = b0."Rating"::text
 FROM "Blogs" AS b
 WHERE b."Id" = b0."Id"
 """);
@@ -188,9 +182,10 @@ WHERE o."Id" = 1
 
     [ConditionalTheory(Skip = ComplexBulkMutationSkip)] // #3001
     [MemberData(nameof(IsAsyncData))]
-    public virtual async Task Update_with_primitive_collection_in_value_selector(bool async)
+    public virtual Task Update_with_primitive_collection_in_value_selector(bool async)
     {
         _ = async;
+        return Task.CompletedTask;
     }
 
     protected class Context3001(DbContextOptions options) : DbContext(options)
@@ -204,6 +199,7 @@ WHERE o."Id" = 1
         public List<string> Tags { get; set; } = null!;
     }
 
+#if NET10_0_OR_GREATER
     [ConditionalTheory(Skip = ComplexBulkMutationSkip)]
     [MemberData(nameof(IsAsyncData))]
     public override Task Delete_with_view_mapping(bool async)
@@ -232,6 +228,7 @@ SET "Data" = @p
         // #34706
         AssertSql();
     }
+#endif
 
     private void AssertSql(params string[] expected)
         => TestSqlLoggerFactory.AssertBaseline(expected);
