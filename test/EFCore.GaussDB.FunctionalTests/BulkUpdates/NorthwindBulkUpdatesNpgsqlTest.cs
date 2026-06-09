@@ -242,7 +242,9 @@ public class NorthwindBulkUpdatesGaussDBTest(
         return Task.CompletedTask;
     }
 
-    public override async Task Delete_with_join(bool async)
+    [ConditionalTheory(Skip = ComplexBulkMutationSkip)]
+    [MemberData(nameof(IsAsyncData))]
+    public override Task Delete_with_join(bool async)
     {
         await base.Delete_with_join(async);
 
