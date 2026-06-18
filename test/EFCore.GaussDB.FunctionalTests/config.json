@@ -1,7 +1,7 @@
 {
     "Test": {
       "GaussDB": {
-        "DefaultConnection": "Server=localhost;Username=npgsql_tests;Password=npgsql_tests;SSL Mode=disable"
+        "DefaultConnection": "Server=localhost;Port=5432;Username=npgsql_tests;Password=npgsql_tests;SSL Mode=disable"
       }
     }
 }

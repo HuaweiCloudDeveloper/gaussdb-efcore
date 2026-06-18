@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <VersionPrefix>0.0.1</VersionPrefix>
+    <VersionPrefix>9.0.0</VersionPrefix>
     <TargetFrameworks>net9.0</TargetFrameworks>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
@@ -25,6 +25,10 @@
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)gaussdb.png" Pack="true" PackagePath="" />
   </ItemGroup>
+
+  <PropertyGroup Condition="'$(MSBuildProjectName)' == 'GetStarted'">
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
 
   <ItemGroup>
     <Using Include="System.Diagnostics" />
