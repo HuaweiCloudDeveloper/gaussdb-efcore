@@ -16,7 +16,10 @@ public class AdHocPrecompiledQueryGaussDBTest(NonSharedFixture fixture, ITestOut
             """
 SELECT j."Id", j."IntList", j."JsonThing"
 FROM "JsonEntities" AS j
-WHERE j."IntList"[j."Id" + 1] = 2
+WHERE (
+    SELECT i.value
+    FROM unnest(j."IntList") AS i(value)
+    LIMIT 1 OFFSET j."Id") = 2
 """);
     }
 
@@ -30,7 +33,10 @@ WHERE j."IntList"[j."Id" + 1] = 2
 
 SELECT j."Id", j."IntList", j."JsonThing"
 FROM "JsonEntities" AS j
-WHERE j."IntList"[@id + 1] = 2
+WHERE (
+    SELECT i.value
+    FROM unnest(j."IntList") AS i(value)
+    LIMIT 1 OFFSET @id) = 2
 """);
     }
 

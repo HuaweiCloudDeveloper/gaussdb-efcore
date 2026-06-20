@@ -5,9 +5,21 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 GO
 
-CREATE EXTENSION "uuid-ossp";
-CREATE EXTENSION "unaccent";
-CREATE EXTENSION "btree_gist"; -- For the <-> (distance) operator
+DO $$
+BEGIN
+    IF EXISTS (SELECT 1 FROM pg_available_extensions WHERE name = 'uuid-ossp') THEN
+        EXECUTE 'CREATE EXTENSION IF NOT EXISTS "uuid-ossp"';
+    END IF;
+
+    IF EXISTS (SELECT 1 FROM pg_available_extensions WHERE name = 'unaccent') THEN
+        EXECUTE 'CREATE EXTENSION IF NOT EXISTS "unaccent"';
+    END IF;
+
+    IF EXISTS (SELECT 1 FROM pg_available_extensions WHERE name = 'btree_gist') THEN
+        EXECUTE 'CREATE EXTENSION IF NOT EXISTS "btree_gist"';
+    END IF;
+END
+$$;
 
 CREATE TABLE "Employees" (
 	"EmployeeID" SERIAL,

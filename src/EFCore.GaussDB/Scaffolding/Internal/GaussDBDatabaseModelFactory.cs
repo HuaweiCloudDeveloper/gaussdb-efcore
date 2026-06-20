@@ -21,6 +21,11 @@ public class GaussDBDatabaseModelFactory : DatabaseModelFactory
     #region Fields
 
     private const string NamePartRegex = """(?:(?:"(?<part{0}>(?:(?:"")|[^"])+)")|(?<part{0}>[^\.\["]+))""";
+    private const string InternalSchemas = "'pg_catalog', 'information_schema', 'sys', 'db4ai', 'dbe_perf', 'dbe_pldeveloper', 'dbe_profiler'";
+    private static readonly HashSet<string> InternalSchemaNames =
+    [
+        "pg_catalog", "information_schema", "sys", "db4ai", "dbe_perf", "dbe_pldeveloper", "dbe_profiler"
+    ];
 
     private static readonly Regex SchemaTableNameExtractor =
         new(
@@ -77,7 +82,7 @@ public class GaussDBDatabaseModelFactory : DatabaseModelFactory
 
         try
         {
-            var internalSchemas = "'pg_catalog', 'information_schema'";
+            var internalSchemas = InternalSchemas;
             using (var command = new GaussDBCommand("SELECT version()", connection))
             {
                 var longVersion = (string)command.ExecuteScalar()!;
@@ -1019,6 +1024,11 @@ WHERE NOT EXISTS (SELECT * FROM pg_depend AS dep WHERE dep.objid = cls.oid AND d
                 var sequenceSchema = reader.GetFieldValue<string>("nspname");
                 var sequenceName = reader.GetFieldValue<string>("relname");
 
+                if (InternalSchemaNames.Contains(sequenceSchema))
+                {
+                    continue;
+                }
+
                 var seqInfo = ReadSequenceInfo(record, connection.PostgreSqlVersion);
                 var sequence = new DatabaseSequence
                 {
@@ -1074,6 +1084,11 @@ WHERE
             {
                 var sequenceName = reader.GetFieldValue<string>("sequence_name");
                 var sequenceSchema = reader.GetFieldValue<string>("sequence_schema");
+
+                if (InternalSchemaNames.Contains(sequenceSchema))
+                {
+                    continue;
+                }
 
                 var seqInfo = ReadSequenceInfo(record, connection.PostgreSqlVersion);
                 var sequence = new DatabaseSequence
@@ -1261,8 +1276,9 @@ WHERE
         storeType = storeType switch
         {
             "int2" => "smallint",
-            "int4" => "integer",
-            "int8" => "bigint",
+            "int16" => "bigint",
+            "int4" or "int32" => "integer",
+            "int8" or "int64" => "bigint",
             _ => storeType
         };
 

@@ -12,7 +12,10 @@ public class NodaTimeContext(DbContextOptions<NodaTimeContext> options) : Poolab
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.HasPostgresExtension("btree_gist");
+        if (TestEnvironment.IsExtensionAvailable("btree_gist"))
+        {
+            modelBuilder.HasPostgresExtension("btree_gist");
+        }
     }
 
     public static async Task SeedAsync(NodaTimeContext context)

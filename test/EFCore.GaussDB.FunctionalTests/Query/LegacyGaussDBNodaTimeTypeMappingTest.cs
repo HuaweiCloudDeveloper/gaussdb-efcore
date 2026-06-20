@@ -48,7 +48,7 @@ namespace Microsoft.EntityFrameworkCore.Query
         [Fact]
         public void GenerateSqlLiteral_returns_instant_range_in_legacy_mode()
         {
-            var mapping = (GaussDBCidrTypeMapping)GetMapping(typeof(GaussDBRange<Instant>))!;
+            var mapping = (GaussDBRangeTypeMapping)GetMapping(typeof(GaussDBRange<Instant>))!;
             Assert.Equal("tsrange", mapping.StoreType);
             Assert.Equal("timestamp without time zone", mapping.SubtypeMapping.StoreType);
 

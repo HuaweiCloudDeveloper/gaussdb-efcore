@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>HuaweiCloud.EntityFrameworkCore.GaussDB.NetTopologySuite</AssemblyName>
     <RootNamespace>HuaweiCloud.EntityFrameworkCore.GaussDB.NetTopologySuite</RootNamespace>
@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!--<PackageReference Include="HuaweiCloud.EntityFrameworkCore.GaussDB.NetTopologySuite" />-->
+    <PackageReference Include="HuaweiCloud.Driver.GaussDB.NetTopologySuite" />
   </ItemGroup>
 
   <ItemGroup>

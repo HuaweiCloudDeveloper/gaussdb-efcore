@@ -15,7 +15,7 @@ public class GaussDBValueGenerationScenariosTest
 
         using (var context = new BlogContextSequence(testStore.Name))
         {
-            context.Database.EnsureCreated();
+            GaussDBTestStore.EnsureCreatedWithUserTables(context);
             context.AddRange(
                 new Blog { Name = "One Unicorn" },
                 new Blog { Name = "Two Unicorns" });
@@ -40,7 +40,7 @@ public class GaussDBValueGenerationScenariosTest
 
         using (var context = new BlogContextHiLo(testStore.Name))
         {
-            context.Database.EnsureCreated();
+            GaussDBTestStore.EnsureCreatedWithUserTables(context);
             context.AddRange(
                 new Blog { Name = "One Unicorn" },
                 new Blog { Name = "Two Unicorns" });
@@ -73,7 +73,7 @@ public class GaussDBValueGenerationScenariosTest
 
         using (var context = new BlogContextDefaultValue(testStore.Name))
         {
-            context.Database.EnsureCreated();
+            GaussDBTestStore.EnsureCreatedWithUserTables(context);
             context.AddRange(
                 new Blog { Name = "One Unicorn" },
                 new Blog { Name = "Two Unicorns" });
@@ -151,7 +151,7 @@ public class GaussDBValueGenerationScenariosTest
 
         using (var context = new BlogContextKeyColumnWithDefaultValue(testStore.Name))
         {
-            context.Database.EnsureCreated();
+            GaussDBTestStore.EnsureCreatedWithUserTables(context);
             context.AddRange(
                 new Blog { Name = "One Unicorn" },
                 new Blog { Name = "Two Unicorns" });
@@ -191,7 +191,7 @@ public class GaussDBValueGenerationScenariosTest
         await using var testStore = await GaussDBTestStore.CreateInitializedAsync(DatabaseName);
         using (var context = new BlogContextUIntToIdentityUsingValueConverter(testStore.Name))
         {
-            context.Database.EnsureCreatedResiliently();
+            GaussDBTestStore.EnsureCreatedWithUserTables(context);
 
             context.AddRange(
                 new BlogWithUIntKey { Name = "One Unicorn" }, new BlogWithUIntKey { Name = "Two Unicorns" });
@@ -235,7 +235,7 @@ public class GaussDBValueGenerationScenariosTest
         await using var testStore = await GaussDBTestStore.CreateInitializedAsync(DatabaseName);
         using (var context = new BlogContextStringToIdentityUsingValueConverter(testStore.Name))
         {
-            context.Database.EnsureCreatedResiliently();
+            GaussDBTestStore.EnsureCreatedWithUserTables(context);
 
             context.AddRange(
                 new BlogWithStringKey { Name = "One Unicorn" }, new BlogWithStringKey { Name = "Two Unicorns" });
@@ -281,7 +281,7 @@ public class GaussDBValueGenerationScenariosTest
 
         using (var context = new BlogContextNoKeyGeneration(testStore.Name))
         {
-            context.Database.EnsureCreated();
+            GaussDBTestStore.EnsureCreatedWithUserTables(context);
             context.AddRange(
                 new Blog { Id = 66, Name = "One Unicorn" },
                 new Blog { Id = 67, Name = "Two Unicorns" });
@@ -317,7 +317,7 @@ public class GaussDBValueGenerationScenariosTest
 
         using (var context = new BlogContextNoKeyGenerationNullableKey(testStore.Name))
         {
-            context.Database.EnsureCreated();
+            GaussDBTestStore.EnsureCreatedWithUserTables(context);
             context.AddRange(
                 new NullableKeyBlog { Id = 0, Name = "One Unicorn" },
                 new NullableKeyBlog { Id = 1, Name = "Two Unicorns" });
@@ -353,7 +353,7 @@ public class GaussDBValueGenerationScenariosTest
 
         using (var context = new BlogContextNonKeyDefaultValue(testStore.Name))
         {
-            context.Database.EnsureCreated();
+            GaussDBTestStore.EnsureCreatedWithUserTables(context);
             var blogs = new List<Blog>
             {
                 new() { Name = "One Unicorn" }, new() { Name = "Two Unicorns", CreatedOn = new DateTime(1969, 8, 3, 0, 10, 0) }
@@ -406,7 +406,7 @@ public class GaussDBValueGenerationScenariosTest
 
         using (var context = new BlogContextNonKeyReadOnlyDefaultValue(testStore.Name))
         {
-            context.Database.EnsureCreated();
+            GaussDBTestStore.EnsureCreatedWithUserTables(context);
             context.AddRange(
                 new Blog { Name = "One Unicorn" },
                 new Blog { Name = "Two Unicorns" });
@@ -462,7 +462,7 @@ public class GaussDBValueGenerationScenariosTest
 
         using (var context = new BlogContextSequenceNonId(testStore.Name))
         {
-            context.Database.EnsureCreated();
+            GaussDBTestStore.EnsureCreatedWithUserTables(context);
 
             var blog = context.Add(new Blog { Name = "One Unicorn" }).Entity;
             var beforeSave = blog.OtherId;
@@ -499,7 +499,7 @@ public class GaussDBValueGenerationScenariosTest
         Guid afterSave;
         using (var context = new BlogContext(testStore.Name))
         {
-            context.Database.EnsureCreated();
+            GaussDBTestStore.EnsureCreatedWithUserTables(context);
             var blog = context.Add(new GuidBlog { Name = "One Unicorn" }).Entity;
             var beforeSave = blog.Id;
             context.SaveChanges();
@@ -524,7 +524,7 @@ public class GaussDBValueGenerationScenariosTest
         Guid afterSave;
         using (var context = new BlogContextServerGuidKey(testStore.Name))
         {
-            context.Database.EnsureCreated();
+            GaussDBTestStore.EnsureCreatedWithUserTables(context);
 
             var blog = context.Add(
                 new GuidBlog { Name = "One Unicorn" }).Entity;
@@ -555,15 +555,14 @@ public class GaussDBValueGenerationScenariosTest
     {
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasPostgresExtension("uuid-ossp");
             modelBuilder
                 .Entity<GuidBlog>(
                     eb =>
                     {
                         eb.Property(e => e.Id)
-                            .HasDefaultValueSql("uuid_generate_v4()");
+                            .HasDefaultValueSql("uuid()::uuid");
                         eb.Property(e => e.NotId)
-                            .HasDefaultValueSql("uuid_generate_v4()");
+                            .HasDefaultValueSql("uuid()::uuid");
                     });
         }
     }
@@ -631,3 +630,4 @@ public class GaussDBValueGenerationScenariosTest
         }
     }
 }
+

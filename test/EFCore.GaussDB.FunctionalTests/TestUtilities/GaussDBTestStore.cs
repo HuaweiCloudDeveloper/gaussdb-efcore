@@ -2,11 +2,16 @@
 using System.Data.Common;
 using System.Text.RegularExpressions;
 using HuaweiCloud.EntityFrameworkCore.GaussDB.Infrastructure;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Microsoft.EntityFrameworkCore.TestUtilities;
 
 public class GaussDBTestStore : RelationalTestStore
 {
+    private const string InternalSchemas =
+        "'pg_catalog', 'information_schema', 'sys', 'db4ai', 'dbe_perf', 'dbe_pldeveloper', 'dbe_profiler'";
+
     private readonly string? _scriptPath;
     private readonly string? _additionalSql;
 
@@ -89,6 +94,7 @@ public class GaussDBTestStore : RelationalTestStore
             {
                 await using var context = createContext();
                 await context.Database.EnsureCreatedResilientlyAsync();
+                await EnsureUserTablesCreatedAsync(context);
 
                 if (_additionalSql is not null)
                 {
@@ -116,29 +122,119 @@ public class GaussDBTestStore : RelationalTestStore
             : builder.UseGaussDB(Connection, npgsqlOptionsBuilder);
     }
 
+    public static void EnsureCreatedWithUserTables(DbContext context)
+    {
+        context.Database.EnsureCreatedResiliently();
+        EnsureUserTablesCreated(context);
+    }
+
+    public static async Task EnsureCreatedWithUserTablesAsync(DbContext context)
+    {
+        await context.Database.EnsureCreatedResilientlyAsync();
+        await EnsureUserTablesCreatedAsync(context);
+    }
+
     private async Task<bool> CreateDatabaseAsync(Func<DbContext, Task>? clean)
     {
         await using var master = new GaussDBConnection(CreateAdminConnectionString());
 
         if (await DatabaseExistsAsync(Name))
         {
-            if (_scriptPath is not null)
+            if (_scriptPath is not null
+                && await ScriptDatabaseIsInitializedAsync())
             {
                 return false;
             }
 
-            await using var context = new DbContext(
-                AddProviderOptions(new DbContextOptionsBuilder().EnableServiceProviderCaching(false)).Options);
-            clean?.Invoke(context);
-            await CleanAsync(context);
-            return true;
+            await DropDatabaseAsync(master, Name);
+            GaussDBConnection.ClearAllPools();
         }
 
-        await ExecuteNonQueryAsync(master, GetCreateDatabaseStatement(Name));
+        try
+        {
+            await ExecuteNonQueryAsync(master, GetCreateDatabaseStatement(Name));
+        }
+        catch (PostgresException e) when (e.SqlState == "23505")
+        {
+            await WaitForExistsAsync((GaussDBConnection)Connection);
+            return false;
+        }
+
         await WaitForExistsAsync((GaussDBConnection)Connection);
 
         return true;
     }
+
+    private static async Task EnsureUserTablesCreatedAsync(DbContext context)
+    {
+        if (await HasUserTablesAsync(context.Database.GetDbConnection()))
+        {
+            return;
+        }
+
+        var creator = context.GetService<IRelationalDatabaseCreator>();
+        await creator.CreateTablesAsync();
+    }
+
+    private static void EnsureUserTablesCreated(DbContext context)
+    {
+        if (HasUserTables(context.Database.GetDbConnection()))
+        {
+            return;
+        }
+
+        var creator = context.GetService<IRelationalDatabaseCreator>();
+        creator.CreateTables();
+    }
+
+    private async Task<bool> ScriptDatabaseIsInitializedAsync()
+    {
+        if (_scriptPath is null)
+        {
+            return true;
+        }
+
+        if (Name == Northwind)
+        {
+            return await ExecuteScalarAsync<long>(
+                    Connection,
+                    """
+SELECT COUNT(*)
+FROM pg_tables
+WHERE schemaname = 'public' AND tablename = 'Customers'
+""")
+                > 0;
+        }
+
+        return await ExecuteScalarAsync<long>(
+                Connection,
+                $"""
+SELECT COUNT(*)
+FROM pg_tables
+WHERE schemaname NOT IN ({InternalSchemas})
+""")
+            > 0;
+    }
+
+    private static async Task<bool> HasUserTablesAsync(DbConnection connection)
+        => await ExecuteScalarAsync<long>(
+                connection,
+                $"""
+SELECT COUNT(*)
+FROM pg_tables
+WHERE schemaname NOT IN ({InternalSchemas})
+""")
+            > 0;
+
+    private static bool HasUserTables(DbConnection connection)
+        => ExecuteScalar<long>(
+                connection,
+                $"""
+SELECT COUNT(*)
+FROM pg_tables
+WHERE schemaname NOT IN ({InternalSchemas})
+""")
+            > 0;
 
     private static async Task WaitForExistsAsync(GaussDBConnection connection)
     {
@@ -211,25 +307,50 @@ public class GaussDBTestStore : RelationalTestStore
 
         await using var master = new GaussDBConnection(CreateAdminConnectionString());
 
-        await ExecuteNonQueryAsync(master, GetDisconnectDatabaseSql(Name));
-        await ExecuteNonQueryAsync(master, GetDropDatabaseSql(Name));
+        await DropDatabaseAsync(master, Name);
 
         GaussDBConnection.ClearAllPools();
     }
 
-    // Kill all connection to the database
+    // openGauss exposes a provider-specific command for forcibly clearing sessions.
     private static string GetDisconnectDatabaseSql(string name)
         => $"""
-REVOKE CONNECT ON DATABASE "{name}" FROM PUBLIC;
-SELECT pg_terminate_backend (pg_stat_activity.pid)
-   FROM pg_stat_activity
-   WHERE datname = '{name}'
+            CLEAN CONNECTION TO ALL FORCE FOR DATABASE "{name}";
 """;
 
     private static string GetDropDatabaseSql(string name)
         => $"""
             DROP DATABASE "{name}"
             """;
+
+    private static async Task DropDatabaseAsync(DbConnection connection, string name)
+    {
+        for (var retryCount = 0; ; retryCount++)
+        {
+            try
+            {
+                await ExecuteNonQueryAsync(connection, GetDisconnectDatabaseSql(name));
+            }
+            catch (PostgresException e) when (e.SqlState == "3D000")
+            {
+                return;
+            }
+
+            try
+            {
+                await ExecuteNonQueryAsync(connection, GetDropDatabaseSql(name));
+                return;
+            }
+            catch (PostgresException e) when (e.SqlState == "3D000")
+            {
+                return;
+            }
+            catch (PostgresException e) when (e.SqlState == "55006" && retryCount < 30)
+            {
+                await Task.Delay(100);
+            }
+        }
+    }
 
     public override void OpenConnection()
         => Connection.Open();
@@ -341,8 +462,7 @@ SELECT pg_terminate_backend (pg_stat_activity.pid)
         }
         finally
         {
-            if (connection.State == ConnectionState.Closed
-                && connection.State != ConnectionState.Closed)
+            if (connection.State != ConnectionState.Closed)
             {
                 connection.Close();
             }
@@ -389,8 +509,7 @@ SELECT pg_terminate_backend (pg_stat_activity.pid)
         }
         finally
         {
-            if (connection.State == ConnectionState.Closed
-                && connection.State != ConnectionState.Closed)
+            if (connection.State != ConnectionState.Closed)
             {
                 await connection.CloseAsync();
             }
@@ -421,10 +540,15 @@ SELECT pg_terminate_backend (pg_stat_activity.pid)
     public static string CreateConnectionString(string name, string? options = null)
     {
         var builder = new GaussDBConnectionStringBuilder(TestEnvironment.DefaultConnection) { Database = name };
+        var effectiveOptions = TestEnvironment.EnableExtensionConnectionOption
+            ? options is null
+                ? "-c enable_extension=on"
+                : $"-c enable_extension=on {options}"
+            : options;
 
-        if (options is not null)
+        if (!string.IsNullOrWhiteSpace(effectiveOptions))
         {
-            builder.Options = options;
+            builder.Options = effectiveOptions;
         }
 
         return builder.ConnectionString;

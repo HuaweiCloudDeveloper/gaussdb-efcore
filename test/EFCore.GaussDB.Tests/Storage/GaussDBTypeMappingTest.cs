@@ -280,6 +280,7 @@ public class GaussDBTypeMappingTest
     public void GenerateCodeLiteral_returns_inet_literal()
         => Assert.Equal("""System.Net.IPAddress.Parse("192.168.1.1")""", CodeLiteral(IPAddress.Parse("192.168.1.1")));
 
+#pragma warning disable CS0618 // GaussDBCidr is obsolete, replaced by .NET IPNetwork
     [Fact]
     public void GenerateSqlLiteral_returns_cidr_literal()
         => Assert.Equal("CIDR '192.168.1.0/24'", GetMapping("cidr").GenerateSqlLiteral(new GaussDBCidr(IPAddress.Parse("192.168.1.0"), 24)));
@@ -287,8 +288,9 @@ public class GaussDBTypeMappingTest
     [Fact]
     public void GenerateCodeLiteral_returns_cidr_literal()
         => Assert.Equal(
-            """new GaussDBTypes.GaussDBCidr(System.Net.IPAddress.Parse("192.168.1.0"), (byte)24)""",
+            """new HuaweiCloud.GaussDBTypes.GaussDBCidr(System.Net.IPAddress.Parse("192.168.1.0"), (byte)24)""",
             CodeLiteral(new GaussDBCidr(IPAddress.Parse("192.168.1.0"), 24)));
+#pragma warning restore CS0618
 
     #endregion Networking
 
@@ -300,7 +302,7 @@ public class GaussDBTypeMappingTest
 
     [Fact]
     public void GenerateCodeLiteral_returns_point_literal()
-        => Assert.Equal("new GaussDBTypes.GaussDBPoint(3.5, 4.5)", CodeLiteral(new GaussDBPoint(3.5, 4.5)));
+        => Assert.Equal("new HuaweiCloud.GaussDBTypes.GaussDBPoint(3.5, 4.5)", CodeLiteral(new GaussDBPoint(3.5, 4.5)));
 
     [Fact]
     public void GenerateSqlLiteral_returns_line_literal()
@@ -308,7 +310,7 @@ public class GaussDBTypeMappingTest
 
     [Fact]
     public void GenerateCodeLiteral_returns_line_literal()
-        => Assert.Equal("new GaussDBTypes.GaussDBLine(3.5, 4.5, 10.0)", CodeLiteral(new GaussDBLine(3.5, 4.5, 10)));
+        => Assert.Equal("new HuaweiCloud.GaussDBTypes.GaussDBLine(3.5, 4.5, 10.0)", CodeLiteral(new GaussDBLine(3.5, 4.5, 10)));
 
     [Fact]
     public void GenerateSqlLiteral_returns_lseg_literal()
@@ -316,7 +318,7 @@ public class GaussDBTypeMappingTest
 
     [Fact]
     public void GenerateCodeLiteral_returns_lseg_literal()
-        => Assert.Equal("new GaussDBTypes.GaussDBLSeg(3.5, 4.5, 5.5, 6.5)", CodeLiteral(new GaussDBLSeg(3.5, 4.5, 5.5, 6.5)));
+        => Assert.Equal("new HuaweiCloud.GaussDBTypes.GaussDBLSeg(3.5, 4.5, 5.5, 6.5)", CodeLiteral(new GaussDBLSeg(3.5, 4.5, 5.5, 6.5)));
 
     [Fact]
     public void GenerateSqlLiteral_returns_box_literal()
@@ -324,7 +326,7 @@ public class GaussDBTypeMappingTest
 
     [Fact]
     public void GenerateCodeLiteral_returns_box_literal()
-        => Assert.Equal("new GaussDBTypes.GaussDBBox(3.0, 4.0, 1.0, 2.0)", CodeLiteral(new GaussDBBox(1, 2, 3, 4)));
+        => Assert.Equal("new HuaweiCloud.GaussDBTypes.GaussDBBox(3.0, 4.0, 1.0, 2.0)", CodeLiteral(new GaussDBBox(1, 2, 3, 4)));
 
     [Fact]
     public void GenerateSqlLiteral_returns_path_closed_literal()
@@ -338,7 +340,7 @@ public class GaussDBTypeMappingTest
     [Fact]
     public void GenerateCodeLiteral_returns_closed_path_literal()
         => Assert.Equal(
-            "new GaussDBTypes.GaussDBPath(new GaussDBPoint[] { new GaussDBTypes.GaussDBPoint(1.0, 2.0), new GaussDBTypes.GaussDBPoint(3.0, 4.0) }, false)",
+            "new HuaweiCloud.GaussDBTypes.GaussDBPath(new GaussDBPoint[] { new HuaweiCloud.GaussDBTypes.GaussDBPoint(1.0, 2.0), new HuaweiCloud.GaussDBTypes.GaussDBPoint(3.0, 4.0) }, false)",
             CodeLiteral(
                 new GaussDBPath(
                     new GaussDBPoint(1, 2),
@@ -357,7 +359,7 @@ public class GaussDBTypeMappingTest
     [Fact]
     public void GenerateCodeLiteral_returns_open_path_literal()
         => Assert.Equal(
-            "new GaussDBTypes.GaussDBPath(new GaussDBPoint[] { new GaussDBTypes.GaussDBPoint(1.0, 2.0), new GaussDBTypes.GaussDBPoint(3.0, 4.0) }, true)",
+            "new HuaweiCloud.GaussDBTypes.GaussDBPath(new GaussDBPoint[] { new HuaweiCloud.GaussDBTypes.GaussDBPoint(1.0, 2.0), new HuaweiCloud.GaussDBTypes.GaussDBPoint(3.0, 4.0) }, true)",
             CodeLiteral(
                 new GaussDBPath(
                     new GaussDBPoint(1, 2),
@@ -376,7 +378,7 @@ public class GaussDBTypeMappingTest
     [Fact]
     public void GenerateCodeLiteral_returns_polygon_literal()
         => Assert.Equal(
-            "new GaussDBTypes.GaussDBPolygon(new GaussDBPoint[] { new GaussDBTypes.GaussDBPoint(1.0, 2.0), new GaussDBTypes.GaussDBPoint(3.0, 4.0) })",
+            "new HuaweiCloud.GaussDBTypes.GaussDBPolygon(new GaussDBPoint[] { new HuaweiCloud.GaussDBTypes.GaussDBPoint(1.0, 2.0), new HuaweiCloud.GaussDBTypes.GaussDBPoint(3.0, 4.0) })",
             CodeLiteral(
                 new GaussDBPolygon(
                     new GaussDBPoint(1, 2),
@@ -389,7 +391,7 @@ public class GaussDBTypeMappingTest
 
     [Fact]
     public void GenerateCodeLiteral_returns_circle_literal()
-        => Assert.Equal("new GaussDBTypes.GaussDBCircle(3.5, 4.5, 5.5)", CodeLiteral(new GaussDBCircle(3.5, 4.5, 5.5)));
+        => Assert.Equal("new HuaweiCloud.GaussDBTypes.GaussDBCircle(3.5, 4.5, 5.5)", CodeLiteral(new GaussDBCircle(3.5, 4.5, 5.5)));
 
     #endregion Geometric
 
@@ -637,7 +639,7 @@ public class GaussDBTypeMappingTest
 
     [Fact]
     public void GenerateCodeLiteral_returns_range_empty_literal()
-        => Assert.Equal("new GaussDBTypes.GaussDBRange<int>(0, false, 0, false)", CodeLiteral(GaussDBRange<int>.Empty));
+        => Assert.Equal("new HuaweiCloud.GaussDBTypes.GaussDBRange<int>(0, false, 0, false)", CodeLiteral(GaussDBRange<int>.Empty));
 
     [Fact]
     public void GenerateSqlLiteral_returns_range_inclusive_literal()
@@ -649,7 +651,7 @@ public class GaussDBTypeMappingTest
 
     [Fact]
     public void GenerateCodeLiteral_returns_range_inclusive_literal()
-        => Assert.Equal("new GaussDBTypes.GaussDBRange<int>(4, 7)", CodeLiteral(new GaussDBRange<int>(4, 7)));
+        => Assert.Equal("new HuaweiCloud.GaussDBTypes.GaussDBRange<int>(4, 7)", CodeLiteral(new GaussDBRange<int>(4, 7)));
 
     [Fact]
     public void GenerateSqlLiteral_returns_range_inclusive_exclusive_literal()
@@ -661,7 +663,7 @@ public class GaussDBTypeMappingTest
 
     [Fact]
     public void GenerateCodeLiteral_returns_range_inclusive_exclusive_literal()
-        => Assert.Equal("new GaussDBTypes.GaussDBRange<int>(4, false, 7, true)", CodeLiteral(new GaussDBRange<int>(4, false, 7, true)));
+        => Assert.Equal("new HuaweiCloud.GaussDBTypes.GaussDBRange<int>(4, false, 7, true)", CodeLiteral(new GaussDBRange<int>(4, false, 7, true)));
 
     [Fact]
     public void GenerateSqlLiteral_returns_range_infinite_literal()
@@ -674,7 +676,7 @@ public class GaussDBTypeMappingTest
     [Fact]
     public void GenerateCodeLiteral_returns_range_infinite_literal()
         => Assert.Equal(
-            "new GaussDBTypes.GaussDBRange<int>(0, false, true, 7, true, false)",
+            "new HuaweiCloud.GaussDBTypes.GaussDBRange<int>(0, false, true, 7, true, false)",
             CodeLiteral(new GaussDBRange<int>(0, false, true, 7, true, false)));
 
     // Tests for the built-in ranges
@@ -682,7 +684,7 @@ public class GaussDBTypeMappingTest
     [Fact]
     public void GenerateSqlLiteral_returns_int4range_literal()
     {
-        var mapping = (GaussDBCidrTypeMapping)GetMapping("int4range");
+        var mapping = (GaussDBRangeTypeMapping)GetMapping("int4range");
         Assert.Equal("integer", mapping.SubtypeMapping.StoreType);
 
         var value = new GaussDBRange<int>(4, 7);
@@ -692,7 +694,7 @@ public class GaussDBTypeMappingTest
     [Fact]
     public void GenerateSqlLiteral_returns_int8range_literal()
     {
-        var mapping = (GaussDBCidrTypeMapping)GetMapping("int8range");
+        var mapping = (GaussDBRangeTypeMapping)GetMapping("int8range");
         Assert.Equal("bigint", mapping.SubtypeMapping.StoreType);
 
         var value = new GaussDBRange<long>(4, 7);
@@ -702,7 +704,7 @@ public class GaussDBTypeMappingTest
     [Fact]
     public void GenerateSqlLiteral_returns_numrange_literal()
     {
-        var mapping = (GaussDBCidrTypeMapping)GetMapping("numrange");
+        var mapping = (GaussDBRangeTypeMapping)GetMapping("numrange");
         Assert.Equal("numeric", mapping.SubtypeMapping.StoreType);
 
         var value = new GaussDBRange<decimal>(4, 7);
@@ -712,7 +714,7 @@ public class GaussDBTypeMappingTest
     [Fact]
     public void GenerateSqlLiteral_returns_tsrange_literal()
     {
-        var mapping = (GaussDBCidrTypeMapping)GetMapping("tsrange");
+        var mapping = (GaussDBRangeTypeMapping)GetMapping("tsrange");
         Assert.Equal("timestamp without time zone", mapping.SubtypeMapping.StoreType);
 
         var value = new GaussDBRange<DateTime>(new DateTime(2020, 1, 1, 12, 0, 0), new DateTime(2020, 1, 2, 12, 0, 0));
@@ -722,7 +724,7 @@ public class GaussDBTypeMappingTest
     [Fact]
     public void GenerateSqlLiteral_returns_tstzrange_literal()
     {
-        var mapping = (GaussDBCidrTypeMapping)GetMapping("tstzrange");
+        var mapping = (GaussDBRangeTypeMapping)GetMapping("tstzrange");
         Assert.Equal("timestamp with time zone", mapping.SubtypeMapping.StoreType);
 
         var value = new GaussDBRange<DateTime>(
@@ -733,9 +735,9 @@ public class GaussDBTypeMappingTest
     [Fact]
     public void GenerateSqlLiteral_returns_daterange_DateOnly_literal()
     {
-        var mapping = (GaussDBCidrTypeMapping)GetMapping("daterange");
+        var mapping = (GaussDBRangeTypeMapping)GetMapping("daterange");
         Assert.Equal("date", mapping.SubtypeMapping.StoreType);
-        Assert.Equal("date", ((GaussDBCidrTypeMapping)GetMapping(typeof(GaussDBRange<DateOnly>))).SubtypeMapping.StoreType);
+        Assert.Equal("date", ((GaussDBRangeTypeMapping)GetMapping(typeof(GaussDBRange<DateOnly>))).SubtypeMapping.StoreType);
 
         var value = new GaussDBRange<DateOnly>(new DateOnly(2020, 1, 1), new DateOnly(2020, 1, 2));
         Assert.Equal(@"'[2020-01-01,2020-01-02]'::daterange", mapping.GenerateSqlLiteral(value));
@@ -744,7 +746,7 @@ public class GaussDBTypeMappingTest
     [Fact]
     public void GenerateSqlLiteral_returns_daterange_DateTime_literal()
     {
-        var mapping = (GaussDBCidrTypeMapping)GetMapping(typeof(GaussDBRange<DateTime>), "daterange");
+        var mapping = (GaussDBRangeTypeMapping)GetMapping(typeof(GaussDBRange<DateTime>), "daterange");
         Assert.Equal("date", mapping.SubtypeMapping.StoreType);
 
         var value = new GaussDBRange<DateTime>(new DateTime(2020, 1, 1), new DateTime(2020, 1, 2));
@@ -783,7 +785,7 @@ public class GaussDBTypeMappingTest
         };
         var literal = CodeLiteral(value);
         Assert.Equal(
-            "new[] { new GaussDBTypes.GaussDBRange<int>(4, 7), new GaussDBTypes.GaussDBRange<int>(9, true, 10, false), new GaussDBTypes.GaussDBRange<int>(13, false, false, 0, false, true) }",
+            "new[] { new HuaweiCloud.GaussDBTypes.GaussDBRange<int>(4, 7), new HuaweiCloud.GaussDBTypes.GaussDBRange<int>(9, true, 10, false), new HuaweiCloud.GaussDBTypes.GaussDBRange<int>(13, false, false, 0, false, true) }",
             literal);
     }
 
@@ -800,7 +802,7 @@ public class GaussDBTypeMappingTest
         };
         var literal = CodeLiteral(value);
         Assert.Equal(
-            "new List<GaussDBRange<int>> { new GaussDBTypes.GaussDBRange<int>(4, 7), new GaussDBTypes.GaussDBRange<int>(9, true, 10, false), new GaussDBTypes.GaussDBRange<int>(13, false, false, 0, false, true) }",
+            "new List<GaussDBRange<int>> { new HuaweiCloud.GaussDBTypes.GaussDBRange<int>(4, 7), new HuaweiCloud.GaussDBTypes.GaussDBRange<int>(9, true, 10, false), new HuaweiCloud.GaussDBTypes.GaussDBRange<int>(13, false, false, 0, false, true) }",
             literal);
     }
 

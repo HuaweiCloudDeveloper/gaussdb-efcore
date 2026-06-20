@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <AssemblyName>HuaweiCloud.EntityFrameworkCore.GaussDB.Tests</AssemblyName>
@@ -8,8 +8,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\EFCore.GaussDB\EFCore.GaussDB.csproj" />
+    <ProjectReference Include="..\..\src\EFCore.GaussDB.NTS\EFCore.GaussDB.NTS.csproj" />
     <ProjectReference Include="..\..\src\EFCore.GaussDB.NodaTime\EFCore.GaussDB.NodaTime.csproj" />
-    <ProjectReference Include="..\EFCore.GaussDB.FunctionalTests\EFCore.GaussDB.FunctionalTests.csproj" />
+    <!-- <ProjectReference Include="..\EFCore.GaussDB.FunctionalTests\EFCore.GaussDB.FunctionalTests.csproj" /> -->
+    <Compile Include="..\EFCore.GaussDB.FunctionalTests\TestUtilities\GaussDBTestHelpers.cs" />
   </ItemGroup>
 
   <ItemGroup>

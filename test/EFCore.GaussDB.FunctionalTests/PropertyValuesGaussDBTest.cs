@@ -1,9 +1,9 @@
-﻿namespace Microsoft.EntityFrameworkCore;
+namespace Microsoft.EntityFrameworkCore;
 
 public class PropertyValuesGaussDBTest(PropertyValuesGaussDBTest.PropertyValuesGaussDBFixture fixture)
-    : PropertyValuesTestBase<PropertyValuesGaussDBTest.PropertyValuesGaussDBFixture>(fixture)
+    : PropertyValuesRelationalTestBase<PropertyValuesGaussDBTest.PropertyValuesGaussDBFixture>(fixture)
 {
-    public class PropertyValuesGaussDBFixture : PropertyValuesFixtureBase
+    public class PropertyValuesGaussDBFixture : PropertyValuesRelationalFixture
     {
         protected override string StoreName { get; } = "PropertyValues";
 

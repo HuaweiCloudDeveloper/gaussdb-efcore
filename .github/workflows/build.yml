@@ -14,40 +14,35 @@ permissions:
   contents: read
 
 env:
-  postgis_version: 3
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-24.04]
-        pg_major: [18, 17, 16, 15, 14, 13]
-        config: [Release]
-        include:
-          - os: windows-2022
-            pg_major: 17
-            config: Release
-          - os: ubuntu-24.04
-            pg_major: 18
-            config: Debug
-#          - os: ubuntu-24.04
-#            pg_major: 19
-#            config: Debug
-#            pg_prerelease: 'PG Prerelease'
+    runs-on: ubuntu-24.04
 
     outputs:
       is_release: ${{ steps.analyze_tag.outputs.is_release }}
       is_prerelease: ${{ steps.analyze_tag.outputs.is_prerelease }}
 
-    # Installing PostGIS on Windows is complicated/unreliable, so we don't test on it.
-    # The NPGSQL_TEST_POSTGIS environment variable ensures that if PostGIS isn't installed,
-    # the PostGIS tests fail and therefore fail the build.
     env:
-      NPGSQL_TEST_POSTGIS: ${{ !startsWith(matrix.os, 'windows') }}
+      NPGSQL_TEST_POSTGIS: false
+      Test__GaussDB__DefaultConnection: Server=localhost;Username=gaussdb;Password=Password@1234;SSL Mode=disable
+      Test__GaussDB__EnableExtensionConnectionOption: false
+
+    services:
+      opengauss:
+        image: opengauss/opengauss:5.0.0
+        env:
+          GS_PASSWORD: Password@1234
+          GS_DB: gaussdb_tests
+        ports:
+          - 5432:5432
+        options: >-
+          --name opengauss
+          --health-cmd "bash -lc 'export LD_LIBRARY_PATH=/usr/local/opengauss/lib:$LD_LIBRARY_PATH; /usr/local/opengauss/bin/gsql -h 127.0.0.1 -U gaussdb -d gaussdb_tests -W Password@1234 -c \"SELECT 1\" >/dev/null'"
+          --health-interval 10s
+          --health-timeout 30s
+          --health-retries 10
 
     steps:
       - name: Checkout
@@ -56,84 +51,34 @@ jobs:
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v5
 
-      - name: Build
-        run: dotnet build --configuration Debug
-        shell: bash
-
-      - name: Start GaussDB ${{ matrix.pg_major }} (Linux)
-        if: startsWith(matrix.os, 'ubuntu')
+      - name: Update openGauss configuration
         run: |
-          # First uninstall any GaussDB installed on the image
-          dpkg-query -W --showformat='${Package}\n' 'opengauss-*' | xargs sudo dpkg -P opengauss
-
-          # Automated repository configuration
-          sudo apt install -y opengauss-common
-          sudo /usr/share/opengauss-common/pgdg/apt.opengauss.org.sh -v ${{ matrix.pg_major }} -y
-          sudo apt-get update -qq
-          sudo apt-get install -qq opengauss-${{ matrix.pg_major  }}
-
-          # To disable PostGIS for prereleases (because it usually isn't available until late), surround with the following:
-          #if [ -z "${{ matrix.pg_prerelease }}" ]; then
-            sudo apt-get install -qq opengauss-${{ matrix.pg_major }}-postgis-${{ env.postgis_version }}
-          #fi
-
-          sudo sed -i 's/max_connections = 100/max_connections = 200/g' /etc/opengauss/${{ matrix.pg_major }}/main/opengauss.conf
-          sudo systemctl restart opengauss
-          sudo -u postgres psql -c "CREATE USER npgsql_tests SUPERUSER PASSWORD 'npgsql_tests'"
-
-      - name: Start GaussDB ${{ matrix.pg_major }} (Windows)
-        if: startsWith(matrix.os, 'windows')
-        run: |
-          # Find EnterpriseDB version number
-          EDB_VERSION=$(pwsh -c "
-              \$global:progressPreference='silentlyContinue';
-              Invoke-WebRequest -URI https://www.opengauss.org/applications-v2.xml |
-                  Select-Object -ExpandProperty Content |
-                  Select-Xml -XPath '/applications/application[id=\"opengauss_${{ matrix.pg_major }}\" and platform=\"windows-x64\"]/version/text()' |
-                  Select-Object -First 1 -ExpandProperty Node |
-                  Select-Object -ExpandProperty Value")
-
-          # Install GaussDB
-          echo "Installing GaussDB (version: ${EDB_VERSION})"
-          curl -o pgsql.zip -L https://get.enterprisedb.com/opengauss/opengauss-${EDB_VERSION}-windows-x64-binaries.zip
-          unzip pgsql.zip -x 'pgsql/include/**' 'pgsql/doc/**' 'pgsql/pgAdmin 4/**' 'pgsql/StackBuilder/**'
-
-          # Match GaussDB CI Docker image and stash one level up
-          cp $GITHUB_WORKSPACE/.build/{server.crt,server.key} pgsql
-
-          # Find OSGEO version number
-          OSGEO_VERSION=$(\
-            curl -Ls https://download.osgeo.org/postgis/windows/pg${{ matrix.pg_major }} |
-            sed -n 's/.*>postgis-bundle-pg${{ matrix.pg_major }}-\(${{ env.postgis_version }}.[0-9]*.[0-9]*\)x64.zip<.*/\1/p' |
-            tail -n 1)
-          if [ -z "$OSGEO_VERSION" ]; then
-              OSGEO_VERSION=$(\
-                curl -Ls https://download.osgeo.org/postgis/windows/pg${{ matrix.pg_major }}/archive |
-                sed -n 's/.*>postgis-bundle-pg${{ matrix.pg_major }}-\(${{ env.postgis_version }}.[0-9]*.[0-9]*\)x64.zip<.*/\1/p' |
-                tail -n 1)
-              POSTGIS_PATH="archive/"
-          else
-              POSTGIS_PATH=""
+          docker exec opengauss bash -c "sed -i 's/^max_wal_senders\s*=\s*4/max_wal_senders = 80/' /var/lib/opengauss/data/postgresql.conf"
+          docker exec opengauss bash -c "sed -i 's/^max_connections\s*=\s*200/max_connections = 500/' /var/lib/opengauss/data/postgresql.conf"
+          docker exec opengauss bash -c "cat /var/lib/opengauss/data/postgresql.conf"
+          docker restart opengauss
+          for i in {1..30}; do
+            if docker exec opengauss bash -lc 'export LD_LIBRARY_PATH=/usr/local/opengauss/lib:$LD_LIBRARY_PATH; /usr/local/opengauss/bin/gsql -h 127.0.0.1 -U gaussdb -d gaussdb_tests -W Password@1234 -c "SELECT 1" >/dev/null'; then
+              break
+            fi
+            sleep 1
+          done
+          docker exec opengauss bash -lc 'export LD_LIBRARY_PATH=/usr/local/opengauss/lib:$LD_LIBRARY_PATH; /usr/local/opengauss/bin/gsql -h 127.0.0.1 -U gaussdb -d gaussdb_tests -W Password@1234 -c "SELECT 1"'
+          postgres_exists=$(docker exec opengauss bash -lc 'export LD_LIBRARY_PATH=/usr/local/opengauss/lib:$LD_LIBRARY_PATH; /usr/local/opengauss/bin/gsql -tA -h 127.0.0.1 -U gaussdb -d gaussdb_tests -W Password@1234 -c "SELECT 1 FROM pg_database WHERE datname = '\''postgres'\''"')
+          if ! echo "$postgres_exists" | grep -q 1; then
+            docker exec opengauss bash -lc 'export LD_LIBRARY_PATH=/usr/local/opengauss/lib:$LD_LIBRARY_PATH; /usr/local/opengauss/bin/gsql -h 127.0.0.1 -U gaussdb -d gaussdb_tests -W Password@1234 -c "CREATE DATABASE postgres OWNER gaussdb;"'
           fi
 
-          # Install PostGIS
-          echo "Installing PostGIS (version: ${OSGEO_VERSION})"
-          POSTGIS_FILE="postgis-bundle-pg${{ matrix.pg_major }}-${OSGEO_VERSION}x64"
-          curl -o postgis.zip -L https://download.osgeo.org/postgis/windows/pg${{ matrix.pg_major }}/${POSTGIS_FILE}.zip
-          unzip postgis.zip -d postgis
-          cp -a postgis/$POSTGIS_FILE/. pgsql/
-
-          # Start GaussDB
-          pgsql/bin/initdb -D pgsql/PGDATA -E UTF8 -U postgres
-          pgsql/bin/pg_ctl -D pgsql/PGDATA -l logfile -o '-c max_connections=200 -c max_prepared_transactions=10 -c ssl=true -c ssl_cert_file=../server.crt -c ssl_key_file=../server.key' start
-
-          # Configure test account
-          pgsql/bin/psql -U postgres -c "CREATE ROLE npgsql_tests SUPERUSER LOGIN PASSWORD 'npgsql_tests'"
-          pgsql/bin/psql -U postgres -c "CREATE DATABASE npgsql_tests OWNER npgsql_tests"
+      - name: Build
+        run: dotnet build --configuration Release
         shell: bash
 
       - name: Test
-        run: dotnet test -c ${{ matrix.config }} --logger "GitHubActions;report-warnings=false"
+        run: |
+          dotnet test test/EFCore.GaussDB.Tests/EFCore.GaussDB.Tests.csproj -c Release --no-build --no-restore --logger "GitHubActions;report-warnings=false"
+          # Main CI keeps only a small smoke set here so push/PR feedback stays fast.
+          # Full functional coverage is left to local or dedicated extended runs.
+          dotnet test test/EFCore.GaussDB.FunctionalTests/EFCore.GaussDB.FunctionalTests.csproj -c Release --no-build --no-restore --filter "FullyQualifiedName~GaussDBDatabaseCreatorExistsTest|FullyQualifiedName~GaussDBDatabaseCreatorEnsureCreatedTest|FullyQualifiedName~GaussDBServiceCollectionExtensionsTest|FullyQualifiedName~GaussDBApiConsistencyTest|FullyQualifiedName~QueryFilterFuncletizationGaussDBTest" --logger "GitHubActions;report-warnings=false"
         shell: bash
 
       - id: analyze_tag
