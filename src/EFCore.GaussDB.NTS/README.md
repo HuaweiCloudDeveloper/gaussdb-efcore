@@ -1,8 +1,10 @@
 # GaussDB Entity Framework Core provider for GaussDB
 
-HuaweiCloud.EntityFrameworkCore.GaussDB is the open source EF Core provider for GaussDB. It allows you to interact with GaussDB via the most widely-used .NET O/RM from Microsoft, and use familiar LINQ syntax to express queries.
+HuaweiCloud.GaussDB.EntityFrameworkCore is the open source EF Core provider for GaussDB. It allows you to interact with GaussDB via the most widely-used .NET O/RM from Microsoft, and use familiar LINQ syntax to express queries.
 
 This package is a plugin which allows you to interact with spatial data provided by the GaussDB [PostGIS extension](https://postgis.net); PostGIS is a mature, standard extension considered to provide top-of-the-line database spatial features. On the .NET side, the plugin adds support for the types from the [NetTopologySuite library](https://github.com/NetTopologySuite/NetTopologySuite), allowing you to read and write them directly to GaussDB.
+
+Install the plugin with the `HuaweiCloud.GaussDB.EntityFrameworkCore.NetTopologySuite` package. The namespace and API remain unchanged, so existing `UseNetTopologySuite()` code does not need to change when migrating from the previous `HuaweiCloud.EntityFrameworkCore.GaussDB.NetTopologySuite` package ID.
 
 To use the plugin, simply add `UseNetTopologySuite` as below and use NetTopologySuite types in your entity properties:
 

@@ -2,6 +2,7 @@
   <PropertyGroup>
     <AssemblyName>HuaweiCloud.EntityFrameworkCore.GaussDB.NetTopologySuite</AssemblyName>
     <RootNamespace>HuaweiCloud.EntityFrameworkCore.GaussDB.NetTopologySuite</RootNamespace>
+    <PackageId>HuaweiCloud.GaussDB.EntityFrameworkCore.NetTopologySuite</PackageId>
 
     <Authors>Shay Rojansky</Authors>
     <Description>NetTopologySuite PostGIS spatial support plugin for GaussDB Entity Framework Core provider.</Description>
@@ -14,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="HuaweiCloud.Driver.GaussDB.NetTopologySuite" />
+    <PackageReference Include="HuaweiCloud.GaussDB.Driver.NetTopologySuite" />
   </ItemGroup>
 
   <ItemGroup>

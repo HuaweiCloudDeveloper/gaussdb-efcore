@@ -26,7 +26,7 @@ jobs:
 
     env:
       NPGSQL_TEST_POSTGIS: false
-      Test__GaussDB__DefaultConnection: Server=localhost;Username=gaussdb;Password=Password@1234;SSL Mode=disable
+      Test__GaussDB__DefaultConnection: Server=localhost;Port=5432;Username=gaussdb;Password=Password@1234;SSL Mode=disable
       Test__GaussDB__EnableExtensionConnectionOption: false
 
     services:
@@ -108,7 +108,11 @@ jobs:
         uses: actions/setup-dotnet@v5
 
       - name: Pack
-        run: dotnet pack --configuration Release --property:PackageOutputPath="$PWD/nupkgs" --version-suffix "ci.$(date -u +%Y%m%dT%H%M%S)+sha.${GITHUB_SHA:0:9}" -p:ContinuousIntegrationBuild=true
+        run: |
+          suffix="ci.$(date -u +%Y%m%dT%H%M%S)+sha.${GITHUB_SHA:0:9}"
+          dotnet pack src/EFCore.GaussDB/EFCore.GaussDB.csproj --configuration Release --property:PackageOutputPath="$PWD/nupkgs" --version-suffix "$suffix" -p:ContinuousIntegrationBuild=true
+          dotnet pack src/EFCore.GaussDB.NodaTime/EFCore.GaussDB.NodaTime.csproj --configuration Release --property:PackageOutputPath="$PWD/nupkgs" --version-suffix "$suffix" -p:ContinuousIntegrationBuild=true
+          dotnet pack src/EFCore.GaussDB.NTS/EFCore.GaussDB.NTS.csproj --configuration Release --property:PackageOutputPath="$PWD/nupkgs" --version-suffix "$suffix" -p:ContinuousIntegrationBuild=true
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v6
@@ -140,7 +144,10 @@ jobs:
         uses: actions/setup-dotnet@v5
 
       - name: Pack
-        run: dotnet pack --configuration Release --property:PackageOutputPath="$PWD/nupkgs" -p:ContinuousIntegrationBuild=true
+        run: |
+          dotnet pack src/EFCore.GaussDB/EFCore.GaussDB.csproj --configuration Release --property:PackageOutputPath="$PWD/nupkgs" -p:ContinuousIntegrationBuild=true
+          dotnet pack src/EFCore.GaussDB.NodaTime/EFCore.GaussDB.NodaTime.csproj --configuration Release --property:PackageOutputPath="$PWD/nupkgs" -p:ContinuousIntegrationBuild=true
+          dotnet pack src/EFCore.GaussDB.NTS/EFCore.GaussDB.NTS.csproj --configuration Release --property:PackageOutputPath="$PWD/nupkgs" -p:ContinuousIntegrationBuild=true
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v6

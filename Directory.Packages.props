@@ -1,12 +1,13 @@
 <Project>
   <PropertyGroup>
+    <ProviderVersion>9.0.0</ProviderVersion>
     <EFCoreVersion>9.0.15</EFCoreVersion>
     <MicrosoftExtensionsVersion>9.0.15</MicrosoftExtensionsVersion>
-    <DriverVersion>0.1.0</DriverVersion>
+    <DriverVersion>8.0.1</DriverVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="dotenv.net" Version="4.0.0" />
-    <PackageVersion Include="HuaweiCloud.EntityFrameworkCore.GaussDB" Version="0.0.1-preview.260105" />
+    <PackageVersion Include="HuaweiCloud.GaussDB.EntityFrameworkCore" Version="$(ProviderVersion)" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="$(EFCoreVersion)" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" Version="$(EFCoreVersion)" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Abstractions" Version="$(EFCoreVersion)" />
@@ -15,10 +16,10 @@
     <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="$(MicrosoftExtensionsVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="$(MicrosoftExtensionsVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Logging" Version="$(MicrosoftExtensionsVersion)" />
-    <PackageVersion Include="HuaweiCloud.Driver.GaussDB" Version="$(DriverVersion)" />
-    <PackageVersion Include="HuaweiCloud.Driver.GaussDB.NodaTime" Version="$(DriverVersion)" />
-    <PackageVersion Include="HuaweiCloud.Driver.GaussDB.DependencyInjection" Version="$(DriverVersion)" />
-    <PackageVersion Include="HuaweiCloud.Driver.GaussDB.NetTopologySuite" Version="$(DriverVersion)" />
+    <PackageVersion Include="HuaweiCloud.GaussDB.Driver" Version="$(DriverVersion)" />
+    <PackageVersion Include="HuaweiCloud.GaussDB.Driver.NodaTime" Version="$(DriverVersion)" />
+    <PackageVersion Include="HuaweiCloud.GaussDB.Driver.DependencyInjection" Version="$(DriverVersion)" />
+    <PackageVersion Include="HuaweiCloud.GaussDB.Driver.NetTopologySuite" Version="$(DriverVersion)" />
     <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
     <PackageVersion Include="System.Security.Cryptography.Xml" Version="9.0.15" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />

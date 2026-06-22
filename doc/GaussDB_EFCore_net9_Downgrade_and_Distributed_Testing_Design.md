@@ -19,8 +19,8 @@ This project is not EF Core itself. It is the database provider that connects EF
 ```mermaid
 flowchart TD
     App["User application / DbContext"] --> EF["EF Core 9"]
-    EF --> Provider["HuaweiCloud.EntityFrameworkCore.GaussDB"]
-    Provider --> Driver["HuaweiCloud.Driver.GaussDB"]
+    EF --> Provider["HuaweiCloud.GaussDB.EntityFrameworkCore"]
+    Provider --> Driver["HuaweiCloud.GaussDB.Driver"]
     Driver --> DB["GaussDB / openGauss"]
 
     EF -.provides.-> EFServices["Model metadata\nLINQ query pipeline\nUpdate pipeline\nMigration abstractions"]
@@ -32,8 +32,8 @@ flowchart TD
 | --- | --- | --- | --- |
 | User application layer | Business code, `DbContext`, entity classes | Uses EF Core APIs to express queries, updates, and migrations | Runtime target changes to `.NET 9.0` |
 | EF Core framework layer | `Microsoft.EntityFrameworkCore`, `Relational` | Provides ORM abstractions, query pipeline, update pipeline, and model metadata | API boundary moves from EF10 to EF9 |
-| GaussDB provider layer | `HuaweiCloud.EntityFrameworkCore.GaussDB` | Implements type mapping, SQL translation, SQL generation, and migration SQL | Must adapt to EF9 internal APIs |
-| ADO.NET driver layer | `HuaweiCloud.Driver.GaussDB` | Connects to the database and executes commands | This EFCore repository does not modify driver protocol implementation |
+| GaussDB provider layer | `HuaweiCloud.GaussDB.EntityFrameworkCore` | Implements type mapping, SQL translation, SQL generation, and migration SQL | Must adapt to EF9 internal APIs |
+| ADO.NET driver layer | `HuaweiCloud.GaussDB.Driver` | Connects to the database and executes commands | This EFCore repository does not modify driver protocol implementation |
 | Database layer | GaussDB/openGauss | Executes SQL, stores data, and returns results | Distributed databases have FK and distribution-key capability limits |
 
 ## 3. Design Goals

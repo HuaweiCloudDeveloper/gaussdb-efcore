@@ -3,6 +3,7 @@
   <PropertyGroup>
     <AssemblyName>HuaweiCloud.EntityFrameworkCore.GaussDB</AssemblyName>
     <RootNamespace>HuaweiCloud.EntityFrameworkCore.GaussDB</RootNamespace>
+    <PackageId>HuaweiCloud.GaussDB.EntityFrameworkCore</PackageId>
 
     <Authors>Conan Yao</Authors>
     <Description>GaussDB provider for Entity Framework Core.</Description>
@@ -17,7 +18,7 @@
     <!-- PrivateAssets="none" is set to flow the EF Core analyzer to users referencing this package https://github.com/aspnet/EntityFrameworkCore/pull/11350 -->
     <PackageReference Include="Microsoft.EntityFrameworkCore" PrivateAssets="none" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" PrivateAssets="none" />
-    <PackageReference Include="HuaweiCloud.Driver.GaussDB" />
+    <PackageReference Include="HuaweiCloud.GaussDB.Driver" />
   </ItemGroup>
 
   <ItemGroup>

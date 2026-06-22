@@ -2,6 +2,7 @@
   <PropertyGroup>
     <AssemblyName>HuaweiCloud.EntityFrameworkCore.GaussDB.NodaTime</AssemblyName>
     <RootNamespace>HuaweiCloud.EntityFrameworkCore.GaussDB.NodaTime</RootNamespace>
+    <PackageId>HuaweiCloud.GaussDB.EntityFrameworkCore.NodaTime</PackageId>
 
     <Authors>Conan Yao</Authors>
     <Description>NodaTime support plugin for GaussDB Entity Framework Core provider.</Description>
@@ -14,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="HuaweiCloud.Driver.GaussDB.NodaTime" />
+    <PackageReference Include="HuaweiCloud.GaussDB.Driver.NodaTime" />
   </ItemGroup>
 
   <ItemGroup>

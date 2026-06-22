@@ -19,8 +19,8 @@
 ```mermaid
 flowchart TD
     App["用户应用 / DbContext"] --> EF["EF Core 9"]
-    EF --> Provider["HuaweiCloud.EntityFrameworkCore.GaussDB"]
-    Provider --> Driver["HuaweiCloud.Driver.GaussDB"]
+    EF --> Provider["HuaweiCloud.GaussDB.EntityFrameworkCore"]
+    Provider --> Driver["HuaweiCloud.GaussDB.Driver"]
     Driver --> DB["GaussDB / openGauss"]
 
     EF -.提供.-> EFServices["模型元数据\nLINQ 查询管线\n更新管线\n迁移抽象"]
@@ -32,8 +32,8 @@ flowchart TD
 | --- | --- | --- | --- |
 | 用户应用层 | 业务代码、`DbContext`、实体类 | 调用 EF Core API 表达查询、更新、迁移 | 运行目标切换为 `.NET 9.0` |
 | EF Core 框架层 | `Microsoft.EntityFrameworkCore`、`Relational` | 提供 ORM 抽象、查询管线、更新管线、模型元数据 | 从 EF10 API 边界降到 EF9 API 边界 |
-| GaussDB provider 层 | `HuaweiCloud.EntityFrameworkCore.GaussDB` | 实现类型映射、SQL 翻译、SQL 生成、迁移 SQL | 需要适配 EF9 内部 API |
-| ADO.NET 驱动层 | `HuaweiCloud.Driver.GaussDB` | 连接数据库并执行命令 | 本次 EFCore 仓库不修改驱动协议实现 |
+| GaussDB provider 层 | `HuaweiCloud.GaussDB.EntityFrameworkCore` | 实现类型映射、SQL 翻译、SQL 生成、迁移 SQL | 需要适配 EF9 内部 API |
+| ADO.NET 驱动层 | `HuaweiCloud.GaussDB.Driver` | 连接数据库并执行命令 | 本次 EFCore 仓库不修改驱动协议实现 |
 | 数据库层 | GaussDB/openGauss | 执行 SQL、保存数据、返回结果 | 分布式库有 FK、分布式键等能力限制 |
 
 ## 3. 设计目标
